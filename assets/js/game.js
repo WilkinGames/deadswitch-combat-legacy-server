@@ -523,7 +523,7 @@ class GameInstance
             world: new p2.World({
                 gravity: [0, settings.gravity],
                 broadphase: new p2.NaiveBroadphase(),
-                islandSplit: false
+                islandSplit: true
             }),
             objects: {},
             spawners: [],
@@ -2866,7 +2866,7 @@ class GameInstance
             {
                 case GameMode.DOMINATION:
                 case GameMode.CONQUEST:
-                    data["captureTimerMax"] = this.game.settings.fps * (data.team == null ? 10 : 15);
+                    this.setDataValue(_body, "captureTimerMax", this.game.settings.fps * (data.team == null ? 10 : 15));
                     break;
             }
             for (var i = 0; i < 2; i++)
