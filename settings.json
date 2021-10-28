@@ -1,7 +1,7 @@
 {
-  "name": "Heroku Server [US]",
+  "name": "Digital Ocean Server [CA]",
   "type": "STR_OFFICIAL",
-  "port": 3000,
+  "port": 8000,
   "maxPlayers": 32,
   "bUseLobby": true,
   "gameData": {
