@@ -1,0 +1,127 @@
+[
+  {
+    "id": "mh6",
+    "name": "STR_MH6",
+    "type": "helicopter",
+    "uiScale": 2,
+    "seats": [
+      [ 44, 0 ],
+      [ 23, 0 ]
+    ],
+    "weapons": [
+      [
+        {
+          "id": null
+        },
+        {
+          "id": "minigun"
+        }
+      ]
+    ],
+    "camos": [
+      {
+        "id": null
+      }
+    ]
+  },
+  {
+    "id": "cobra",
+    "name": "STR_COBRA",
+    "type": "helicopter",
+    "uiScale": 2,
+    "seats": [
+      [ 55, 0 ],
+      [ 36, -2 ]
+    ],
+    "weapons": [
+      [
+        {
+          "id": "zuni"
+        },
+        {
+          "id": "hydra"
+        }
+      ],
+      [
+        {
+          "id": "minigun"
+        },
+        {
+          "id": "gatling"
+        },
+        {
+          "id": "m2"
+        }
+      ]
+    ],
+    "camos": [
+      {
+        "id": null
+      }
+    ]
+  },
+  {
+    "id": "blackhawk",
+    "name": "STR_BLACKHAWK",
+    "type": "helicopter",
+    "uiScale": 3,
+    "seats": [
+      [ 58, 3 ],
+      [ 30, 7 ],
+      [ 17, 7 ]
+    ],
+    "camos": [
+      {
+        "id": null
+      }
+    ]
+  },
+  {
+    "id": "abrams",
+    "name": "STR_ABRAMS",
+    "type": "tank",
+    "uiScale": 3,
+    "seats": [
+      [ -5, 7 ],
+      [ -34, -16 ]
+    ],
+    "weapons": [
+      [
+        {
+          "id": "m256a1"
+        }
+      ],
+      [
+        {
+          "id": "m240"
+        },
+        {
+          "id": "m60e4"
+        },
+        {
+          "id": "m2"
+        }
+      ]
+    ],
+    "camos": [
+      {
+        "id": null
+      }
+    ]
+  },
+  {
+    "id": "quad",
+    "name": "STR_QUAD",
+    "type": "car",
+    "uiScale": 1.5,
+    "seats": [
+      [ 2, -20 ],
+      [ -26, -20 ]
+    ],
+    "camos": [
+      {
+        "id": null
+      }
+    ]
+  }
+]

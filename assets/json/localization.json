@@ -1,0 +1,3398 @@
+﻿{
+  "STR_LOADING": {
+    "en": "Loading"
+  },
+  "STR_CONTINUE": {
+    "en": "Continue"
+  },
+  "STR_START_GAME": {
+    "en": "Start Game"
+  },
+  "STR_CLICK_TO_START": {
+    "en": "Click to Start"
+  },
+  "STR_WILKIN_COPYRIGHT": {
+    "en": "\u00A92021 Wilkin Games"
+  },
+  "STR_DSC_COPYRIGHT": {
+    "en": "\u00A92021 Wilkin Games.\nDeadswitch: Combat is developed by Wilkin Games.\nAll rights reserved."
+  },
+  "STR_DSC": {
+    "en": "Deadswitch: Combat"
+  },
+  "STR_DSC_BETA": {
+    "en": "Deadswitch: Combat Beta"
+  },
+  "STR_DSC_BETA_DESC": {
+    "en": "Thank you for participating in the Deadswitch: Combat Beta.\n\nPlease note that the beta build does not represent the game in its final state.\n\nPlease provide any feedback or issues to the official Deadswitch: Combat Discord.\n\nHave fun!"
+  },
+  "STR_DISCORD": {
+    "en": "Discord"
+  },
+  "STR_HOMEPAGE": {
+    "en": "Homepage"
+  },
+  "STR_SWITCH_TEAM": {
+    "en": "Switch Team"
+  },
+  "STR_X_SWITCHED_TEAM": {
+    "en": "%1 switched teams"
+  },
+  "STR_MULTIPLAYER": {
+    "en": "Multiplayer"
+  },
+  "STR_PLAY": {
+    "en": "Play"
+  },
+  "STR_SERVER_BROWSER": {
+    "en": "Server Browser"
+  },
+  "STR_CONNECT_BY_IP": {
+    "en": "Connect by IP"
+  },
+  "STR_CONNECT_BY_IP_DESC": {
+    "en": "Enter the IP address of the Deadswitch: Combat server you want to join."
+  },
+  "STR_CONNECTING_TO_X": {
+    "en": "Connecting to %1..."
+  },
+  "STR_HOST_GAME": {
+    "en": "Host Game"
+  },
+  "STR_QUICK_JOIN": {
+    "en": "Quick Join"
+  },
+  "STR_JOIN_SERVER": {
+    "en": "Join Server"
+  },
+  "STR_CONNECTING": {
+    "en": "Connecting"
+  },
+  "STR_DISCONNECT": {
+    "en": "Disconnect"
+  },
+  "STR_LOBBY": {
+    "en": "Lobby"
+  },
+  "STR_LOCAL_PLAY": {
+    "en": "Local Play"
+  },
+  "STR_CUSTOMIZE": {
+    "en": "Customize"
+  },
+  "STR_STORE": {
+    "en": "Store"
+  },
+  "STR_PROFILE": {
+    "en": "Profile"
+  },
+  "STR_SETTINGS": {
+    "en": "Settings"
+  },
+  "STR_AUDIO": {
+    "en": "Audio"
+  },
+  "STR_GRAPHICS": {
+    "en": "Graphics"
+  },
+  "STR_PREFERENCES": {
+    "en": "Preferences"
+  },
+  "STR_QUIT_GAME": {
+    "en": "Quit Game"
+  },
+  "STR_QUIT": {
+    "en": "Quit"
+  },
+  "STR_LEAVE": {
+    "en": "Leave"
+  },
+  "STR_QUIT_GAME_CONFIRM": {
+    "en": "Are you sure you want to quit this game?"
+  },
+  "STR_QUIT_GAME_PC_CONFIRM": {
+    "en": "Are you sure you want to quit Deadswitch: Combat?"
+  },
+  "STR_BACK": {
+    "en": "Back"
+  },
+  "STR_PREVIOUS": {
+    "en": "Previous"
+  },
+  "STR_NEXT": {
+    "en": "Next"
+  },
+  "STR_PLAYERS": {
+    "en": "Players"
+  },
+  "STR_X_/_X_PLAYERS": {
+    "en": "%1 / %2 Players"
+  },
+  "STR_X_RPM": {
+    "en": "%1 RPM"
+  },
+  "STR_X_METERS_SQ": {
+    "en": "%1 m²"
+  },
+  "STR_X_METERS": {
+    "en": "%1 m"
+  },
+  "STR_BOTS": {
+    "en": "Bots",
+    "ru": "ИИ",
+    "zh-CN": "AI玩家",
+    "tr": "Botlar",
+    "es": "Bots",
+    "it": "Bot"
+  },
+  "STR_OK": {
+    "en": "OK",
+    "ru": "ОК",
+    "zh-CN": "好",
+    "tr": "OK",
+    "es": "OK",
+    "it": "OK"
+  },
+  "STR_ERROR_SERVER_CONNECTION_FAILED_DESC": {
+    "en": "Server connection failed.\n\nPlease try again later or try a different server.",
+    "ru": "Ошибка при подключении к серверу.\n\nПопробуйте позже или попробуйте другой сервер.",
+    "zh-CN": "服务器连接失败。\n\n请稍后再重试或者尝试其它服务器。",
+    "tr": "Sunucu bağlantısı başarısız.\n\nLütfen farklı bir sunucu ya da daha sonra tekrar deneyin.",
+    "es": "Falló la conexión con el servidor.\n\nVuelva a intentarlo más tarde o pruebe con un servidor diferente.",
+    "it": "Connessione al Server fallita\n\nRiprova più tardi oppure prova un altro server."
+  },
+  "STR_BOT_TEAM": {
+    "en": "Bot Team"
+  },
+  "STR_AUTO": {
+    "en": "Auto"
+  },
+  "STR_BOT_SKILL": {
+    "en": "Bot Skill",
+    "ru": "Навык ИИ",
+    "zh-CN": "AI玩家水平",
+    "tr": "Bot Yetenekleri",
+    "es": "Habilidad de bot",
+    "it": "Skill Bot"
+  },
+  "STR_SPAWN_PROTECTION": {
+    "en": "Spawn Protection",
+    "ru": "Защита при возрождении",
+    "zh-CN": "重生无敌保护",
+    "tr": "Doğma Koruması",
+    "es": "Protección de reaparición",
+    "it": "Protezione Spawn"
+  },
+  "STR_RESPAWN_TIME": {
+    "en": "Respawn Time",
+    "ru": "Время возрождения",
+    "zh-CN": "重生倒计时",
+    "tr": "Yeniden Doğma Süresi",
+    "es": "Tiempo de reaparición",
+    "it": "Tempo Respawn"
+  },
+  "STR_SCORE_LIMIT": {
+    "en": "Score Limit",
+    "ru": "Лимит очков",
+    "zh-CN": "得分目标",
+    "tr": "Skor Limiti",
+    "es": "Límite de puntuación",
+    "it": "Limite Punti"
+  },
+  "STR_X_MINUTES": {
+    "en": "%1 Minutes",
+    "ru": "%1 мин.",
+    "zh-CN": "%1 分钟",
+    "tr": "%1 Dakikalar",
+    "es": "%1 minutos",
+    "it": "%1 minuti"
+  },
+  "STR_X_MINUTE": {
+    "en": "%1 Minute",
+    "ru": "%1 мин.",
+    "zh-CN": "%1 分钟",
+    "tr": "%1 Dakika",
+    "es": "%1 minuto",
+    "it": "%1 minuto"
+  },
+  "STR_X_SECONDS": {
+    "en": "%1 Seconds",
+    "ru": "%1 сек.",
+    "zh-CN": "%1 秒",
+    "tr": "%1 Saniyeler",
+    "es": "%1 segundos",
+    "it": "%1 secondi"
+  },
+  "STR_X_SECOND": {
+    "en": "%1 Second",
+    "ru": "%1 сек.",
+    "zh-CN": "%1 秒",
+    "tr": "%1 Saniye",
+    "es": "%1 segundo",
+    "it": "%1 secondo"
+  },
+  "STR_TIME_LIMIT": {
+    "en": "Time Limit",
+    "ru": "Время матча",
+    "zh-CN": "时间限制",
+    "tr": "Zaman Limiti",
+    "es": "Límite de tiempo",
+    "it": "Limite Tempo"
+  },
+  "STR_WINNING": {
+    "en": "Winning",
+    "ru": "Побеждаете",
+    "zh-CN": "领先",
+    "tr": "Kazanılıyor",
+    "es": "Ganadas",
+    "it": "Vittoria"
+  },
+  "STR_TIED": {
+    "en": "Tied",
+    "ru": "Ничья",
+    "zh-CN": "持平",
+    "tr": "Berabere",
+    "es": "Empatadas",
+    "it": "Pareggio"
+  },
+  "STR_LOSING": {
+    "en": "Losing",
+    "ru": "Проигрываете",
+    "zh-CN": "落后",
+    "tr": "Kaybediliyor",
+    "es": "Perdidas",
+    "it": "Sconfitta"
+  },
+  "STR_STAT_KILLS": {
+    "en": "Kills",
+    "ru": "Убийств",
+    "zh-CN": "击杀数",
+    "tr": "Öldürmeler",
+    "es": "Muertes",
+    "it": "Uccisioni"
+  },
+  "STR_STAT_RADIUS": {
+    "en": "Radius",
+    "ru": "Радиус",
+    "zh-CN": "范围",
+    "tr": "Yarıçap",
+    "es": "Radio",
+    "it": "Raggio"
+  },
+  "STR_STAT_HEADSHOTS": {
+    "en": "Headshots",
+    "ru": "В голову",
+    "zh-CN": "爆头击杀",
+    "tr": "Kafadan Vuruşlar",
+    "es": "Disparos a la cabeza",
+    "it": "Colpo alla Testa"
+  },
+  "STR_STAT_MELEES": {
+    "en": "Melees",
+    "ru": "Ближний бой",
+    "zh-CN": "近战击杀",
+    "tr": "Bıçaklar",
+    "es": "Cuerpo a cuerpo",
+    "it": "Corpo a Corpo"
+  },
+  "STR_STAT_DEATHS": {
+    "en": "Deaths",
+    "ru": "Смертей",
+    "zh-CN": "死亡数",
+    "tr": "Ölümler",
+    "es": "Muertes",
+    "it": "Morti"
+  },
+  "STR_STAT_SCORE": {
+    "en": "Score",
+    "ru": "Счёт",
+    "zh-CN": "得分",
+    "tr": "Skor",
+    "es": "Puntuación",
+    "it": "Punteggio"
+  },
+  "STR_EQUIPPED": {
+    "en": "Equipped"
+  },
+  "STR_MOD_OPTIC": {
+    "en": "Optic"
+  },
+  "STR_MOD_BARREL": {
+    "en": "Barrel"
+  },
+  "STR_MOD_ACCESSORY": {
+    "en": "Accessory"
+  },
+  "STR_MOD_AMMO": {
+    "en": "Ammo"
+  },
+  "STR_SETTING_MUSIC_VOLUME": {
+    "en": "Music Volume"
+  },
+  "STR_SETTING_GAME_VOLUME": {
+    "en": "Game Volume"
+  },
+  "STR_SETTING_PERFORMANCE_MODE": {
+    "en": "Performance Mode"
+  },
+  "STR_SETTING_FULLSCREEN": {
+    "en": "Fullscreen"
+  },
+  "STR_SETTING_CAMERA_SPEED": {
+    "en": "Camera Speed"
+  },
+  "STR_EDIT_NAME": {
+    "en": "Edit Name"
+  },
+  "STR_ENTER_NAME": {
+    "en": "Enter your name."
+  },
+  "STR_US": {
+    "en": "US"
+  },
+  "STR_RU": {
+    "en": "RU"
+  },
+  "STR_CONFIRM": {
+    "en": "Confirm"
+  },
+  "STR_CANCEL": {
+    "en": "Cancel"
+  },
+  "STR_RESET_PROFILE": {
+    "en": "Reset Profile"
+  },
+  "STR_RESET_PROFILE_CONFIRM": {
+    "en": "Are you sure you want to reset your profile?"
+  },
+  "STR_RESET_SETTINGS": {
+    "en": "Reset Settings"
+  },
+  "STR_RESET_SETTINGS_CONFIRM": {
+    "en": "Are you sure you want to reset your settings?"
+  },
+  "STR_UNLOCK_ALL": {
+    "en": "Unlock All"
+  },
+  "STR_CLEAR_PENDING": {
+    "en": "Clear Pending Items"
+  },
+  "STR_RANK": {
+    "en": "Rank"
+  },
+  "STR_SKILL": {
+    "en": "Skill"
+  },
+  "STR_YES": {
+    "en": "Yes"
+  },
+  "STR_TOGGLE_ON": {
+    "en": "On"
+  },
+  "STR_TOGGLE_OFF": {
+    "en": "Off"
+  },
+  "STR_PAUSED": {
+    "en": "Paused"
+  },
+  "STR_RESUME": {
+    "en": "Resume"
+  },
+  "STR_MENU": {
+    "en": "Menu"
+  },
+  "STR_OFFICIAL": {
+    "en": "Official"
+  },
+  "STR_SERVER": {
+    "en": "Server"
+  },
+  "STR_REFRESH": {
+    "en": "Refresh"
+  },
+  "STR_FILTERS": {
+    "en": "Filters"
+  },
+  "STR_TYPE": {
+    "en": "Type"
+  },
+  "STR_PING": {
+    "en": "Ping"
+  },
+  "STR_VICTORY": {
+    "en": "Victory",
+    "ru": "Победа",
+    "zh-CN": "胜利",
+    "tr": "Zafer",
+    "es": "Victoria",
+    "it": "Vittoria"
+  },
+  "STR_DEFEAT": {
+    "en": "Defeat",
+    "ru": "Поражение",
+    "zh-CN": "战败",
+    "tr": "Yenilgi",
+    "es": "Derrota",
+    "it": "Sconfitta"
+  },
+  "STR_DRAW": {
+    "en": "Draw",
+    "ru": "Ничья",
+    "zh-CN": "平手",
+    "tr": "Berabere",
+    "es": "Empate",
+    "it": "Disegno"
+  },
+  "STR_ROUND_OVER": {
+    "en": "Round Over",
+    "ru": "Конец каунда",
+    "zh-CN": "回合结束",
+    "tr": "Tur Bitti",
+    "es": "Ronda finalizada",
+    "it": "Round Terminato"
+  },
+  "STR_CONDITION_SCORE": {
+    "en": "Score Limit Reached",
+    "ru": "Достигнут лимит по очкам",
+    "zh-CN": "得分完成",
+    "tr": "Skor Limitine Ulaşıldı",
+    "es": "Límite de puntuación alcanzado",
+    "it": "Limite Punteggio Raggiunto"
+  },
+  "STR_CONDITION_TIME": {
+    "en": "Time Limit Reached",
+    "ru": "Достигнут лимит по времени",
+    "zh-CN": "时间已到",
+    "tr": "Zaman Limitine Ulaşıldı",
+    "es": "Límite de tiempo alcanzado",
+    "it": "Limite Tempo Raggiunto"
+  },
+  "STR_MODE_FFA": {
+    "en": "Free-for-All",
+    "ru": "Каждый сам за себя",
+    "zh-CN": "自由混战",
+    "tr": "Herkes Tek",
+    "es": "Todos contra todos",
+    "it": "Tutti contro Tutti"
+  },
+  "STR_MODE_FFA_DESC": {
+    "en": "Eliminate enemy players to win.",
+    "ru": "Уничтожьте вражеских игроков.",
+    "zh-CN": "消灭敌对玩家来取胜。",
+    "tr": "Kazanmak için düşman oyuncuları yok et.",
+    "es": "Elimina a los jugadores enemigos para ganar.",
+    "it": "Elimina i giocatori nemici per vincere."
+  },
+  "STR_MODE_TDM": {
+    "en": "Team Deathmatch",
+    "ru": "Командный бой насмерть",
+    "zh-CN": "团队死亡竞赛",
+    "tr": "Takım Ölüm Maçı",
+    "es": "Combate a muerte por equipos",
+    "it": "Deatmatch a Squadre"
+  },
+  "STR_MODE_DOMINATION": {
+    "en": "Domination",
+    "ru": "Господство",
+    "zh-CN": "据点占领",
+    "tr": "Egemenlik",
+    "es": "Dominación",
+    "it": "Dominazione"
+  },
+  "STR_MODE_CONQUEST": {
+    "en": "Conquest"
+  },
+  "STR_MODE_TDM_DESC": {
+    "en": "Eliminate the enemy team to win.",
+    "ru": "Уничтожьте вражескую команду.",
+    "zh-CN": "消灭敌方队伍来取胜。",
+    "tr": "Kazanmak için düşman takımı yok et.",
+    "es": "Elimina al equipo enemigo para ganar.",
+    "it": "Elimina il Team nemico per vincere."
+  },
+  "STR_MODE_DOMINATION_DESC": {
+    "en": "Capture and defend the 3 flag positions.",
+    "ru": "Захватите и защищайте 3 позиции.",
+    "zh-CN": "占领并防守3个旗帜区域。",
+    "tr": "3 Bayrak pozisyonunu ele geçir ve savun.",
+    "es": "Captura y defiende las 3 posiciones de la bandera.",
+    "it": "Cattura e difendi le 3 posizioni della bandiera."
+  },
+  "STR_MODE_CONQUEST_DESC": {
+    "en": "Capture and defend the 5 flag positions."
+  },
+  "STR_MAP_SIEGE": {
+    "en": "Siege"
+  },
+  "STR_SPAWN": {
+    "en": "Spawn"
+  },
+  "STR_RESPAWN_IN_X": {
+    "en": "Respawn available in %1"
+  },
+  "STR_RESPAWN_AVAILABLE": {
+    "en": "Respawn available"
+  },
+  "STR_SELECT_SPAWN": {
+    "en": "Select a spawn point"
+  },
+  "STR_X_MS": {
+    "en": "%1 ms",
+    "ru": "%1 мс",
+    "zh-CN": "%1 毫秒",
+    "tr": "%1 ms",
+    "es": "%1 ms",
+    "it": "%1 ms"
+  },
+  "STR_BOT_SKILL_EASY": {
+    "en": "Easy",
+    "ru": "Простой",
+    "zh-CN": "容易",
+    "tr": "Kolay",
+    "es": "Fácil",
+    "it": "Facile"
+  },
+  "STR_BOT_SKILL_NORMAL": {
+    "en": "Normal",
+    "ru": "Обычный",
+    "zh-CN": "普通",
+    "tr": "Normal",
+    "es": "Normal",
+    "it": "Normale"
+  },
+  "STR_BOT_SKILL_HARD": {
+    "en": "Hard",
+    "ru": "Сложный",
+    "zh-CN": "困难",
+    "tr": "Zor",
+    "es": "Difícil",
+    "it": "Difficile"
+  },
+  "STR_BOT_SKILL_INSANE": {
+    "en": "Insane",
+    "ru": "Невозможный",
+    "zh-CN": "疯狂",
+    "tr": "Komando",
+    "es": "Locura",
+    "it": "Insano"
+  },
+  "STR_BOT_SKILL_GOD": {
+    "en": "God",
+    "ru": "Божественный",
+    "zh-CN": "超神",
+    "tr": "Bordo Bereli",
+    "es": "Modo Dios",
+    "it": "Dio"
+  },
+  "STR_X_JOINED": {
+    "en": "%1 joined"
+  },
+  "STR_X_LEFT": {
+    "en": "%1 left"
+  },
+  "STR_MAP": {
+    "en": "Map"
+  },
+  "STR_RELOAD": {
+    "en": "Reload"
+  },
+  "STR_LOW_AMMO": {
+    "en": "Low Ammo"
+  },
+  "STR_NO_AMMO": {
+    "en": "No Ammo"
+  },
+  "STR_GAME_MODE": {
+    "en": "Game Mode"
+  },
+  "STR_ERROR": {
+    "en": "Error"
+  },
+  "STR_ERROR_DESC": {
+    "en": "An error occurred."
+  },
+  "STR_SUBMIT_BUG_REPORT": {
+    "en": "Submit Bug Report"
+  },
+  "STR_EDIT_GAME_SETTINGS": {
+    "en": "Edit Game Settings"
+  },
+  "STR_LEAVE_MULTIPLAYER_CONFIRM": {
+    "en": "Are you sure you want to leave this server?"
+  },
+  "STR_STATE_WAITING": {
+    "en": "Waiting"
+  },
+  "STR_STATE_IN_PROGRESS": {
+    "en": "In Progress"
+  },
+  "STR_CLASS_ASSAULT": {
+    "en": "Assault"
+  },
+  "STR_CLASS_ASSAULT_DESC": {
+    "en": "Versatile all-range combat role."
+  },
+  "STR_CLASS_ENGINEER": {
+    "en": "Engineer"
+  },
+  "STR_CLASS_ENGINEER_DESC": {
+    "en": "Ideal for close-mid range combat.\nRole: Vehicles and explosives."
+  },
+  "STR_CLASS_SUPPORT": {
+    "en": "Support"
+  },
+  "STR_CLASS_SUPPORT_DESC": {
+    "en": "Ideal for mid-long range combat.\nRole: Suppression and team support."
+  },
+  "STR_CLASS_RECON": {
+    "en": "Recon"
+  },
+  "STR_CLASS_RECON_DESC": {
+    "en": "Ideal for long-range combat.\nRole: Reconnaissance and stealth."
+  },
+  "STR_CLASSES": {
+    "en": "Classes"
+  },
+  "STR_LOADOUT": {
+    "en": "Loadout"
+  },
+  "STR_APPEARANCE": {
+    "en": "Appearance"
+  },
+  "STR_VEHICLES": {
+    "en": "Vehicles"
+  },
+  "STR_UNLIMITED_AMMO": {
+    "en": "Unlimited Ammo"
+  },
+  "STR_FALL_DAMAGE": {
+    "en": "Fall Damage"
+  },
+  "STR_HARDCORE": {
+    "en": "Hardcore"
+  },
+  "STR_WEAPON_DROPS": {
+    "en": "Weapon Spawns"
+  },
+  "STR_WEAPON_RESPAWN_TIME": {
+    "en": "Weapon Respawn Time"
+  },
+  "STR_VEHICLE_RESPAWN_TIME": {
+    "en": "Vehicle Respawn Time"
+  },
+  "STR_GRAVITY": {
+    "en": "Gravity"
+  },
+  "STR_SWITCH_SEATS": {
+    "en": "Allow Vehicle Seat Switch"
+  },
+  "STR_SWITCHING_SEAT": {
+    "en": "Switching Seat..."
+  },
+  "STR_PRIMARY_WEAPON": {
+    "en": "Primary Weapon"
+  },
+  "STR_SECONDARY_WEAPON": {
+    "en": "Secondary Weapon"
+  },
+  "STR_GRENADE": {
+    "en": "Grenade"
+  },
+  "STR_EQUIPMENT": {
+    "en": "Equipment"
+  },
+  "STR_MELEE": {
+    "en": "Melee"
+  },
+  "STR_HELICOPTERS": {
+    "en": "Helicopters"
+  },
+  "STR_TANKS": {
+    "en": "Tanks"
+  },
+  "STR_CARS": {
+    "en": "Land"
+  },
+  "STR_MH6": {
+    "en": "AH-6J Little Bird"
+  },
+  "STR_COBRA": {
+    "en": "AH-1Z Viper"
+  },
+  "STR_BLACKHAWK": {
+    "en": "UH-60 Black Hawk"
+  },
+  "STR_ABRAMS": {
+    "en": "M1 Abrams"
+  },
+  "STR_QUAD": {
+    "en": "Quad Bike"
+  },
+  "STR_PRIMARY": {
+    "en": "Primary"
+  },
+  "STR_SECONDARY": {
+    "en": "Secondary"
+  },
+  "STR_WPN_M9": {
+    "en": "M9",
+    "ru": "M9",
+    "zh-CN": "M9",
+    "tr": "M9",
+    "es": "M9",
+    "it": "M9"
+  },
+  "STR_WPN_FIVESEVEN": {
+    "en": "FN57",
+    "ru": "FN57",
+    "zh-CN": "FN57",
+    "tr": "FN57",
+    "es": "FN57",
+    "it": "FN57"
+  },
+  "STR_WPN_DEAGLE": {
+    "en": "Desert Eagle",
+    "ru": "Desert Eagle",
+    "zh-CN": "沙漠之鹰",
+    "tr": "Desert Eagle",
+    "es": "Desert Eagle",
+    "it": "Desert Eagle"
+  },
+  "STR_WPN_MP5": {
+    "en": "MP5A2",
+    "ru": "MP5A2",
+    "zh-CN": "MP5A2",
+    "tr": "MP5A2",
+    "es": "MP5A2",
+    "it": "MP5A2"
+  },
+  "STR_WPN_M93R": {
+    "en": "M93R",
+    "ru": "M93R",
+    "zh-CN": "M93R",
+    "tr": "M93R",
+    "es": "M93R",
+    "it": "M93R"
+  },
+  "STR_WPN_G18": {
+    "en": "G18",
+    "ru": "G18",
+    "zh-CN": "G18",
+    "tr": "G18",
+    "es": "G18",
+    "it": "G18"
+  },
+  "STR_WPN_M4A1": {
+    "en": "M4A1",
+    "ru": "M4A1",
+    "zh-CN": "M4A1",
+    "tr": "M4A1",
+    "es": "M4A1",
+    "it": "M4A1"
+  },
+  "STR_WPN_M16A4": {
+    "en": "M16A4",
+    "ru": "M16A4",
+    "zh-CN": "M16A4",
+    "tr": "M16A4",
+    "es": "M16A4",
+    "it": "M16A4"
+  },
+  "STR_WPN_AK47": {
+    "en": "AKM",
+    "ru": "AKM",
+    "zh-CN": "АК47",
+    "tr": "AKM",
+    "es": "AKM",
+    "it": "AKM"
+  },
+  "STR_WPN_AUG": {
+    "en": "AUG A3",
+    "ru": "AUG A3",
+    "zh-CN": "AUG A3",
+    "tr": "AUG A3",
+    "es": "AUG A3",
+    "it": "AUG A3"
+  },
+  "STR_WPN_TAR21": {
+    "en": "TAR-21",
+    "ru": "TAR-21",
+    "zh-CN": "TAR-21",
+    "tr": "TAR-21",
+    "es": "TAR-21",
+    "it": "TAR-21"
+  },
+  "STR_WPN_G3": {
+    "en": "G3A3",
+    "ru": "G3A3",
+    "zh-CN": "G3A3",
+    "tr": "G3A3",
+    "es": "G3A3",
+    "it": "G3A3"
+  },
+  "STR_WPN_FAL_OSW": {
+    "en": "FAL OSW",
+    "ru": "FAL OSW",
+    "zh-CN": "FAL OSW",
+    "tr": "FAL OSW",
+    "es": "FAL OSW",
+    "it": "FAL OSW"
+  },
+  "STR_WPN_RSASS": {
+    "en": "RSASS",
+    "ru": "RSASS",
+    "zh-CN": "RSASS",
+    "tr": "RSASS",
+    "es": "RSASS",
+    "it": "RSASS"
+  },
+  "STR_WPN_SR25": {
+    "en": "MK11 Mod 0",
+    "ru": "MK11 Mod 0",
+    "zh-CN": "MK11 Mod 0",
+    "tr": "MK11 Mod 0",
+    "es": "MK11 Mod 0",
+    "it": "MK11 Mod 0"
+  },
+  "STR_WPN_SG550": {
+    "en": "SG 550",
+    "ru": "SG 550",
+    "zh-CN": "SG 550",
+    "tr": "SG 550",
+    "es": "SG 550",
+    "it": "SG 550"
+  },
+  "STR_WPN_M1014": {
+    "en": "M1014",
+    "ru": "M1014",
+    "zh-CN": "M1014",
+    "tr": "M1014",
+    "es": "M1014",
+    "it": "M1014"
+  },
+  "STR_WPN_M3": {
+    "en": "Benelli M3",
+    "ru": "Benneli M3",
+    "zh-CN": "伯奈利 M3",
+    "tr": "Benelli M3",
+    "es": "Benelli M3",
+    "it": "Benelli M3"
+  },
+  "STR_WPN_SPAS12": {
+    "en": "SPAS-12",
+    "ru": "SPAS-12",
+    "zh-CN": "SPAS-12",
+    "tr": "SPAS-12",
+    "es": "SPAS-12",
+    "it": "SPAS-12"
+  },
+  "STR_WPN_M249": {
+    "en": "M249 SAW",
+    "ru": "M249 SAW",
+    "zh-CN": "M249 班用自动武器",
+    "tr": "M249 SAW",
+    "es": "M249 SAW",
+    "it": "M249 SAW"
+  },
+  "STR_WPN_RPK16": {
+    "en": "RPK-16",
+    "ru": "RPK-16",
+    "zh-CN": "RPK-16",
+    "tr": "RPK-16",
+    "es": "RPK-16",
+    "it": "RPK-16"
+  },
+  "STR_WPN_M60E4": {
+    "en": "M60E4",
+    "ru": "M60E4",
+    "zh-CN": "M60E4",
+    "tr": "M60E4",
+    "es": "M60E4",
+    "it": "M60E4"
+  },
+  "STR_WPN_M240": {
+    "en": "M240B",
+    "ru": "M240B",
+    "zh-CN": "M240B",
+    "tr": "M240B",
+    "es": "M240B",
+    "it": "M240B"
+  },
+  "STR_WPN_MINIGUN": {
+    "en": "M134 Minigun"
+  },
+  "STR_WPN_M82": {
+    "en": "M82A3",
+    "ru": "M82A3",
+    "zh-CN": "M82A3",
+    "tr": "M82A3",
+    "es": "M82A3",
+    "it": "M82A3"
+  },
+  "STR_WPN_TAC50": {
+    "en": "TAC-50 C"
+  },
+  "STR_WPN_GATLING": {
+    "en": "M197 Gatling"
+  },
+  "STR_WPN_M2": {
+    "en": "M2HB"
+  },
+  "STR_WPN_ZUNI": {
+    "en": "Zuni Rocket"
+  },
+  "STR_WPN_HYDRA": {
+    "en": "Hydra Rocket"
+  },
+  "STR_WPN_M256A1": {
+    "en": "M256A1 Cannon"
+  },
+  "STR_WPN_FAMAS": {
+    "en": "FAMAS",
+    "ru": "FAMAS",
+    "zh-CN": "FAMAS",
+    "tr": "FAMAS",
+    "es": "FAMAS",
+    "it": "FAMAS"
+  },
+  "STR_WPN_MP7": {
+    "en": "MP7",
+    "ru": "MP7",
+    "zh-CN": "MP7",
+    "tr": "MP7",
+    "es": "MP7",
+    "it": "MP7"
+  },
+  "STR_WPN_P90": {
+    "en": "P90",
+    "ru": "P90",
+    "zh-CN": "P90",
+    "tr": "P90",
+    "es": "P90",
+    "it": "P90"
+  },
+  "STR_WPN_M40A3": {
+    "en": "M40A3",
+    "ru": "M40A3",
+    "zh-CN": "M40A3",
+    "tr": "M40A3",
+    "es": "M40A3",
+    "it": "M40A3"
+  },
+  "STR_WPN_SCOUT": {
+    "en": "Scout Elite",
+    "ru": "Scout Elite",
+    "zh-CN": "Scout Elite",
+    "tr": "Scout Elite",
+    "es": "Scout Elite",
+    "it": "Scout Elite"
+  },
+  "STR_WPN_L96A1": {
+    "en": "L96A1",
+    "ru": "L96A1",
+    "zh-CN": "L96A1",
+    "tr": "L96A1",
+    "es": "L96A1",
+    "it": "L96A1"
+  },
+  "STR_WPN_G36C": {
+    "en": "G36C",
+    "ru": "G36C",
+    "zh-CN": "G36C",
+    "tr": "G36C",
+    "es": "G36C",
+    "it": "G36C"
+  },
+  "STR_WPN_ASVAL": {
+    "en": "AS VAL"
+  },
+  "STR_WPN_RPG": {
+    "en": "RPG-7V2",
+    "ru": "РПГ-7",
+    "zh-CN": "RPG-7V2",
+    "tr": "RPG-7V2",
+    "es": "RPG-7V2",
+    "it": "RPG-7V2"
+  },
+  "STR_WPN_MGL": {
+    "en": "M32 MGL",
+    "ru": "M32 MGL",
+    "zh-CN": "M32 MGL",
+    "tr": "M32 MGL",
+    "es": "M32 Lanzagranadas",
+    "it": "M32 MGL"
+  },
+  "STR_WPN_SMOKE": {
+    "en": "Smoke"
+  },
+  "STR_WPN_FRAG": {
+    "en": "Frag"
+  },
+  "STR_WPN_STUN": {
+    "en": "Stun"
+  },
+  "STR_WPN_FLASHBANG": {
+    "en": "Flashbang"
+  },
+  "STR_WPN_SEMTEX": {
+    "en": "Semtex"
+  },
+  "STR_WPN_BLOWTORCH": {
+    "en": "Repair Tool"
+  },
+  "STR_WPN_THROWING_KNIFE": {
+    "en": "Throwing Knife",
+    "ru": "Метательный нож",
+    "zh-CN": "飞刀",
+    "tr": "Bıçak Fırlatma",
+    "es": "Cuchillo arrojadizo",
+    "it": "Coltello da Lancio"
+  },
+  "STR_WPN_STIM": {
+    "en": "Stim Shot",
+    "ru": "Стимулятор",
+    "zh-CN": "兴奋激素针",
+    "tr": "İğne Vuruşu",
+    "es": "Inyección de estimulación",
+    "it": "Iniezione Stimolante"
+  },
+  "STR_WPN_C4": {
+    "en": "C4",
+    "ru": "C4",
+    "zh-CN": "C4",
+    "tr": "C4",
+    "es": "C4",
+    "it": "C4"
+  },
+  "STR_WPN_CLAYMORE": {
+    "en": "M18 Claymore",
+    "ru": "M18 Клеймор",
+    "zh-CN": "阔剑地雷",
+    "tr": "M18 Mayın",
+    "es": "M18 Claymore",
+    "it": "M18 Claymore"
+  },
+  "STR_WPN_AT_MINE": {
+    "en": "M15 AT Mine"
+  },
+  "STR_WPN_JAMMER": {
+    "en": "Jammer",
+    "ru": "Глушилка",
+    "zh-CN": "干扰器",
+    "tr": "Jammer",
+    "es": "Inhibidor",
+    "it": "Accecamento"
+  },
+  "STR_WPN_AMMO_BOX": {
+    "en": "Ammo Box"
+  },
+  "STR_WPN_SENSOR": {
+    "en": "Motion Sensor",
+    "ru": "Датчик движения",
+    "zh-CN": "运动传感器",
+    "tr": "Hareket Sensörü",
+    "es": "Sensor de movimiento",
+    "it": "Sensore di Movimento"
+  },
+  "STR_WPN_COMBAT_KNIFE": {
+    "en": "Combat Knife",
+    "ru": "Боевой нож",
+    "zh-CN": "战斗匕首",
+    "tr": "Savaş Bıçağı",
+    "es": "Cuchillo de combate",
+    "it": "Coltello da Combattimento"
+  },
+  "STR_WPN_TROPHY": {
+    "en": "Trophy System",
+    "ru": "Активная защита",
+    "zh-CN": "奖杯主动防御系统",
+    "tr": "Kupa Sistemi",
+    "es": "Sistema de trofeos",
+    "it": "Sistema Trofei"
+  },
+  "STR_WPN_DEPLOYABLE_COVER": {
+    "en": "Deployable Cover",
+    "ru": "Переносное укрытие",
+    "zh-CN": "部署型掩体",
+    "tr": "Konuşlandırılabilir Siper",
+    "es": "Cubierta desplegable",
+    "it": "Trincea schierabile"
+  },
+  "STR_WPN_FISTS": {
+    "en": "Fists",
+    "ru": "Кулаки",
+    "zh-CN": "拳头",
+    "tr": "Yumruklar",
+    "es": "Puños",
+    "it": "Pugni"
+  },
+  "STR_CHAR_FACE": {
+    "en": "Face"
+  },
+  "STR_CHAR_HAIR": {
+    "en": "Hair"
+  },
+  "STR_CHAR_BEARD": {
+    "en": "Beard"
+  },
+  "STR_CHAR_HAIR_COLOUR": {
+    "en": "Hair Color"
+  },
+  "STR_CHAR_HEADGEAR": {
+    "en": "Headgear"
+  },
+  "STR_CHAR_EYEWEAR": {
+    "en": "Eyewear"
+  },
+  "STR_CHAR_FACEWEAR": {
+    "en": "Facewear"
+  },
+  "STR_CHAR_BODY": {
+    "en": "Body"
+  },
+  "STR_NONE": {
+    "en": "None"
+  },
+  "STR_KEVLAR": {
+    "en": "Kevlar"
+  },
+  "STR_STANDARD": {
+    "en": "Standard"
+  },
+  "STR_MALE": {
+    "en": "Male"
+  },
+  "STR_FEMALE": {
+    "en": "Female"
+  },
+  "STR_COLOUR_BROWN": {
+    "en": "Brown",
+    "ru": "Коричневый",
+    "zh-CN": "棕色",
+    "tr": "Kahverengi",
+    "es": "Marrón",
+    "it": "Marrone"
+  },
+  "STR_COLOUR_LIGHT_BROWN": {
+    "en": "Light Brown",
+    "ru": "Светло-коричневый",
+    "zh-CN": "浅棕色",
+    "tr": "Ekrü",
+    "es": "Marrón claro",
+    "it": "Marrone Chiaro"
+  },
+  "STR_COLOUR_BLACK": {
+    "en": "Black",
+    "ru": "Чёрный",
+    "zh-CN": "黑色",
+    "tr": "Siyah",
+    "es": "Negro",
+    "it": "Nero"
+  },
+  "STR_COLOUR_BLONDE": {
+    "en": "Blonde",
+    "ru": "Светлый",
+    "zh-CN": "金色",
+    "tr": "Sarışın",
+    "es": "Rubio",
+    "it": "Biondo"
+  },
+  "STR_COLOUR_GINGER": {
+    "en": "Ginger",
+    "ru": "Рыжий",
+    "zh-CN": "姜红色",
+    "tr": "Kızıl",
+    "es": "Pelirrojo",
+    "it": "Ginger"
+  },
+  "STR_COLOUR_GREY": {
+    "en": "Grey",
+    "ru": "Седой",
+    "zh-CN": "灰色",
+    "tr": "Gri",
+    "es": "Gris",
+    "it": "Grigio"
+  },
+  "STR_COLOUR_WHITE": {
+    "en": "White",
+    "ru": "Белый",
+    "zh-CN": "银色",
+    "tr": "Beyaz",
+    "es": "Blanco",
+    "it": "Bianco"
+  },
+  "STR_COLOUR_RED": {
+    "en": "Red",
+    "ru": "Красный",
+    "zh-CN": "红色",
+    "tr": "Kırmızı",
+    "es": "Rojo",
+    "it": "Rosso"
+  },
+  "STR_COLOUR_GREEN": {
+    "en": "Green",
+    "ru": "Зелёный",
+    "zh-CN": "绿色",
+    "tr": "Yeşil",
+    "es": "Verde",
+    "it": "Verde"
+  },
+  "STR_COLOUR_BLUE": {
+    "en": "Blue",
+    "ru": "Синий",
+    "zh-CN": "蓝色",
+    "tr": "Mavi",
+    "es": "Azul",
+    "it": "Blue"
+  },
+  "STR_COLOUR_PURPLE": {
+    "en": "Purple",
+    "ru": "Фиолетовый",
+    "zh-CN": "紫色",
+    "tr": "Mor",
+    "es": "Lila",
+    "it": "Viola"
+  },
+  "STR_COLOUR_PINK": {
+    "en": "Pink",
+    "ru": "Розовый",
+    "zh-CN": "粉色",
+    "tr": "Pembe",
+    "es": "Rosa",
+    "it": "Rosa"
+  },
+  "STR_DOUBLE_KILL": {
+    "en": "Double Kill",
+    "ru": "Двойное убийство",
+    "zh-CN": "双连杀",
+    "tr": "Çifte Leş",
+    "es": "Asesinato Doble",
+    "it": "Doppia Uccisione"
+  },
+  "STR_TRIPLE_KILL": {
+    "en": "Triple Kill",
+    "ru": "Тройное убийство",
+    "zh-CN": "三连杀",
+    "tr": "Üçlü Leş",
+    "es": "Asesinato Triple",
+    "it": "Tripla Uccisione"
+  },
+  "STR_QUAD_KILL": {
+    "en": "Quad Kill",
+    "ru": "Четверное убийство",
+    "zh-CN": "四连杀",
+    "tr": "Dörtlü Leş",
+    "es": "Asesinato Cuádruple",
+    "it": "Quadripla Uccisione"
+  },
+  "STR_MULTI_KILL": {
+    "en": "Multi-Kill",
+    "ru": "Буйство",
+    "zh-CN": "多重击杀",
+    "tr": "Seri Katil",
+    "es": "Asesinato Múltiple",
+    "it": "Multipla Uccisione"
+  },
+  "STR_X_SCORE_X": {
+    "en": "%1 Score: %2"
+  },
+  "STR_SCORE_X": {
+    "en": "Score: %1"
+  },
+  "STR_REQUIRES_X_SCORE": {
+    "en": "Requires %1 Score"
+  },
+  "STR_REQUIRES_X_X_SCORE": {
+    "en": "Requires %1 %2 Score"
+  },
+  "STR_REQUIRES_LEVEL_X": {
+    "en": "Requires Level %1"
+  },
+  "STR_ADD_X_XP": {
+    "en": "%1 XP",
+    "ru": "%1 Опыт",
+    "zh-CN": "%1 XP",
+    "tr": "%1 XP",
+    "es": "%1 XP",
+    "it": "%1 XP"
+  },
+  "STR_X_XP_HUD": {
+    "en": "%1XP",
+    "ru": "%1Опыт",
+    "zh-CN": "%1点经验值",
+    "tr": "%1XP",
+    "es": "%1XP",
+    "it": "%1XP"
+  },
+  "STR_FLAG_CAPTURED": {
+    "en": "Flag Captured"
+  },
+  "STR_POSITION_SECURED": {
+    "en": "Position Secured",
+    "ru": "Позиция захвачена",
+    "zh-CN": "位置已安全",
+    "tr": "Pozisyon Emniyette",
+    "es": "Posición Asegurada",
+    "it": "Posizione Assicurata"
+  },
+  "STR_X_CAPTURED_X": {
+    "en": "%1 captured %2"
+  },
+  "STR_CAMO": {
+    "en": "Camo"
+  },
+  "STR_CAPTURE": {
+    "en": "Capture",
+    "ru": "Захватить",
+    "zh-CN": "占领",
+    "tr": "Ele Geçir",
+    "es": "Capturar",
+    "it": "Cattura"
+  },
+  "STR_RETURN": {
+    "en": "Return",
+    "ru": "Вернуть",
+    "zh-CN": "夺回",
+    "tr": "Geri Götür",
+    "es": "Volver",
+    "it": "Ritorna"
+  },
+  "STR_DEFEND": {
+    "en": "Defend",
+    "ru": "Защитить",
+    "zh-CN": "防御",
+    "tr": "Savun",
+    "es": "Defender",
+    "it": "Difendi"
+  },
+  "STR_ENEMY_KILLED": {
+    "en": "Enemy Killed",
+    "ru": "Убийство",
+    "zh-CN": "敌人已被击毙",
+    "tr": "Düşman Öldürüldü",
+    "es": "Enemigo Eliminado",
+    "it": "Nemico Ucciso"
+  },
+  "STR_HEALED_ALLY": {
+    "en": "Healed Ally"
+  },
+  "STR_ASSIST": {
+    "en": "Assist",
+    "ru": "Помощь",
+    "zh-CN": "协助击杀",
+    "tr": "Asist",
+    "es": "Asistencias",
+    "it": "Assist"
+  },
+  "STR_REVENGE": {
+    "en": "Revenge",
+    "ru": "Месть",
+    "zh-CN": "报复击杀",
+    "tr": "İntikam",
+    "es": "Venganza",
+    "it": "Vendetta"
+  },
+  "STR_AVENGER": {
+    "en": "Avenger",
+    "ru": "Мститель",
+    "zh-CN": "复仇者",
+    "tr": "İntikamcı",
+    "es": "Vengador",
+    "it": "Vendicatore"
+  },
+  "STR_VEHICLE_DESTROYED": {
+    "en": "Vehicle Destroyed"
+  },
+  "STR_TANK_DESTROYED": {
+    "en": "Tank Destroyed"
+  },
+  "STR_HELICOPTER_DESTROYED": {
+    "en": "Helicopter Destroyed"
+  },
+  "STR_TURRET_DESTROYED": {
+    "en": "Turret Destroyed"
+  },
+  "STR_LONGSHOT": {
+    "en": "Longshot"
+  },
+  "STR_HEADSHOT": {
+    "en": "Headshot",
+    "ru": "В голову",
+    "zh-CN": "爆头击杀",
+    "tr": "Kafadan",
+    "es": "Disparo a la cabeza",
+    "it": "Colpo alla testa"
+  },
+  "STR_MELEE_KILL": {
+    "en": "Melee Kill",
+    "ru": "Убийство в ближнем бою",
+    "zh-CN": "近战击杀",
+    "tr": "Bıçakla Öldürme",
+    "es": "Muerte cuerpo a cuerpo",
+    "it": "Uccisione Arma corpo a corpo"
+  },
+  "STR_MODE_SEMI": {
+    "en": "Semi-Auto"
+  },
+  "STR_MODE_BURST": {
+    "en": "Burst"
+  },
+  "STR_MODE_AUTO": {
+    "en": "Full Auto"
+  },
+  "STR_MODE_BOLT": {
+    "en": "Bolt-Action"
+  },
+  "STR_MODE_PUMP": {
+    "en": "Pump-Action"
+  },
+  "STR_WPN_TYPE_MELEE": {
+    "en": "Melee",
+    "ru": "Холодное",
+    "zh-CN": "近战器具",
+    "tr": "Yakın Dövüş Silahı",
+    "es": "Arma cuerpo a cuerpo",
+    "it": "Corpo a Corpo"
+  },
+  "STR_WPN_TYPE_PISTOLS": {
+    "en": "Pistols",
+    "ru": "Пистолеты",
+    "zh-CN": "手枪",
+    "tr": "Tabancalar",
+    "es": "Pistolas",
+    "it": "Pistole"
+  },
+  "STR_WPN_TYPE_MACHINE_PISTOLS": {
+    "en": "Machine Pistols",
+    "ru": "Одноручные ПП",
+    "zh-CN": "自动手枪",
+    "tr": "Makineli Tabancalar",
+    "es": "Pistolas automáticas",
+    "it": "Pistole Automatiche"
+  },
+  "STR_WPN_TYPE_LAUNCHERS": {
+    "en": "Launchers",
+    "ru": "Гранатомёты",
+    "zh-CN": "发射器",
+    "tr": "Roketler",
+    "es": "Lanzacohetes",
+    "it": "Lanciatori"
+  },
+  "STR_WPN_TYPE_TACTICAL": {
+    "en": "Tactical",
+    "ru": "Тактическое",
+    "zh-CN": "战术装备",
+    "tr": "Taktiksel",
+    "es": "Táctico",
+    "it": "Tattico"
+  },
+  "STR_WPN_TYPE_SMGS": {
+    "en": "SMGs",
+    "ru": "Двуручные ПП",
+    "zh-CN": "微型冲锋枪",
+    "tr": "Makineliler",
+    "es": "Subfusiles",
+    "it": "Mitragliette"
+  },
+  "STR_WPN_TYPE_RIFLES": {
+    "en": "Assault Rifles",
+    "ru": "Автоматы",
+    "zh-CN": "突击步枪",
+    "tr": "Taarruz Silahları",
+    "es": "Rifles de asalto",
+    "it": "Fucili d'Assalto"
+  },
+  "STR_WPN_TYPE_CARBINES": {
+    "en": "Carbines"
+  },
+  "STR_WPN_TYPE_DMRS": {
+    "en": "DMRs"
+  },
+  "STR_WPN_TYPE_SHOTGUNS": {
+    "en": "Shotguns",
+    "ru": "Дробовики",
+    "zh-CN": "霰弹枪",
+    "tr": "Pompalılar",
+    "es": "Escopetas",
+    "it": "Fucili"
+  },
+  "STR_WPN_TYPE_SNIPERS": {
+    "en": "Sniper Rifles",
+    "ru": "Снайперские винтовки",
+    "zh-CN": "狙击步枪",
+    "tr": "Keskin Nişancı Silahları",
+    "es": "Rifles de francotirador",
+    "it": "Fucili da Cecchino"
+  },
+  "STR_WPN_TYPE_LMGS": {
+    "en": "LMGs",
+    "ru": "Пулемёты",
+    "zh-CN": "轻型机枪",
+    "tr": "Hafif Makineliler",
+    "es": "Ametralladoras ligeras",
+    "it": "Mitragliatrici Leggere"
+  },
+  "STR_WPN_TYPE_GRENADES": {
+    "en": "Grenades",
+    "ru": "Гранаты",
+    "zh-CN": "投掷物",
+    "tr": "El Bombaları",
+    "es": "Granadas",
+    "it": "Granate"
+  },
+  "STR_WPN_TYPE_EXPLOSIVES": {
+    "en": "Explosives",
+    "ru": "Взрывчатка",
+    "zh-CN": "爆破炸药",
+    "tr": "Patlayıcılar",
+    "es": "Explosivos",
+    "it": "Esplosivi"
+  },
+  "STR_WPN_TYPE_PISTOL": {
+    "en": "Pistol",
+    "ru": "Пистолет",
+    "zh-CN": "手枪",
+    "tr": "Tabanca",
+    "es": "Pistola",
+    "it": "Pistola"
+  },
+  "STR_WPN_TYPE_MACHINE_PISTOL": {
+    "en": "Machine Pistol",
+    "ru": "Одноручный ПП",
+    "zh-CN": "自动手枪",
+    "tr": "Makineli Tabanca",
+    "es": "Pistola automática",
+    "it": "Pistola Automatica"
+  },
+  "STR_WPN_TYPE_LAUNCHER": {
+    "en": "Launcher",
+    "ru": "Гранатомёт",
+    "zh-CN": "发射器",
+    "tr": "Roket",
+    "es": "Lanzacohetes",
+    "it": "Lanciatore"
+  },
+  "STR_WPN_TYPE_SMG": {
+    "en": "SMG",
+    "ru": "Двуручный ПП",
+    "zh-CN": "微型冲锋枪",
+    "tr": "Makineli",
+    "es": "Subfusil",
+    "it": "Mitragliatrice"
+  },
+  "STR_WPN_TYPE_RIFLE": {
+    "en": "Assault Rifle",
+    "ru": "Автомат",
+    "zh-CN": "狙击步枪",
+    "tr": "Taarruz Silahı",
+    "es": "Rifle de asalto",
+    "it": "Fucile d'Assalto"
+  },
+  "STR_WPN_TYPE_CARBINE": {
+    "en": "Carbine"
+  },
+  "STR_WPN_TYPE_DMR": {
+    "en": "DMR"
+  },
+  "STR_WPN_TYPE_SHOTGUN": {
+    "en": "Shotgun",
+    "ru": "Дробовик",
+    "zh-CN": "霰弹枪",
+    "tr": "Pompalılar",
+    "es": "Escopetas",
+    "it": "Fucile"
+  },
+  "STR_WPN_TYPE_SNIPER": {
+    "en": "Sniper Rifle",
+    "ru": "Снайперская винтовка",
+    "zh-CN": "狙击步枪",
+    "tr": "Keskin Nişancı Silahı",
+    "es": "Rifle de francotirador",
+    "it": "Fucile da Cecchino"
+  },
+  "STR_WPN_TYPE_LMG": {
+    "en": "LMG",
+    "ru": "Пулемёт",
+    "zh-CN": "轻型机枪",
+    "tr": "Hafif Makineliler",
+    "es": "Ametralladora ligera",
+    "it": "Mitragliatrice Leggera"
+  },
+  "STR_WPN_TYPE_GRENADE": {
+    "en": "Grenade",
+    "ru": "Граната",
+    "zh-CN": "手雷",
+    "tr": "El Bombası",
+    "es": "Granada",
+    "it": "Granata"
+  },
+  "STR_WPN_TYPE_EXPLOSIVE": {
+    "en": "Explosive",
+    "ru": "Взрывчатка",
+    "zh-CN": "爆破炸药",
+    "tr": "Patlayıcı",
+    "es": "Explosivo",
+    "it": "Esplosivo"
+  },
+  "STR_HEAD_CAP": {
+    "en": "Cap",
+    "ru": "Кепка",
+    "zh-CN": "鸭舌帽",
+    "tr": "Şapka",
+    "es": "Gorra",
+    "it": "Berretto"
+  },
+  "STR_HEAD_BOONIE": {
+    "en": "Boonie",
+    "ru": "Панама",
+    "zh-CN": "奔尼帽",
+    "tr": "Boonie",
+    "es": "Boonie",
+    "it": "Boonie"
+  },
+  "STR_HEAD_BASIC_HELMET": {
+    "en": "Basic Helmet",
+    "ru": "Основной шлем",
+    "zh-CN": "基础头盔",
+    "tr": "Temel Kask",
+    "es": "Casco básico",
+    "it": "Elmetto Base"
+  },
+  "STR_HEAD_TOQUE": {
+    "en": "Toque",
+    "ru": "Шапка",
+    "zh-CN": "针织帽",
+    "tr": "Bere",
+    "es": "Sombrero",
+    "it": "Zuccotto"
+  },
+  "STR_HEAD_SOVIET_HELMET": {
+    "en": "Soviet Helmet",
+    "ru": "Советский шлем",
+    "zh-CN": "苏式头盔",
+    "tr": "Sovyet Kaskı",
+    "es": "Casco soviético",
+    "it": "Elmetto Sovietico"
+  },
+  "STR_HEAD_BASIC_HELMET_HEADSET": {
+    "en": "Basic Helmet Headset",
+    "ru": "Основной шлем с гарнитурой",
+    "zh-CN": "基础耳机头盔",
+    "tr": "Temel Kask Kafa Seti ",
+    "es": "Auriculares básicos para casco",
+    "it": "Cuffie Elmetto Base"
+  },
+  "STR_HEAD_USHANKA": {
+    "en": "Ushanka",
+    "ru": "Ушанка",
+    "zh-CN": "苏联毛帽",
+    "tr": "Rus Kalpağı",
+    "es": "Ushanka",
+    "it": "Ushanka"
+  },
+  "STR_HEAD_CAP_MILITARY": {
+    "en": "Military Cap",
+    "ru": "Кепка военного образца",
+    "zh-CN": "军用鸭舌帽",
+    "tr": "Ordu Şapkası",
+    "es": "Gorra militar",
+    "it": "Berretto Militare"
+  },
+  "STR_HEAD_BALLISTIC_MASK_BLACK": {
+    "en": "Ballistic Mask – Black",
+    "ru": "Баллистическая Маска – Чёрная",
+    "zh-CN": "防弹面具",
+    "tr": "Balistik Maskesi – Siyah",
+    "es": "Máscara balística – Negra",
+    "it": "Maschera balistica – Nero"
+  },
+  "STR_HEAD_BALLISTIC_MASK_WHITE": {
+    "en": "Ballistic Mask – White",
+    "ru": "Баллистическая Маска – Белая",
+    "zh-CN": "防弹面具-白",
+    "tr": "Balistik Maskesi – Beyaz",
+    "es": "Máscara balística – Blanca",
+    "it": "Maschera balistica – Bianco"
+  },
+  "STR_HEAD_RIOT_HELMET": {
+    "en": "Riot Helmet",
+    "ru": "Полицейский шлем",
+    "zh-CN": "防暴头盔",
+    "tr": "Riot Kaskı",
+    "es": "Casco antidisturbios",
+    "it": "Casco Antisommossa"
+  },
+  "STR_HEAD_RIOT_HELMET_VISOR_UP": {
+    "en": "Riot Helmet – Visor Up",
+    "ru": "Полицейский шлем – Визор поднят",
+    "zh-CN": "防暴头盔-面罩打开",
+    "tr": "Riot Kaskı – Vizör Yukarı",
+    "es": "Casco antidisturbios – Visera levantada",
+    "it": "Casco Antisommossa – Visiera Alzata"
+  },
+  "STR_HEAD_BASIC_TACTICAL_HELMET": {
+    "en": "Basic Tactical Helmet",
+    "ru": "Простой тактический шлем",
+    "zh-CN": "基础战术头盔",
+    "tr": "Temel Taktiksel Kask",
+    "es": "Casco táctico básico",
+    "it": "Elmetto Tattico Base"
+  },
+  "STR_HEAD_BERET": {
+    "en": "Beret",
+    "ru": "Берет",
+    "zh-CN": "贝雷帽",
+    "tr": "Bere",
+    "es": "Boina",
+    "it": "Berretto"
+  },
+  "STR_HEAD_NIGHTVISION": {
+    "en": "Nightvision",
+    "ru": "Очки ночного видения",
+    "zh-CN": "夜视仪",
+    "tr": "Gecegörüşü",
+    "es": "Vision nocturna",
+    "it": "Visione Notturna"
+  },
+  "STR_HEAD_COMMANDER": {
+    "en": "Commander",
+    "ru": "Командир",
+    "zh-CN": "指挥官帽",
+    "tr": "Kumandan",
+    "es": "Comandante",
+    "it": "Comandante"
+  },
+  "STR_HEAD_SNIPER": {
+    "en": "Sniper",
+    "ru": "Снайпер",
+    "zh-CN": "狙击手帽",
+    "tr": "K. Nişancı",
+    "es": "Francotirador",
+    "it": "Cecchino"
+  },
+  "STR_HEAD_PEACEKEEPER_BERET": {
+    "en": "Peacekeeper Beret",
+    "ru": "Берет миротворца",
+    "zh-CN": "维和贝雷帽",
+    "tr": "Barış Muhafızı Beresi",
+    "es": "Boina de pacificador",
+    "it": "Berretto Pacifico"
+  },
+  "STR_HEAD_PEACEKEEPER_HELMET": {
+    "en": "Peacekeeper Helmet",
+    "ru": "Шлем миротворца",
+    "zh-CN": "维和头盔",
+    "tr": "Barış Muhafızı Kaskı",
+    "es": "Casco de pacificador",
+    "it": "Elmetto Pacifico"
+  },
+  "STR_HEAD_ALTYN_HELMET": {
+    "en": "Altyn Helmet",
+    "ru": "Шлем Алтын",
+    "zh-CN": "阿尔金头盔",
+    "tr": "Altyn Kaskı",
+    "es": "Casco Altyn",
+    "it": "Elmetto Altyn"
+  },
+  "STR_HEAD_ALTYN_HELMET_VISOR_UP": {
+    "en": "Altyn Helmet – Visor Up",
+    "ru": "Шлем Алтын – Визор поднят",
+    "zh-CN": "阿尔金头盔-面罩打开",
+    "tr": "Altyn Kask – Vizör Yukarı",
+    "es": "Casco Altyn – Visera levantada",
+    "it": "Elmetto Altyn – Visore Alzato"
+  },
+  "STR_HEAD_HOOD": {
+    "en": "Hood",
+    "ru": "Капюшон",
+    "zh-CN": "头罩",
+    "tr": "Kapüşon",
+    "es": "capucha",
+    "it": "Cappuccio"
+  },
+  "STR_TONED_1": {
+    "en": "Male – Tan",
+    "ru": "Мужчина – Тан",
+    "zh-CN": "男性 – 谭",
+    "tr": "Erkek – Bronzluk",
+    "es": "Masculino – Broncearse",
+    "it": "Uomo - Abbronzato"
+  },
+  "STR_TONED_2": {
+    "en": "Male – Dark",
+    "ru": "Мужчина – Темный",
+    "zh-CN": "男性 – 深色",
+    "tr": "Erkek – Koyu",
+    "es": "Masculino – Oscuro",
+    "it": "Uomo - Scuro"
+  },
+  "STR_RADIO": {
+    "en": "Radio",
+    "ru": "Радио",
+    "zh-CN": "无线电",
+    "tr": "Radyo",
+    "es": "Radio",
+    "it": "Radio"
+  },
+  "STR_RECON": {
+    "en": "Recon",
+    "ru": "Разведчик",
+    "zh-CN": "侦察兵",
+    "tr": "Gözcü",
+    "es": "Reconocimiento",
+    "it": "Recon"
+  },
+  "STR_PARATROOPER": {
+    "en": "Paratrooper",
+    "ru": "Десантник",
+    "zh-CN": "伞兵",
+    "tr": "Paraşütçü",
+    "es": "Paracaidista",
+    "it": "Paracadutista"
+  },
+  "STR_HEAVY": {
+    "en": "Heavy",
+    "ru": "Тяжёлый",
+    "zh-CN": "重装",
+    "tr": "Ağır",
+    "es": "Heavy",
+    "it": "Heavy"
+  },
+  "STR_ROCKETIER": {
+    "en": "Rocketier",
+    "ru": "Ракетчик",
+    "zh-CN": "火箭兵",
+    "tr": "Roketçi",
+    "es": "Cohetero",
+    "it": "Rocketier"
+  },
+  "STR_TACTICAL": {
+    "en": "Tactical",
+    "ru": "Тактический",
+    "zh-CN": "战术",
+    "tr": "Taktiksel",
+    "es": "Táctico",
+    "it": "Tattico"
+  },
+  "STR_OPERATOR": {
+    "en": "Operator",
+    "ru": "Оператор",
+    "zh-CN": "操作员",
+    "tr": "Operatör",
+    "es": "Agente",
+    "it": "Operatore"
+  },
+  "STR_JUGGERNAUT": {
+    "en": "Juggernaut",
+    "ru": "Джаггернаут",
+    "zh-CN": "重装兵",
+    "tr": "Juggernaut",
+    "es": "Juggernaut",
+    "it": "Juggernaut"
+  },
+  "STR_GHILLIE": {
+    "en": "Ghillie",
+    "ru": "Гилли",
+    "zh-CN": "吉利服",
+    "tr": "Av Uşağı",
+    "es": "Camuflaje",
+    "it": "Ghillie"
+  },
+  "STR_SPEC_OPS": {
+    "en": "Spec Ops",
+    "ru": "Ветеран",
+    "zh-CN": "特种兵",
+    "tr": "Özel Harekat",
+    "es": "Operaciones Especiales",
+    "it": "Spec Ops"
+  },
+  "STR_HEAD_PMC": {
+    "en": "PMC Cap",
+    "ru": "Кепка ЧВК",
+    "zh-CN": "佣兵鸭舌帽",
+    "tr": "PMC Şapkası",
+    "es": "Gorra PMC",
+    "it": "Cappello PMC"
+  },
+  "STR_HEAD_TACTICAL_HELMET": {
+    "en": "Tactical Helmet",
+    "ru": "Тактический шлем с визором",
+    "zh-CN": "战术头盔",
+    "tr": "Taktiksel Kask",
+    "es": "Casco táctico",
+    "it": "Elmetto Tattico"
+  },
+  "STR_HEAD_TACTICAL_DELTA_HELMET": {
+    "en": "Tactical Delta Helmet",
+    "ru": "Тактический шлем отряда \"Дельта\"",
+    "zh-CN": "三角洲战术头盔",
+    "tr": "Takti Delta Kaskı",
+    "es": "Casco táctico Delta",
+    "it": "Elmetto Tattico Delta"
+  },
+  "STR_HEAD_DELTA_HELMET": {
+    "en": "Delta Helmet",
+    "ru": "Шлем отряда \"Дельта\"",
+    "zh-CN": "三角洲头盔",
+    "tr": "elta Kaskı",
+    "es": "Casco Delta",
+    "it": "Elmetto Delta"
+  },
+  "STR_HEAD_GIGN_HELMET": {
+    "en": "GIGN Helmet",
+    "ru": "Шлем GIGN",
+    "zh-CN": "宪兵队头盔",
+    "tr": "GIGN Kaskı",
+    "es": "Casco GIGN",
+    "it": "Elmetto GIGN"
+  },
+  "STR_HEAD_GIGN_HELMET_VISOR_UP": {
+    "en": "GIGN Helmet – Visor Up",
+    "ru": "Шлем GIGN – Визор поднят",
+    "zh-CN": "宪兵队头盔-面罩打开",
+    "tr": "GIGN Kaskı – Vizör Yukarı",
+    "es": "Casco GIGN – Visera levantada",
+    "it": "Elmetto GIGN – Visiera Alzata"
+  },
+  "STR_HEAD_GSG9_CAP": {
+    "en": "GSG 9 Cap",
+    "ru": "Кепка GSG 9",
+    "zh-CN": "边防九队鸭舌帽",
+    "tr": "GSG 9 Şapkası",
+    "es": "Gorra GSG 9",
+    "it": "Cappello GSG 9"
+  },
+  "STR_HEAD_GSG9_CAP_BACKWARDS": {
+    "en": "GSG 9 Backwards Cap",
+    "ru": "Кепка GSG 9 козырьком назад",
+    "zh-CN": "边防九队反戴鸭舌帽",
+    "tr": "GSG 9 Geriye Doğru Şapka",
+    "es": "Gorra GSG 9 al revés",
+    "it": "Cappello GSG 9 all'indietro"
+  },
+  "STR_HEAD_GIGN_CAP": {
+    "en": "GIGN Cap",
+    "ru": "Кепка GIGN",
+    "zh-CN": "宪兵队鸭舌帽",
+    "tr": "GIGH Şapkası",
+    "es": "Gorra GIGN",
+    "it": "Cappello GIGN"
+  },
+  "STR_HEAD_GIGN_CAP_BACKWARDS": {
+    "en": "GIGN Backwards Cap",
+    "ru": "Кепка GIGN козырьком назад",
+    "zh-CN": "宪兵队反戴鸭舌帽",
+    "tr": "Şapkası Geriye Doğru Şapka",
+    "es": "Gorra GIGN al revés",
+    "it": "Cappello GIGN all'indietro"
+  },
+  "STR_HEAD_GSG9_HELMET": {
+    "en": "GSG 9 Helmet",
+    "ru": "Шлем GSG 9",
+    "zh-CN": "边防九队头盔",
+    "tr": "GSG 9 Kaskı",
+    "es": "Casco GSG 9",
+    "it": "Elmetto GSG 9"
+  },
+  "STR_HEAD_GSG9_HELMET_VISOR_DOWN": {
+    "en": "GSG 9 Helmet – Visor Down",
+    "ru": "Шлем GSG 9 – Визор вниз",
+    "zh-CN": "边防九队头盔-面罩关闭",
+    "tr": "GSG 9 Kaskı – Vizör Aşağı",
+    "es": "Casco GSG 9 – Visera abajo",
+    "it": "Elmetto GSG 9 – Visiera Abbassata"
+  },
+  "STR_HEAD_GSG9_HELMET_VISOR_UP": {
+    "en": "GSG 9 Helmet – Visor Up",
+    "ru": "Шлем GSG 9 – Визор вверх",
+    "zh-CN": "边防九队头盔-面罩打开",
+    "tr": "GSG 9 Kaskı – Vizör Yukarı",
+    "es": "Casco GSG 9 – Visera levantada",
+    "it": "Elmetto GSG 9 – Visiera Alzata"
+  },
+  "STR_HEAD_HEADBAND": {
+    "en": "Headband",
+    "ru": "Повязка",
+    "zh-CN": "头绳",
+    "tr": "Kafabandı",
+    "es": "Venda",
+    "it": "Fascia"
+  },
+  "STR_HEAD_SANTA_HAT": {
+    "en": "Santa Hat",
+    "ru": "Шапка санта клауса",
+    "zh-CN": "圣诞帽",
+    "tr": "Noel Baba Şapkası",
+    "es": "Sombrero de Santa",
+    "it": "Cappello Natalizio"
+  },
+  "STR_HEAD_SANTA_HAT_STRIPED": {
+    "en": "Santa Hat – Striped",
+    "ru": "Шапка санта клауса – В полоску",
+    "zh-CN": "圣诞帽 – 条纹款",
+    "tr": "Noel Baba Şapkası – Çizgili",
+    "es": "Gorro de Papá Noel – Con rayas",
+    "it": "Cappello Natalizio a strisce"
+  },
+  "STR_HEAD_JUGGERNAUT_HELMET": {
+    "en": "Juggernaut Helmet",
+    "ru": "Шлем джаггернаута",
+    "zh-CN": "重装头盔",
+    "tr": "Juggernaut Kaskı",
+    "es": "Casco Juggernaut",
+    "it": "Elmetto Juggernaut"
+  },
+  "STR_HEAD_ELITE_HELMET_RED": {
+    "en": "Elite Helmet – Red",
+    "ru": "Элитный шлем – Красный",
+    "zh-CN": "精英头盔-红色",
+    "tr": "Elit Kaskı – Kırmızı",
+    "es": "Casco Elite – Rojo",
+    "it": "Elmetto Elite – Rosso"
+  },
+  "STR_HEAD_ELITE_HELMET_YELLOW": {
+    "en": "Elite Helmet – Gold",
+    "ru": "Элитный шлем – Золотой",
+    "zh-CN": "精英头盔-金色",
+    "tr": "Elit Kaskı – Altın",
+    "es": "Casco Elite – Oro",
+    "it": "Elmetto Elite – Oro"
+  },
+  "STR_HEAD_CAP_BACKWARDS": {
+    "en": "Backwards Cap",
+    "ru": "Кепка Козырьком Назад",
+    "zh-CN": "反戴鸭舌帽",
+    "tr": "Geriye Doğru Şapka",
+    "es": "Gorra al revés",
+    "it": "Berretto all'indietro"
+  },
+  "STR_HEAD_ELITE_HELMET_BLUE": {
+    "en": "Elite Helmet – Blue",
+    "ru": "Элитный шлем – Синий",
+    "zh-CN": "精英头盔-蓝色",
+    "tr": "Elit Kaskı – Mavi",
+    "es": "Casco Elite – Azul",
+    "it": "Elmetto Elite – Blue"
+  },
+  "STR_HEAD_MEDIC_HELMET": {
+    "en": "Medic Helmet",
+    "ru": "Шлем Медика",
+    "zh-CN": "医务兵头盔",
+    "tr": "Sıhhiye Kaskı",
+    "es": "Casco de médico",
+    "it": "Elmetto Medico"
+  },
+  "STR_HEAD_MEDIC_CAP": {
+    "en": "Medic Cap",
+    "ru": "Кепка Медика",
+    "zh-CN": "医务兵鸭舌帽",
+    "tr": "Sıhhiye Şapkası",
+    "es": "Gorra de médico",
+    "it": "Berretto Medico"
+  },
+  "STR_HEAD_MEDIC_RADIO_CAP": {
+    "en": "Medic Radio Cap",
+    "ru": "Кепка Медика с Гарнитурой",
+    "zh-CN": "医务兵无线电鸭舌帽",
+    "tr": "Sıhhiye Radyo Şapkası",
+    "es": "Gorra de médico con auriculares",
+    "it": "Berretto Radio Medico"
+  },
+  "STR_HEAD_ALTYN_HELMET_STRIPED": {
+    "en": "Altyn Helmet – Striped",
+    "ru": "Шлем Алтын – Три Полоски",
+    "zh-CN": "阿尔金头盔-条纹款",
+    "tr": "Altyn Kaskı – Çizgili",
+    "es": "Casco Altyn – Con rayas",
+    "it": "Elmetto Altyn – A strisce"
+  },
+  "STR_HEAD_BLAST_HELMET_TAN": {
+    "en": "Blast Helmet – Tan",
+    "ru": "Взрывозащитный шлем – Песочный",
+    "zh-CN": "爆炸防护头盔",
+    "tr": "Blast Kaskı – Bronz",
+    "es": "Casco a prueba de explosiones – Bronce",
+    "it": "Elmetto Esplosione – Bronzo"
+  },
+  "STR_HEAD_SQUAD_HELMET_TAN": {
+    "en": "Squad Helmet – Tan",
+    "ru": "Шлем Командира Отряда – Песочный",
+    "zh-CN": "小队头盔-黄褐色",
+    "tr": "Squad Kaskı – Bronz",
+    "es": "Casco de escuadrón – Bronce",
+    "it": "Elmetto Squadrone – Bronzo"
+  },
+  "STR_HEAD_RED_HELMET": {
+    "en": "Red Helmet",
+    "ru": "Красный Шлем",
+    "zh-CN": "红色头盔",
+    "tr": "Kırmızı Kask",
+    "es": "Casco Rojo",
+    "it": "Elmetto Rosso"
+  },
+  "STR_HEAD_BALLISTIC_MASK_RED": {
+    "en": "Ballistic Mask – Red",
+    "ru": "Баллистическая Маска – Красный",
+    "zh-CN": "防弹面具 – 红色",
+    "tr": "Balistik Maskesi – Kırmızı",
+    "es": "Máscara balística – Rojo",
+    "it": "Maschera Balistica – Rosso"
+  },
+  "STR_HEAD_ALTYN_HELMET_TAN": {
+    "en": "Altyn Helmet – Tan",
+    "ru": "Шлем Алтын – Загар",
+    "zh-CN": "阿尔金头盔 – 谭",
+    "tr": "Altyn Kask – Bronzluk",
+    "es": "Casco Altyn – Bronceado",
+    "it": "Elmetto Altyn – Bronzato"
+  },
+  "STR_HEAD_ALTYN_HELMET_VISOR_UP_TAN": {
+    "en": "Altyn Helmet – Tan Visor Up",
+    "ru": "Шлем Алтын – Загар Визор поднят",
+    "zh-CN": "阿尔金头盔-谭面罩打开",
+    "tr": "Altyn Kask – Bronzluk Vizör Yukarı",
+    "es": "Casco Altyn – Bronceado Visera levantada",
+    "it": "Elmetto Altyn – Visiera bronzata su"
+  },
+  "STR_HEAD_ERIC_DST_GREEN": {
+    "en": "Eric's DST Helmet – Green",
+    "ru": "Шлем Эрика DST – Зеленый",
+    "zh-CN": "埃里克（Eric）的DST头盔 – 绿色的",
+    "tr": "Eric'in DST Kaskı – Yeşil",
+    "es": "Casco DST de Eric – Verde",
+    "it": "Elmetto Eric DST – Verde"
+  },
+  "STR_FACEWEAR_RED_SCARF": {
+    "en": "Red Scarf",
+    "ru": "Красный Шарф",
+    "zh-CN": "红领巾",
+    "tr": "Kırmızı Eşarp",
+    "es": "Bufanda Roja",
+    "it": "Sciarpa Rossa"
+  },
+  "STR_FACEWEAR_ARACHNID": {
+    "en": "Arachnid",
+    "ru": "Arachnid",
+    "zh-CN": "蛛眼头盔",
+    "tr": "Örümceğimsi",
+    "es": "Arácnido",
+    "it": "Aracnide"
+  },
+  "STR_FACEWEAR_ARACHNID_RED": {
+    "en": "Arachnid – Red",
+    "ru": "Arachnid – Красный",
+    "zh-CN": "蛛眼头盔 – 红色",
+    "tr": "Örümceğimsi – Kırmızı",
+    "es": "Arácnido – Rojo",
+    "it": "Aracnide – Rosso"
+  },
+  "STR_HEAD_SANTA_HAT_GOLD": {
+    "en": "Santa Hat – Gold",
+    "ru": "Шапка санта клауса – Золото",
+    "zh-CN": "圣诞帽 – 金子",
+    "tr": "Noel Baba Şapkası – Altın",
+    "es": "Gorro de Papá Noel – Oro",
+    "it": "Cappello Natalizio – Oro"
+  },
+  "STR_FACEWEAR_MASK": {
+    "en": "Mask",
+    "ru": "Маска",
+    "zh-CN": "面罩",
+    "tr": "Maske",
+    "es": "Máscara",
+    "it": "Maschera"
+  },
+  "STR_FACEWEAR_GAITER": {
+    "en": "Gaiter",
+    "ru": "Мультишарф",
+    "zh-CN": "围脖",
+    "tr": "Tozluk",
+    "es": "Braga militar",
+    "it": "Gaiter"
+  },
+  "STR_FACEWEAR_BALACLAVA": {
+    "en": "Balaclava",
+    "ru": "Балаклава",
+    "zh-CN": "巴拉克拉瓦头套",
+    "tr": "Kar Maskesi",
+    "es": "Pasamontañas",
+    "it": "Passamontagna"
+  },
+  "STR_FACEWEAR_SOVIET_SCARF": {
+    "en": "Soviet Scarf",
+    "ru": "Советский шарф",
+    "zh-CN": "苏式围巾",
+    "tr": "Sovyet Atkısı",
+    "es": "Bufanda soviética",
+    "it": "Sciarpa Sovietica"
+  },
+  "STR_FACEWEAR_SKULL_BANDANA": {
+    "en": "Skull Bandana",
+    "ru": "Бандана с черепом",
+    "zh-CN": "骷髅面巾",
+    "tr": "Kafatası Bandanası",
+    "es": "Bandana de calavera",
+    "it": "Bandana Teschio"
+  },
+  "STR_FACEWEAR_BANDANA": {
+    "en": "Bandana",
+    "ru": "Бандана",
+    "zh-CN": "面巾",
+    "tr": "Bandana",
+    "es": "Bandana",
+    "it": "Bandana"
+  },
+  "STR_FACEWEAR_GAITER_WHITE": {
+    "en": "Gaiter – White",
+    "ru": "Мультишарф – Белый",
+    "zh-CN": "围脖-白色",
+    "tr": "Tozluk – Beyaz",
+    "es": "Braga militar – Blanca",
+    "it": "Gaiter – Bianco"
+  },
+  "STR_FACEWEAR_GAITER_GREY": {
+    "en": "Gaiter – Grey",
+    "ru": "Мультишарф – Серый",
+    "zh-CN": "围脖-灰色",
+    "tr": "Tozluk – Gri",
+    "es": "Braga militar – Gris",
+    "it": "Gaiter – Grigio"
+  },
+  "STR_FACEWEAR_GAITER_MILITIA": {
+    "en": "Militia Gaiter",
+    "ru": "Мультишарф Ополчения",
+    "zh-CN": "民兵围脖",
+    "tr": "Milis Tozluğu",
+    "es": "Polaina de la milicia",
+    "it": "Gaiter – Milizia"
+  },
+  "STR_FACEWEAR_BANDANA_MILITIA": {
+    "en": "Militia Bandana",
+    "ru": "Бандана Ополчения",
+    "zh-CN": "民兵面巾",
+    "tr": "Milis Bandanası",
+    "es": "Bandana de la milicia",
+    "it": "Bandana Milizia"
+  },
+  "STR_FACEWEAR_BANDANA_WHITE": {
+    "en": "Bandana – White",
+    "ru": "Бандана – Белая",
+    "zh-CN": "面巾-白色",
+    "tr": "Bandana – Beyaz",
+    "es": "Bandana – Blanca",
+    "it": "Bandana – Bianco"
+  },
+  "STR_FACEWEAR_BANDANA_GREEN": {
+    "en": "Bandana – Green",
+    "ru": "Бандана – Зелёная",
+    "zh-CN": "面巾-绿色",
+    "tr": "Bandana – Yeşil",
+    "es": "Bandana – Verde",
+    "it": "Bandana – Verde"
+  },
+  "STR_FACEWEAR_BANDANA_BLUE": {
+    "en": "Bandana – Blue",
+    "ru": "Бандана – Синяя",
+    "zh-CN": "面巾-蓝色",
+    "tr": "Bandana – Mavi",
+    "es": "Bandana – Azul",
+    "it": "Bandana – Blue"
+  },
+  "STR_FACEWEAR_BANDANA_PINK": {
+    "en": "Bandana – Pink",
+    "ru": "Бандана – Розовая",
+    "zh-CN": "面巾-粉色",
+    "tr": "Bandana – Pempe",
+    "es": "Bandana – Rosa",
+    "it": "Bandana – Rosa"
+  },
+  "STR_FACEWEAR_BANDANA_PURPLE": {
+    "en": "Bandana – Purple",
+    "ru": "Бандана – Фиолетовая",
+    "zh-CN": "面巾-紫色",
+    "tr": "Bandana – Mor",
+    "es": "Bandana – Lila",
+    "it": "Bandana – Viola"
+  },
+  "STR_FACEWEAR_BANDANA_YELLOW": {
+    "en": "Bandana – Yellow",
+    "ru": "Бандана – Жёлтая",
+    "zh-CN": "面巾-黄色",
+    "tr": "Bandana – Sarı",
+    "es": "Bandana – Amarillo",
+    "it": "Bandana – Giallo"
+  },
+  "STR_FACEWEAR_BANDANA_ORANGE": {
+    "en": "Bandana – Orange",
+    "ru": "Бандана – Оранжевая",
+    "zh-CN": "面巾-橙色",
+    "tr": "Bandana – Turuncu",
+    "es": "Bandana – Naranja",
+    "it": "Bandana – Arancione"
+  },
+  "STR_FACEWEAR_BANDANA_GREY": {
+    "en": "Bandana – Grey",
+    "ru": "Бандана – Серая",
+    "zh-CN": "面巾-灰色",
+    "tr": "Bandana – Gri",
+    "es": "Bandana – Gris",
+    "it": "Bandana – Grigio"
+  },
+  "STR_FACEWEAR_BALACLAVA_GREY": {
+    "en": "Balaclava – Grey",
+    "ru": "Балаклава – Серая",
+    "zh-CN": "巴拉克拉瓦头套-灰色",
+    "tr": "Kar Maskesi – Gri",
+    "es": "Pasamontañas – Gris",
+    "it": "Passamontagna – Grigio"
+  },
+  "STR_FACEWEAR_MASK_GREY": {
+    "en": "Mask – Grey",
+    "ru": "Маска – Серая",
+    "zh-CN": "面罩-灰色",
+    "tr": "Maske – Gri",
+    "es": "Máscara – Gris",
+    "it": "Maschera – Grigio"
+  },
+  "STR_FACEWEAR_HEAD_SCARF": {
+    "en": "Head Scarf",
+    "ru": "Шарф",
+    "zh-CN": "头巾",
+    "tr": "Baş Atkısı",
+    "es": "Pañuelo",
+    "it": "Sciarpa per la testa"
+  },
+  "STR_FACEWEAR_BANDANA_GAITER": {
+    "en": "Gaiter – Grey",
+    "ru": "Мультишарф – Серый",
+    "zh-CN": "围脖-灰色",
+    "tr": "Tozluk – Gri",
+    "es": "Braga militar – Gris",
+    "it": "Gaiter – Grigio"
+  },
+  "STR_FACEWEAR_RESPIRATOR": {
+    "en": "Respirator",
+    "ru": "Респиратор",
+    "zh-CN": "过滤口罩",
+    "tr": "Respiratör",
+    "es": "Respirador",
+    "it": "Respiratore"
+  },
+  "STR_FACEWEAR_GAS_MASK": {
+    "en": "Gas Mask",
+    "ru": "Противогаз",
+    "zh-CN": "防毒面具",
+    "tr": "Gaz Maskesi",
+    "es": "Máscara de gas",
+    "it": "Maschera a Gas"
+  },
+  "STR_FACEWEAR_GAS_MASK_PMK3": {
+    "en": "PMK-3 Gas Mask",
+    "ru": "Противогаз ПМК-3",
+    "zh-CN": "PMK-3 防毒面具",
+    "tr": "PMK-3 Gaz Maskesi",
+    "es": "Máscara de gas PMK-3",
+    "it": "PMK-3 Maschera a Gas"
+  },
+  "STR_EYEWEAR_GLASSES": {
+    "en": "Glasses",
+    "ru": "Очки",
+    "zh-CN": "眼镜",
+    "tr": "Gözlükler",
+    "es": "Gafas",
+    "it": "Occhiali"
+  },
+  "STR_EYEWEAR_SHADES": {
+    "en": "Shades",
+    "ru": "Тёмные очки",
+    "zh-CN": "墨镜",
+    "tr": "Güneş Gözlükleri",
+    "es": "Gafas de sol",
+    "it": "Sfumature"
+  },
+  "STR_EYEWEAR_GOGGLES_WHITE": {
+    "en": "Goggles – White",
+    "ru": "Стрелковые очки – Белые",
+    "zh-CN": "护目镜-白色",
+    "tr": "Gözlük – Beyaz",
+    "es": "Gafas de protección – Blanco",
+    "it": "Occhiali – Bianco"
+  },
+  "STR_EYEWEAR_GOGGLES_BLACK": {
+    "en": "Goggles – Black",
+    "ru": "Стрелковые очки – Чёрные",
+    "zh-CN": "护目镜-黑色",
+    "tr": "Gözlük – Siyah",
+    "es": "Gafas de protección – Negro",
+    "it": "Occhiali – Neri"
+  },
+  "STR_EYEWEAR_GOGGLES_YELLOW": {
+    "en": "Goggles – Gold",
+    "ru": "Стрелковые очки – Золотые",
+    "zh-CN": "护目镜-金色",
+    "tr": "Gözlük – Altın",
+    "es": "Gafas de protección – Oro",
+    "it": "Occhiali – Oro"
+  },
+  "STR_EYEWEAR_GOGGLES_ORANGE": {
+    "en": "Goggles – Orange",
+    "ru": "Стрелковые очки – Оранжевые",
+    "zh-CN": "护目镜-橘色",
+    "tr": "Gözlük – Turuncu",
+    "es": "Gafas de protección – Naranja",
+    "it": "Occhiali – Arancione"
+  },
+  "STR_EYEWEAR_GOGGLES_RED": {
+    "en": "Goggles – Red",
+    "ru": "Стрелковые очки – Красные",
+    "zh-CN": "护目镜-红色",
+    "tr": "Gözlük – Kırmızı",
+    "es": "Gafas de protección – Rojo",
+    "it": "Occhiali – Rosso"
+  },
+  "STR_EYEWEAR_GOGGLES_GREEN": {
+    "en": "Goggles – Green",
+    "ru": "Стрелковые очки – Зелёные",
+    "zh-CN": "护目镜-绿色",
+    "tr": "Gözlük – Yeşil",
+    "es": "Gafas de protección – Verde",
+    "it": "Occhiali – Verde"
+  },
+  "STR_EYEWEAR_GOGGLES_BLUE": {
+    "en": "Goggles – Blue",
+    "ru": "Стрелковые очки – Синие",
+    "zh-CN": "护目镜-蓝色",
+    "tr": "Gözlük – Mavi",
+    "es": "Gafas de protección – Azul",
+    "it": "Occhiali – Blu"
+  },
+  "STR_HEAD_RANGER": {
+    "en": "Ranger Helmet",
+    "ru": "Шлем следопыта",
+    "zh-CN": "游侠头盔",
+    "tr": "Korucu Kaskı",
+    "es": "Casco de Guardabosques",
+    "it": "Casco da Ranger"
+  },
+  "STR_HEAD_RANGER_MASK": {
+    "en": "Ranger Helmet – Mask",
+    "ru": "Шлем следопыта – Маска",
+    "zh-CN": "游侠头盔–面具",
+    "tr": "Korucu Kaskı – Maske",
+    "es": "Casco de Guardabosques – Máscara",
+    "it": "Casco da Ranger – Maschera"
+  },
+  "STR_HEAD_RANGER_NIGHTVISION_1": {
+    "en": "Ranger Helmet – Nightvision 1",
+    "ru": "Шлем следопыта – Ночное видение 1",
+    "zh-CN": "游侠头盔–夜间视力1",
+    "tr": "Korucu Kaskı – Gece Görüşü 1",
+    "es": "Casco de Guardabosques – Vision Nocturna 1",
+    "it": "Casco da Ranger – Visione Notturna 1"
+  },
+  "STR_HEAD_RANGER_NIGHTVISION_2": {
+    "en": "Ranger Helmet – Nightvision 2",
+    "ru": "Шлем следопыта – Ночное видение 2",
+    "zh-CN": "游侠头盔–夜间视力2",
+    "tr": "Korucu Kaskı – Gece Görüşü 2",
+    "es": "Casco de Guardabosques – Vision Nocturna 2",
+    "it": "Casco da Ranger – Visione Notturna 2"
+  },
+  "STR_HEAD_BRUISER": {
+    "en": "Bruiser Helmet",
+    "ru": "Шлем Синяк",
+    "zh-CN": "Bruiser 头盔",
+    "tr": "Bruiser Kask",
+    "es": "Casco de Magullador",
+    "it": "Elmo del Bruser"
+  },
+  "STR_HEAD_AIRFRAME_HELMET_MASK": {
+    "en": "Airframe Helmet – Tan 3",
+    "ru": "Шлем \"Airframe\" – Песочный 3",
+    "zh-CN": "空气框架头盔-黄褐色3",
+    "tr": "Uçak Gövdesi Kaskı – Bronz 3",
+    "es": "Casco de fuselaje – Bronce 3",
+    "it": "Casco Airframe – Bronzo  3"
+  },
+  "STR_HEAD_AIRFRAME_HELMET_RADIO": {
+    "en": "Airframe Helmet – Tan 2",
+    "ru": "Шлем \"Airframe\" – Песочный 2",
+    "zh-CN": "空气框架头盔-黄褐色2",
+    "tr": "Uçak Gövdesi Kaskı – Bronz 2",
+    "es": "Casco de fuselaje – Bronce 2",
+    "it": "Casco Airframe – Bronzo  2"
+  },
+  "STR_HEAD_AIRFRAME_HELMET": {
+    "en": "Airframe Helmet – Tan 1",
+    "ru": "Шлем \"Airframe\" – Песочный 1",
+    "zh-CN": "空气框架头盔-黄褐色1",
+    "tr": "Uçak Gövdesi Kaskı – Bronz 1",
+    "es": "Casco de fuselaje – Bronce 1",
+    "it": "Casco Airframe – Bronzo 1"
+  },
+  "STR_HEAD_AIRFRAME_HELMET_MASK_BLACK": {
+    "en": "Airframe Helmet – Black 3",
+    "ru": "Шлем \"Airframe\" – Чёрный 3",
+    "zh-CN": "空气框架头盔-黑色3",
+    "tr": "Uçak Gövdesi Kaskı – Siyah 3",
+    "es": "Casco de fuselaje – Negro 3",
+    "it": "Casco Airframe – Nero 3"
+  },
+  "STR_HEAD_AIRFRAME_HELMET_RADIO_BLACK": {
+    "en": "Airframe Helmet – Black 2",
+    "ru": "Шлем \"Airframe\" – Чёрный 2",
+    "zh-CN": "空气框架头盔-黑色2",
+    "tr": "Uçak Gövdesi Kaskı – Siyah 2",
+    "es": "Casco de fuselaje – Negro 2",
+    "it": "Casco Airframe – Nero 2"
+  },
+  "STR_HEAD_AIRFRAME_HELMET_BLACK": {
+    "en": "Airframe Helmet – Black 1",
+    "ru": "Шлем \"Airframe\" – Чёрный 1",
+    "zh-CN": "空气框架头盔-黑色1",
+    "tr": "Uçak Gövdesi Kaskı – Siyah 1",
+    "es": "Casco de fuselaje – Negro 1",
+    "it": "Casco Airframe – Nero 1"
+  },
+  "STR_HEAD_BLAST_HELMET_BLACK": {
+    "en": "Blast Helmet – Black",
+    "ru": "Взрывозащитный шлем – Чёрный",
+    "zh-CN": "爆炸防护头盔-黑色",
+    "tr": "Blast Kaskı – Siyah",
+    "es": "Casco de protección contra explosiones – Negro",
+    "it": "Elmetto Antibomba - Nero"
+  },
+  "STR_HEAD_SQUAD_HELMET_BLACK": {
+    "en": "Squad Helmet – Black",
+    "ru": "Шлем командира отряда – Чёрный",
+    "zh-CN": "小队头盔-黑色",
+    "tr": "Squad Kaskı – Siyah",
+    "es": "Casco de esquadrón – Negro",
+    "it": "Elmetto Squadrone - Nero"
+  },
+  "STR_HEAD_SKY_RONIN_HELMET": {
+    "en": "Sky Ronin Medic Helmet",
+    "ru": "Шлем Небесного Ронина Медика",
+    "zh-CN": "天空罗宁军医头盔",
+    "tr": "Sky Ronin Medic Kaskı",
+    "es": "Casco de médico Sky Ronin",
+    "it": "Elmetto Medico Sky Ronin"
+  },
+  "STR_HEAD_ERIC_DST": {
+    "en": "Eric's DST Helmet",
+    "ru": "Шлем Эрика DST",
+    "zh-CN": "埃里克（Eric）的DST头盔",
+    "tr": "Eric'in DST Kaskı",
+    "es": "Casco DST de Eric",
+    "it": "Elmetto DST Eric"
+  },
+  "STR_AETIC": {
+    "en": "AETIC",
+    "ru": "AETIC",
+    "zh-CN": "AETIC",
+    "tr": "AETIC",
+    "es": "AETIC",
+    "it": "AETIC"
+  },
+  "STR_HAIR_SHORT": {
+    "en": "Short",
+    "ru": "Короткие",
+    "zh-CN": "短发",
+    "tr": "Kısa",
+    "es": "Corto",
+    "it": "Corto"
+  },
+  "STR_HAIR_LONG": {
+    "en": "Long",
+    "ru": "Длинные",
+    "zh-CN": "长发",
+    "tr": "Uzun",
+    "es": "Largo",
+    "it": "Lungo"
+  },
+  "STR_HAIR_BALD": {
+    "en": "Bald",
+    "ru": "Лысина",
+    "zh-CN": "光头",
+    "tr": "Kel",
+    "es": "Calvo",
+    "it": "Calvo"
+  },
+  "STR_HAIR_FLAT_TOP": {
+    "en": "Flat Top",
+    "ru": "Плосковерхая",
+    "zh-CN": "平头",
+    "tr": "Yassı Üst",
+    "es": "Flattop",
+    "it": "Cima Calvo"
+  },
+  "STR_HAIR_PONYTAIL": {
+    "en": "Ponytail",
+    "ru": "Хвостик",
+    "zh-CN": "马尾",
+    "tr": "At Kuyruğu",
+    "es": "Coleta",
+    "it": "Coda di cavallo"
+  },
+  "STR_HAIR_BUZZED": {
+    "en": "Buzzed",
+    "ru": "Новобранец",
+    "zh-CN": "寸头",
+    "tr": "3 Numara",
+    "es": "Corte de zumbido",
+    "it": "Ronzato"
+  },
+  "STR_HAIR_HORSHOE": {
+    "en": "Horshoe",
+    "ru": "Подковой",
+    "zh-CN": "地中海",
+    "tr": "At Yelesi",
+    "es": "Herradura",
+    "it": "Cavallo"
+  },
+  "STR_HAIR_STYLED": {
+    "en": "Styled",
+    "ru": "От стилиста",
+    "zh-CN": "有型",
+    "tr": "Stil",
+    "es": "Estilizado",
+    "it": "Stiloso"
+  },
+  "STR_HAIR_BUN": {
+    "en": "Bun",
+    "ru": "Пучок",
+    "zh-CN": "团子头",
+    "tr": "Topuz",
+    "es": "Moño",
+    "it": "Ben Curati"
+  },
+  "STR_HAIR_DREADS": {
+    "en": "Dreads",
+    "ru": "Дрэды",
+    "zh-CN": "麻花",
+    "tr": "Örgü",
+    "es": "Rastas",
+    "it": "Dreads"
+  },
+  "STR_HAIR_UNDERCUT": {
+    "en": "Undercut",
+    "ru": "Андеркат",
+    "zh-CN": "盖头",
+    "tr": "Alabros",
+    "es": "Recortado",
+    "it": "Taglio Sotto"
+  },
+  "STR_HAIR_SPIKES": {
+    "en": "Spikes",
+    "ru": "Шипы",
+    "zh-CN": "钉子头",
+    "tr": "Sivri Uçlu",
+    "es": "De punta",
+    "it": "A Punta"
+  },
+  "STR_BEARD_STUBBLE": {
+    "en": "Stubble",
+    "ru": "Щетина",
+    "zh-CN": "短茬胡",
+    "tr": "Kirli Sakal",
+    "es": "Incipiente",
+    "it": "Stoppia"
+  },
+  "STR_BEARD_FULL": {
+    "en": "Full",
+    "ru": "Большая",
+    "zh-CN": "大胡子",
+    "tr": "Tam",
+    "es": "Grande",
+    "it": "Barbone"
+  },
+  "STR_BEARD_CIRCLE": {
+    "en": "Circle",
+    "ru": "Круглая",
+    "zh-CN": "圈嘴胡",
+    "tr": "Daire",
+    "es": "Redonda",
+    "it": "Rotonda"
+  },
+  "STR_BEARD_GOATEE": {
+    "en": "Goatee",
+    "ru": "Эспаньолка",
+    "zh-CN": "山羊胡",
+    "tr": "Keçi",
+    "es": "Perilla",
+    "it": "Caprone"
+  },
+  "STR_BEARD_MOUSTACHE": {
+    "en": "Moustache",
+    "ru": "Усы",
+    "zh-CN": "上唇胡",
+    "tr": "Bıyık",
+    "es": "Bigote",
+    "it": "Baffi"
+  },
+  "STR_BEARD_SIDEBURNS": {
+    "en": "Sideburns",
+    "ru": "Бакенбарды",
+    "zh-CN": "连鬓胡",
+    "tr": "Favoriler",
+    "es": "Patillas",
+    "it": "Basette"
+  },
+  "STR_STAT_DAMAGE": {
+    "en": "Damage",
+    "ru": "Урон",
+    "zh-CN": "伤害",
+    "tr": "Hasar",
+    "es": "Daño",
+    "it": "Danno"
+  },
+  "STR_KDR": {
+    "en": "KDR"
+  },
+  "STR_SPM": {
+    "en": "Score Per Minute"
+  },
+  "STR_KPM": {
+    "en": "Kills Per Minute"
+  },
+  "STR_STAT_TIME": {
+    "en": "Play Time"
+  },
+  "STR_STAT_WINS": {
+    "en": "Wins"
+  },
+  "STR_STAT_LOSSES": {
+    "en": "Losses"
+  },
+  "STR_TEAM_PLAY": {
+    "en": "Team Play"
+  },
+  "STR_STAT_CAPTURES": {
+    "en": "Captures",
+    "ru": "Захватов",
+    "zh-CN": "夺取旗帜",
+    "tr": "Yakalamalar",
+    "es": "Capturadas",
+    "it": "Catture"
+  },
+  "STR_STAT_PENETRATION": {
+    "en": "Penetration",
+    "ru": "Пробиваемость",
+    "zh-CN": "穿透力",
+    "tr": "Penetrasyon",
+    "es": "Penetración",
+    "it": "Penetrazione"
+  },
+  "STR_WPN_STAT_RADIUS": {
+    "en": "Radius",
+    "ru": "Радиус",
+    "zh-CN": "范围",
+    "tr": "Yarıçap",
+    "es": "Radio",
+    "it": "Raggio"
+  },
+  "STR_STAT_ACCURACY": {
+    "en": "Accuracy",
+    "ru": "Точность",
+    "zh-CN": "命中率",
+    "tr": "Doğruluk",
+    "es": "Precisión",
+    "it": "Precisione"
+  },
+  "STR_STAT_FIRE_RATE": {
+    "en": "Fire Rate",
+    "ru": "Скорострельность",
+    "zh-CN": "射速",
+    "tr": "Atış Hızı",
+    "es": "Velocidad de disparo",
+    "it": "Cadenza di Fuoco"
+  },
+  "STR_STAT_RECOIL": {
+    "en": "Recoil",
+    "ru": "Отдача",
+    "zh-CN": "后坐力",
+    "tr": "Geriye Tepme",
+    "es": "Retroceso",
+    "it": "Rinculo"
+  },
+  "STR_STAT_MOBILITY": {
+    "en": "Mobility",
+    "ru": "Мобильность",
+    "zh-CN": "机动性",
+    "tr": "Hareketlilik",
+    "es": "Movilidad",
+    "it": "Mobilità"
+  },
+  "STR_STAT_RANGE": {
+    "en": "Effective Range",
+    "ru": "Дальность",
+    "zh-CN": "射程",
+    "tr": "Mesafe",
+    "es": "Rango",
+    "it": "Gittata"
+  },
+  "STR_MOD_REFLEX": {
+    "en": "Reflex"
+  },
+  "STR_MOD_EOTECH": {
+    "en": "EOTech"
+  },
+  "STR_MOD_ACOG": {
+    "en": "ACOG"
+  },
+  "STR_MOD_MAGPULL": {
+    "en": "Mag Assist"
+  },
+  "STR_MOD_REFLEX_DESC": {
+    "en": "1.5x optical sight"
+  },
+  "STR_MOD_EOTECH_DESC": {
+    "en": "2x optical sight"
+  },
+  "STR_MOD_ACOG_DESC": {
+    "en": "4x optical sight"
+  },
+  "STR_MOD_GRIP_DESC": {
+    "en": "Reduces recoil"
+  },
+  "STR_MOD_SUPPRESSOR_DESC": {
+    "en": "Suppresses weapon"
+  },
+  "STR_MOD_MASTERKEY_DESC": {
+    "en": "Underbarrel shotgun"
+  },
+  "STR_MOD_M203_DESC": {
+    "en": "Underbarrel grenade launcher"
+  },
+  "STR_MOD_LASER_DESC": {
+    "en": "Assists with aiming"
+  },
+  "STR_MOD_COMPENSATOR_DESC": {
+    "en": "Reduces recoil"
+  },
+  "STR_MOD_BRAKE_DESC": {
+    "en": "Increases damage and recoil"
+  },
+  "STR_MOD_HEAVY_DESC": {
+    "en": "Extends damage drop off range"
+  },
+  "STR_MOD_FMJ_DESC": {
+    "en": "Increases damage"
+  },
+  "STR_MOD_PIERCING_DESC": {
+    "en": "Increases penetration"
+  },
+  "STR_MOD_HOLLOW_POINT_DESC": {
+    "en": "Increases headshot damage"
+  },
+  "STR_MOD_EXTENDED_DESC": {
+    "en": "Increases mag capacity"
+  },
+  "STR_MOD_SLUG_DESC": {
+    "en": "Single high damage slug"
+  },
+  "STR_MOD_MAGPULL_DESC": {
+    "en": "Increases reload speed"
+  },
+  "STR_MOD_IRON_SIGHTS_DESC": {
+    "en": "Iron sights"
+  },
+  "STR_MOD_SCOPE_DESC": {
+    "en": "8x optical scope"
+  },
+  "STR_ERROR_FILE_X": {
+    "en": "Error loading file: %1",
+    "ru": "Ошибка при загрузке файла: %1",
+    "zh-CN": "读取文件出错: %1",
+    "tr": "Dosya yüklenirken hata oluştu: %1",
+    "es": "Error al cargar el archivo: %1",
+    "it": "Errore caricamento file: %1"
+  },
+  "STR_X_/_X": {
+    "en": "%1 / %2",
+    "ru": "%1 / %2",
+    "zh-CN": "%1 / %2",
+    "tr": "%1 / %2",
+    "es": "%1 / %2",
+    "it": "%1 / %2"
+  },
+  "STR_X_%": {
+    "en": "%1%"
+  },
+  "STR_MOD_BRAKE": {
+    "en": "Muzzle Brake"
+  },
+  "STR_MOD_HEAVY": {
+    "en": "Heavy Barrel"
+  },
+  "STR_MOD_COMPENSATOR": {
+    "en": "Compensator",
+    "ru": "Компенсатор",
+    "zh-CN": "补偿器",
+    "tr": "Kompensatör",
+    "es": "Compensador",
+    "it": "Compensatore"
+  },
+  "STR_MOD_LASER": {
+    "en": "Laser",
+    "ru": "ЛЦУ",
+    "zh-CN": "激光瞄准器",
+    "tr": "Lazer",
+    "es": "Laser",
+    "it": "Laser"
+  },
+  "STR_MOD_SUPPRESSOR": {
+    "en": "Suppressor",
+    "ru": "Глушитель",
+    "zh-CN": "抑制器",
+    "tr": "Susturucu",
+    "es": "Silenciador",
+    "it": "Silenziatore"
+  },
+  "STR_MOD_GRIP": {
+    "en": "Grip",
+    "ru": "Рукоять",
+    "zh-CN": "稳定握把",
+    "tr": "Kabza",
+    "es": "Empuñadura",
+    "it": "Impugnatura"
+  },
+  "STR_MOD_M203": {
+    "en": "M203",
+    "ru": "M203",
+    "zh-CN": "M203榴弹发射器",
+    "tr": "M203",
+    "es": "M203",
+    "it": "M203"
+  },
+  "STR_MOD_M320": {
+    "en": "M320"
+  },
+  "STR_MOD_GP25": {
+    "en": "GP-25"
+  },
+  "STR_MOD_MASTERKEY": {
+    "en": "Masterkey",
+    "ru": "\"Взломщик\"",
+    "zh-CN": "万能钥匙",
+    "tr": "Masterkey",
+    "es": "Llave maestra",
+    "it": "Masterkey"
+  },
+  "STR_MOD_FMJ": {
+    "en": "FMJ",
+    "ru": "ЦМО",
+    "zh-CN": "全金属壳弹",
+    "tr": "FMJ",
+    "es": "FMJ",
+    "it": "FMJ"
+  },
+  "STR_MOD_EXTENDED": {
+    "en": "Extended",
+    "ru": "Увеличенный магазин",
+    "zh-CN": "加长弹匣",
+    "tr": "Genişletilmiş",
+    "es": "Cargador extenso",
+    "it": "Caricatore Esteso"
+  },
+  "STR_MOD_SLUG": {
+    "en": "Slug",
+    "ru": "Пуля",
+    "zh-CN": "铅弹",
+    "tr": "Tüfek Kurşunu",
+    "es": "Perdigones de plomo",
+    "it": "Lumaca"
+  },
+  "STR_MOD_PIERCING": {
+    "en": "Piercing",
+    "ru": "Пробитие",
+    "zh-CN": "穿甲弹",
+    "tr": "Delici",
+    "es": "Bala perforadora de armaduras",
+    "it": "Proiettile Perforante"
+  },
+  "STR_MOD_HOLLOW_POINT": {
+    "en": "Hollow Point",
+    "ru": "Экспансивные",
+    "zh-CN": "空尖弹",
+    "tr": "Ucu Delik Mermi",
+    "es": "Bala de punta vacía",
+    "it": "Foro punta proiettile"
+  },
+  "STR_ROUND_12G": {
+    "en": "12 Gauge",
+    "ru": "12-ый калибр",
+    "zh-CN": "12号口径",
+    "tr": "12 Gauge",
+    "es": "Calibre 12",
+    "it": "Calibro 12"
+  },
+  "STR_ROUND_9MM": {
+    "en": "9×19mm",
+    "ru": "9×19 мм",
+    "zh-CN": "9×19毫米",
+    "tr": "9×19mm",
+    "es": "9×19mm",
+    "it": "9x19mm"
+  },
+  "STR_ROUND_20MM": {
+    "en": "20×102mm",
+    "ru": "20×102 мм",
+    "zh-CN": "20×102毫米",
+    "tr": "20×102mm",
+    "es": "20×102mm",
+    "it": "20×102mm"
+  },
+  "STR_ROUND_4MM": {
+    "en": "4.6×30mm",
+    "ru": "4.6×30 мм",
+    "zh-CN": "4.6×30毫米",
+    "tr": "4.6×30mm",
+    "es": "4.6×30mm",
+    "it": "4.6x30mm"
+  },
+  "STR_ROUND_57": {
+    "en": "5.7×28mm",
+    "ru": "5.7×28 мм",
+    "zh-CN": "5.7×28毫米",
+    "tr": "5.7×28mm",
+    "es": "5.7×28mm",
+    "it": "5.7×28mm"
+  },
+  "STR_ROUND_556MM": {
+    "en": "5.56×45mm",
+    "ru": "5.56×45 мм",
+    "zh-CN": "5.56×45毫米",
+    "tr": "5.56×45mm",
+    "es": "5.56×45mm",
+    "it": "5.56×45mm"
+  },
+  "STR_ROUND_68MM": {
+    "en": "6.8×43mm",
+    "ru": "6.8×43 мм",
+    "zh-CN": "6.8×43毫米",
+    "tr": "6.8×43mm",
+    "es": "6.8×43mm",
+    "it": "6.8×43mm"
+  },
+  "STR_ROUND_545MM_39": {
+    "en": "5.45×39mm",
+    "ru": "5.45×39 мм",
+    "zh-CN": "5.45×39毫米",
+    "tr": "5.45×39mm",
+    "es": "5.45×39mm",
+    "it": "5.45×39mm"
+  },
+  "STR_ROUND_762MM": {
+    "en": "7.62×51mm",
+    "ru": "7.62×51 мм",
+    "zh-CN": "7.62×51毫米",
+    "tr": "7.62×51mm",
+    "es": "7.62×51mm",
+    "it": "7.62×51mm"
+  },
+  "STR_ROUND_762MM_39": {
+    "en": "7.62×39mm",
+    "ru": "7.62×39 мм",
+    "zh-CN": "7.62×39毫米",
+    "tr": "7.62×39mm",
+    "es": "7.62×39mm",
+    "it": "7.62×39mm"
+  },
+  "STR_ROUND_762MM_54": {
+    "en": "7.62×54mm",
+    "ru": "7.62×54 мм",
+    "zh-CN": "7.62×54毫米",
+    "tr": "7.62×54mm",
+    "es": "7.62×54mm",
+    "it": "7.62×54mm"
+  },
+  "STR_ROUND_338": {
+    "en": ".338 Magnum",
+    "ru": ".338 Magnum",
+    "zh-CN": ".338 马格南",
+    "tr": ".338 Magnum",
+    "es": ".338 Magnum",
+    "it": ".338 Magnum"
+  },
+  "STR_ROUND_50BMG": {
+    "en": ".50 BMG",
+    "ru": ".50 BMG",
+    "zh-CN": ".50 勃朗宁机枪弹",
+    "tr": ".50 BMG",
+    "es": ".50 BMG",
+    "it": ".50 BMG"
+  },
+  "STR_ROUND_45ACP": {
+    "en": ".45 ACP",
+    "ru": ".45 ACP",
+    "zh-CN": ".45 柯尔特自动手枪弹",
+    "tr": ".45 ACP",
+    "es": ".45 ACP",
+    "it": ".45 ACP"
+  },
+  "STR_ROUND_50CAL": {
+    "en": ".50 AE",
+    "ru": ".50 AE",
+    "zh-CN": ".50 行动特快",
+    "tr": ".50 AE",
+    "es": ".50 AE",
+    "it": ".50 AE"
+  },
+  "STR_ROUND_44": {
+    "en": ".44 Magnum",
+    "ru": ".44 Magnum",
+    "zh-CN": ".44 马格南",
+    "tr": ".44 Magnum",
+    "es": ".44 Magnum",
+    "it": ".44 Magnum"
+  },
+  "STR_ROUND_357": {
+    "en": ".357 Magnum",
+    "ru": ".357 Magnum",
+    "zh-CN": ".357 马格南",
+    "tr": ".357 Magnum",
+    "es": ".357 Magnum",
+    "it": ".357 Magnum"
+  },
+  "STR_ROUND_300AAC": {
+    "en": ".300 AAC",
+    "ru": ".300 AAC",
+    "zh-CN": ".300 先进武装",
+    "tr": ".300 AAC",
+    "es": ".300 AAC",
+    "it": ".300 AAC"
+  },
+  "STR_ROUND_ROCKET": {
+    "en": "40mm Rocket",
+    "ru": "Ракета 40-мм",
+    "zh-CN": "40毫米 火箭弹",
+    "tr": "40mm Roket",
+    "es": "Cohete de 40 mm",
+    "it": "Razzo 40mm"
+  },
+  "STR_ROUND_ROCKET_SMAW": {
+    "en": "HEDP Rocket",
+    "ru": "Ракета 83-мм HEDP",
+    "zh-CN": "高爆两用火箭弹",
+    "tr": "HEDP Roket",
+    "es": "Cohete HEDP",
+    "it": "Circon. Razzo"
+  },
+  "STR_ROUND_ROCKET_HEAT": {
+    "en": "HEAT Rocket",
+    "ru": "Кумулятивная ракета",
+    "zh-CN": "高爆破甲火箭弹",
+    "tr": "HEAT Roket",
+    "es": "Cohete HEAT",
+    "it": "Calore Razzo"
+  },
+  "STR_ROUND_GRENADE": {
+    "en": "40mm Grenade",
+    "ru": "Граната 40-мм",
+    "zh-CN": "40毫米 榴弹",
+    "tr": "40mm El Bombası",
+    "es": "Granada 40mm",
+    "it": "40mm Granata"
+  },
+  "STR_RANK_TITLE_1": {
+    "en": "Private",
+    "ru": "Рядовой",
+    "zh-CN": "二等兵",
+    "tr": "Er",
+    "es": "Soldado",
+    "it": "Soldato"
+  },
+  "STR_RANK_TITLE_2": {
+    "en": "Private 1st Class",
+    "ru": "Рядовой первого класса",
+    "zh-CN": "一等兵",
+    "tr": "1. Sınıf Er",
+    "es": "Soldado de Primera Clase",
+    "it": "Soldato 1a Classe"
+  },
+  "STR_RANK_TITLE_3": {
+    "en": "Specialist",
+    "ru": "Специалист",
+    "zh-CN": "技术军士",
+    "tr": "Uzman",
+    "es": "Especialista",
+    "it": "Specialista"
+  },
+  "STR_RANK_TITLE_4": {
+    "en": "Corporal",
+    "ru": "Капрал",
+    "zh-CN": "下士",
+    "tr": "Onbaşı",
+    "es": "Cabo",
+    "it": "Caporale"
+  },
+  "STR_RANK_TITLE_5": {
+    "en": "Sergeant",
+    "ru": "Сержант",
+    "zh-CN": "中士",
+    "tr": "Çavuş",
+    "es": "Sargento",
+    "it": "Sergente"
+  },
+  "STR_RANK_TITLE_6": {
+    "en": "Staff Sergeant",
+    "ru": "Штаб-сержант",
+    "zh-CN": "上士",
+    "tr": "Üstçavuş",
+    "es": "Sargento superior",
+    "it": "Sergente Superiore"
+  },
+  "STR_RANK_TITLE_7": {
+    "en": "Sergeant 1st Class",
+    "ru": "Сержант первого класса",
+    "zh-CN": "三级军士长",
+    "tr": "Astsubay Kıdemli Çavuş",
+    "es": "Sargento de primera clase",
+    "it": "Sergente 1a Classe"
+  },
+  "STR_RANK_TITLE_8": {
+    "en": "Master Sergeant",
+    "ru": "Мастер-сержант",
+    "zh-CN": "二级军士长",
+    "tr": "Başçavuş",
+    "es": "Sargento mayor",
+    "it": "Sergente Superiore"
+  },
+  "STR_RANK_TITLE_9": {
+    "en": "1st Sergeant",
+    "ru": "Первый сержант",
+    "zh-CN": "二级军士连长",
+    "tr": "Kıdemli Başçavuş",
+    "es": "Sargento primero",
+    "it": "1o Sergente"
+  },
+  "STR_RANK_TITLE_10": {
+    "en": "Sergeant Major",
+    "ru": "Сержант-майор",
+    "zh-CN": "一级军士长",
+    "tr": "Astsubay Kıdemli Başçavuş",
+    "es": "Sargento mayor",
+    "it": "Sergente Maggiore"
+  },
+  "STR_RANK_TITLE_11": {
+    "en": "Command Sergeant Major I",
+    "ru": "Команд-сержант-майор",
+    "zh-CN": "总军士长I",
+    "tr": "Astsubay Kıdemli Başçavuş II",
+    "es": "Sargento mayor de mando I",
+    "it": "Sergente Comandante Maggiore I"
+  },
+  "STR_RANK_TITLE_12": {
+    "en": "Command Sergeant Major II",
+    "ru": "Сержант-майор сухопутных войск",
+    "zh-CN": "总军士长II",
+    "tr": "stsubay Kıdemli Başçavuş III",
+    "es": "Sargento mayor de mando II",
+    "it": "Sergente Comandante Maggiore II"
+  },
+  "STR_RANK_TITLE_13": {
+    "en": "2nd Lieutenant",
+    "ru": "Второй лейтенант",
+    "zh-CN": "少尉",
+    "tr": "Teğmen",
+    "es": "Teniente segundo",
+    "it": "2o Lungotenente"
+  },
+  "STR_RANK_TITLE_14": {
+    "en": "1st Lieutenant",
+    "ru": "Первый лейтенант",
+    "zh-CN": "中尉",
+    "tr": "Üsteğmen",
+    "es": "Teniente primero",
+    "it": "1o Lungotenente"
+  },
+  "STR_RANK_TITLE_15": {
+    "en": "Captain",
+    "ru": "Капитан",
+    "zh-CN": "上尉",
+    "tr": "Yüzbaşı",
+    "es": "Capitán",
+    "it": "Capitano"
+  },
+  "STR_RANK_TITLE_16": {
+    "en": "Major",
+    "ru": "Майор",
+    "zh-CN": "少校",
+    "tr": "Binbaşı",
+    "es": "Comandante",
+    "it": "Maggiore"
+  },
+  "STR_RANK_TITLE_17": {
+    "en": "Lieutenant Colonel",
+    "ru": "Подполковник",
+    "zh-CN": "中校",
+    "tr": "Yarbay",
+    "es": "Teniente Coronel",
+    "it": "Tenente Colonnello"
+  },
+  "STR_RANK_TITLE_18": {
+    "en": "Colonel I",
+    "ru": "Полковник I",
+    "zh-CN": "上校I",
+    "tr": "Albay I",
+    "es": "Coronel de primera",
+    "it": "Colonnello I"
+  },
+  "STR_RANK_TITLE_19": {
+    "en": "Colonel II",
+    "ru": "Полковник II",
+    "zh-CN": "上校II",
+    "tr": "Albay II",
+    "es": "Colonel de segunda",
+    "it": "Colonnello II"
+  },
+  "STR_RANK_TITLE_20": {
+    "en": "Colonel III",
+    "ru": "Полковник III",
+    "zh-CN": "上校III",
+    "tr": "Albay III",
+    "es": "Colonel de tercera",
+    "it": "Colonnello III"
+  },
+  "STR_RANK_TITLE_21": {
+    "en": "Brigadier General",
+    "ru": "Бригадный генерал",
+    "zh-CN": "准将",
+    "tr": "Tuğgeneral",
+    "es": "General de brigada",
+    "it": "Brigadiere Generale"
+  },
+  "STR_RANK_TITLE_22": {
+    "en": "Major General",
+    "ru": "Генерал-майор",
+    "zh-CN": "少将",
+    "tr": "Tümgeneral",
+    "es": "General de división",
+    "it": "Generale Maggiore"
+  },
+  "STR_RANK_TITLE_23": {
+    "en": "Lieutenant General",
+    "ru": "Генерал-лейтенант",
+    "zh-CN": "中将",
+    "tr": "Korgeneral",
+    "es": "Teniente general",
+    "it": "Generale Lungotenente"
+  },
+  "STR_RANK_TITLE_24": {
+    "en": "General",
+    "ru": "Генерал",
+    "zh-CN": "上将",
+    "tr": "Orgeneral",
+    "es": "General",
+    "it": "Generale"
+  },
+  "STR_RANK_TITLE_25": {
+    "en": "Commander",
+    "ru": "Генерал армии",
+    "zh-CN": "元帅",
+    "tr": "Başbuğ",
+    "es": "Comandante",
+    "it": "Comandante"
+  }
+}

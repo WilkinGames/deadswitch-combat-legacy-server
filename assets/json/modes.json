@@ -1,0 +1,20 @@
+[
+  {
+    "id": "team_deathmatch",
+    "name": "STR_MODE_TDM",
+    "desc": "STR_MODE_TDM_DESC",
+    "bTeam": true
+  },
+  {
+    "id": "domination",
+    "name": "STR_MODE_DOMINATION",
+    "desc": "STR_MODE_DOMINATION_DESC",
+    "bTeam": true
+  },
+  {
+    "id": "conquest",
+    "name": "STR_MODE_CONQUEST",
+    "desc": "STR_MODE_CONQUEST_DESC",
+    "bTeam": true
+  }
+]

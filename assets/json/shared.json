@@ -1,0 +1,227 @@
+{
+  "smokeSize": 350,
+  "character": {
+    "width": 40,
+    "height": 80,
+    "crouchHeight": 62,
+    "maxSpeed": 225,
+    "jumpHeight": 350,
+    "damping": 0.2,
+    "ladderCooldown": 30,
+    "climbDamping": 0.2,
+    "climbSpeedMultiplier": 1.2,
+    "fixedRotation": true,
+    "angularDamping": 1,
+    "parachuteDamping": 0.98,
+    "parachuteVelocity": 400
+  },
+  "crate": {
+    "width": 60,
+    "height": 24,
+    "mass": 2
+  },
+  "ammo_box": {
+    "width": 22,
+    "height": 14,
+    "mass": 3
+  },
+  "sandbags": {
+    "width": 20,
+    "height": 34,
+    "mass": 0,
+    "fixedRotation": true
+  },
+  "sandbags_large": {
+    "width": 15,
+    "height": 50,
+    "mass": 0,
+    "fixedRotation": true
+  },
+  "sandbags_edge": {
+    "width": 10,
+    "height": 46,
+    "mass": 0,
+    "fixedRotation": true
+  },
+  "sandbags_tall": {
+    "width": 10,
+    "height": 62,
+    "mass": 0,
+    "fixedRotation": true
+  },
+  "barrel_generic": {
+    "width": 24,
+    "height": 42,
+    "mass": 2,
+    "damping": 0.5
+  },
+  "barrel_explosive": {
+    "width": 24,
+    "height": 42,
+    "mass": 2,
+    "damping": 0.5
+  },
+  "quad": {
+    "width": 120,
+    "height": 62,
+    "mass": 6
+  },
+  "abrams": {
+    "width": 420,
+    "height": 126
+  },
+  "mh6": {
+    "width": 264,
+    "height": 108
+  },
+  "cobra": {
+    "width": 475,
+    "height": 148
+  },
+  "blackhawk": {
+    "width": 700,
+    "height": 255
+  },
+  "grenade": {
+    "width": 20,
+    "height": 20
+  },
+  "claymore": {
+    "width": 20,
+    "height": 10
+  },
+  "betty": {
+    "width": 50,
+    "height": 10
+  },
+  "c4": {
+    "width": 32,
+    "height": 10
+  },
+  "sensor": {
+    "width": 32,
+    "height": 10
+  },
+  "jammer": {
+    "width": 32,
+    "height": 10
+  },
+  "tac_insert": {
+    "width": 15,
+    "height": 6
+  },
+  "trophy": {
+    "width": 40,
+    "height": 38
+  },
+  "classes": {
+    "ASSAULT": {
+      "primary": {
+        "id": "m16a4",
+        "mods": { "optic": null }
+      },
+      "secondary": {
+        "id": "m9",
+        "mods": {}
+      },
+      "grenade": "frag",
+      "equipment": "stim",
+      "melee": "melee_knife",
+      "avatar": {
+        "us": {
+          "hair": "hair0000",
+          "hairColour": "HAIR_COLOUR_BROWN",
+          "body": "us_kevlar",
+          "head": "head0006"
+        },
+        "ru": {
+          "hair": "hair0000",
+          "hairColour": "HAIR_COLOUR_BROWN",
+          "body": "ru_kevlar",
+          "head": "head0027"
+        }
+      }
+    },
+    "ENGINEER": {
+      "primary": {
+        "id": "mp5",
+        "mods": {}
+      },
+      "secondary": {
+        "id": "rpg",
+        "mods": {}
+      },
+      "grenade": "frag",
+      "equipment": "blowtorch",
+      "melee": "melee_knife",
+      "avatar": {
+        "us": {
+          "hair": "hair0000",
+          "hairColour": "HAIR_COLOUR_BROWN",
+          "body": "us",
+          "head": "head0008"
+        },
+        "ru": {
+          "hair": "hair0000",
+          "hairColour": "HAIR_COLOUR_BROWN",
+          "body": "ru",
+          "head": "head0031"
+        }
+      }
+    },
+    "SUPPORT": {
+      "primary": {
+        "id": "m249",
+        "mods": {}
+      },
+      "secondary": {
+        "id": "m9",
+        "mods": {}
+      },
+      "grenade": "smoke",
+      "equipment": "ammo_box",
+      "melee": "melee_knife",
+      "avatar": {
+        "us": {
+          "hair": "hair0000",
+          "hairColour": "HAIR_COLOUR_BROWN",
+          "body": "us_heavy",
+          "head": "head0007"
+        },
+        "ru": {
+          "hair": "hair0000",
+          "hairColour": "HAIR_COLOUR_BROWN",
+          "body": "ru_heavy",
+          "head": "head0007"
+        }
+      }
+    },
+    "RECON": {
+      "primary": {
+        "id": "m40a3",
+        "mods": { "optic": null }
+      },
+      "secondary": {
+        "id": "m9",
+        "mods": {}
+      },
+      "grenade": "smoke",
+      "equipment": "sensor",
+      "melee": "melee_knife",
+      "avatar": {
+        "us": {
+          "hair": "hair0000",
+          "hairColour": "HAIR_COLOUR_BROWN",
+          "body": "us_ghillie",
+          "head": "head0010"
+        },
+        "ru": {
+          "hair": "hair0000",
+          "hairColour": "HAIR_COLOUR_BROWN",
+          "body": "ru_para",
+          "head": "head0039"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,135 @@
+[
+  {
+    "id": "reflex",
+    "type": "optic",
+    "name": "STR_MOD_REFLEX",
+    "desc": "STR_MOD_REFLEX_DESC",
+    "score": 1000
+  },
+  {
+    "id": "eotech",
+    "type": "optic",
+    "name": "STR_MOD_EOTECH",
+    "desc": "STR_MOD_EOTECH_DESC",
+    "score": 5000
+  },
+  {
+    "id": "acog",
+    "type": "optic",
+    "name": "STR_MOD_ACOG",
+    "desc": "STR_MOD_ACOG_DESC",
+    "score": 10000
+  },
+  {
+    "id": "ammo_fmj",
+    "type": "ammo",
+    "name": "STR_MOD_FMJ",
+    "desc": "STR_MOD_FMJ_DESC",
+    "score": 2500
+  },
+  {
+    "id": "ammo_ap",
+    "type": "ammo",
+    "name": "STR_MOD_PIERCING",
+    "desc": "STR_MOD_PIERCING_DESC",
+    "score": 5000
+  },
+  {
+    "id": "ammo_magpull",
+    "type": "ammo",
+    "name": "STR_MOD_MAGPULL",
+    "desc": "STR_MOD_MAGPULL_DESC",
+    "score": 7500
+  },
+  {
+    "id": "ammo_extended",
+    "type": "ammo",
+    "name": "STR_MOD_EXTENDED",
+    "desc": "STR_MOD_EXTENDED_DESC",
+    "score": 10000
+  },
+  {
+    "id": "ammo_slug",
+    "type": "ammo",
+    "name": "STR_MOD_SLUG",
+    "desc": "STR_MOD_SLUG_DESC",
+    "score": 7500
+  },
+  {
+    "id": "ammo_hollow_point",
+    "type": "ammo",
+    "name": "STR_MOD_HOLLOW_POINT",
+    "desc": "STR_MOD_HOLLOW_POINT_DESC",
+    "score": 12500
+  },
+  {
+    "id": "acc_laser",
+    "type": "accessory",
+    "name": "STR_MOD_LASER",
+    "desc": "STR_MOD_LASER_DESC",
+    "score": 1500
+  },
+  {
+    "id": "acc_masterkey",
+    "type": "accessory",
+    "name": "STR_MOD_MASTERKEY",
+    "desc": "STR_MOD_MASTERKEY_DESC",
+    "score": 6000
+  },
+  {
+    "id": "barrel_silencer",
+    "type": "barrel",
+    "name": "STR_MOD_SUPPRESSOR",
+    "desc": "STR_MOD_SUPPRESSOR_DESC",
+    "score": 5000
+  },
+  {
+    "id": "acc_grip",
+    "type": "accessory",
+    "name": "STR_MOD_GRIP",
+    "desc": "STR_MOD_GRIP_DESC",
+    "score": 4500
+  },
+  {
+    "id": "acc_m203",
+    "type": "accessory",
+    "name": "STR_MOD_M203",
+    "desc": "STR_MOD_M203_DESC",
+    "score": 10000
+  },
+  {
+    "id": "acc_m320",
+    "type": "accessory",
+    "name": "STR_MOD_M320",
+    "desc": "STR_MOD_M203_DESC",
+    "score": 10000
+  },
+  {
+    "id": "acc_gp25",
+    "type": "accessory",
+    "name": "STR_MOD_GP25",
+    "desc": "STR_MOD_M203_DESC",
+    "score": 10000
+  },
+  {
+    "id": "barrel_compensator",
+    "type": "barrel",
+    "name": "STR_MOD_COMPENSATOR",
+    "desc": "STR_MOD_COMPENSATOR_DESC",
+    "score": 3000
+  },
+  {
+    "id": "barrel_booster",
+    "type": "barrel",
+    "name": "STR_MOD_BRAKE",
+    "desc": "STR_MOD_BRAKE_DESC",
+    "score": 5500
+  },
+  {
+    "id": "barrel_range",
+    "type": "barrel",
+    "name": "STR_MOD_HEAVY",
+    "desc": "STR_MOD_HEAVY_DESC",
+    "score": 8500
+  }
+]
