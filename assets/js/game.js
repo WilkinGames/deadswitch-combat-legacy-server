@@ -523,7 +523,7 @@ class GameInstance
             world: new p2.World({
                 gravity: [0, settings.gravity],
                 broadphase: new p2.NaiveBroadphase(),
-                islandSplit: true
+                islandSplit: false
             }),
             objects: {},
             spawners: [],
