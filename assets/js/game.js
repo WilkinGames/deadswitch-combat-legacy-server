@@ -474,12 +474,12 @@ class GameInstance
         this.lobbyId = _data.lobbyId;
         this.onEventFunc = _onEventFunc;
         this.batchData = [];
-        var fps = _data.settings.fps != null ? Math.min(_data.settings.fps, 60) : 60;
+        var fps = _data.settings.tickRate != null ? Math.min(_data.settings.tickRate, 60) : 60;
         var settings = {
             fps: fps,
             gravity: _data.settings.gravity != null ? _data.settings.gravity : 600,
             restitution: 0.25,
-            updateTimerMax: Math.round(fps / (_data.settings.updateTimerMax != null ? _data.settings.updateTimerMax : 10))
+            updateTimerMax: Math.round(fps / (_data.settings.updateRate != null ? _data.settings.updateRate : 10))
         };
         if (typeof p2 === "undefined")
         {
