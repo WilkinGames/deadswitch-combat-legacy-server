@@ -360,7 +360,7 @@
     "range": 1600,
     "mag": 30,
     "ammo": 90,
-    "recoil": 0.5,
+    "recoil": 0.4,
     "penetration": 2,
     "lookModifier": 1.5,
     "score": 10000

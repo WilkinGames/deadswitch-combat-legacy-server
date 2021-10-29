@@ -2767,6 +2767,18 @@
   "STR_TEAM_PLAY": {
     "en": "Team Play"
   },
+  "STR_TOP_WEAPONS": {
+    "en": "Top Weapons"
+  },
+  "STR_TOP_VEHICLES": {
+    "en": "Top Vehicles"
+  },
+  "STR_X_KILLS": {
+    "en": "%1 Kills"
+  },
+  "STR_FPS": {
+    "en": "Frame Rate"
+  },
   "STR_STAT_CAPTURES": {
     "en": "Captures",
     "ru": "Захватов",
