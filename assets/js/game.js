@@ -474,11 +474,12 @@ class GameInstance
         this.lobbyId = _data.lobbyId;
         this.onEventFunc = _onEventFunc;
         this.batchData = [];
+        var fps = _data.settings.fps != null ? _data.settings.fps : 60;
         var settings = {
-            fps: _data.settings.fps != null ? _data.settings.fps : 60,
+            fps: fps,
             gravity: _data.settings.gravity != null ? _data.settings.gravity : 600,
             restitution: 0.25,
-            updateTimerMax: _data.settings.updateTimerMax != null ? (_data.settings.updateTimerMax) : 5
+            updateTimerMax: Math.round((_data.settings.updateTimerMax != null ? (_data.settings.updateTimerMax) : 10) * (fps / 60))
         };
         if (typeof p2 === "undefined")
         {
@@ -3337,7 +3338,7 @@ class GameInstance
                         }
                         if (weapon.weaponData && weapon.weaponData.overheatMax)
                         {
-                            weapon.overheat += weapon.weaponData.overheatNum ? weapon.weaponData.overheatNum : Math.round(weaponData.fireRate * 1.75);
+                            weapon.overheat += Math.round((weapon.weaponData.overheatNum ? weapon.weaponData.overheatNum : Math.round(weaponData.fireRate * 1.75)) * this.game.fpsMult);
                             if (weapon.overheat >= weapon.weaponData.overheatMax)
                             {
                                 weapon.bCooldown = true;
@@ -9864,7 +9865,7 @@ class GameInstance
     {
         var shared = this.getSharedData("character");
         var body = new p2.Body({
-            mass: 1,
+            mass: _data.bBot ? 1 : 0,
             fixedRotation: shared.fixedRotation,
             damping: shared.damping,
             position: [_data.x, _data.y],
