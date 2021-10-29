@@ -1768,6 +1768,15 @@ class GameInstance
         return false;
     }
 
+    canExitVehicle(_body)
+    {
+        if (!_body)
+        {
+            return false;
+        }
+        return !_body.data.vehicleCooldown;
+    }
+
     canEnterVehicle(_body, _vehicle)
     {
         if (this.vehicleHasOccupant(_vehicle))
@@ -1918,6 +1927,7 @@ class GameInstance
                 _char.angle = 0;                
                 _char.velocity = [0, 0];
                 _char.shapes[0].collisionMask = CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT;
+                _char.data.vehicleCooldown = this.game.settings.fps;
                 this.requestEvent({
                     eventId: GameServer.EVENT_PAWN_ACTION,
                     pawnId: _char.data.id,
@@ -6549,6 +6559,7 @@ class GameInstance
         {
             return;
         }
+        var pawn = this.getObjectById(_id);
         var ps = this.getPlayerById(_id);
         if (ps && ps.controllableId)
         {
@@ -6560,11 +6571,13 @@ class GameInstance
                     //TODO
                 }
             }
-            this.clearPlayerControllable(ps.id);
+            if (this.canExitVehicle(pawn))
+            {
+                this.clearPlayerControllable(ps.id);
+            }
         }
         else
-        {
-            var pawn = this.getObjectById(_id);  
+        {              
             if (!pawn)
             {
                 return;
@@ -8548,8 +8561,8 @@ class GameInstance
             body.data["health"] = 20;
         }
         var shape = new p2.Box({
-            width: 20,
-            height: 8,
+            width: 40,
+            height: 10,
             collisionGroup: CollisionGroups.PROJECTILE,
             collisionMask: CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.VEHICLE | CollisionGroups.OBJECT
         });
@@ -9866,7 +9879,7 @@ class GameInstance
     {
         var shared = this.getSharedData("character");
         var body = new p2.Body({
-            mass: _data.bBot ? 1 : 0,
+            mass: 1,
             fixedRotation: shared.fixedRotation,
             damping: shared.damping,
             position: [_data.x, _data.y],

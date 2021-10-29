@@ -945,7 +945,16 @@
     "en": "Hydra Rocket"
   },
   "STR_WPN_M256A1": {
-    "en": "M256A1 Cannon"
+    "en": "120mm Smoothbore"
+  },
+  "STR_WPN_SHELL_HE": {
+    "en": "120mm High Explosive"
+  },
+  "STR_WPN_SHELL_SABOT": {
+    "en": "25mm High Velocity"
+  },
+  "STR_WPN_SHELL_AP": {
+    "en": "120mm Armor Piercing"
   },
   "STR_WPN_FAMAS": {
     "en": "FAMAS",
@@ -2776,8 +2785,11 @@
   "STR_X_KILLS": {
     "en": "%1 Kills"
   },
-  "STR_FPS": {
-    "en": "Frame Rate"
+  "STR_TICK_RATE": {
+    "en": "Tick Rate"
+  },
+  "STR_UPDATE_RATE": {
+    "en": "Update Rate"
   },
   "STR_STAT_CAPTURES": {
     "en": "Captures",
