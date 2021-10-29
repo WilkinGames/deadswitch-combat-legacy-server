@@ -491,7 +491,7 @@ class GameInstance
             bRanked: true,
             bFriendlyFire: true,
             settings: settings,
-            frameRate: 0.05, //1 / settings.fps,
+            frameRate: 0.03, //1 / settings.fps,
             timestepMult: settings.fps / 60,
             fpsMult: settings.fps / 60,
             gameSettings: _data.settings,
@@ -11633,8 +11633,21 @@ class GameInstance
         {
             var key = keys[i];
             var cur = classes[key];
-            var primary = cur.primary;
-            var wpns = this.getAllWeaponsByType(types[i]);
+            var primary = cur.primary;            
+            var rand = this.Random(1, 5);
+            switch (rand)
+            {
+                case 1:
+                    var wpnType = Weapon.TYPE_DMR;
+                    break;
+                case 1:
+                    wpnType = Weapon.TYPE_CARBINE;
+                    break;
+                default:
+                    wpnType = types[i];
+                    break;
+            }
+            var wpns = this.getAllWeaponsByType(wpnType);
             primary.id = wpns[this.Random(0, wpns.length - 1)].id;
             var mods = this.getModsForWeapon(primary.id, Mods.TYPE_OPTIC);
             primary.mods.optic = mods[this.Random(0, mods.length - 1)];
@@ -11699,6 +11712,10 @@ class GameInstance
                             break;
                         default:
                             mods.push(Mods.AMMO_FMJ, Mods.AMMO_PIERCING, Mods.AMMO_HOLLOW_POINT, Mods.AMMO_EXTENDED);
+                            if (!wpn.bSingleRoundLoaded)
+                            {
+                                mods.push(Mods.AMMO_MAGPULL);
+                            }
                             break;
                     }
                     break;
