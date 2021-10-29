@@ -479,7 +479,7 @@ class GameInstance
             fps: fps,
             gravity: _data.settings.gravity != null ? _data.settings.gravity : 600,
             restitution: 0.25,
-            updateTimerMax: Math.round((_data.settings.updateTimerMax != null ? (_data.settings.updateTimerMax) : 6) * (fps / 60))
+            updateTimerMax: Math.round(fps / (_data.settings.updateTimerMax != null ? _data.settings.updateTimerMax : 10))
         };
         if (typeof p2 === "undefined")
         {
@@ -491,7 +491,7 @@ class GameInstance
             bRanked: true,
             bFriendlyFire: true,
             settings: settings,
-            frameRate: 0.03, //1 / settings.fps,
+            frameRate: 0.05, //1 / settings.fps,
             timestepMult: settings.fps / 60,
             fpsMult: settings.fps / 60,
             gameSettings: _data.settings,
