@@ -474,7 +474,7 @@ class GameInstance
         this.lobbyId = _data.lobbyId;
         this.onEventFunc = _onEventFunc;
         this.batchData = [];
-        var fps = _data.settings.fps != null ? _data.settings.fps : 60;
+        var fps = _data.settings.fps != null ? Math.min(_data.settings.fps, 60) : 60;
         var settings = {
             fps: fps,
             gravity: _data.settings.gravity != null ? _data.settings.gravity : 600,
@@ -491,7 +491,7 @@ class GameInstance
             bRanked: true,
             bFriendlyFire: true,
             settings: settings,
-            frameRate: 1 / settings.fps,
+            frameRate: 0.05, //1 / settings.fps,
             timestepMult: settings.fps / 60,
             fpsMult: settings.fps / 60,
             gameSettings: _data.settings,
@@ -9886,7 +9886,7 @@ class GameInstance
             team: _data.team,
             health: this.getCharacterMaxHealth(),
             aimRotation: 0,
-            aimSpeed: 0.25,
+            aimSpeed: 0.25 / this.game.fpsMult,
             desiredAimRotation: this.ToRad(this.RandomBoolean() ? 0 : 180),
             lookPos: [_data.x + this.RandomBoolean() ? 100 : -1000, _data.y],
             maxSpeed: shared.maxSpeed,
