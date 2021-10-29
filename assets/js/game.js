@@ -479,7 +479,7 @@ class GameInstance
             fps: fps,
             gravity: _data.settings.gravity != null ? _data.settings.gravity : 600,
             restitution: 0.25,
-            updateTimerMax: Math.round((_data.settings.updateTimerMax != null ? (_data.settings.updateTimerMax) : 10) * (fps / 60))
+            updateTimerMax: Math.round((_data.settings.updateTimerMax != null ? (_data.settings.updateTimerMax) : 6) * (fps / 60))
         };
         if (typeof p2 === "undefined")
         {
@@ -3297,7 +3297,7 @@ class GameInstance
                     if (weapon.overheat > 0)
                     {
                         var cooldownNum = weapon.weaponData.cooldownNum ? weapon.weaponData.cooldownNum : 1;
-                        weapon.overheat -= cooldownNum * weapon.bCooldown ? 0.5 : 1;
+                        weapon.overheat -= (cooldownNum * weapon.bCooldown ? 0.5 : 1) / this.game.fpsMult;
                         if (weapon.overheat == 0 && weapon.bCooldown)
                         {
                             weapon.bCooldown = false;
@@ -3340,7 +3340,7 @@ class GameInstance
                         }
                         if (weapon.weaponData && weapon.weaponData.overheatMax)
                         {
-                            weapon.overheat += Math.round((weapon.weaponData.overheatNum ? weapon.weaponData.overheatNum : Math.round(weaponData.fireRate * 1.75)) * this.game.fpsMult);
+                            weapon.overheat += (weapon.weaponData.overheatNum ? weapon.weaponData.overheatNum : Math.round(weaponData.fireRate * 1.75));
                             if (weapon.overheat >= weapon.weaponData.overheatMax)
                             {
                                 weapon.bCooldown = true;
