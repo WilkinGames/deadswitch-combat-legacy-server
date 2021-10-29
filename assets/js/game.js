@@ -491,7 +491,7 @@ class GameInstance
             bRanked: true,
             bFriendlyFire: true,
             settings: settings,
-            frameRate: 1 / settings.fps,
+            frameRate: 1 / 30,
             timestepMult: settings.fps / 60,
             fpsMult: settings.fps / 60,
             gameSettings: _data.settings,
