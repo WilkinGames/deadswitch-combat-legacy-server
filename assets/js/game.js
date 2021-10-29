@@ -491,7 +491,7 @@ class GameInstance
             bRanked: true,
             bFriendlyFire: true,
             settings: settings,
-            frameRate: 1 / settings.fps,
+            frameRate: 0.1, //1 / settings.fps,
             timestepMult: settings.fps / 60,
             fpsMult: settings.fps / 60,
             gameSettings: _data.settings,
@@ -524,7 +524,7 @@ class GameInstance
             world: new p2.World({
                 gravity: [0, settings.gravity],
                 broadphase: new p2.NaiveBroadphase(),
-                islandSplit: false
+                islandSplit: true
             }),
             objects: {},
             spawners: [],
@@ -1503,6 +1503,7 @@ class GameInstance
             collisionMask: groundMask
         }));
         this.addWorldBody(rightBody);
+        /*
         var bottomBody = new p2.Body({
             angle: this.ToRad(180),
             position: [0, map["height"]]
@@ -1517,6 +1518,7 @@ class GameInstance
             collisionMask: groundMask
         }));
         this.addWorldBody(bottomBody);
+        */
 
         var objects = map.objects;
         for (var i = 0; i < objects.length; i++)
@@ -2018,16 +2020,16 @@ class GameInstance
                 switch (ai.botSkill)
                 {
                     case BotSkill.SKILL_EASY:
-                        pathTickerMax = 2;
+                        pathTickerMax = 4;
                         break;
                     case BotSkill.SKILL_NORMAL:
-                        pathTickerMax = 1;
+                        pathTickerMax = 3;
                         break;
                     case BotSkill.SKILL_GOD:
-                        pathTickerMax = 0;
+                        pathTickerMax = 1;
                         break;
                     default:
-                        pathTickerMax = 1;
+                        pathTickerMax = 2;
                         break;
                 }
                 ai.pathTicker = pathTickerMax;
@@ -9111,8 +9113,7 @@ class GameInstance
             position: _position,
             gravityScale: 1,
             allowSleep: true,
-            sleepSpeedLimit: 1,
-            angularVelocity: 0.5
+            sleepSpeedLimit: 1
         });
         body.data = {
             id: this.getRandomUniqueId(),
