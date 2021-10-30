@@ -1,5 +1,5 @@
 {
-  "name": "Digital Ocean Server [CA]",
+  "name": "DigitalOcean Server [CA]",
   "type": "STR_OFFICIAL",
   "port": 8000,
   "maxPlayers": 32,
