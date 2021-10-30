@@ -614,7 +614,6 @@ class GameInstance
             });
         }
 
-        console.log(1000 / this.game.settings.fps);
         this.game.interval = setInterval(this.tick.bind(this), 1000 / this.game.settings.fps);
 
         this.bInit = true;
@@ -9166,6 +9165,8 @@ class GameInstance
                         bBack: true
                     }
                 ];
+                var mg = this.getWeaponData("m240");
+                mg.overheatMax = 180;
                 data.weapons = [                    
                     {
                         id: "m256a1",
@@ -9180,9 +9181,8 @@ class GameInstance
                         id: "m240",
                         muzzlePos: [-30, -70],
                         aimRotation: 0,
-                        weaponData: this.getWeaponData("m240")
-                        //overheat: 0,
-                        //overheatMax: 180
+                        weaponData: mg,
+                        overheat: 0
                     }
                 ]
                 break;

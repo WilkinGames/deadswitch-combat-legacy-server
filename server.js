@@ -266,7 +266,7 @@ io.on("connection", (socket) =>
             {
                 socket.disconnect();
                 return;
-            }            
+            }          
             if (_data.name)
             {
                 socket.player.name = _data.name;
@@ -286,7 +286,22 @@ io.on("connection", (socket) =>
             if (_data.class)
             {
                 socket.player.classes[_data.class.id] = _data.class.data;
-                log(socket.player.classes);
+            }
+            if (_data.vehicles)
+            {
+                if (!socket.player.vehicles)
+                {
+                    socket.player.vehicles = _data.vehicles;
+                }
+                else
+                {
+                    var keys = Object.keys(_data.vehicles);
+                    for (var i = 0; i < keys.length; i++)
+                    {
+                        var key = keys[i];
+                        socket.player.vehicles[key] = _data.vehicles[key];
+                    }
+                }
             }
             if (!socket.player.lobbyId)
             {
