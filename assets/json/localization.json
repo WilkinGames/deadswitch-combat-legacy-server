@@ -2879,6 +2879,9 @@
   "STR_MOD_GRIP_DESC": {
     "en": "Reduces recoil"
   },
+  "STR_MOD_GRIP_ANGLED_DESC": {
+    "en": "Reduces recoil when ADS"
+  },
   "STR_MOD_SUPPRESSOR_DESC": {
     "en": "Suppresses weapon"
   },
@@ -2889,7 +2892,7 @@
     "en": "Underbarrel grenade launcher"
   },
   "STR_MOD_LASER_DESC": {
-    "en": "Assists with aiming"
+    "en": "Increases accuracy and assists with aiming"
   },
   "STR_MOD_COMPENSATOR_DESC": {
     "en": "Reduces recoil"
@@ -2923,6 +2926,18 @@
   },
   "STR_MOD_SCOPE_DESC": {
     "en": "8x optical scope"
+  },
+  "STR_COMMANDS": {
+    "en": "Commands"
+  },
+  "STR_CMD_REQUEST_AMMO": {
+    "en": "Request Ammo"
+  },
+  "STR_CMD_REQUEST_VEHICLE": {
+    "en": "Request Vehicle"
+  },
+  "STR_CMD_REQUEST_SUPPORT": {
+    "en": "Request Support"
   },
   "STR_ERROR_FILE_X": {
     "en": "Error loading file: %1",
@@ -2974,7 +2989,15 @@
     "it": "Silenziatore"
   },
   "STR_MOD_GRIP": {
-    "en": "Grip",
+    "en": "Vertical Grip",
+    "ru": "Рукоять",
+    "zh-CN": "稳定握把",
+    "tr": "Kabza",
+    "es": "Empuñadura",
+    "it": "Impugnatura"
+  },
+  "STR_MOD_GRIP_ANGLED": {
+    "en": "Angled Grip",
     "ru": "Рукоять",
     "zh-CN": "稳定握把",
     "tr": "Kabza",

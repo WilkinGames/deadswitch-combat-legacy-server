@@ -258,7 +258,7 @@ const Mods = {
     AMMO_LAUNCHER_RADIUS: "ammo_radius",
     AMMO_LAUNCHER_EXPLOSIVE: "ammo_explosive",
     AMMO_SLUG: "ammo_slug",
-    AMMO_MAGPULL: "ammo_magpull",
+    ACCESSORY_MAG_ASSIST: "ammo_magpull",
     AMMO_SPEED_LOADER: "ammo_speed_loader",
     AMMO_HIGH_CALIBER: "ammo_range",
     AMMO_NAPALM: "ammo_napalm",
@@ -267,11 +267,12 @@ const Mods = {
     BARREL_BRAKE: "barrel_booster",
     BARREL_HEAVY: "barrel_range",
     ACCESSORY_LASER: "acc_laser",
-    ACCESSORY_GRIP: "acc_grip",    
-    ACC_M203: "acc_m203",
-    ACC_M320: "acc_m320",
-    ACC_GP25: "acc_gp25",
-    ACC_MASTERKEY: "acc_masterkey"
+    ACCESSORY_GRIP: "acc_grip", 
+    ACCESSORY_GRIP_ANGLED: "acc_grip_angled", 
+    ACCESSORY_M203: "acc_m203",
+    ACCESSORY_M320: "acc_m320",
+    ACCESSORY_GP25: "acc_gp25",
+    ACCESSORY_MASTERKEY: "acc_masterkey"
 };
 const MatchState = {
     STATE_PRE_GAME: "pre_game",
@@ -878,8 +879,8 @@ class GameInstance
             }
 
             if (this.matchInProgress())
-            {                
-                var pawns = this.getCharacters();
+            {
+                var pawns = this.getCharacters().concat(this.getFlags());
                 for (var i = 0; i < this.game.gameModeData.spawns.length; i++)
                 {
                     var spawn = this.game.gameModeData.spawns[i];                      
@@ -1774,7 +1775,7 @@ class GameInstance
         {
             return false;
         }
-        return !_body.data.vehicleCooldown;
+        return !_body.data.vehicleCooldown && !_body.data.seatTimer;
     }
 
     canEnterVehicle(_body, _vehicle)
@@ -1868,7 +1869,7 @@ class GameInstance
                                 }
                                 if (!weapon.weaponData.overheatMax)
                                 {
-                                    weapon.weaponData.overheatMax = 120;
+                                    weapon.weaponData.overheatMax = 180;
                                 }
                                 weapon.overheat = 0;
                                 this.requestEvent({
@@ -4034,7 +4035,7 @@ class GameInstance
 
     hasUnderbarrelMod(_weaponData)
     {
-        return this.hasMod(_weaponData, Mods.ACC_M203) || this.hasMod(_weaponData, Mods.ACC_M320) || this.hasMod(_weaponData, Mods.ACC_GP25) || this.hasMod(_weaponData, Mods.ACC_MASTERKEY);
+        return this.hasMod(_weaponData, Mods.ACCESSORY_M203) || this.hasMod(_weaponData, Mods.ACCESSORY_M320) || this.hasMod(_weaponData, Mods.ACCESSORY_GP25) || this.hasMod(_weaponData, Mods.ACCESSORY_MASTERKEY);
     }
 
     hasMod(_weaponData, _modId)
@@ -4089,7 +4090,7 @@ class GameInstance
             var useAccuracy = weapon.accuracy;
             if (weapon.type != Weapon.TYPE_SHOTGUN)
             {
-                useAccuracy *= (data.bCrouching ? 0.8 : 1) * (data.bADS ? 0.8 : 1);
+                useAccuracy *= (data.bCrouching ? 0.8 : 1) * (data.bAiming ? 0.8 : 1);
             }
             useAccuracy *= 10;
             var bulletRad = rad + this.ToRad(this.Random(-useAccuracy, useAccuracy) * 0.1);
@@ -4170,13 +4171,18 @@ class GameInstance
                 this.createBullet(muzzlePos[0], muzzlePos[1], bulletRad, weapon.range, useDamage, data.id, data.id, weapon.id, weapon, true, bMelee, bIgnoreObstacles);
             }
         }
+        var useRecoil = weapon.recoil;
+        if (data.bAiming && this.hasMod(weapon, Mods.ACCESSORY_GRIP_ANGLED))
+        {
+            useRecoil *= 0.25;
+        }
         //Post-recoil
         if (!weapon.bBoltAction)
         {
             var rand = this.Random(1, 2);
             var scaleVal = data.scale == 1 ? -1 : 1;
-            var recoilMult = (data.bCrouching ? 0.5 : 1) * (data.bAiming ? 0.5 : 1);
-            var recoilVal = weapon.recoil + (Math.abs(data.weapon.recoil) * 0.15);
+            var recoilMult = (data.bCrouching ? 0.5 : 1) * (data.bAiming ? 0.5 : 1);            
+            var recoilVal = useRecoil + (Math.abs(useRecoil) * 0.15);
             data.weapon.recoil += -(recoilVal * recoilMult) * (rand == 1 ? scaleVal : -scaleVal);            
         }
 
@@ -4201,7 +4207,7 @@ class GameInstance
                 eventId: GameServer.EVENT_PAWN_ACTION,
                 pawnId: data.id,
                 type: GameServer.PAWN_FIRE_WEAPON,
-                recoil: weapon.recoil
+                recoil: useRecoil
             });
         }
     }
@@ -4242,7 +4248,7 @@ class GameInstance
         data["currentInventoryIndex"] = _index;
         var item = this.getCurrentCharacterInventoryItem(_body);
         if (prev)
-        {
+        {            
             if (prev.id == "riot_shield")
             {
                 data.bShieldCooldown = true;
@@ -6019,6 +6025,7 @@ class GameInstance
                 case Control.LOOK:
                     data.desiredAimRotation = value.angle;
                     data.lookPos = value.pos;
+                    data.bAiming = value.bAiming == true ? 1 : 0;
                     if (value.char && !data.bBot)
                     {
                         data.clientPos = value.char; 
@@ -7295,6 +7302,7 @@ class GameInstance
                             uses: 3,
                             frame: item.id
                         });
+                        crate.data.destroyTimer = this.game.settings.fps * 60;
                         var force = Math.min(400, this.Dist(_worldX, _worldY, _body.position[0], _body.position[1]) * 4);
                         crate.applyImpulse([Math.cos(equipmentRot) * force, Math.sin(equipmentRot) * force], 0, 0);
                         data.weapon.bThrowDelay = true;
@@ -9981,7 +9989,7 @@ class GameInstance
     initAI(_body, _botSkill)
     {
         var ai = {
-            pathTimer: 0,
+            pathTicker: 0,
             ticker: 0,
             botSkill: _botSkill,
             destThreshold: 50,
@@ -11316,23 +11324,48 @@ class GameInstance
             mods[Mods.TYPE_ACCESSORY] = _mods[Mods.TYPE_ACCESSORY];
             mods[Mods.TYPE_AMMO] = _mods[Mods.TYPE_AMMO];
 
-            switch (mods[Mods.TYPE_OPTIC])
+            if (_weaponData.type == Weapon.TYPE_SNIPER)
             {
-                case Mods.OPTIC_REFLEX:
-                    _weaponData.lookModifier = defaultWeaponData.lookModifier + (_weaponData.type == Weapon.TYPE_SNIPER ? -0.5 : 0.025);
-                    break;
-                case Mods.OPTIC_EOTECH:
-                    _weaponData.lookModifier = defaultWeaponData.lookModifier + (_weaponData.type == Weapon.TYPE_SNIPER ? -0.35 : 0.05);
-                    break;
-                case Mods.OPTIC_ACOG:
-                    _weaponData.lookModifier = defaultWeaponData.lookModifier + (_weaponData.type == Weapon.TYPE_SNIPER ? -0.2 : 0.1);
-                    break;
+                switch (mods[Mods.TYPE_OPTIC])
+                {
+                    case Mods.OPTIC_REFLEX:
+                        _weaponData.lookModifier = 1.2;
+                        break;
+                    case Mods.OPTIC_EOTECH:
+                        _weaponData.lookModifier = 1.35;
+                        break;
+                    case Mods.OPTIC_ACOG:
+                        _weaponData.lookModifier = 1.5;
+                        break;
+                }
+            }
+            else
+            {
+                switch (mods[Mods.TYPE_OPTIC])
+                {
+                    case Mods.OPTIC_REFLEX:
+                        _weaponData.lookModifier = defaultWeaponData.lookModifier + 0.025;
+                        break;
+                    case Mods.OPTIC_EOTECH:
+                        _weaponData.lookModifier = defaultWeaponData.lookModifier + 0.05;
+                        break;
+                    case Mods.OPTIC_ACOG:
+                        _weaponData.lookModifier = defaultWeaponData.lookModifier + 0.1;
+                        break;
+                }
             }
 
             switch (mods[Mods.TYPE_ACCESSORY])
             {
+                case Mods.ACCESSORY_MAG_ASSIST:
+                    _weaponData.reloadMultiplier = 0.4;
+                    _weaponData.reloadTime = defaultWeaponData.reloadTime * 0.6;
+                    break;
                 case Mods.ACCESSORY_GRIP:
-                    _weaponData.recoil = _weaponData.recoil * 0.35;
+                    _weaponData.recoil = _weaponData.recoil * 0.5;
+                    break;
+                case Mods.ACCESSORY_GRIP_ANGLED:
+                    //_weaponData.recoil = _weaponData.recoil * 0.25;
                     break;
                 case Mods.ACCESSORY_LASER:
                     if (_weaponData.type != Weapon.TYPE_SHOTGUN)
@@ -11340,15 +11373,15 @@ class GameInstance
                         _weaponData.accuracy = _weaponData.accuracy * 0.75;
                     }
                     break;
-                case Mods.ACC_M203:
-                case Mods.ACC_M320:
-                case Mods.ACC_GP25:
+                case Mods.ACCESSORY_M203:
+                case Mods.ACCESSORY_M320:
+                case Mods.ACCESSORY_GP25:
                     if (!_weaponData.barrel)
                     {
                         _weaponData.barrel = this.getWeaponData("acc_m320");
                     }
                     break;
-                case Mods.ACC_MASTERKEY:
+                case Mods.ACCESSORY_MASTERKEY:
                     if (!_weaponData.barrel)
                     {
                         _weaponData.barrel = this.getWeaponData("acc_masterkey");
@@ -11374,11 +11407,7 @@ class GameInstance
             }
 
             switch (mods[Mods.TYPE_AMMO])
-            {
-                case Mods.AMMO_MAGPULL:
-                    _weaponData.reloadMultiplier = 0.4;
-                    _weaponData.reloadTime = defaultWeaponData.reloadTime * 0.6;
-                    break;
+            {                
                 case Mods.AMMO_FMJ:
                     _weaponData.damage = Math.round(_weaponData.damage * 1.1);
                     break;
@@ -11707,6 +11736,10 @@ class GameInstance
                             mods.push(Mods.ACCESSORY_LASER, Mods.ACCESSORY_GRIP);
                             break;
                     }
+                    if (!wpn.bSingleRoundLoaded)
+                    {
+                        mods.push(Mods.ACCESSORY_MAG_ASSIST);
+                    }
                     break;
                 case Mods.TYPE_BARREL:
                     switch (wpn.type)
@@ -11724,11 +11757,7 @@ class GameInstance
                         case Weapon.TYPE_LAUNCHER:
                             break;
                         default:
-                            mods.push(Mods.AMMO_FMJ, Mods.AMMO_PIERCING, Mods.AMMO_HOLLOW_POINT, Mods.AMMO_EXTENDED);
-                            if (!wpn.bSingleRoundLoaded)
-                            {
-                                mods.push(Mods.AMMO_MAGPULL);
-                            }
+                            mods.push(Mods.AMMO_FMJ, Mods.AMMO_PIERCING, Mods.AMMO_HOLLOW_POINT, Mods.AMMO_EXTENDED);                            
                             break;
                     }
                     break;

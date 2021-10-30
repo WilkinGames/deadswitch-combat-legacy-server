@@ -36,7 +36,7 @@
   },
   {
     "id": "ammo_magpull",
-    "type": "ammo",
+    "type": "accessory",
     "name": "STR_MOD_MAGPULL",
     "desc": "STR_MOD_MAGPULL_DESC",
     "score": 7500
@@ -81,7 +81,7 @@
     "type": "barrel",
     "name": "STR_MOD_SUPPRESSOR",
     "desc": "STR_MOD_SUPPRESSOR_DESC",
-    "score": 5000
+    "score": 3000
   },
   {
     "id": "acc_grip",
@@ -89,6 +89,13 @@
     "name": "STR_MOD_GRIP",
     "desc": "STR_MOD_GRIP_DESC",
     "score": 4500
+  },
+  {
+    "id": "acc_grip_angled",
+    "type": "accessory",
+    "name": "STR_MOD_GRIP_ANGLED",
+    "desc": "STR_MOD_GRIP_ANGLED_DESC",
+    "score": 6000
   },
   {
     "id": "acc_m203",
@@ -116,7 +123,7 @@
     "type": "barrel",
     "name": "STR_MOD_COMPENSATOR",
     "desc": "STR_MOD_COMPENSATOR_DESC",
-    "score": 3000
+    "score": 5000
   },
   {
     "id": "barrel_booster",
