@@ -334,7 +334,7 @@ io.on("connection", (socket) =>
         var lobby = getLobbyData(socket.player.lobbyId);
         if (lobby)
         {
-            if (settings.bUseLobby && socket.player.bAdmin)
+            if (settings.bUseLobby)
             {
                 setLobbyState(lobby.id, LobbyState.WAITING);
             }
