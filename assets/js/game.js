@@ -4754,8 +4754,12 @@ class GameInstance
     }
 
     addPlayer(_data)
-    {
+    {        
         var ps = this.clone(_data);
+        if (this.getPlayerById(ps.id))
+        {
+            console.warn("Player already exists!", ps.id);
+        }
         if (!ps.id)
         {
             console.warn("Missing player id", _data);
