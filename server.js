@@ -262,7 +262,7 @@ io.on("connection", (socket) =>
         log(chalk.cyan(socket.id), "update");
         if (_data)
         {
-            if (_data.version != ServerData.GAME_VERSION)
+            if (_data.version && _data.version != ServerData.GAME_VERSION)
             {
                 socket.disconnect();
                 return;
@@ -491,6 +491,7 @@ function createLobby()
     }    
     var lobby = {
         id: getRandomUniqueId(),
+        name: settings.name,
         state: LobbyState.WAITING,
         players: [],
         maxPlayers: settings.maxPlayers,
