@@ -4691,6 +4691,7 @@ class GameInstance
                 return true;
             }
         }
+        console.warn("Player does not exist:", _id);
         return false;
     }
 
@@ -6566,7 +6567,7 @@ class GameInstance
                     case "crate":
                         if (interactData["ownerId"] && interactData["ownerId"] != data["id"])
                         {
-                            interactTime = this.game.settings.fps * 3;
+                            //interactTime = this.game.settings.fps * 3;
                         }
                         break;
                     case "reviver":
