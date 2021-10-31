@@ -981,7 +981,7 @@
     "recoil": 1,
     "penetration": 3,
     "overheatMax": 120,
-    "overheatNum": 30,
+    "overheatNum": 60,
     "velocity": 200,
     "gravityScale": 0,
     "bAutoLock": true,
