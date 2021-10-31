@@ -14,7 +14,8 @@
           "id": null
         },
         {
-          "id": "minigun"
+          "id": "minigun",
+          "score": 2500
         }
       ]
     ],
@@ -39,7 +40,12 @@
           "id": "zuni"
         },
         {
-          "id": "hydra"
+          "id": "hydra",
+          "score": 2500
+        },
+        {
+          "id": "rocket_guided",
+          "score": 5000
         }
       ],
       [
@@ -47,10 +53,12 @@
           "id": "minigun"
         },
         {
-          "id": "gatling"
+          "id": "gatling",
+          "score": 2500
         },
         {
-          "id": "m2"
+          "id": "m2",
+          "score": 5000
         }
       ]
     ],
@@ -91,13 +99,16 @@
           "id": "m256a1"
         },
         {
-          "id": "shell_he"
+          "id": "shell_he",
+          "score": 2500
         },
         {
-          "id": "shell_sabot"
+          "id": "shell_sabot",
+          "score": 5000
         },
         {
-          "id": "shell_ap"
+          "id": "shell_ap",
+          "score": 10000
         }
       ],
       [
@@ -105,10 +116,12 @@
           "id": "m240"
         },
         {
-          "id": "m60e4"
+          "id": "m60e4",
+          "score": 2500
         },
         {
-          "id": "m2"
+          "id": "m2",
+          "score": 5000
         }
       ]
     ],

@@ -939,10 +939,13 @@
     "en": "M2HB"
   },
   "STR_WPN_ZUNI": {
-    "en": "Zuni Rocket"
+    "en": "Zuni Rockets"
   },
   "STR_WPN_HYDRA": {
-    "en": "Hydra Rocket"
+    "en": "Hydra Rockets"
+  },
+  "STR_WPN_ROCKET_GUIDED": {
+    "en": "Guided Rockets"
   },
   "STR_WPN_M256A1": {
     "en": "120mm Smoothbore"
@@ -2938,6 +2941,15 @@
   },
   "STR_CMD_REQUEST_SUPPORT": {
     "en": "Request Support"
+  },
+  "STR_REQUESTS_AMMO": {
+    "en": "❗ Requests Ammo"
+  },
+  "STR_REQUESTS_VEHICLE": {
+    "en": "❗ Requests Vehicle"
+  },
+  "STR_REQUESTS_SUPPORT": {
+    "en": "❗ Requests Support"
   },
   "STR_ERROR_FILE_X": {
     "en": "Error loading file: %1",

@@ -92,6 +92,7 @@ const GameServer = {
     PAWN_VEHICLE_HORN: 54,
     PAWN_VEHICLE_UPDATE: 54,
     PAWN_SWITCH_SEATS: 55,
+    PAWN_REQUEST: 56,
     INV_CLASS_DATA: 1,
     INV_CURRENT_INVENTORY_INDEX: 2,
     INV_FIRE: 3,
@@ -2336,7 +2337,14 @@ class GameInstance
                                         var desiredPos = [ai.enemy.position[0], ai.enemy.position[1]];
                                         break;
                                     default:
-                                        desiredPos = [ai.enemy.position[0], ai.enemy.position[1] - 500];
+                                        if (controllable.data.type == "helicopter")
+                                        {
+                                            desiredPos = [ai.enemy.position[0], Math.min(1600, ai.enemy.position[1] - 500)];
+                                        }
+                                        else
+                                        {
+                                            desiredPos = [ai.enemy.position[0], ai.enemy.position[1]];
+                                        }
                                         break;
                                 }
                                 var keyInfo = {};                                
@@ -3187,7 +3195,21 @@ class GameInstance
         {
             this.removeNextStep(_body);
         }
-        if (data.rocketData["enemyId"] && !data["path"])
+        if (data.bAutoLock && !data.rocketData.enemyId)
+        {
+            console.log("get enemy");
+            var enemy = this.getNearestEnemyPawn(_body, {
+                bTargetColdBlooded: false,
+                bIgnoreOutOfSight: false,
+                maxRange: 2000,
+                bLOS: false
+            });
+            if (enemy)
+            {
+                data.rocketData["enemyId"] = enemy.data.id;
+            }
+        }
+        else if (data.rocketData["enemyId"] && !data["path"])
         {
             var enemy = this.getObjectById(data.rocketData["enemyId"]);
             if (enemy && enemy.data["health"])
@@ -3195,26 +3217,12 @@ class GameInstance
                 var distX = enemy.position[0] - _body.position[0];
                 var distY = enemy.position[1] - _body.position[1];
                 var rad = Math.atan2(distY, distX);
-                var speed = 300;
+                var speed = 150;
                 var target = this.WrapAngle(_body.angle - rad, true);
                 _body.angle -= target * 0.5;
                 _body.applyForce([Math.cos(_body.angle) * speed, Math.sin(_body.angle) * speed], 0, 0);
                 this.constrainVelocity(_body, 1000);
-            }
-            else if (data["bAutoLock"])
-            {
-                var enemy = this.getNearestEnemyPawn(_body, {
-                    bTargetColdBlooded: false,
-                    bIgnoreOutOfSight: false,
-                    maxRange: 2000,
-                    pawnTypes: ["helicopter"],
-                    bLOS: false
-                });
-                if (enemy)
-                {
-                    data.rocketData["enemyId"] = enemy.data.id;
-                }
-            }
+            }            
         }
         else if (data["bControllable"])
         {
@@ -3335,7 +3343,8 @@ class GameInstance
                                 damage: weaponData.damage,
                                 radius: weaponData.radius,
                                 bAirOnly: weaponData.bAirOnly,
-                                gravityScale: weaponData.gravityScale
+                                gravityScale: weaponData.gravityScale,
+                                bAutoLock: weaponData.bAutoLock
                             });
                         }
                         else
@@ -3856,6 +3865,18 @@ class GameInstance
                         this.enterVehicle(_body, vehicle, seatIndex);
                     }
                 }
+            }
+        }
+        if (data.currentRequest)
+        {            
+            if (data.requestTimer > 0)
+            {
+                data.requestTimer--;
+            }
+            else
+            {
+                delete data.requestTimer;
+                this.setDataValue(_body, "currentRequest", 0);
             }
         }
         if (data.bShieldCooldown)
@@ -4910,6 +4931,15 @@ class GameInstance
                                 }
                             }
                             break;
+
+                        case GameServer.PAWN_REQUEST:
+                            var pawn = this.getObjectById(_data.pawnId);
+                            if (pawn)
+                            {
+                                this.setDataValue(pawn, "currentRequest", _data.value);
+                                pawn.data.requestTimer = this.game.settings.fps * 5;
+                            }
+                            break;
                     }
                     break;
 
@@ -5642,6 +5672,24 @@ class GameInstance
             return vehicle.data.seats[_body.data.seatIndex];
         }
         return null;
+    }
+
+    getVehiclePawnIds(_vehicle)
+    {
+        var arr = [];
+        var seats = _vehicle.data.seats;
+        if (seats)
+        {
+            for (var i = 0; i < seats.length; i++)
+            {
+                var seat = seats[i];
+                if (seat.pawnId)
+                {
+                    arr.push(seat.pawnId);
+                }
+            }
+        }
+        return arr;
     }
 
     getVehicleDriverId(_vehicle)
@@ -8507,14 +8555,14 @@ class GameInstance
             mass: 0.1,
             position: [_data.x, _data.y],
             angle: _data.angle,
-            gravityScale: _data.gravityScale ? _data.gravityScale : 0.5
+            gravityScale: _data.gravityScale != null ? _data.gravityScale : 0.5
         });
         var damage = 0;
         var radius = 0;
         var velocity = 0;
         var bControllable = false;
         var bAirOnly = false;
-        var bAutoLock = false;
+        var bAutoLock = _data.bAutoLock == true;
         var weaponId = _data.weaponId;
         var destroyTimer = this.game.settings.fps * 5;
         switch (weaponId)

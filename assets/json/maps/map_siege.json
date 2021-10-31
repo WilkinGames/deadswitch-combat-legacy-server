@@ -620,6 +620,22 @@
     },
     {
       "type": "obstacle",
+      "obstacleId": "sandbags_large",
+      "position": [
+        776,
+        2401
+      ]
+    },
+    {
+      "type": "obstacle",
+      "obstacleId": "sandbags_large",
+      "position": [
+        13244,
+        2401
+      ]
+    },
+    {
+      "type": "obstacle",
       "obstacleId": "sandbags_edge",
       "position": [
         6817,
