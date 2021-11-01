@@ -101,6 +101,9 @@
   "STR_QUIT_GAME": {
     "en": "Quit Game"
   },
+  "STR_END_GAME": {
+    "en": "End Game"
+  },
   "STR_QUIT": {
     "en": "Quit"
   },
@@ -136,6 +139,9 @@
   },
   "STR_X_METERS": {
     "en": "%1 m"
+  },
+  "STR_X_MPS": {
+    "en": "%1 m/s"
   },
   "STR_BOTS": {
     "en": "Bots",
@@ -687,7 +693,7 @@
     "en": "Allow Vehicle Seat Switch"
   },
   "STR_SWITCHING_SEAT": {
-    "en": "Switching Seat..."
+    "en": "Switching Seat"
   },
   "STR_PRIMARY_WEAPON": {
     "en": "Primary Weapon"
@@ -713,6 +719,9 @@
   "STR_CARS": {
     "en": "Land"
   },
+  "STR_CAMO_THERMAL": {
+    "en": "Thermal Camo"
+  },
   "STR_MH6": {
     "en": "AH-6J Little Bird"
   },
@@ -724,6 +733,9 @@
   },
   "STR_ABRAMS": {
     "en": "M1 Abrams"
+  },
+  "STR_T90": {
+    "en": "T-90"
   },
   "STR_QUAD": {
     "en": "Quad Bike"
@@ -749,6 +761,14 @@
     "tr": "FN57",
     "es": "FN57",
     "it": "FN57"
+  },
+  "STR_WPN_USP45": {
+    "en": "USP .45",
+    "ru": "USP .45",
+    "zh-CN": "USP .45",
+    "tr": "USP .45",
+    "es": "USP .45",
+    "it": "USP .45"
   },
   "STR_WPN_DEAGLE": {
     "en": "Desert Eagle",
@@ -781,6 +801,14 @@
     "tr": "G18",
     "es": "G18",
     "it": "G18"
+  },
+  "STR_WPN_MP9": {
+    "en": "MP9",
+    "ru": "MP9",
+    "zh-CN": "MP9",
+    "tr": "MP9",
+    "es": "MP9",
+    "it": "MP9"
   },
   "STR_WPN_M4A1": {
     "en": "M4A1",
@@ -1138,6 +1166,9 @@
     "es": "Puños",
     "it": "Pugni"
   },
+  "STR_PARACHUTE": {
+    "en": "Parachute"
+  },
   "STR_CHAR_FACE": {
     "en": "Face"
   },
@@ -1352,6 +1383,9 @@
   },
   "STR_CAMO": {
     "en": "Camo"
+  },
+  "STR_COUNTERMEASURE": {
+    "en": "Countermeasure"
   },
   "STR_CAPTURE": {
     "en": "Capture",
@@ -2841,6 +2875,9 @@
     "tr": "Geriye Tepme",
     "es": "Retroceso",
     "it": "Rinculo"
+  },
+  "STR_STAT_VELOCITY": {
+    "en": "Velocity"
   },
   "STR_STAT_MOBILITY": {
     "en": "Mobility",

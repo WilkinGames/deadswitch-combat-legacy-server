@@ -22,6 +22,14 @@
     "camos": [
       {
         "id": null
+      },
+      {
+        "id": "thermal"
+      }
+    ],
+    "countermeasures": [
+      {
+        "id": null
       }
     ]
   },
@@ -65,6 +73,14 @@
     "camos": [
       {
         "id": null
+      },
+      {
+        "id": "thermal"
+      }
+    ],
+    "countermeasures": [
+      {
+        "id": null
       }
     ]
   },
@@ -79,6 +95,14 @@
       [ 17, 7 ]
     ],
     "camos": [
+      {
+        "id": null
+      },
+      {
+        "id": "thermal"
+      }
+    ],
+    "countermeasures": [
       {
         "id": null
       }
@@ -126,6 +150,69 @@
       ]
     ],
     "camos": [
+      {
+        "id": null
+      },
+      {
+        "id": "thermal"
+      }
+    ],
+    "countermeasures": [
+      {
+        "id": null
+      }
+    ]
+  },
+  {
+    "id": "t90",
+    "name": "STR_T90",
+    "type": "tank",
+    "uiScale": 3,
+    "seats": [
+      [ -5, 7 ],
+      [ -34, -16 ]
+    ],
+    "weapons": [
+      [
+        {
+          "id": "m256a1"
+        },
+        {
+          "id": "shell_he",
+          "score": 2500
+        },
+        {
+          "id": "shell_sabot",
+          "score": 5000
+        },
+        {
+          "id": "shell_ap",
+          "score": 10000
+        }
+      ],
+      [
+        {
+          "id": "m240"
+        },
+        {
+          "id": "m60e4",
+          "score": 2500
+        },
+        {
+          "id": "m2",
+          "score": 5000
+        }
+      ]
+    ],
+    "camos": [
+      {
+        "id": null
+      },
+      {
+        "id": "thermal"
+      }
+    ],
+    "countermeasures": [
       {
         "id": null
       }
