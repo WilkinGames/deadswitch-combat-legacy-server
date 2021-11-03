@@ -94,6 +94,7 @@ const GameServer = {
     PAWN_SWITCH_SEATS: 55,
     PAWN_REQUEST: 56,
     PAWN_WEAPON_COOLDOWN: 57,
+    PAWN_LOCK_ACQUIRED: 58,
     INV_CLASS_DATA: 1,
     INV_CURRENT_INVENTORY_INDEX: 2,
     INV_FIRE: 3,
@@ -928,7 +929,15 @@ class GameInstance
                     {
                         this.removeNextStep(body);
                     }
-                }                
+                }     
+                if (data.exposeTimer > 0)
+                {
+                    data.exposeTimer--;
+                    if (data.exposeTimer <= 0)
+                    {
+                        this.setDataValue(body, "bExposed", false);
+                    }
+                }    
                 if (data.bStunned)
                 {
                     if (data.stunTimer > 0)
@@ -2017,7 +2026,7 @@ class GameInstance
                     break;
                 default:
                     ai.offsetX = this.Random(-50, 50);
-                    ai.offsetY = this.Random(-75, 75);
+                    ai.offsetY = this.Random(-100, 100);
                     break;
             }
         }        
@@ -3253,7 +3262,7 @@ class GameInstance
             var enemy = this.getNearestEnemyPawn(_body, {
                 bTargetThermal: false,
                 bIgnoreOutOfSight: false,
-                maxRange: 2000,
+                maxRange: 1000,
                 bLOS: false
             });
             if (enemy)
@@ -3269,8 +3278,12 @@ class GameInstance
                 var distX = enemy.position[0] - _body.position[0];
                 var distY = enemy.position[1] - _body.position[1];
                 var rad = Math.atan2(distY, distX);
-                var speed = 150;
+                var speed = data.velocity ? data.velocity : 150;
                 var target = this.WrapAngle(_body.angle - rad, true);
+                if (_body.gravityScale > 0)
+                {
+                    _body.gravityScale = 0;
+                }
                 _body.angle -= target * 0.5;
                 _body.applyForce([Math.cos(_body.angle) * speed, Math.sin(_body.angle) * speed], 0, 0);
                 this.constrainVelocity(_body, 1000);
@@ -3387,8 +3400,17 @@ class GameInstance
                         var muzzlePos = this.getVehicleMuzzlePosition(_body, i);
                         var weaponData = weapon.weaponData;
                         var bulletRad = weapon.aimRotation + this.ToRad(this.Random(-weaponData.accuracy, weaponData.accuracy) * 0.1);
+                        if (weaponData.bAutoLock)
+                        {
+                            var pawn = this.getObjectById(pawnId);
+                            if (pawn && pawn.data.lockOnTargetId)
+                            {
+                                bulletRad += this.ToRad(this.Random(-15, 15));
+                            }
+                        }
                         if (weaponData.bRocket)
                         {
+                            var pawn = this.getObjectById(pawn);
                             this.createRocket({
                                 x: muzzlePos[0],
                                 y: muzzlePos[1],
@@ -3403,7 +3425,8 @@ class GameInstance
                                 radius: weaponData.radius,
                                 bAirOnly: weaponData.bAirOnly,
                                 gravityScale: weaponData.gravityScale,
-                                bAutoLock: weaponData.bAutoLock
+                                bAutoLock: weaponData.bAutoLock,
+                                bCanLock: weaponData.bCanLock
                             });
                         }
                         else
@@ -3719,7 +3742,7 @@ class GameInstance
         var weapon = data.weapon;
         if (weapon)
         {
-            var recoilMult = 0.95; //Lower value is faster recoil recovery
+            var recoilMult = 0.975; //Lower value is faster recoil recovery
             var recoilDecay = recoilMult * this.game.fpsMult;
             weapon.recoil = this.RoundDecimal(weapon.recoil * recoilDecay);
         }        
@@ -4187,15 +4210,16 @@ class GameInstance
                 var rocketData = {
                     x: muzzlePos[0],
                     y: muzzlePos[1],
-                    type: weapon["rocketType"] ? weapon["rocketType"] : Rocket.TYPE_DEFAULT,
+                    type: weapon.rocketType ? weapon.rocketType : Rocket.TYPE_DEFAULT,
                     team: data.team,
                     playerId: data.id,
                     causerId: data.id,
                     angle: bulletRad,
                     weaponId: weapon.id,
-                    damage: weapon["damage"],
-                    radius: weapon["radius"],
-                    bAirOnly: weapon["bAirOnly"]
+                    damage: weapon.damage,
+                    radius: weapon.radius,
+                    bAirOnly: weapon.bAirOnly,
+                    bCanLock: weapon.bCanLock
                 };
                 if (weapon.fireDamage)
                 {
@@ -4227,7 +4251,7 @@ class GameInstance
                     playerId: data.id,
                     causerId: data.id,
                     rotation: bulletRad,
-                    velocity: 1750,
+                    velocity: weapon.velocity ? weapon.velocity : 1500,
                     damage: weapon.damage,
                     weaponId: weapon.id,
                     bImpact: true,
@@ -4272,7 +4296,6 @@ class GameInstance
             var recoilVal = useRecoil + (Math.abs(useRecoil) * 0.15);
             data.weapon.recoil += -(recoilVal * recoilMult) * (rand == 1 ? scaleVal : -scaleVal);            
         }
-
         if (weapon.type == Weapon.TYPE_MELEE)
         {
             this.requestEvent({
@@ -4296,6 +4319,11 @@ class GameInstance
                 type: GameServer.PAWN_FIRE_WEAPON,
                 recoil: useRecoil
             });
+        }
+        if (!weapon.bSilenced && !this.hasMod(weapon, Mods.BARREL_SILENCER))
+        {
+            this.setDataValue(_body, "bExposed", true);
+            data.exposeTimer = this.game.settings.fps * 2;
         }
     }
 
@@ -4332,7 +4360,8 @@ class GameInstance
         this.cancelCharacterBoltPull(_body);
         var data = _body.data;
         var prev = this.getCurrentCharacterInventoryItem(_body, false);
-        data["currentInventoryIndex"] = _index;
+        data.currentInventoryIndex = _index;
+        data.lockOnTargetId = null;
         var item = this.getCurrentCharacterInventoryItem(_body);
         if (prev)
         {            
@@ -4372,15 +4401,15 @@ class GameInstance
             var shield = this.createShield(_body.data.id);
             if (shield)
             {
-                data["shieldId"] = shield.data.id;
+                data.shieldId = shield.data.id;
             }
         }
         else
         {
-            if (data["shieldId"])
+            if (data.shieldId)
             {
-                this.removeObjectById(_body.data["shieldId"]);
-                delete _body.data["shieldId"];
+                this.removeObjectById(_body.data.shieldId);
+                delete _body.data.shieldId;
             }
         }
     }
@@ -4822,7 +4851,6 @@ class GameInstance
 
     addPlayer(_data)
     {
-        console.log("Add player", _data.id);
         var ps = this.clone(_data);
         if (this.getPlayerById(ps.id))
         {
@@ -5013,6 +5041,15 @@ class GameInstance
                                 pawn.data.requestTimer = this.game.settings.fps * 5;
                             }
                             break;
+                    }
+                    if (_data.lockOnTargetId !== undefined)
+                    {
+                        var pawn = this.getObjectById(_data.pawnId);
+                        if (pawn)
+                        {
+                            pawn.data.lockOnTargetId = _data.lockOnTargetId;
+                        }
+                        _data.bServer = true;
                     }
                     break;
 
@@ -5988,7 +6025,7 @@ class GameInstance
                 break;
 
             case "helicopter":
-                var heliSpeed = 4500 / this.game.fpsMult;
+                var heliSpeed = (_controllable.data.speed ? _controllable.data.speed : 4500) / this.game.fpsMult;
                 switch (keyId)
                 {
                     case Control.JUMP:
@@ -8132,7 +8169,7 @@ class GameInstance
                         delete interactable.data["currentPawnId"];
                     }
                 }
-                if (this.Random(1, 2) == 1)
+                if (this.Random(1, 3) == 1)
                 {
                     this.dropCharacterWeapon(pawn, pawn.data.currentInventoryIndex);
                 }
@@ -8674,7 +8711,8 @@ class GameInstance
             damage: damage,
             radius: radius,
             team: _data.team,
-            rocketData: _data
+            rocketData: _data,
+            velocity: velocity
         };
         if (path)
         {
@@ -8690,7 +8728,7 @@ class GameInstance
             body.data["health"] = 20;
         }
         var shape = new p2.Box({
-            width: 40,
+            width: 50,
             height: 10,
             collisionGroup: CollisionGroups.PROJECTILE,
             collisionMask: CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.VEHICLE | CollisionGroups.OBJECT
@@ -8703,12 +8741,17 @@ class GameInstance
             var rad = _data.angle;
             body.applyImpulse([Math.cos(rad) * velocity, Math.sin(rad) * velocity], 0, 0);
         }
-        if (bAirOnly)
+        if (bAirOnly || _data.bCanLock)
         {
             var pawn = this.getObjectById(_data.playerId);
             if (pawn)
             {
-                body.data.rocketData["enemyId"] = pawn.data["lockOnTargetId"];
+                body.data.rocketData["enemyId"] = pawn.data.lockOnTargetId;
+                this.requestEvent({
+                    eventId: GameServer.EVENT_PAWN_ACTION,
+                    pawnId: pawn.data.lockOnTargetId,
+                    type: GameServer.PAWN_LOCK_ACQUIRED
+                });
             }
         }
         if (bControllable)
@@ -8884,7 +8927,7 @@ class GameInstance
         if (_weaponData.id == "trophy")
         {
             body.data["material"] = Material.METAL;
-            body.data["blockNum"] = 2;
+            body.data["blockNum"] = 3;
             body.data["bCanMelee"] = true;
         }
         else if (_weaponData.id == "tac_insert")
@@ -9519,6 +9562,7 @@ class GameInstance
 
             case Helicopter.COBRA:
                 data.health = 2000;
+                data.speed = 3000;
                 data.seats = [
                     {
                         position: [160, 20],
@@ -9548,6 +9592,7 @@ class GameInstance
                 break;
 
             case Helicopter.BLACKHAWK:
+                data.speed = 3500;
                 data.health = 2500;
                 data.seats = [
                     {
@@ -10108,6 +10153,7 @@ class GameInstance
                 recoil: 0
             },
             bBot: _data.bBot,
+            bExposed: false,
             avatar: _data.avatar
         };
         var data = body.data;
@@ -10363,6 +10409,13 @@ class GameInstance
             }
             switch (dataA.type)
             {
+                case "window":
+                    if (this.isVehicle(_bodyB))
+                    {
+                        this.removeNextStep(_bodyA);
+                    }
+                    break;
+
                 case "door":
                     if (dataA.bClosed)
                     {
@@ -11552,7 +11605,11 @@ class GameInstance
                     //_weaponData.recoil = _weaponData.recoil * 0.25;
                     break;
                 case Mods.ACCESSORY_LASER:
-                    if (_weaponData.type != Weapon.TYPE_SHOTGUN)
+                    if (_weaponData.type == Weapon.TYPE_SHOTGUN)
+                    {
+                        _weaponData.accuracy = _weaponData.accuracy * 0.9;
+                    }
+                    else
                     {
                         _weaponData.accuracy = _weaponData.accuracy * 0.75;
                     }
@@ -11577,6 +11634,7 @@ class GameInstance
             {
                 case Mods.BARREL_SILENCER:
                     _weaponData.recoil = _weaponData.recoil * 0.75;
+                    _weaponData.dropRange = Math.round(_weaponData.dropRange * 0.75);
                     break;
                 case Mods.BARREL_COMPENSATOR:
                     _weaponData.recoil = _weaponData.recoil * 0.5;
@@ -11929,6 +11987,20 @@ class GameInstance
                     switch (wpn.type)
                     {
                         case Weapon.TYPE_LAUNCHER:
+                            break;
+                        case Weapon.TYPE_DMR:
+                        case Weapon.TYPE_SNIPER:
+                        case Weapon.TYPE_RIFLE:
+                        case Weapon.TYPE_CARBINE:
+                        case Weapon.TYPE_SMG:
+                            if (!wpn.bSilenced)
+                            {
+                                mods.push(Mods.BARREL_COMPENSATOR, Mods.BARREL_BRAKE, Mods.BARREL_HEAVY, Mods.BARREL_SILENCER);
+                            }
+                            else
+                            {
+                                mods.push(Mods.BARREL_COMPENSATOR, Mods.BARREL_BRAKE, Mods.BARREL_HEAVY);
+                            }
                             break;
                         default:
                             mods.push(Mods.BARREL_COMPENSATOR, Mods.BARREL_BRAKE, Mods.BARREL_HEAVY);

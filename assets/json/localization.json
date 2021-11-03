@@ -380,6 +380,15 @@
   "STR_UNLOCK_ALL": {
     "en": "Unlock All"
   },
+  "STR_TARGET_LOCKED": {
+    "en": "Target Locked"
+  },
+  "STR_AIR_TARGET_REQUIRED": {
+    "en": "Air Target Required"
+  },
+  "STR_LOCKING_ON": {
+    "en": "Locking On..."
+  },
   "STR_CLEAR_PENDING": {
     "en": "Clear Pending Items"
   },
@@ -596,6 +605,12 @@
   "STR_X_LEFT": {
     "en": "%1 left"
   },
+  "STR_X_KICKED": {
+    "en": "%1 was kicked"
+  },
+  "STR_X_TIMED_OUT": {
+    "en": "%1 timed out"
+  },
   "STR_MAP": {
     "en": "Map"
   },
@@ -785,6 +800,14 @@
     "tr": "MP5A2",
     "es": "MP5A2",
     "it": "MP5A2"
+  },
+  "STR_WPN_UMP45": {
+    "en": "UMP45",
+    "ru": "UMP45",
+    "zh-CN": "UMP45",
+    "tr": "UMP45",
+    "es": "UMP45",
+    "it": "UMP45"
   },
   "STR_WPN_M93R": {
     "en": "M93R",
@@ -1062,17 +1085,25 @@
     "es": "M32 Lanzagranadas",
     "it": "M32 MGL"
   },
+  "STR_WPN_SMAW": {
+    "en": "MK153 SMAW",
+    "ru": "MK153 SMAW",
+    "zh-CN": "手把电焊",
+    "tr": "MK153 SMAW",
+    "es": "MK153 SMAW",
+    "it": "MK153 SMAW"
+  },
   "STR_WPN_SMOKE": {
-    "en": "Smoke"
+    "en": "M18 Smoke"
   },
   "STR_WPN_FRAG": {
-    "en": "Frag"
+    "en": "M67 Frag"
   },
   "STR_WPN_STUN": {
-    "en": "Stun"
+    "en": "M84 Stun"
   },
   "STR_WPN_FLASHBANG": {
-    "en": "Flashbang"
+    "en": "M84 Flashbang"
   },
   "STR_WPN_SEMTEX": {
     "en": "Semtex"
@@ -1165,6 +1196,30 @@
     "tr": "Yumruklar",
     "es": "Puños",
     "it": "Pugni"
+  },
+  "STR_NOT_ENOUGH_SHARDS": {
+    "en": "Not Enough Shards",
+    "ru": "Недостаточно осколков",
+    "zh-CN": "碎片不足",
+    "tr": "Yeterince Shard yok",
+    "es": "Fragmentos insuficientes",
+    "it": "Non hai altri frammenti"
+  },
+  "STR_YOU_NEED_X_SHARDS_FOR_X": {
+    "en": "You need at least %1 Shards for %2.",
+    "ru": "Вам нужно хотя бы %1 осколков, чтобы приобрести %2.",
+    "zh-CN": "您至少需要 %1 块碎片来解锁 %2。",
+    "tr": "%2 için en az %1 Shard'a ihtiyacınız var.",
+    "es": "Necesitas al menos %1 fragmentos para %2.",
+    "it": "Hai bisogno di almeno %1 frammenti per sbloccare %2."
+  },
+  "STR_YOU_NEED_X_SHARD_FOR_X": {
+    "en": "You need at least %1 Shard for %2.",
+    "ru": "Вам нужен хотя бы %1 осколок, чтобы приобрести %2.",
+    "zh-CN": "您只需要 %1 块碎片就能解锁 %2。",
+    "tr": "%2 için en az %1 Shard'a ihtiyacınız var.",
+    "es": "Necesitas al menos %1 fragmento para %2.",
+    "it": "Hai bisogno di almeno %1 frammento per sbloccare %2."
   },
   "STR_PARACHUTE": {
     "en": "Parachute"
@@ -3490,5 +3545,202 @@
     "tr": "Başbuğ",
     "es": "Comandante",
     "it": "Comandante"
+  },
+  "STR_CONTROL_MOVE": {
+    "en": "Move",
+    "ru": "Двигаться",
+    "zh-CN": "行走",
+    "tr": "Hareket",
+    "es": "Moverse",
+    "it": "Muovi"
+  },
+  "STR_CONTROL_JUMP": {
+    "en": "Jump",
+    "ru": "Прыгать",
+    "zh-CN": "跳跃",
+    "tr": "Zıpla",
+    "es": "Saltar",
+    "it": "Salta"
+  },
+  "STR_CONTROL_SPRINT": {
+    "en": "Sprint",
+    "ru": "Бежать",
+    "zh-CN": "冲刺",
+    "tr": "Koş",
+    "es": "Esprintar",
+    "it": "Corri"
+  },
+  "STR_CONTROL_CROUCH": {
+    "en": "Crouch",
+    "ru": "Присесть",
+    "zh-CN": "蹲伏",
+    "tr": "Çömel",
+    "es": "Agacharse",
+    "it": "Abbassati"
+  },
+  "STR_CONTROL_INTERACT": {
+    "en": "Interact",
+    "ru": "Взаимодействовать",
+    "zh-CN": "互动",
+    "tr": "Etkileşim",
+    "es": "Interactuar",
+    "it": "Interagisci"
+  },
+  "STR_CONTROL_MAP": {
+    "en": "View Map",
+    "ru": "Посмотреть карту",
+    "zh-CN": "查看地图",
+    "tr": "Haritayı Görüntüle",
+    "es": "Ver mapa",
+    "it": "Visualizza Mappa"
+  },
+  "STR_CONTROL_RELOAD": {
+    "en": "Reload Weapon",
+    "ru": "Перезарядить оружие",
+    "zh-CN": "装填弹药",
+    "tr": "Silahı Doldur",
+    "es": "Recargar",
+    "it": "Ricarica Arma"
+  },
+  "STR_CONTROL_SWITCH": {
+    "en": "Switch Weapon",
+    "ru": "Сменить оружие",
+    "zh-CN": "切换武器",
+    "tr": "Silah Değiştir",
+    "es": "Cambiar arma",
+    "it": "Cambia Arma"
+  },
+  "STR_CONTROL_EQUIPMENT": {
+    "en": "Use Equipment",
+    "ru": "Использ. снаряжение",
+    "zh-CN": "使用道具",
+    "tr": "Ekipman Kullan",
+    "es": "Usar el equipo",
+    "it": "Utilizza Equipaggiamento"
+  },
+  "STR_CONTROL_GRENADE": {
+    "en": "Throw Grenade"
+  },
+  "STR_CONTROL_MELEE": {
+    "en": "Melee Attack",
+    "ru": "Ближний Бой",
+    "zh-CN": "近战攻击",
+    "tr": "Bıçak Saldırısı",
+    "es": "Ataque cuerpo a cuerpo",
+    "it": "Attacco corpo a corpo"
+  },
+  "STR_CONTROL_KILLSTREAK": {
+    "en": "Use Killstreak",
+    "ru": "Награда за комбо",
+    "zh-CN": "激活连杀奖励",
+    "tr": "Leş Serisi'ni Kullan",
+    "es": "Usar racha de muertes",
+    "it": "Usa serie di uccisioni"
+  },
+  "STR_CONTROL_WEAPON": {
+    "en": "Equip Undebarrel"
+  },
+  "STR_CONTROL_FIRE_WEAPON": {
+    "en": "Fire Weapon",
+    "ru": "Стрелять",
+    "zh-CN": "武器开火",
+    "tr": "Silahı Ateşle",
+    "es": "Disparar",
+    "it": "Fuoco Arma"
+  },
+  "STR_CONTROL_ADS": {
+    "en": "Aim / Underbarrel",
+    "ru": "Прицелится / Подствольное",
+    "zh-CN": "瞄准 / 下枪管配件功能",
+    "tr": "Nişan / Altnamlu",
+    "es": "Apuntar / Acoplados",
+    "it": "Mira / Sottocanna"
+  },
+  "STR_CONTROL_LEFT": {
+    "en": "Move Left",
+    "ru": "Двигаться влево",
+    "zh-CN": "向左移动",
+    "tr": "Sola Hareket",
+    "es": "Mover hacia la izquierda",
+    "it": "Muovi a Sinistra"
+  },
+  "STR_CONTROL_RIGHT": {
+    "en": "Move Right",
+    "ru": "Двигаться вправо",
+    "zh-CN": "向右移动",
+    "tr": "Sağa Hareket",
+    "es": "Mover hacia la derecha",
+    "it": "Muovi a Destra"
+  },
+  "STR_CONTROL_UP": {
+    "en": "Move/Climb Up",
+    "ru": "Двигаться/Лезть вверх",
+    "zh-CN": "向上移动/攀爬",
+    "tr": "Hareket/Tırmanma",
+    "es": "Mover/Subir",
+    "it": "Muovi/Sali"
+  },
+  "STR_CONTROL_DOWN": {
+    "en": "Move/Climb Down",
+    "ru": "Двигаться/Лезть вниз",
+    "zh-CN": "向下移动/攀爬",
+    "tr": "Hareket/Aşağı İnme",
+    "es": "Mover/Trepar hacia abajo",
+    "it": "Muovi/Scendi"
+  },
+  "STR_CONTROL_KILLSTREAK_NEXT": {
+    "en": "Select Next Killstreak",
+    "ru": "Выбрать следующую награду за комбо",
+    "zh-CN": "选择下一个连杀奖励",
+    "tr": "Sonraki Leş Serisini Seç",
+    "es": "Seleccionar la siguiente racha de muertes",
+    "it": "Seleziona prossima serie di uccisioni"
+  },
+  "STR_CONTROL_KILLSTREAK_PREV": {
+    "en": "Select Previous Killstreak",
+    "ru": "Выбрать предыдущую награду за комбо",
+    "zh-CN": "选择上一个连杀奖励",
+    "tr": "Önceki Leş Serisini Seç",
+    "es": "Seleccionar la racha de muertes anterior",
+    "it": "Seleziona precedente serie di uccisioni"
+  },
+  "STR_CONTROL_SCOREBOARD": {
+    "en": "View Scoreboard",
+    "ru": "Посмотреть таблицу счёта игроков",
+    "zh-CN": "查看计分板",
+    "tr": "Skor Tabelasını Gör",
+    "es": "Ver marcador",
+    "it": "Visualizza Classifica"
+  },
+  "STR_CONTROL_CHAT": {
+    "en": "Open In-Game Chat",
+    "ru": "Открыть чат",
+    "zh-CN": "打开游戏内聊天窗口",
+    "tr": "Oyuniçi Sohbeti Aç",
+    "es": "Abrir chat en el juego",
+    "it": "Apri Chat in Gioco"
+  },
+  "STR_CONTROL_PAUSE": {
+    "en": "Pause / Menu",
+    "ru": "Пауза/Меню",
+    "zh-CN": "暂停 / 菜单",
+    "tr": "Durdur / Menü",
+    "es": "Pausa / Menú",
+    "it": "Pausa / Menù"
+  },
+  "STR_CONTROL_COMMANDS": {
+    "en": "Open Commands Menu"
+  },
+  "STR_CONTROL_ITEM_1": {
+    "en": "Inventory 1"
+  },
+  "STR_CONTROL_ITEM_2": {
+    "en": "Inventory 2"
+  },
+  "STR_CONTROL_ITEM_3": {
+    "en": "Inventory 3"
+  },
+  "STR_CONTROLS": {
+    "en": "Controls"
   }
 }

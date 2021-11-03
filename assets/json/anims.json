@@ -874,7 +874,7 @@
         },
         {
           "frame": 95,
-          "sound": "sfx_reload_bolt_open"
+          "sound": "sfx_reload_bolt_close"
         }
       ]
     },

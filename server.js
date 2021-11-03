@@ -229,7 +229,7 @@ io.on("connection", (socket) =>
 
     if (getNumClients() >= settings.maxPlayers)
     {
-        socket.disconnect();
+        disconnectSocket(socket, "max_players");
         return;
     }
 
@@ -250,12 +250,117 @@ io.on("connection", (socket) =>
     socket.on("chat", (_message) =>
     {
         log(chalk.cyan(socket.id), "chat", _message);
-        sendChatMessage(socket.player.lobbyId, {
+        sendChatMessageToLobby(socket.player.lobbyId, {
             date: Date.now(),
             playerText: socket.player.name,
             playerId: socket.player.id,
             messageText: _message
         });
+        var arr = _message.split(" ");
+        if (arr && arr.length > 0)
+        {
+            var lobby = getLobbyData(socket.player.lobbyId);
+            switch (arr[0])
+            {
+                case "/players":
+                    if (lobby)
+                    {
+                        var str = "";
+                        for (var i = 0; i < lobby.players.length; i++)
+                        {
+                            var p = lobby.players[i];
+                            str += i + "  " + p.name + "  Level " + p.level + "  " + p.ping + "ms";
+                            if (p.bAdmin)
+                            {
+                                str += "  [ADMIN]";
+                            }
+                            if (i < lobby.players.length - 1)
+                            {
+                                str += "\n";
+                            }
+                        }
+                        sendChatMessageToSocket(socket, {
+                            date: Date.now(),
+                            bServer: true,
+                            bDirect: true,
+                            messageText: str
+                        });
+                    }
+                    break;
+
+                case "/votekick":
+                    if (lobby)
+                    {
+                        var index = parseInt(arr[1], 10);
+                        log(arr[1], index);
+                        if (index != null && !isNaN(index))
+                        {
+                            for (var i = 0; i < lobby.players.length; i++)
+                            {
+                                var p = lobby.players[i];
+                                if (index == i)
+                                {
+                                    if (p.id == socket.player.id)
+                                    {
+                                        sendChatMessageToSocket(socket, {
+                                            date: Date.now(),
+                                            bServer: true,
+                                            bDirect: true,
+                                            messageText: "You can't votekick yourself."
+                                        });
+                                        var kickNum = 0;
+                                        continue;
+                                    }
+                                    if (p.votekicks == null)
+                                    {
+                                        p.votekicks = {};
+                                    }
+                                    p.votekicks[socket.player.id] = 1;
+                                    var numVotes = Object.keys(p.votekicks).length;
+                                    kickNum = Math.ceil(lobby.players.length * 0.5);
+                                    sendChatMessageToLobby(lobby.id, {
+                                        date: Date.now(),
+                                        bServer: true,
+                                        messageText: "Votes against " + p.name + ": " + numVotes + "/" + kickNum
+                                    });
+                                    if (numVotes >= kickNum)
+                                    {
+                                        var voteSocket = getSocketByPlayerId(p.id);
+                                        if (voteSocket)
+                                        {
+                                            disconnectSocket(voteSocket, "kicked");
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                            if (kickNum == null)
+                            {
+                                sendChatMessageToSocket(socket, {
+                                    date: Date.now(),
+                                    bServer: true,
+                                    bDirect: true,
+                                    messageText: "Player not found. Type /players"
+                                });
+                            }
+                        }
+                        else
+                        {
+                            sendChatMessageToSocket(socket, {
+                                date: Date.now(),
+                                bServer: true,
+                                bDirect: true,
+                                messageText: "Missing player index. Type /players"
+                            });
+                        }
+                    }
+                    break;
+
+                case "/disconnect":
+                    disconnectSocket(socket);
+                    break;
+            }
+        }
     });
     socket.on("update", (_data) =>
     {
@@ -264,9 +369,13 @@ io.on("connection", (socket) =>
         {
             if (_data.version && _data.version != ServerData.GAME_VERSION)
             {
-                socket.disconnect();
+                disconnectSocket(socket, "version_mismatch");
                 return;
-            }          
+            }
+            if (_data.bAdmin)
+            {
+                socket.player.bAdmin = _data.bAdmin == true;
+            }
             if (_data.name)
             {
                 socket.player.name = _data.name;
@@ -340,7 +449,7 @@ io.on("connection", (socket) =>
             }
             else
             {
-                socket.disconnect();
+                disconnectSocket(socket);
             }
         }
     });
@@ -368,6 +477,7 @@ io.on("connection", (socket) =>
         var lobby = getLobbyData(socket.player.lobbyId);
         if (lobby)
         {
+            var num = 0;
             var keys = Object.keys(_data);
             for (var i = 0; i < keys.length; i++)
             {
@@ -380,15 +490,31 @@ io.on("connection", (socket) =>
                     {
                         var settingsKey = settingsKeys[j];
                         var settingsValue = _data.settings[settingsKey];
+                        if (lobby.gameData.settings[settingsKey] !== settingsValue)
+                        {
+                            num++;
+                        }
                         lobby.gameData.settings[settingsKey] = settingsValue;
                     }
                 }
                 else
                 {
+                    if (lobby.gameData[key] !== value)
+                    {
+                        num++;
+                    }
                     lobby.gameData[key] = value;
                 }
             }
             io.to(lobby.id).emit("updateLobby", { gameData: lobby.gameData });
+            if (num > 0)
+            {
+                sendChatMessageToLobby(lobby.id, {
+                    date: Date.now(),
+                    bServer: true,
+                    messageText: "Game settings changed (" + num + ")"
+                });
+            }
         }
     });
     socket.on("requestEvent", (_data) =>
@@ -450,7 +576,7 @@ io.on("connection", (socket) =>
     socket.on("disconnect", () =>
     {
         log(chalk.cyan(socket.id), chalk.red("Disconnected"));
-        leaveLobby(socket);
+        leaveLobby(socket, socket.disconnectReason);
     });
 });
 
@@ -523,8 +649,7 @@ function joinLobby(_socket, _lobbyId)
         }
         else
         {
-            console.log(_socket.player.name);
-            sendChatMessage(lobby.id, {
+            sendChatMessageToLobby(lobby.id, {
                 date: Date.now(),
                 locText: "STR_X_JOINED",
                 params: [_socket.player.name]
@@ -533,7 +658,7 @@ function joinLobby(_socket, _lobbyId)
     }
 }
 
-function sendChatMessage(_lobbyId, _data)
+function sendChatMessageToLobby(_lobbyId, _data)
 {
     var lobby = getLobbyData(_lobbyId);
     if (lobby)
@@ -544,6 +669,14 @@ function sendChatMessage(_lobbyId, _data)
         }
         lobby.chat.push(_data);
         io.to(lobby.id).emit("chat", _data);
+    }
+}
+
+function sendChatMessageToSocket(_socket, _data)
+{
+    if (_socket)
+    {
+        _socket.emit("chat", _data);
     }
 }
 
@@ -586,7 +719,14 @@ function setLobbyState(_lobbyId, _state)
                 startGame(lobbies[0].id, gameData);
                 break;
             case LobbyState.WAITING:
-
+                for (var i = 0; i < lobby.players.length; i++)
+                {
+                    var p = lobby.players[i];
+                    if (p.votekicks)
+                    {
+                        delete p.votekicks;
+                    }
+                }
                 break;
         }
         io.to(lobby.id).emit("updateLobby", { state: lobby.state, chat: lobby.chat });
@@ -621,7 +761,7 @@ function getClientLobbyData(_lobby)
     return data;
 }
 
-function leaveLobby(_socket)
+function leaveLobby(_socket, _reason)
 {
     var lobby = getLobbyData(_socket.player.lobbyId);
     if (lobby)
@@ -644,9 +784,21 @@ function leaveLobby(_socket)
         }
         if (!lobby.game)
         {
-            sendChatMessage(lobby.id, {
+            switch (_reason)
+            {
+                case "kicked":
+                    var str = "STR_X_KICKED";
+                    break;
+                case "timed_out":
+                    str = "STR_X_TIMED_OUT";
+                    break;
+                default:
+                    str = "STR_X_LEFT";
+                    break;
+            }
+            sendChatMessageToLobby(lobby.id, {
                 date: Date.now(),
-                locText: "STR_X_LEFT",
+                locText: str,
                 params: [_socket.player.name]
             });
         }
@@ -734,6 +886,7 @@ function getLobbyData(_lobbyId)
     }
     return null;
 }
+
 function getBot(_botSkill)
 {
     var level = 1;
@@ -752,6 +905,15 @@ function getBot(_botSkill)
         level: level
     };
     return player;
+}
+
+function disconnectSocket(_socket, _reason)
+{
+    if (_socket)
+    {
+        _socket.disconnectReason = _reason;
+        _socket.disconnect();
+    }
 }
 
 function getNumClients()
@@ -774,6 +936,20 @@ function getSocketByPlayerId(_id)
         }
     }
     return null;
+}
+
+function getVotesAgainstPlayer(_id)
+{
+    var socket = getSocketByPlayerId(_id);
+    if (socket)
+    {
+        if (socket.player.votekicks)
+        {
+            var keys = Object.keys(socket.player.votekicks);
+            return keys.length;
+        }
+    }
+    return 0;
 }
 
 function getRandomUniqueId()

@@ -1023,8 +1023,7 @@
       "position": [
         2550,
         1900
-      ],
-      "team": 0
+      ]
     },
     {
       "type": "helicopter",
@@ -1047,7 +1046,7 @@
       "type": "tank",
       "tankType": "abrams",
       "position": [
-        4000,
+        3900,
         2350
       ],
       "scale": 1
@@ -1056,7 +1055,7 @@
       "type": "tank",
       "tankType": "t90",
       "position": [
-        10000,
+        10100,
         2350
       ],
       "scale": -1
@@ -1094,6 +1093,22 @@
       ],
       "weaponId": "tac50",
       "scale": -1
+    },
+    {
+      "type": "obstacle",
+      "obstacleId": "sandbags_large",
+      "position": [
+        11717,
+        2400
+      ]
+    },
+    {
+      "type": "obstacle",
+      "obstacleId": "sandbags_large",
+      "position": [
+        2283,
+        2400
+      ]
     },
     {
       "type": "obstacle",
