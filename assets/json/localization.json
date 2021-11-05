@@ -277,6 +277,110 @@
     "es": "Muertes",
     "it": "Uccisioni"
   },
+  "STR_STAT_ASSISTS": {
+    "en": "Assists",
+    "ru": "Помощи",
+    "zh-CN": "协助击杀",
+    "tr": "Asistler",
+    "es": "Asistencias",
+    "it": "Assist"
+  },
+  "STR_STAT_AVENGERS": {
+    "en": "Avengers",
+    "ru": "Мстители",
+    "zh-CN": "复仇者",
+    "tr": "İntikamcılar",
+    "es": "Vengadores",
+    "it": "Vendicatori"
+  },
+  "STR_STAT_REVENGES": {
+    "en": "Revenges",
+    "ru": "Мести",
+    "zh-CN": "报复击杀",
+    "tr": "İntikamlar",
+    "es": "Venganzas",
+    "it": "Vendette"
+  },
+  "STR_STAT_AFTERLIFES": {
+    "en": "Afterlifes",
+    "ru": "Убийства после смерти",
+    "zh-CN": "后事",
+    "tr": "Öldükten sonralar",
+    "es": "Aniquilaciones después de muerto",
+    "it": "Dopo Morte"
+  },
+  "STR_STAT_SUICIDES": {
+    "en": "Suicides",
+    "ru": "Самоубийства",
+    "zh-CN": "自杀",
+    "tr": "İntiharlar",
+    "es": "Suicidios",
+    "it": "Suicidi"
+  },
+  "STR_STAT_MVPS": {
+    "en": "MVPs",
+    "ru": "Звания \"Лучший игрок\"",
+    "zh-CN": "全场最佳",
+    "tr": "EDO'lar",
+    "es": "MVPs",
+    "it": "MVP"
+  },
+  "STR_STAT_FLAG_CAPTURES": {
+    "en": "Flag Captures",
+    "ru": "Захваты флагов",
+    "zh-CN": "夺取旗帜",
+    "tr": "Bayrak Kapmaları",
+    "es": "Capturas de bandera",
+    "it": "Bandiere Catturate"
+  },
+  "STR_STAT_FLAG_RETURNS": {
+    "en": "Flag Returns",
+    "ru": "Возвраты флагов",
+    "zh-CN": "寻回旗帜",
+    "tr": "Bayrak Getirmeleri",
+    "es": "Banderas devueltas",
+    "it": "Bandiere Tornate"
+  },
+  "STR_STAT_BOMB_PLANTS": {
+    "en": "Bomb Plants",
+    "ru": "Закладки бомб",
+    "zh-CN": "炸弹放置",
+    "tr": "Bomba Kurmaları",
+    "es": "Bombas plantadas",
+    "it": "Bombe Posizionate"
+  },
+  "STR_STAT_BOMB_DEFUSES": {
+    "en": "Bomb Defusals",
+    "ru": "Обезвреживания бомб",
+    "zh-CN": "炸弹拆除",
+    "tr": "Bomba Çözmeleri",
+    "es": "Bombas desactivadas",
+    "it": "Bombe Disinnescate"
+  },
+  "STR_STAT_FLAG_CARRIER_KILLS": {
+    "en": "Flag Carrier Kills",
+    "ru": "Убийств носителей флагов",
+    "zh-CN": "夺旗者击杀",
+    "tr": "Bayrak Taşıyıcı Öldürmeleri",
+    "es": "Muertes de portabandera",
+    "it": "Uccisioni Porta Bandiere"
+  },
+  "STR_STAT_OFFENSIVE_KILLS": {
+    "en": "Offensive Kills",
+    "ru": "Атакующие убийства",
+    "zh-CN": "作为进攻方击杀",
+    "tr": "Saldırgan Öldürmeler",
+    "es": "Muertes como atacante",
+    "it": "Uccisioni Offensive"
+  },
+  "STR_STAT_DEFENSIVE_KILLS": {
+    "en": "Defensive Kills",
+    "ru": "Оборонительные убийства",
+    "zh-CN": "作为防守方击杀",
+    "tr": "Defansif Öldürmeler",
+    "es": "Muertes como defensor",
+    "it": "Uccisioni Difensive"
+  },
   "STR_STAT_RADIUS": {
     "en": "Radius",
     "ru": "Радиус",
@@ -346,6 +450,9 @@
   },
   "STR_SETTING_CAMERA_SPEED": {
     "en": "Camera Speed"
+  },
+  "STR_SETTING_CHAT_FILTER": {
+    "en": "Filter Chat Profanity"
   },
   "STR_EDIT_NAME": {
     "en": "Edit Name"
@@ -3043,6 +3150,30 @@
   "STR_REQUESTS_SUPPORT": {
     "en": "❗ Requests Support"
   },
+  "STR_ENEMY_LOCKED_ON": {
+    "en": "WARNING: Enemy Locked On"
+  },
+  "STR_ENEMY_INCOMING_PROJECTILE": {
+    "en": "WARNING: Guided Projectile Incoming!"
+  },
+  "STR_LEVEL_UP": {
+    "en": "Promotion"
+  },
+  "STR_WEAPON_UNLOCKED": {
+    "en": "Weapon Unlocked"
+  },
+  "STR_MOD_UNLOCKED": {
+    "en": "Attachment Unlocked"
+  },
+  "STR_X_UNLOCKED": {
+    "en": "%1 Unlocked"
+  },
+  "STR_X_RIBBON": {
+    "en": "%1 Ribbon"
+  },
+  "STR_RIBBONS": {
+    "en": "Ribbons"
+  },
   "STR_ERROR_FILE_X": {
     "en": "Error loading file: %1",
     "ru": "Ошибка при загрузке файла: %1",
@@ -3093,7 +3224,7 @@
     "it": "Silenziatore"
   },
   "STR_MOD_GRIP": {
-    "en": "Vertical Grip",
+    "en": "Foregrip",
     "ru": "Рукоять",
     "zh-CN": "稳定握把",
     "tr": "Kabza",

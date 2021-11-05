@@ -200,6 +200,11 @@ const Car = {
 const MountedWeapon = {
     M2_BROWNING: "m2"
 };
+const Commands = {
+    AMMO: 1,
+    VEHICLE: 2,
+    SUPPORT: 3
+};
 const Crate = {
     STORE: "CRATE_STORE",
     AMMO: "CRATE_AMMO",
@@ -484,7 +489,7 @@ class GameInstance
             fps: fps,
             gravity: _data.settings.gravity != null ? _data.settings.gravity : 600,
             restitution: 0.25,
-            updateTimerMax: Math.round(fps / (_data.settings.updateRate != null ? _data.settings.updateRate : 10))
+            updateTimerMax: Math.round(fps / (_data.settings.updateRate != null ? _data.settings.updateRate : 60))
         };
         if (typeof p2 === "undefined")
         {
@@ -535,7 +540,8 @@ class GameInstance
             spawners: [],
             toRemove: [],
             objectsToUpdate: null,
-            updateTimer: 1
+            updateTimer: 1,
+            callbacks: this.data.callbacks
         }   
         this.game.world.sleepMode = p2.World.BODY_SLEEPING;
         this.game.world.defaultContactMaterial.friction = 0.5;
@@ -664,7 +670,8 @@ class GameInstance
                 }
                 world.off("beginContact", this.onBeginContact, this);
             }
-            clearInterval(game.interval);
+            clearInterval(this.game.interval);
+            delete this.game.interval;
             this.stopAllTimers();
             while (this.game.players.length > 0)
             {
@@ -1880,23 +1887,26 @@ class GameInstance
                                 if (newData)
                                 {
                                     var weapon = weapons[_seatIndex];
-                                    weapon.weaponData = newData;
-                                    if (weapon.id != _vehicle.data.vehicleId)
+                                    if (!weapon.weaponData || weapon.weaponData.id != newData.id)
                                     {
-                                        weapon.id = newData.id;
+                                        weapon.weaponData = newData;
+                                        if (weapon.id != _vehicle.data.vehicleId)
+                                        {
+                                            weapon.id = newData.id;
+                                        }
+                                        if (!weapon.weaponData.overheatMax)
+                                        {
+                                            weapon.weaponData.overheatMax = 180;
+                                        }
+                                        weapon.overheat = 0;
+                                        this.requestEvent({
+                                            eventId: GameServer.EVENT_PAWN_ACTION,
+                                            pawnId: _vehicle.data.id,
+                                            type: GameServer.PAWN_VEHICLE_UPDATE,
+                                            index: _seatIndex,
+                                            weapon: weapon
+                                        });
                                     }
-                                    if (!weapon.weaponData.overheatMax)
-                                    {
-                                        weapon.weaponData.overheatMax = 180;
-                                    }
-                                    weapon.overheat = 0;
-                                    this.requestEvent({
-                                        eventId: GameServer.EVENT_PAWN_ACTION,
-                                        pawnId: _vehicle.data.id,
-                                        type: GameServer.PAWN_VEHICLE_UPDATE,
-                                        index: _seatIndex,
-                                        weapon: weapon
-                                    });
                                 }
                             }
                         }
@@ -2016,6 +2026,10 @@ class GameInstance
             ai.ticker = ai.tickerMax;
             switch (ai.botSkill)
             {
+                case BotSkill.SKILL_GOD:
+                    ai.offsetX = 0;
+                    ai.offsetY = 0;
+                    break;
                 case BotSkill.SKILL_INSANE:
                     ai.offsetX = this.Random(-15, 15);
                     ai.offsetY = this.Random(-15, 15);
@@ -2042,9 +2056,10 @@ class GameInstance
         if (ai.ticker == 0)
         {
             var enemy = this.getNearestEnemyPawn(_body);
+            data.lockOnTargetId = enemy ? enemy.data.id : null;
             if (enemy)
             {
-                ai.enemy = enemy;
+                ai.enemy = enemy;                
                 ai.bEnemyLOS = this.checkLineOfSight(_body.position, enemy.position, false, enemy);
                 ai.enemyDist = this.Dist(enemy.position[0], enemy.position[1], _body.position[0], _body.position[1]);
             }
@@ -2079,6 +2094,40 @@ class GameInstance
                 }
                 ai.pathTicker = pathTickerMax;
             }
+            var allies = this.getCharactersOnTeam(data.team);
+            for (var i = 0; i < allies.length; i++)
+            {
+                var ally = allies[i];
+                if (ally.data.id != data.id)
+                {
+                    if (ally.data.currentRequest == Commands.AMMO)
+                    {
+                        if (!data.controllableId)
+                        {                            
+                            var dist = this.Dist(ally.position[0], ally.position[1], _body.position[0], _body.position[1]);
+                            if (dist < 500)
+                            {
+                                if (this.hasEquipment(_body, "ammo_box"))
+                                {
+                                    this.useCharacterEquipment(_body, "equipment", ally.position[0], ally.position[1]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //Handle inventory
+        var bestIndex = this.getBestInventoryIndex(_body, ai.enemy, ai.enemyDist);
+        if (bestIndex != data.currentInventoryIndex)
+        {
+            this.requestEvent({
+                eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                pawnId: data.id,
+                type: GameServer.INV_CURRENT_INVENTORY_INDEX,
+                value: bestIndex
+            });
         }
 
         var moveDirX = 0;
@@ -2467,6 +2516,52 @@ class GameInstance
         }
     }
 
+    getBestInventoryIndex(_body, _enemyPawn, _enemyDist)
+    {
+        var data = _body.data;
+        var inventory = data["inventory"];
+        var bestIndex = data["currentInventoryIndex"];
+        var bestValue = 0;
+        for (var i = 0; i < inventory.length; i++)
+        {
+            var item = inventory[i];
+            var damage = item.damage;
+            if (item.type == Weapon.TYPE_LAUNCHER)
+            {
+                damage *= 0.5;
+            }
+            var itemValue = damage * item.magSize;
+            if (item["mag"] > 0 || item["ammo"] > 0 || data.weapon["bUnlimitedAmmo"])
+            {
+                //var enemyState = _enemyPawn ? this.getPlayerById(_enemyPawn.data["id"]) : null;
+                if (_enemyPawn && (this.isVehicle(_enemyPawn) || _enemyPawn.data.controllableId))
+                {
+                    if (item.bRocket)
+                    {
+                        bestIndex = i;
+                    }
+                }
+                else
+                {
+                    if (_enemyPawn && _enemyDist < 500 && item.type == Weapon.TYPE_SHOTGUN)
+                    {
+                        bestIndex = i;
+                    }
+                    else if (_enemyPawn && _enemyDist < 200 && item.id == "riot_shield")
+                    {
+                        bestIndex = i;
+                    }
+                    else if (itemValue > bestValue && !item["bAirOnly"])
+                    {
+                        bestIndex = i;
+                        bestValue = itemValue;
+                    }
+                }
+            }
+        }
+        return bestIndex;
+    }
+
     setVehicleWeaponAimRotation(_scale, _weapon, _val)
     {
         if (_weapon)
@@ -2484,7 +2579,8 @@ class GameInstance
                 }
                 else
                 {
-                    val = Math.max(_weapon.minAngle - this.ToRad(180), val);
+                    var rad = this.WrapAngle(_weapon.minAngle - this.ToRad(180));
+                    val = Math.max(rad, val);
                 }
             }
             if (_weapon.maxAngle != null)
@@ -2500,6 +2596,12 @@ class GameInstance
             }
             _weapon.aimRotation = val;
         }
+    }
+
+    hasEquipment(_body, _id)
+    {
+        var data = _body.data;
+        return data.equipment && data.equipment.id == _id && data.equipment.ammo > 0;
     }
 
     hasInventoryAmmo(_body)
@@ -3263,7 +3365,7 @@ class GameInstance
                 bTargetThermal: false,
                 bIgnoreOutOfSight: false,
                 maxRange: 1000,
-                bLOS: false
+                bLOS: true
             });
             if (enemy)
             {
@@ -3390,7 +3492,7 @@ class GameInstance
                                 type: GameServer.PAWN_WEAPON_COOLDOWN,
                                 index: i,
                                 value: weapon.bCooldown
-                            });
+                            });                            
                         }
                     }
                     var bHasAmmo = weapon.ammo != null ? weapon.ammo > 0 : true;
@@ -5047,7 +5149,15 @@ class GameInstance
                         var pawn = this.getObjectById(_data.pawnId);
                         if (pawn)
                         {
-                            pawn.data.lockOnTargetId = _data.lockOnTargetId;
+                            if (!pawn.data.lockOnTargetId && _data.lockOnTargetId)
+                            {
+                                this.requestEvent({
+                                    eventId: GameServer.EVENT_PAWN_ACTION,
+                                    pawnId: _data.lockOnTargetId,
+                                    type: GameServer.PAWN_LOCK_ACQUIRED
+                                });
+                            }
+                            pawn.data.lockOnTargetId = _data.lockOnTargetId;                            
                         }
                         _data.bServer = true;
                     }
@@ -7066,6 +7176,29 @@ class GameInstance
         return arr;
     }
 
+    getCharactersOnTeam(_team)
+    {
+        var world = this.game.world;
+        var arr = [];
+        for (var i = 0; i < world.bodies.length; i++)
+        {
+            var cur = world.bodies[i];
+            if (cur.data)
+            {
+                switch (cur.data.type)
+                {
+                    case "character":
+                        if (cur.data.team == _team)
+                        {
+                            arr.push(cur);
+                        }
+                        break;
+                }
+            }
+        }
+        return arr;
+    }
+
     getHelicopters()
     {
         var world = this.game.world;
@@ -7969,6 +8102,10 @@ class GameInstance
                 }
             }
         }
+        if (this.game.callbacks.onPlayerKill)
+        {
+            this.game.callbacks.onPlayerKill();
+        }
     }
 
     onPawnDeath(_pawnId, _damageAmount, _killerId, _causerId, _damageInfo)
@@ -8583,6 +8720,24 @@ class GameInstance
         }
     }
 
+    updatePlayer(_data)
+    {
+        if (!_data)
+        {
+            return;
+        }
+        var ps = this.getPlayerById(_data.id);
+        if (ps)
+        {
+            var keys = Object.keys(_data);
+            for (var i = 0; i < keys.length; i++)
+            {
+                var key = keys[i];
+                ps[key] = _data[key];
+            }
+        }
+    }
+
     getPlayerById(_id)
     {
         var players = this.game.players;
@@ -8747,11 +8902,15 @@ class GameInstance
             if (pawn)
             {
                 body.data.rocketData["enemyId"] = pawn.data.lockOnTargetId;
-                this.requestEvent({
-                    eventId: GameServer.EVENT_PAWN_ACTION,
-                    pawnId: pawn.data.lockOnTargetId,
-                    type: GameServer.PAWN_LOCK_ACQUIRED
-                });
+                if (pawn.data.lockOnTargetId)
+                {
+                    this.requestEvent({
+                        eventId: GameServer.EVENT_PAWN_ACTION,
+                        pawnId: pawn.data.lockOnTargetId,
+                        type: GameServer.PAWN_LOCK_ACQUIRED,
+                        bRocket: true
+                    });
+                }
             }
         }
         if (bControllable)
@@ -10934,7 +11093,7 @@ class GameInstance
                                     }
                                     else if (dataA.rocketData.team == dataB.team)
                                     {
-                                        bDetonate = !this.game.bSurvival;
+                                        bDetonate = !attackerPawn.data.bBot && this.game.gameModeData.bHardcore;
                                     }
                                 }
                                 if (dataB.controllableId)
@@ -11916,15 +12075,15 @@ class GameInstance
         for (var i = 0; i < keys.length; i++)
         {
             var key = keys[i];
-            var cur = classes[key];
-            var primary = cur.primary;            
+            var curClass = classes[key];
+            var primary = curClass.primary;            
             var rand = this.Random(1, 5);
             switch (rand)
             {
                 case 1:
                     var wpnType = Weapon.TYPE_DMR;
                     break;
-                case 1:
+                case 2:
                     wpnType = Weapon.TYPE_CARBINE;
                     break;
                 default:
@@ -11941,6 +12100,18 @@ class GameInstance
             primary.mods.barrel = mods[this.Random(0, mods.length - 1)];
             mods = this.getModsForWeapon(primary.id, Mods.TYPE_AMMO);
             primary.mods.ammo = mods[this.Random(0, mods.length - 1)];
+            var secondary = curClass.secondary;
+            switch (curClass)
+            {
+                case Classes.ENGINEER:
+                    var s = [Weapon.TYPE_LAUNCHER];
+                    break;
+                default:
+                    s = [Weapon.TYPE_PISTOL, Weapon.TYPE_MACHINE_PISTOL, Weapon.TYPE_SHOTGUN];
+                    break;
+            }
+            var wpns = this.getAllWeaponsByType(s[this.Random(0, s.length - 1)]);
+            secondary.id = wpns[this.Random(0, wpns.length - 1)].id;
         }
         return classes;
     }

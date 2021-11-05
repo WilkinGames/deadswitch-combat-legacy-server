@@ -1,27 +1,35 @@
 {
-  "name": "DigitalOcean Server [CA]",
+  "name": "DigitalOcean [Toronto, Canada]",
   "type": "STR_OFFICIAL",
-  "port": 8000,
+  "port": 3000,
   "maxPlayers": 32,
   "bUseLobby": true,
+  "welcome": "Welcome to the server.",
+  "rules": "This server has no rules.",
+  "info": [
+    "Type /rules for server rules.",
+    "Type /players to view players."
+  ],
   "gameData": {
     "gameModeId": "team_deathmatch",
     "mapId": "map_siege",
     "settings": {
       "timeLimit": 10,
       "scoreLimit": 100,
-      "respawnTime": 5,
-      "preGameTimer": 10,
+      "respawnTime": 1,
+      "preGameTimer": 5,
       "bAllowRespawns": true,
       "bSpawnProtection": true,
       "bVehicles": true,
       "bWeaponDrops": true,
-      "bSwitchSeats": true,
       "bHardcore": false,
+      "bFallDamage": true,
       "vehicleRespawnTime": 120,
       "weaponRespawnTime": 120,
       "bots": 0,
-      "botSkill": 0
+      "botSkill": 0,
+      "tickRate": 60,
+      "updateRate": 60
     }
   }
 }

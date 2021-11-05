@@ -4,35 +4,35 @@
     "type": "optic",
     "name": "STR_MOD_REFLEX",
     "desc": "STR_MOD_REFLEX_DESC",
-    "score": 1000
+    "score": 2000
   },
   {
     "id": "eotech",
     "type": "optic",
     "name": "STR_MOD_EOTECH",
     "desc": "STR_MOD_EOTECH_DESC",
-    "score": 5000
+    "score": 7500
   },
   {
     "id": "acog",
     "type": "optic",
     "name": "STR_MOD_ACOG",
     "desc": "STR_MOD_ACOG_DESC",
-    "score": 10000
+    "score": 15000
   },
   {
     "id": "ammo_fmj",
     "type": "ammo",
     "name": "STR_MOD_FMJ",
     "desc": "STR_MOD_FMJ_DESC",
-    "score": 2500
+    "score": 5000
   },
   {
     "id": "ammo_ap",
     "type": "ammo",
     "name": "STR_MOD_PIERCING",
     "desc": "STR_MOD_PIERCING_DESC",
-    "score": 5000
+    "score": 2500
   },
   {
     "id": "ammo_magpull",
@@ -95,7 +95,7 @@
     "type": "accessory",
     "name": "STR_MOD_GRIP_ANGLED",
     "desc": "STR_MOD_GRIP_ANGLED_DESC",
-    "score": 6000
+    "score": 7500
   },
   {
     "id": "acc_m203",
@@ -130,13 +130,13 @@
     "type": "barrel",
     "name": "STR_MOD_BRAKE",
     "desc": "STR_MOD_BRAKE_DESC",
-    "score": 5500
+    "score": 10000
   },
   {
     "id": "barrel_range",
     "type": "barrel",
     "name": "STR_MOD_HEAVY",
     "desc": "STR_MOD_HEAVY_DESC",
-    "score": 8500
+    "score": 15000
   }
 ]

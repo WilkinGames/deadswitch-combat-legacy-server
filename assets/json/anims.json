@@ -1892,19 +1892,19 @@
       "reload": [ 22, 259 ],
       "sounds": [
         {
-          "frame": 42,
-          "sound": "sfx_reload_bolt_open"
-        },
-        {
-          "frame": 84,
+          "frame": 58,
           "sound": "sfx_reload_start"
         },
         {
-          "frame": 167,
+          "frame": 126,
           "sound": "sfx_reload_end"
         },
         {
-          "frame": 230,
+          "frame": 185,
+          "sound": "sfx_reload_bolt_open"
+        },
+        {
+          "frame": 203,
           "sound": "sfx_reload_bolt_close"
         }
       ]
