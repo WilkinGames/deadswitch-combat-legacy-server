@@ -409,13 +409,23 @@ io.on("connection", (socket) =>
                                         var kickNum = 0;
                                         continue;
                                     }
+                                    if (p.bAdmin)
+                                    {
+                                        sendChatMessageToSocket(socket, {
+                                            bServer: true,
+                                            bDirect: true,
+                                            messageText: "You can't votekick an admin."
+                                        });
+                                        var kickNum = 0;
+                                        continue;
+                                    }
                                     if (p.votekicks == null)
                                     {
                                         p.votekicks = {};
                                     }
                                     p.votekicks[socket.player.id] = 1;
                                     var numVotes = Object.keys(p.votekicks).length;
-                                    kickNum = Math.ceil(lobby.players.length * 0.5);
+                                    kickNum = Math.ceil(lobby.players.length * 0.5) + 1;
                                     sendChatMessageToLobby(lobby.id, {
                                         bServer: true,
                                         messageText: "Votes against " + p.name + ": " + numVotes + "/" + kickNum
