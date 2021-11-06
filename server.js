@@ -853,7 +853,8 @@ function getClientLobbyData(_lobby)
             switch (key)
             {
                 case "game":
-                    break;
+                case "infoInterval":
+                    break;                
                 default:
                     data[key] = _lobby[key];
                     break;
