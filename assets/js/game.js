@@ -3046,7 +3046,7 @@ class GameInstance
             {
                 case GameMode.DOMINATION:
                 case GameMode.CONQUEST:
-                    this.setDataValue(_body, "captureTimerMax", this.game.settings.fps * (data.team == null ? 10 : 15));
+                    this.setDataValue(_body, "captureTimerMax", this.game.settings.fps * 10);
                     break;
             }
             for (var i = 0; i < 2; i++)

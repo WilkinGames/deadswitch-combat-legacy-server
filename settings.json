@@ -4,6 +4,7 @@
   "port": 8000,
   "maxPlayers": 32,
   "bUseLobby": true,
+  "bAllowVotekick": false,
   "welcome": "Welcome to the Beta server.",
   "rules": "This server has no rules.",
   "info": [

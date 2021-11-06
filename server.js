@@ -389,7 +389,7 @@ io.on("connection", (socket) =>
                     break;
 
                 case "/votekick":
-                    if (lobby)
+                    if (lobby && settings.bAllowVotekick)
                     {
                         var index = parseInt(arr[1], 10);
                         if (index != null && !isNaN(index))
