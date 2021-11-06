@@ -1992,10 +1992,6 @@ class GameInstance
                 this.setDataValue(vehicle, "team", -1);
             }
         }
-        else
-        {
-            console.warn("Invalid vehicle");
-        }
     }
 
     getCurrentMapData() 
@@ -3375,7 +3371,7 @@ class GameInstance
                 var distX = enemy.position[0] - _body.position[0];
                 var distY = enemy.position[1] - _body.position[1];
                 var rad = Math.atan2(distY, distX);
-                var speed = data.velocity ? data.velocity : 150;
+                var speed = 300; //data.velocity ? data.velocity : 150;
                 var target = this.WrapAngle(_body.angle - rad, true);
                 if (_body.gravityScale > 0)
                 {
@@ -3686,12 +3682,12 @@ class GameInstance
                 {
                     if (data.bSprinting)
                     {
-                        var mult = 2;
+                        var mult = this.getSharedData("character").sprintMult;
                         maxSpeed = maxSpeed * mult;
                     }
                     else if (data.bCrouching)
                     {
-                        var mult = 0.6;
+                        var mult = this.getSharedData("character").crouchMult;
                         maxSpeed = maxSpeed * mult;
                     }
                 }
@@ -6297,7 +6293,8 @@ class GameInstance
                     if (value.char && !data.bBot)
                     {
                         data.clientPos = value.char; 
-                        _body.position = value.char;
+                        _body.position[0] = (value.char[0] + _body.position[0]) * 0.5;
+                        _body.position[1] = (value.char[1] + _body.position[1]) * 0.5;
                         _body.velocity[1] = -value.vel[1] / 0.05;
                         data.bOnGround = value.bOnGround;
                     }
@@ -9739,7 +9736,7 @@ class GameInstance
 
             case Helicopter.COBRA:
                 data.health = 2000;
-                data.speed = 3000;
+                data.speed = 2750;
                 data.seats = [
                     {
                         position: [160, 20],
@@ -9769,7 +9766,7 @@ class GameInstance
                 break;
 
             case Helicopter.BLACKHAWK:
-                data.speed = 3500;
+                data.speed = 3000;
                 data.health = 2500;
                 data.seats = [
                     {
@@ -12372,6 +12369,15 @@ class GameInstance
             result += range;
         }
         return result + min;
+    }
+
+    RoundNumberArray(_arr)
+    {
+        if (_arr)
+        {
+            return [Math.round(_arr[0]), Math.round(_arr[1])];
+        }
+        return _arr;
     }
 
     RoundDecimal(_val)

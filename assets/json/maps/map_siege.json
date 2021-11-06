@@ -571,16 +571,16 @@
       "type": "obstacle",
       "obstacleId": "sandbags_large",
       "position": [
-        5272,
-        2449
+        5553,
+        2453
       ]
     },
     {
       "type": "obstacle",
       "obstacleId": "sandbags_large",
       "position": [
-        8728,
-        2449
+        8447,
+        2453
       ]
     },
     {
@@ -1099,6 +1099,22 @@
       ],
       "weaponId": "tac50",
       "scale": -1
+    },
+    {
+      "type": "obstacle",
+      "obstacleId": "sandbags_large",
+      "position": [
+        4705,
+        2421
+      ]
+    },
+    {
+      "type": "obstacle",
+      "obstacleId": "sandbags_large",
+      "position": [
+        9300,
+        2421
+      ]
     },
     {
       "type": "obstacle",

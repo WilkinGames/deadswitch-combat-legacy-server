@@ -721,6 +721,18 @@
   "STR_MAP": {
     "en": "Map"
   },
+  "STR_WORLD": {
+    "en": "World"
+  },
+  "STR_WORLD_DUSK": {
+    "en": "Dusk"
+  },
+  "STR_WORLD_NIGHT": {
+    "en": "Night"
+  },
+  "STR_WORLD_WINTER": {
+    "en": "Winter"
+  },
   "STR_RELOAD": {
     "en": "Reload"
   },

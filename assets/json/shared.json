@@ -6,6 +6,8 @@
     "crouchHeight": 62,
     "maxSpeed": 225,
     "jumpHeight": 350,
+    "sprintMult": 2.2,
+    "crouchMult": 0.6,
     "damping": 0.2,
     "ladderCooldown": 30,
     "climbDamping": 0.2,

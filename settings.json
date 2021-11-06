@@ -3,7 +3,7 @@
   "type": "STR_OFFICIAL",
   "port": 8000,
   "maxPlayers": 32,
-  "bUseLobby": true,
+  "bUseLobby": false,
   "bAllowVotekick": false,
   "welcome": "Welcome to the Beta server.",
   "rules": "This server has no rules.",
@@ -27,9 +27,9 @@
       "bFallDamage": true,
       "vehicleRespawnTime": 120,
       "weaponRespawnTime": 120,
-      "bots": 0,
+      "bots": 12,
       "botSkill": 0,
-      "tickRate": 60,
+      "tickRate": 30,
       "updateRate": 60
     }
   }
