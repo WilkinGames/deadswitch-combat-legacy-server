@@ -1,10 +1,10 @@
 {
-  "name": "DigitalOcean [Toronto, Canada]",
+  "name": "DigitalOcean [Canada]",
   "type": "STR_OFFICIAL",
   "port": 8000,
   "maxPlayers": 32,
   "bUseLobby": true,
-  "welcome": "Welcome to the server.",
+  "welcome": "Welcome to the Beta server.",
   "rules": "This server has no rules.",
   "info": [
     "Type /rules for server rules.",

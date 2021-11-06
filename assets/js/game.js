@@ -2036,7 +2036,7 @@ class GameInstance
                     break;
                 case BotSkill.SKILL_HARD:
                     ai.offsetX = this.Random(-30, 30);
-                    ai.offsetY = this.Random(-50, 50);
+                    ai.offsetY = this.Random(-60, 60);
                     break;
                 default:
                     ai.offsetX = this.Random(-50, 50);
@@ -2218,15 +2218,8 @@ class GameInstance
                         //Node reached
                         switch (node.data.type)
                         {
-                            case "node_walk":
-                                if (data["bClimbing"])
-                                {
-                                    //this.triggerCharacterJump(_body);
-                                }
-                                break;
-
                             case "node_jump":
-                                //this.triggerCharacterJump(_body);
+                                this.triggerCharacterJump(_body);
                                 break;
 
                             case "node_climb":
@@ -2316,8 +2309,8 @@ class GameInstance
         }    
         if (ai.botSkill >= BotSkill.SKILL_HARD)
         {
-            this.setDataValue(_body, "bSprinting", !data.bWantsToFire && data.bWantsToMove && !data.bClimbing);
-            this.setDataValue(_body, "bCrouching", !data.bWantsToMove && !data.bClimbing && !data.bSprinting && !data.bParachute);
+            this.setDataValue(_body, "bSprinting", !data.bWantsToFire && data.bWantsToMove && this.characterCanSprint(_body));
+            this.setDataValue(_body, "bCrouching", !data.bWantsToMove && !data.bClimbing && !data.bSprinting && !data.bParachute && this.characterCanCrouch(_body));
         }
         switch (this.game.gameModeId)
         {
@@ -2439,7 +2432,7 @@ class GameInstance
                                         break;
                                 }
                                 var keyInfo = {};                                
-                                var dist = this.Dist(desiredPos[0], desiredPos[1], ai.enemy.position[0], ai.enemy.position[1]);
+                                var dist = this.Dist(desiredPos[0], desiredPos[1], controllable.position[0], controllable.position[1]);
                                 if (dist > 100)
                                 {
                                     if (Math.abs(desiredPos[0] - controllable.position[0]) > 100)
@@ -2467,7 +2460,7 @@ class GameInstance
                                     }
                                 }
                                 if (Object.keys(keyInfo).length > 0)
-                                {
+                                {                                    
                                     this.requestEvent({
                                         eventId: GameServer.EVENT_PLAYER_INPUT,
                                         playerId: data.id,
@@ -2571,6 +2564,7 @@ class GameInstance
             {
                 val = 0;
             }
+            /*
             if (_weapon.minAngle != null)
             {
                 if (_scale == 1)
@@ -2594,6 +2588,7 @@ class GameInstance
                     val = Math.min(_weapon.maxAngle - this.ToRad(180), val);
                 }
             }
+            */
             _weapon.aimRotation = val;
         }
     }
@@ -3650,6 +3645,12 @@ class GameInstance
 
     handleCharacter(_body)
     {
+        if (_body.position[1] > this.getCurrentMapData().height)
+        {
+            this.killPawn(_body);
+            return;
+        }
+
         var data = _body.data;         
         if (data.bBot)
         {
@@ -3660,7 +3661,7 @@ class GameInstance
         {
             data.bSprinting = false;
             data.bCrouching = false;
-        }
+        }        
 
         var target = this.WrapAngle(data.aimRotation - data.desiredAimRotation, true);
         data.aimRotation -= target * data.aimSpeed;
@@ -4339,7 +4340,7 @@ class GameInstance
                         [lookPos[0] + (-_body.data["scale"] * 100), 500],
                         [lookPos[0], lookPos[1]]
                     ];
-                    if (weapon["bAirOnly"])
+                    if (data.lockOnTargetId)
                     {
                         rocketData["path"].pop();
                     }
@@ -6389,13 +6390,7 @@ class GameInstance
                             {
                                 this.leaveLadder(pawn);
                             }
-                            pawn.velocity[1] = -data.jumpHeight;
-                            pawn.wakeUp();
-                            this.requestEvent({
-                                eventId: GameServer.EVENT_PAWN_ACTION,
-                                pawnId: data.id,
-                                type: GameServer.PAWN_JUMP
-                            });
+                            this.triggerCharacterJump(pawn);
                         }
                         else if (!this.isOnGround(pawn) && pawn.velocity[1] > this.getSharedData("character").parachuteVelocity)
                         {
@@ -6429,6 +6424,22 @@ class GameInstance
                     break;
             }
         }
+    }
+
+    triggerCharacterJump(_body)
+    {
+        if (!this.characterCanJump(_body))
+        {
+            return;
+        }
+        var data = _body.data;
+        _body.velocity[1] = -data.jumpHeight;
+        _body.wakeUp();
+        this.requestEvent({
+            eventId: GameServer.EVENT_PAWN_ACTION,
+            pawnId: data.id,
+            type: GameServer.PAWN_JUMP
+        });
     }
 
     executeInteractable(_interactable, _playerId)
@@ -6479,7 +6490,7 @@ class GameInstance
                     {
                         case Crate.AMMO:
                             var inventory = pawn.data["inventory"];
-                            var numMags = 3;
+                            var numMags = 1;
                             for (var i = 0; i < inventory.length; i++)
                             {
                                 var invItem = inventory[i];
@@ -7589,7 +7600,7 @@ class GameInstance
                             ownerId: _body.data.id,
                             interactTime: this.game.settings.fps * 0.5,
                             type: Crate.AMMO,
-                            uses: 3,
+                            uses: 10,
                             frame: item.id
                         });
                         crate.data.destroyTimer = this.game.settings.fps * 60;
@@ -8102,9 +8113,14 @@ class GameInstance
                 }
             }
         }
-        if (this.game.callbacks.onPlayerKill)
+        this.triggerCallback("onPlayerKill");
+    }
+
+    triggerCallback(_id)
+    {
+        if (this.game.callbacks && this.game.callbacks[_id])
         {
-            this.game.callbacks.onPlayerKill();
+            this.game.callbacks[_id]();
         }
     }
 
@@ -8842,6 +8858,7 @@ class GameInstance
                 break;
 
             case "javelin":
+                destroyTimer = this.game.settings.fps * 10;
                 var weaponData = this.getWeaponData(weaponId);
                 damage = _data["damage"] ? _data["damage"] : weaponData["damage"];
                 radius = _data["radius"] ? _data["radius"] : weaponData["radius"];
@@ -8987,6 +9004,10 @@ class GameInstance
                 if (!oldWeapon)
                 {
                     oldWeapon = obj;
+                }
+                if (oldWeapon.data.bSpawned)
+                {
+                    continue;
                 }
                 num++;
                 if (num > Settings.MAX_DROPPED_WEAPONS)
@@ -9434,6 +9455,7 @@ class GameInstance
                             scale: data.scale,
                             weaponData: this.getWeaponData(data.weaponId)
                         });
+                        pawn.data.bSpawned = true;
                         break;
 
                     case "helicopter":

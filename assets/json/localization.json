@@ -1200,6 +1200,14 @@
     "es": "MK153 SMAW",
     "it": "MK153 SMAW"
   },
+  "STR_WPN_JAVELIN": {
+    "en": "FGM-148 Javelin",
+    "ru": "FGM-148 Javelin",
+    "zh-CN": "FGM-148 Javelin",
+    "tr": "FGM-148 Kargı",
+    "es": "FGM-148 Javelin",
+    "it": "FGM-148 Javelin"
+  },
   "STR_WPN_SMOKE": {
     "en": "M18 Smoke"
   },
@@ -1513,8 +1521,14 @@
   "STR_REQUIRES_LEVEL_X": {
     "en": "Requires Level %1"
   },
+  "STR_WELCOME_BACK_X": {
+    "en": "Welcome back, %1."
+  },
+  "STR_WELCOME_TO_DSC_X": {
+    "en": "Welcome to Deadswitch: Combat, %1."
+  },
   "STR_ADD_X_XP": {
-    "en": "%1 XP",
+    "en": "+%1 XP",
     "ru": "%1 Опыт",
     "zh-CN": "%1 XP",
     "tr": "%1 XP",
@@ -1639,6 +1653,9 @@
     "es": "Muerte cuerpo a cuerpo",
     "it": "Uccisione Arma corpo a corpo"
   },
+  "STR_MODE_SINGLE_FIRE": {
+    "en": "Single Fire"
+  },
   "STR_MODE_SEMI": {
     "en": "Semi-Auto"
   },
@@ -1663,7 +1680,7 @@
     "it": "Corpo a Corpo"
   },
   "STR_WPN_TYPE_PISTOLS": {
-    "en": "Pistols",
+    "en": "Handguns",
     "ru": "Пистолеты",
     "zh-CN": "手枪",
     "tr": "Tabancalar",
@@ -1757,7 +1774,7 @@
     "it": "Esplosivi"
   },
   "STR_WPN_TYPE_PISTOL": {
-    "en": "Pistol",
+    "en": "Handgun",
     "ru": "Пистолет",
     "zh-CN": "手枪",
     "tr": "Tabanca",

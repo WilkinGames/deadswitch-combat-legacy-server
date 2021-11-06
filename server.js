@@ -279,6 +279,35 @@ io.on("connection", (socket) =>
             var lobby = getLobbyData(socket.player.lobbyId);
             switch (arr[0])
             {
+                case "/end":
+                    if (socket.player.bAdmin)
+                    {
+                        setLobbyState(lobby.id, LobbyState.WAITING);
+                    }
+                    break;
+
+                case "/start":
+                    if (socket.player.bAdmin)
+                    {
+                        setLobbyState(lobby.id, LobbyState.WAITING);
+                        setLobbyState(lobby.id, LobbyState.IN_PROGRESS);
+                    }
+                    break;
+
+                case "/name":
+                    if (socket.player.bAdmin)
+                    {
+                        var name = socket.player.name;
+                        updatePlayerData(socket, {
+                            name: arr[1]
+                        });
+                        sendChatMessageToLobby(lobby.id, {
+                            bServer: true,
+                            messageText: name + " changed name to " + socket.player.name
+                        });
+                    }
+                    break;
+
                 case "/kick":
                     if (socket.player.bAdmin)
                     {
@@ -433,70 +462,8 @@ io.on("connection", (socket) =>
         }
     });
     socket.on("update", (_data) =>
-    {
-        log(chalk.cyan(socket.id), "update");
-        if (_data)
-        {
-            if (_data.version && _data.version != ServerData.GAME_VERSION)
-            {
-                disconnectSocket(socket, "version_mismatch");
-                return;
-            }
-            if (_data.bAdmin)
-            {
-                socket.player.bAdmin = _data.bAdmin == true;
-            }
-            if (_data.name)
-            {
-                socket.player.name = _data.name;
-            }
-            if (_data.level)
-            {
-                socket.player.level = _data.level;
-            }
-            if (_data.currentClass)
-            {
-                socket.player.currentClass = _data.currentClass;
-            }
-            if (_data.classes)
-            {
-                socket.player.classes = _data.classes;
-            }
-            if (_data.class)
-            {
-                socket.player.classes[_data.class.id] = _data.class.data;
-            }
-            if (_data.vehicles)
-            {
-                if (!socket.player.vehicles)
-                {
-                    socket.player.vehicles = _data.vehicles;
-                }
-                else
-                {
-                    var keys = Object.keys(_data.vehicles);
-                    for (var i = 0; i < keys.length; i++)
-                    {
-                        var key = keys[i];
-                        socket.player.vehicles[key] = _data.vehicles[key];
-                    }
-                }
-            }
-            if (!socket.player.lobbyId)
-            {
-                joinLobby(socket.player, lobbies[0].id);
-            }
-            var lobby = getLobbyData(socket.player.lobbyId);
-            if (lobby)
-            {            
-                io.to(lobby.id).emit("updateLobby", { players: lobby.players });
-                var game = lobby.game;
-                if (game)
-                {
-                    game.updatePlayer(socket.player);
-                }
-            }
-        }
+    {        
+        updatePlayerData(socket, _data);
     });
     socket.on("latency", (_ms) => 
     {
@@ -736,7 +703,7 @@ function joinLobby(_player, _lobbyId)
                 setTimeout(() =>
                 {
                     enterGame(socket);
-                }, 3000);
+                }, 2000);
             }
             else
             {
@@ -996,6 +963,73 @@ function destroyLobbyGame(_lobbyId)
         {
             game.destroy();
             delete lobby.game;
+        }
+    }
+}
+
+function updatePlayerData(_socket, _data)
+{
+    log(chalk.cyan(_socket.id), "update");
+    if (_data)
+    {
+        if (_data.version && _data.version != ServerData.GAME_VERSION)
+        {
+            disconnectSocket(_socket, "version_mismatch");
+            return;
+        }
+        if (_data.bAdmin)
+        {
+            _socket.player.bAdmin = _data.bAdmin == true;
+        }
+        if (_data.name)
+        {
+            _socket.player.name = _data.name;
+        }
+        if (_data.level)
+        {
+            _socket.player.level = _data.level;
+        }
+        if (_data.currentClass)
+        {
+            _socket.player.currentClass = _data.currentClass;
+        }
+        if (_data.classes)
+        {
+            _socket.player.classes = _data.classes;
+        }
+        if (_data.class)
+        {
+            _socket.player.classes[_data.class.id] = _data.class.data;
+        }
+        if (_data.vehicles)
+        {
+            if (!_socket.player.vehicles)
+            {
+                _socket.player.vehicles = _data.vehicles;
+            }
+            else
+            {
+                var keys = Object.keys(_data.vehicles);
+                for (var i = 0; i < keys.length; i++)
+                {
+                    var key = keys[i];
+                    _socket.player.vehicles[key] = _data.vehicles[key];
+                }
+            }
+        }
+        if (!_socket.player.lobbyId)
+        {
+            joinLobby(_socket.player, lobbies[0].id);
+        }
+        var lobby = getLobbyData(_socket.player.lobbyId);
+        if (lobby)
+        {
+            io.to(lobby.id).emit("updateLobby", { players: lobby.players });
+            var game = lobby.game;
+            if (game)
+            {
+                game.updatePlayer(_socket.player);
+            }
         }
     }
 }
