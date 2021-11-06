@@ -9005,10 +9005,6 @@ class GameInstance
                 {
                     oldWeapon = obj;
                 }
-                if (oldWeapon.data.bSpawned)
-                {
-                    continue;
-                }
                 num++;
                 if (num > Settings.MAX_DROPPED_WEAPONS)
                 {
