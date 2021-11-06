@@ -6039,7 +6039,7 @@ class GameInstance
                 break;
 
             case "car":
-                var carSpeed = 100 / this.game.fpsMult;
+                var carSpeed = 100;
                 switch (keyId)
                 {
                     case Control.SWITCH:
@@ -6082,7 +6082,7 @@ class GameInstance
                 break;
 
             case "tank":
-                var tankSpeed = _controllable.data.speed / this.game.fpsMult;
+                var tankSpeed = _controllable.data.speed;
                 switch (keyId)
                 {
                     case Control.JUMP:
@@ -6136,7 +6136,7 @@ class GameInstance
                 break;
 
             case "helicopter":
-                var heliSpeed = (_controllable.data.speed ? _controllable.data.speed : 4500) / this.game.fpsMult;
+                var heliSpeed = (_controllable.data.speed ? _controllable.data.speed : 4500);
                 switch (keyId)
                 {
                     case Control.JUMP:
