@@ -1052,7 +1052,7 @@
       "type": "tank",
       "tankType": "abrams",
       "position": [
-        2900,
+        3050,
         2350
       ],
       "scale": 1
@@ -1061,7 +1061,7 @@
       "type": "tank",
       "tankType": "t90",
       "position": [
-        10100,
+        10950,
         2350
       ],
       "scale": -1
