@@ -649,10 +649,11 @@
     "damage": 10,
     "accuracy": 40,
     "fireRate": 2,
-    "range": 2000,
-    "recoil": 0.2,
+    "range": 3000,
+    "recoil": 0.5,
     "penetration": 2,
     "overheatMax": 180,
+    "cooldownNum": 1.5,
     "bVehicle": true
   },
   {
@@ -663,10 +664,10 @@
     "damage": 20,
     "accuracy": 25,
     "fireRate": 3,
-    "range": 2000,
+    "range": 3000,
     "recoil": 1,
     "penetration": 3,
-    "overheatMax": 120,
+    "overheatMax": 60,
     "bVehicle": true
   },
   {
@@ -683,7 +684,7 @@
     "recoil": 2,
     "penetration": 5,
     "overheatMax": 300,
-    "cooldownNum": 5,
+    "cooldownNum": 2,
     "bVehicle": true
   },
   {
@@ -885,8 +886,7 @@
     "ammo": 1,
     "recoil": 20,
     "penetration": 5,
-    "lookModifier": 2.5,
-    "gravityScale": 0.9
+    "lookModifier": 2.5
   },
   {
     "id": "mgl",
@@ -921,7 +921,7 @@
     "type": "TYPE_LAUNCHER",
     "fireMode": "MODE_SEMI",
     "round": "rocket",
-    "damage": 400,
+    "damage": 450,
     "radius": 350,
     "accuracy": 2,
     "fireRate": 30,
@@ -933,7 +933,7 @@
     "speedModifier": 0.7,
     "range": 2000,
     "mag": 1,
-    "ammo": 1,
+    "ammo": 2,
     "recoil": 15,
     "penetration": 5,
     "lookModifier": 1.5,
@@ -1152,7 +1152,7 @@
     "type": "TYPE_LAUNCHER",
     "round": "rocket",
     "damage": 500,
-    "radius": 250,
+    "radius": 300,
     "accuracy": 0,
     "fireRate": 20,
     "bRocket": true,

@@ -3,5 +3,15 @@
     "id": null,
     "name": "STR_NONE",
     "score": 0
+  },
+  {
+    "id": "ecm",
+    "name": "STR_COUNTERMEASURE_ECM",
+    "score": 5000
+  },
+  {
+    "id": "flares",
+    "name": "STR_COUNTERMEASURE_FLARES",
+    "score": 10000
   }
 ]

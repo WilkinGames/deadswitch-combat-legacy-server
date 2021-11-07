@@ -30,6 +30,14 @@
     "countermeasures": [
       {
         "id": null
+      },
+      {
+        "id": "ecm",
+        "score": 5000
+      },
+      {
+        "id": "flares",
+        "score": 10000
       }
     ]
   },
@@ -81,6 +89,69 @@
     "countermeasures": [
       {
         "id": null
+      },
+      {
+        "id": "ecm"
+      },
+      {
+        "id": "flares"
+      }
+    ]
+  },
+  {
+    "id": "oh58",
+    "name": "STR_OH58",
+    "type": "helicopter",
+    "uiScale": 2,
+    "seats": [
+      [ 55, 0 ],
+      [ 36, -2 ]
+    ],
+    "weapons": [
+      [
+        {
+          "id": "minigun"
+        },
+        {
+          "id": "gatling",
+          "score": 2500
+        },
+        {
+          "id": "m2",
+          "score": 5000
+        }
+      ],
+      [
+        {
+          "id": "minigun"
+        },
+        {
+          "id": "gatling",
+          "score": 2500
+        },
+        {
+          "id": "m2",
+          "score": 5000
+        }
+      ]
+    ],
+    "camos": [
+      {
+        "id": null
+      },
+      {
+        "id": "thermal"
+      }
+    ],
+    "countermeasures": [
+      {
+        "id": null
+      },
+      {
+        "id": "ecm"
+      },
+      {
+        "id": "flares"
       }
     ]
   },
@@ -105,6 +176,12 @@
     "countermeasures": [
       {
         "id": null
+      },
+      {
+        "id": "ecm"
+      },
+      {
+        "id": "flares"
       }
     ]
   },
@@ -160,6 +237,12 @@
     "countermeasures": [
       {
         "id": null
+      },
+      {
+        "id": "ecm"
+      },
+      {
+        "id": "flares"
       }
     ]
   },
@@ -215,6 +298,12 @@
     "countermeasures": [
       {
         "id": null
+      },
+      {
+        "id": "ecm"
+      },
+      {
+        "id": "flares"
       }
     ]
   },

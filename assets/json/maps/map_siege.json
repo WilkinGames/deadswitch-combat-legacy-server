@@ -1008,7 +1008,7 @@
     },
     {
       "type": "helicopter",
-      "heliType": "blackhawk",
+      "heliType": "oh58",
       "position": [
         455,
         1500
@@ -1016,7 +1016,7 @@
     },
     {
       "type": "helicopter",
-      "heliType": "blackhawk",
+      "heliType": "oh58",
       "position": [
         13556,
         1500

@@ -487,6 +487,9 @@
   "STR_UNLOCK_ALL": {
     "en": "Unlock All"
   },
+  "STR_TARGET_LOCK": {
+    "en": "Target Lock"
+  },
   "STR_TARGET_LOCKED": {
     "en": "Target Locked"
   },
@@ -733,6 +736,9 @@
   "STR_WORLD_WINTER": {
     "en": "Winter"
   },
+  "STR_WORLD_WATER": {
+    "en": "Water"
+  },
   "STR_RELOAD": {
     "en": "Reload"
   },
@@ -856,11 +862,20 @@
   "STR_CAMO_THERMAL": {
     "en": "Thermal Camo"
   },
+  "STR_COUNTERMEASURE_ECM": {
+    "en": "ECM Jammer"
+  },
+  "STR_COUNTERMEASURE_FLARES": {
+    "en": "IR Flares"
+  },
   "STR_MH6": {
     "en": "AH-6J Little Bird"
   },
   "STR_COBRA": {
     "en": "AH-1Z Viper"
+  },
+  "STR_OH58": {
+    "en": "OH-58D Kiowa"
   },
   "STR_BLACKHAWK": {
     "en": "UH-60 Black Hawk"
@@ -1518,6 +1533,54 @@
     "es": "Asesinato Múltiple",
     "it": "Multipla Uccisione"
   },
+  "STR_MP_DISCONNECTED_DESC": {
+    "en": "You have been disconnected from the server.\n\n%1",
+    "ru": "Вы были отключены от сервера.\n\n%1",
+    "zh-CN": "您已断开与服务器的连接。\n\n%1",
+    "tr": "Sunucudan ayrıldın. \n\n%1",
+    "es": "Has sido desconectado del servidor. \n\n%1",
+    "it": "Sei stato disconnesso dal server. \\n\\n\\%1"
+  },
+  "STR_MP_LOST_CONNECTION": {
+    "en": "Lost connection to server",
+    "ru": "Потеряно соединение с сервером.",
+    "zh-CN": "失去与服务器的连接",
+    "tr": "Sunucu ile bağlantı kesildi.",
+    "es": "Has perdido la conexión con el servidor",
+    "it": "Connessione con il server persa."
+  },
+  "STR_MP_THROTTLE": {
+    "en": "Exceeded throttle limit",
+    "ru": "Превышено количество запросов.",
+    "zh-CN": "已超出最大上限",
+    "tr": "İstek Limiti Sınırı Aşıldı",
+    "es": "Límite de solicitud excedido",
+    "it": "Limite di richieste superato."
+  },
+  "STR_MP_KICKED": {
+    "en": "Player kicked",
+    "ru": "Игрок выгнан",
+    "zh-CN": "已踢出玩家",
+    "tr": "Oyuncu Atıldı",
+    "es": "Jugador expulsado",
+    "it": "Giocatore espulso"
+  },
+  "STR_MP_IDLE": {
+    "en": "Player idle",
+    "ru": "Игрок бездействовал",
+    "zh-CN": "玩家挂机中",
+    "tr": "Oyuncu boşta",
+    "es": "Jugador inactivo",
+    "it": "Giocatore inattivo"
+  },
+  "STR_MP_TIMED_OUT": {
+    "en": "Player timed out",
+    "ru": "Игрок превысил время ожидания",
+    "zh-CN": "玩家连接已超时",
+    "tr": "Oyuncu Zaman Aşımına Uğradı",
+    "es": "El jugador ha excedido el tiempo de espera.",
+    "it": "Tempo scaduto per il giocatore."
+  },
   "STR_X_SCORE_X": {
     "en": "%1 Score: %2"
   },
@@ -1636,6 +1699,14 @@
   },
   "STR_VEHICLE_DESTROYED": {
     "en": "Vehicle Destroyed"
+  },
+  "STR_EQUIPMENT_DESTROYED": {
+    "en": "Equipment Destroyed",
+    "ru": "Уничтожено снаряжения",
+    "zh-CN": "破坏装备道具",
+    "tr": "Ekipman Yok Edildi",
+    "es": "Equipo destruido",
+    "it": "Equipaggiamento distrutto"
   },
   "STR_TANK_DESTROYED": {
     "en": "Tank Destroyed"

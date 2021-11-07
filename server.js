@@ -31,7 +31,9 @@ const LobbyState = {
     IN_PROGRESS: "in_progress"
 };
 const GameMode = {
-    TEAM_DEATHMATCH: "team_deathmatch"
+    TEAM_DEATHMATCH: "team_deathmatch",
+    DOMINATION: "domination",
+    CONQUEST: "conquest",
 };
 const Map = {
     SIEGE: "map_siege"
@@ -206,11 +208,15 @@ app.use(cors({
 app.get("/", (req, res) =>
 {
     var str = "<head><style>body { font-size: 12px; font-family:'Arial'; };</style>";
-    str += "<title>DS:C Multiplayer Server</title></head><body>";
+    str += "<title>DS:C Multiplayer Server</title></head><body><h1>Deadswitch: Combat Multiplayer Server</h1>"
+    var upTime = convertMS(Date.now() - serverStartTime);
+    str += "<b>Uptime:</b> " + upTime.day + "d " + upTime.hour + "h " + upTime.minute + "m " + upTime.seconds + "s<br>";
+    str += "<b>Version:</b> " + ServerData.VERSION + "<br>";
+    str += "<b>Game Version:</b> " + ServerData.GAME_VERSION;      
     var lobby = lobbies[0];
     if (lobby)
-    {
-        str += "<h2>" + lobby.gameData.mapId + "  -  " + lobby.gameData.gameModeId + "  -  " + lobby.state + "</h2>";
+    {  
+        str += "<h2>" + lobby.gameData.mapId + "  -  " + lobby.gameData.gameModeId + "  -  " + lobby.state + "</h2>";        
         str += "<h3>Players: " + lobby.players.length + "/" + lobby.maxPlayers + "</h3>";
     }
     var keys = Object.keys(lobby.gameData.settings);
@@ -228,6 +234,7 @@ app.get("/data", (req, res) =>
     var data = {
         time: Date.now(),
         name: settings.name,
+        country: settings.country,
         numPlayers: getNumClients(),
         maxPlayers: settings.maxPlayers,
         type: settings.type,
@@ -308,6 +315,14 @@ io.on("connection", (socket) =>
                     }
                     break;
 
+                case "/stats":
+                    sendChatMessageToSocket(socket, {
+                        bServer: true,
+                        bDirect: true,
+                        messageText: stats.kills + " kills"
+                    });
+                    break;
+
                 case "/kick":
                     if (socket.player.bAdmin)
                     {
@@ -321,7 +336,7 @@ io.on("connection", (socket) =>
                                 {
                                     if (p.id == socket.player.id)
                                     {
-                                        continue;
+                                        //continue;
                                     }
                                     var kickSocket = getSocketByPlayerId(p.id);
                                     if (kickSocket)
@@ -389,68 +404,79 @@ io.on("connection", (socket) =>
                     break;
 
                 case "/votekick":
-                    if (lobby && settings.bAllowVotekick)
+                    if (lobby)
                     {
-                        var index = parseInt(arr[1], 10);
-                        if (index != null && !isNaN(index))
+                        if (settings.bAllowVotekick)
                         {
-                            for (var i = 0; i < lobby.players.length; i++)
+                            var index = parseInt(arr[1], 10);
+                            if (index != null && !isNaN(index))
                             {
-                                var p = lobby.players[i];
-                                if (index == i)
+                                for (var i = 0; i < lobby.players.length; i++)
                                 {
-                                    if (p.id == socket.player.id)
+                                    var p = lobby.players[i];
+                                    if (index == i)
                                     {
-                                        sendChatMessageToSocket(socket, {
+                                        if (p.id == socket.player.id)
+                                        {
+                                            sendChatMessageToSocket(socket, {
+                                                bServer: true,
+                                                bDirect: true,
+                                                messageText: "You can't votekick yourself."
+                                            });
+                                            var kickNum = 0;
+                                            continue;
+                                        }
+                                        if (p.bAdmin)
+                                        {
+                                            sendChatMessageToSocket(socket, {
+                                                bServer: true,
+                                                bDirect: true,
+                                                messageText: "You can't votekick an admin."
+                                            });
+                                            var kickNum = 0;
+                                            continue;
+                                        }
+                                        if (p.votekicks == null)
+                                        {
+                                            p.votekicks = {};
+                                        }
+                                        p.votekicks[socket.player.id] = 1;
+                                        var numVotes = Object.keys(p.votekicks).length;
+                                        kickNum = Math.ceil(lobby.players.length * 0.5) + 1;
+                                        sendChatMessageToLobby(lobby.id, {
                                             bServer: true,
-                                            bDirect: true,
-                                            messageText: "You can't votekick yourself."
+                                            messageText: "Votes against " + p.name + ": " + numVotes + "/" + kickNum
                                         });
-                                        var kickNum = 0;
-                                        continue;
+                                        if (numVotes >= kickNum)
+                                        {
+                                            var voteSocket = getSocketByPlayerId(p.id);
+                                            if (voteSocket)
+                                            {
+                                                disconnectSocket(voteSocket, "kicked");
+                                            }
+                                            else
+                                            {
+                                                leaveLobby(p, "kicked");
+                                            }
+                                        }
+                                        break;
                                     }
-                                    if (p.bAdmin)
-                                    {
-                                        sendChatMessageToSocket(socket, {
-                                            bServer: true,
-                                            bDirect: true,
-                                            messageText: "You can't votekick an admin."
-                                        });
-                                        var kickNum = 0;
-                                        continue;
-                                    }
-                                    if (p.votekicks == null)
-                                    {
-                                        p.votekicks = {};
-                                    }
-                                    p.votekicks[socket.player.id] = 1;
-                                    var numVotes = Object.keys(p.votekicks).length;
-                                    kickNum = Math.ceil(lobby.players.length * 0.5) + 1;
-                                    sendChatMessageToLobby(lobby.id, {
+                                }
+                                if (kickNum == null)
+                                {
+                                    sendChatMessageToSocket(socket, {
                                         bServer: true,
-                                        messageText: "Votes against " + p.name + ": " + numVotes + "/" + kickNum
+                                        bDirect: true,
+                                        messageText: "Player not found. Type /players"
                                     });
-                                    if (numVotes >= kickNum)
-                                    {
-                                        var voteSocket = getSocketByPlayerId(p.id);
-                                        if (voteSocket)
-                                        {
-                                            disconnectSocket(voteSocket, "kicked");
-                                        }
-                                        else
-                                        {
-                                            leaveLobby(p, "kicked");
-                                        }
-                                    }
-                                    break;
                                 }
                             }
-                            if (kickNum == null)
+                            else
                             {
                                 sendChatMessageToSocket(socket, {
                                     bServer: true,
                                     bDirect: true,
-                                    messageText: "Player not found. Type /players"
+                                    messageText: "Missing player index. Type /players"
                                 });
                             }
                         }
@@ -459,7 +485,7 @@ io.on("connection", (socket) =>
                             sendChatMessageToSocket(socket, {
                                 bServer: true,
                                 bDirect: true,
-                                messageText: "Missing player index. Type /players"
+                                messageText: "Votekick is disabled by this server."
                             });
                         }
                     }
@@ -1102,6 +1128,7 @@ function disconnectSocket(_socket, _reason)
 {
     if (_socket)
     {
+        _socket.emit("disconnectInfo", _reason);
         _socket.disconnectReason = _reason;
         _socket.disconnect();
     }
@@ -1151,6 +1178,24 @@ function getRandomUniqueId()
 function clone(_data)
 {
     return JSON.parse(JSON.stringify(_data));
+}
+
+function convertMS(milliseconds)
+{
+    var day, hour, minute, seconds;
+    seconds = Math.floor(milliseconds / 1000);
+    minute = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    hour = Math.floor(minute / 60);
+    minute = minute % 60;
+    day = Math.floor(hour / 24);
+    hour = hour % 24;
+    return {
+        day: day,
+        hour: hour,
+        minute: minute,
+        seconds: seconds
+    };
 }
 
 server.listen(process.env.PORT || settings.port, () =>

@@ -1,9 +1,10 @@
 {
-  "name": "DigitalOcean [Canada]",
+  "name": "Digital Ocean",
+  "country": "ca",
   "type": "STR_OFFICIAL",
   "port": 8000,
   "maxPlayers": 32,
-  "bUseLobby": false,
+  "bUseLobby": true,
   "bAllowVotekick": false,
   "welcome": "Welcome to the Beta server.",
   "rules": "This server has no rules.",
@@ -12,11 +13,11 @@
     "Type /players to view players."
   ],
   "gameData": {
-    "gameModeId": "team_deathmatch",
+    "gameModeId": "conquest",
     "mapId": "map_siege",
     "settings": {
       "timeLimit": 10,
-      "scoreLimit": 100,
+      "scoreLimit": 300,
       "respawnTime": 1,
       "preGameTimer": 5,
       "bAllowRespawns": true,
@@ -28,7 +29,7 @@
       "vehicleRespawnTime": 120,
       "weaponRespawnTime": 120,
       "bots": 12,
-      "botSkill": 0,
+      "botSkill": 1,
       "tickRate": 30,
       "updateRate": 60
     }

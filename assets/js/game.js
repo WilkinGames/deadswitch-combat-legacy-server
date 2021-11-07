@@ -188,6 +188,7 @@ const Rocket = {
 const Helicopter = {
     MH6: "mh6",
     COBRA: "cobra",
+    OH58: "oh58",
     BLACKHAWK: "blackhawk"
 };
 const Tank = {
@@ -1044,7 +1045,7 @@ class GameInstance
                     var arr = toUpdate[id];
                     var objData = {}; //this.clone(data);
                     objData.id = id;
-                    objData.position = this.clone(body.position);
+                    objData.position = this.RoundNumberArray(body.position);
                     objData.velocity = this.clone(body.velocity);
                     objData.rotation = body.angle;
                     if (data.bOnGround != null)
@@ -1898,7 +1899,7 @@ class GameInstance
                                         {
                                             weapon.weaponData.overheatMax = 180;
                                         }
-                                        weapon.overheat = 0;
+                                        weapon.overheat = 0;                                        
                                         this.requestEvent({
                                             eventId: GameServer.EVENT_PAWN_ACTION,
                                             pawnId: _vehicle.data.id,
@@ -3472,8 +3473,8 @@ class GameInstance
                     }
                     if (weapon.overheat > 0)
                     {
-                        var cooldownNum = weapon.weaponData.cooldownNum ? weapon.weaponData.cooldownNum : 1;
-                        weapon.overheat -= (cooldownNum * weapon.bCooldown ? 0.5 : 1) / this.game.fpsMult;
+                        var cooldownNum = weapon.weaponData.cooldownNum ? weapon.weaponData.cooldownNum : 0.5;
+                        weapon.overheat -= (weapon.bCooldown ? cooldownNum : 1) / this.game.fpsMult;
                         if (weapon.overheat <= 0 && weapon.bCooldown)
                         {
                             weapon.bCooldown = false;
@@ -3841,7 +3842,7 @@ class GameInstance
         var weapon = data.weapon;
         if (weapon)
         {
-            var recoilMult = 0.975; //Lower value is faster recoil recovery
+            var recoilMult = 0.98; //Lower value is faster recoil recovery
             var recoilDecay = recoilMult * this.game.fpsMult;
             weapon.recoil = this.RoundDecimal(weapon.recoil * recoilDecay);
         }        
@@ -5066,29 +5067,48 @@ class GameInstance
             switch (eventId)
             {
                 case GameServer.EVENT_PLAYER_UPDATE:
-                    var ps = this.getPlayerById(_data.playerId);                    
-                    if (ps)
+                    if (_data.data)
                     {
-                        if (_data.data.team != null)
+                        var ps = this.getPlayerById(_data.playerId);
+                        if (ps)
                         {
-                            this.changeTeam(ps.id, _data.data.team);
-                        }
-                        if (_data.data.currentClass)
-                        {                            
-                            this.setCurrentClass(ps, _data.data.currentClass);
-                        }
-                        if (_data.data.desiredSpawn != null)
-                        {
-                            ps.desiredSpawn = _data.data.desiredSpawn;
-                        }     
-                        if (_data.data.bAutoRespawn != null)
-                        {
-                            ps.bAutoRespawn = _data.data.bAutoRespawn;
-                            if (ps.bAutoRespawn && ps.bCanRespawn)
+                            if (_data.data.team != null)
                             {
-                                this.respawnPlayer(ps.id);
+                                this.changeTeam(ps.id, _data.data.team);
                             }
-                        }                                           
+                            if (_data.data.currentClass)
+                            {
+                                this.setCurrentClass(ps, _data.data.currentClass);
+                            }
+                            if (_data.data.vehicles)
+                            {
+                                if (!ps.vehicles)
+                                {
+                                    ps.vehicles = _data.data.vehicles;
+                                }
+                                else
+                                {
+                                    var keys = Object.keys(_data.data.vehicles);
+                                    for (var i = 0; i < keys.length; i++)
+                                    {
+                                        var key = keys[i];
+                                        ps.vehicles[key] = _data.data.vehicles[key];
+                                    }
+                                }
+                            }
+                            if (_data.data.desiredSpawn != null)
+                            {
+                                ps.desiredSpawn = _data.data.desiredSpawn;
+                            }
+                            if (_data.data.bAutoRespawn != null)
+                            {
+                                ps.bAutoRespawn = _data.data.bAutoRespawn;
+                                if (ps.bAutoRespawn && ps.bCanRespawn)
+                                {
+                                    this.respawnPlayer(ps.id);
+                                }
+                            }
+                        }
                     }
                     break;
 
@@ -9765,9 +9785,40 @@ class GameInstance
                 ]
                 break;
 
-            case Helicopter.BLACKHAWK:
+            case Helicopter.OH58:
+                data.health = 2000;
                 data.speed = 3000;
+                data.seats = [
+                    {
+                        position: [190, 30],
+                        bBack: true
+                    },
+                    {
+                        position: [110, 30],
+                        bBack: true
+                    }
+                ];
+                data.weapons = [
+                    {
+                        id: "minigun",
+                        muzzlePos: [225, 60],
+                        aimRotation: 0,
+                        weaponData: this.getWeaponData("minigun"),
+                        overheat: 0
+                    },
+                    {
+                        id: "minigun",
+                        muzzlePos: [0, 55],
+                        aimRotation: 0,
+                        weaponData: this.getWeaponData("minigun"),
+                        overheat: 0
+                    }
+                ]
+                break;
+
+            case Helicopter.BLACKHAWK:                
                 data.health = 2500;
+                data.speed = 3000;
                 data.seats = [
                     {
                         position: [250, 60],
