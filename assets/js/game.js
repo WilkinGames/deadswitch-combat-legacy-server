@@ -2320,22 +2320,29 @@ class GameInstance
             this.setDataValue(_body, "bCrouching", !data.bWantsToMove && !data.bClimbing && !data.bSprinting && !data.bParachute && this.characterCanCrouch(_body));
         }
 
-        if (ai.desiredVehicleId)
+        if (!_body.data.controllableId)
         {
-            var veh = this.getObjectById(ai.desiredVehicleId);
-            if (!veh || !this.hasAvailableSeat(veh))
+            if (ai.desiredVehicleId)
             {
-                ai.desiredVehicleId = null;
+                var veh = this.getObjectById(ai.desiredVehicleId);
+                if (!veh || !this.hasAvailableSeat(veh))
+                {
+                    ai.desiredVehicleId = null;
+                }
+            }
+            else
+            {
+                var desiredVehicle = this.getNearbyVehicle(_body);
+                if (desiredVehicle)
+                {
+                    ai.desiredVehicleId = desiredVehicle.data.id;
+                    ai.moveToPos = this.clone(desiredVehicle.position);
+                }
             }
         }
         else
         {
-            var desiredVehicle = this.getNearbyVehicle(_body);
-            if (desiredVehicle)
-            {
-                ai.desiredVehicleId = desiredVehicle.data.id;
-                ai.moveToPos = this.clone(desiredVehicle.position);
-            }
+            ai.desiredVehicleId = null;
         }
 
         if (!ai.desiredVehicleId)
@@ -9826,7 +9833,7 @@ class GameInstance
                         muzzlePos: [80, 40],
                         aimRotation: 0,
                         overheat: 0
-                    },
+                    }
                 ];
                 break;
 
@@ -9871,6 +9878,10 @@ class GameInstance
                     },
                     {
                         position: [110, 30],
+                        bBack: true
+                    },
+                    {
+                        position: [150, 30],
                         bBack: true
                     }
                 ];
@@ -11269,6 +11280,15 @@ class GameInstance
                                 }
                                 if (bDetonate)
                                 {
+                                    this.requestEvent({
+                                        eventId: GameServer.EVENT_PAWN_DAMAGE,
+                                        damageType: DamageType.DAMAGE_EXPLOSIVE,
+                                        damageAmount: dataA["damage"],
+                                        pawnId: dataB.id,
+                                        attackerId: dataA.rocketData.playerId,
+                                        causerId: dataA.id,
+                                        weaponId: dataA.rocketData["weaponId"]
+                                    });
                                     this.detonate(_bodyA);
                                 }
                                 break;
@@ -11456,10 +11476,13 @@ class GameInstance
                     if (_weaponId == "bomb")
                     {
                         bAlly = false; //Bomb crates kill everyone
-                    }
-                    if (cur.data["type"] == "character" && bAlly)
+                    }                    
+                    if (cur.data["type"] == "character")
                     {
-                        damageAmount = 0;
+                        if (bAlly || cur.data.id == _directHitId)
+                        {
+                            damageAmount = 0;
+                        }
                     }
                     else if (cur.data["type"] == "turret" && bAlly)
                     {
@@ -11467,14 +11490,14 @@ class GameInstance
                     }
                     else if (this.isVehicle(cur) && this.vehicleHasOccupant(cur) && bAlly)
                     {
-                        //damageAmount = 0;
+                        damageAmount = 0;
                     }
                     else if (this.isVehicle(cur))
                     {
                         //Handle vehicle explosive damage
                         if (bAlly)
                         {
-                            //damageAmount = 0;
+                            damageAmount = 0;
                         }
                         else if (cur.data.id == _directHitId)
                         {
@@ -12265,9 +12288,9 @@ class GameInstance
             mods = this.getModsForWeapon(primary.id, Mods.TYPE_AMMO);
             primary.mods.ammo = mods[this.Random(0, mods.length - 1)];
             var secondary = curClass.secondary;
-            switch (curClass)
+            switch (i)
             {
-                case Classes.ENGINEER:
+                case 1:
                     var s = [Weapon.TYPE_LAUNCHER];
                     break;
                 default:
