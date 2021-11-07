@@ -187,7 +187,7 @@
     },
     {
       "type": "mountedWeapon",
-      "weaponType": "m2",
+      "weaponType": "bgm71",
       "scale": 1,
       "position": [
         750,
@@ -196,7 +196,7 @@
     },
     {
       "type": "mountedWeapon",
-      "weaponType": "m2",
+      "weaponType": "bgm71",
       "scale": -1,
       "position": [
         13261,
@@ -1891,21 +1891,21 @@
     {
       "data": {
         "type": "node_walk",
-        "position": [ 461.55, 2008.3 ]
+        "position": [ 209.65, 2008.3 ]
       },
       "id": "n_n_3"
     },
     {
       "data": {
         "type": "node_walk",
-        "position": [ 461.55, 1822 ]
+        "position": [ 209.65, 1822 ]
       },
       "id": "n_n_4"
     },
     {
       "data": {
         "type": "node_walk",
-        "position": [ 461.55, 1630.1 ]
+        "position": [ 209.65, 1630.1 ]
       },
       "id": "n_n_5"
     },

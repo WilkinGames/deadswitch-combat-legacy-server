@@ -496,6 +496,9 @@
   "STR_AIR_TARGET_REQUIRED": {
     "en": "Air Target Required"
   },
+  "STR_TARGET_LOCK_REQUIRED": {
+    "en": "Target Required"
+  },
   "STR_LOCKING_ON": {
     "en": "Locking On..."
   },
@@ -736,8 +739,8 @@
   "STR_WORLD_WINTER": {
     "en": "Winter"
   },
-  "STR_WORLD_WATER": {
-    "en": "Water"
+  "STR_WORLD_MOUNTAINS": {
+    "en": "Mountains"
   },
   "STR_RELOAD": {
     "en": "Reload"
@@ -1122,6 +1125,9 @@
   },
   "STR_WPN_M2": {
     "en": "M2HB"
+  },
+  "STR_WPN_BGM71": {
+    "en": "BGM-71 TOW"
   },
   "STR_WPN_ZUNI": {
     "en": "Zuni Rockets"

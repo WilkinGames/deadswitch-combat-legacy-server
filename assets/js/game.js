@@ -199,7 +199,8 @@ const Car = {
     QUAD: "quad"
 };
 const MountedWeapon = {
-    M2_BROWNING: "m2"
+    M2_BROWNING: "m2",
+    BGM71_TOW: "bgm71"
 };
 const Commands = {
     AMMO: 1,
@@ -915,10 +916,13 @@ class GameInstance
                     this.handleSpawn(spawn);
                 }
             }
-            for (var i = 0; i < this.game.spawners.length; i++)
+            if (!this.matchHasEnded())
             {
-                var spawner = this.game.spawners[i];
-                this.handleSpawner(spawner);
+                for (var i = 0; i < this.game.spawners.length; i++)
+                {
+                    var spawner = this.game.spawners[i];
+                    this.handleSpawner(spawner);
+                }
             }
 
             var objects = this.game.world.bodies;
@@ -2029,15 +2033,15 @@ class GameInstance
                     ai.offsetY = 0;
                     break;
                 case BotSkill.SKILL_INSANE:
-                    ai.offsetX = this.Random(-15, 15);
+                   ai.offsetX = 0;
                     ai.offsetY = this.Random(-15, 15);
                     break;
                 case BotSkill.SKILL_HARD:
-                    ai.offsetX = this.Random(-30, 30);
+                    ai.offsetX = this.Random(-5, 5);
                     ai.offsetY = this.Random(-60, 60);
                     break;
                 default:
-                    ai.offsetX = this.Random(-50, 50);
+                    ai.offsetX = this.Random(-10, 10);
                     ai.offsetY = this.Random(-100, 100);
                     break;
             }
@@ -2073,21 +2077,26 @@ class GameInstance
             }
             else
             {
-                ai.path = this.getAIPath([_body.position[0], _body.position[1]], ai.moveToPos, _body, ai.destThreshold);
+                if (!_body.data.bClimbing)
+                {
+                    ai.path = this.getAIPath([_body.position[0], _body.position[1]], ai.moveToPos, _body, ai.destThreshold);
+                }
                 var pathTickerMax = 0;
                 switch (ai.botSkill)
                 {
                     case BotSkill.SKILL_EASY:
-                        pathTickerMax = 4;
-                        break;
-                    case BotSkill.SKILL_NORMAL:
                         pathTickerMax = 3;
                         break;
+                    case BotSkill.SKILL_NORMAL:
+                    case BotSkill.SKILL_HARD:
+                        pathTickerMax = 2;
+                        break;
+                    case BotSkill.SKILL_INSANE:
                     case BotSkill.SKILL_GOD:
                         pathTickerMax = 1;
                         break;
                     default:
-                        pathTickerMax = 2;
+                        pathTickerMax = 5;
                         break;
                 }
                 ai.pathTicker = pathTickerMax;
@@ -2310,25 +2319,47 @@ class GameInstance
             this.setDataValue(_body, "bSprinting", !data.bWantsToFire && data.bWantsToMove && this.characterCanSprint(_body));
             this.setDataValue(_body, "bCrouching", !data.bWantsToMove && !data.bClimbing && !data.bSprinting && !data.bParachute && this.characterCanCrouch(_body));
         }
-        switch (this.game.gameModeId)
+
+        if (ai.desiredVehicleId)
         {
-            case GameMode.HEADQUARTERS:
-            case GameMode.DOMINATION:
-            case GameMode.CONQUEST:
-                var flag = this.getAIBestDominationFlag(_body);
-                if (flag)
-                {
-                    ai.destThreshold = 100;
-                    ai.moveToPos = this.clone(flag.position);
-                }
-                break;
-            default:
-                if (ai.enemy)
-                {
-                    ai.moveToPos = this.clone(ai.enemy.position);
-                }
-                break;
-        }  
+            var veh = this.getObjectById(ai.desiredVehicleId);
+            if (!veh || !this.hasAvailableSeat(veh))
+            {
+                delete ai.desiredVehicleId;
+            }
+        }
+        else
+        {
+            var desiredVehicle = this.getNearbyVehicle(_body);
+            if (desiredVehicle)
+            {
+                ai.desiredVehicleId = desiredVehicle.data.id;
+                ai.moveToPos = this.clone(desiredVehicle.position);
+            }
+        }
+
+        if (!ai.desiredVehicleId)
+        {
+            switch (this.game.gameModeId)
+            {
+                case GameMode.HEADQUARTERS:
+                case GameMode.DOMINATION:
+                case GameMode.CONQUEST:
+                    var flag = this.getAIBestDominationFlag(_body);
+                    if (flag)
+                    {
+                        ai.destThreshold = 100;
+                        ai.moveToPos = this.clone(flag.position);
+                    }
+                    break;
+                default:
+                    if (ai.enemy)
+                    {
+                        ai.moveToPos = this.clone(ai.enemy.position);
+                    }
+                    break;
+            }
+        }
 
         var bTriggerFire = ai.enemyDist < ai.lookRange && ai.bEnemyLOS && (!data.bStunned && !data.bFlashed);
 
@@ -3489,7 +3520,13 @@ class GameInstance
                         }
                     }
                     var bHasAmmo = weapon.ammo != null ? weapon.ammo > 0 : true;
-                    if (weapon.bWantsToFire && !weapon.bFireDelay && !weapon.bCooldown && bHasAmmo && weapon.weaponData)
+                    var bCanFire = weapon.weaponData != null;
+                    if (bCanFire && weapon.weaponData.bAirOnly)
+                    {
+                        var pawn = this.getObjectById(seats[i].pawnId);
+                        bCanFire = bCanFire && pawn && pawn.data.lockOnTargetId;
+                    }
+                    if (weapon.bWantsToFire && !weapon.bFireDelay && !weapon.bCooldown && bHasAmmo && bCanFire)
                     {
                         var pawnId = seats[i].pawnId;
                         var muzzlePos = this.getVehicleMuzzlePosition(_body, i);
@@ -6755,16 +6792,24 @@ class GameInstance
 
     getAvailableSeatIndex(_vehicle)
     {
-        var seats = _vehicle.data.seats;
-        for (var i = 0; i < seats.length; i++)
+        if (_vehicle)
         {
-            var seat = seats[i];
-            if (!seat.pawnId)
+            var seats = _vehicle.data.seats;
+            for (var i = 0; i < seats.length; i++)
             {
-                return i;
+                var seat = seats[i];
+                if (!seat.pawnId)
+                {
+                    return i;
+                }
             }
         }
         return null;
+    }
+
+    hasAvailableSeat(_vehicle)
+    {
+        return this.getAvailableSeatIndex(_vehicle) != null;
     }
 
     clearPlayerControllable(_id)
@@ -6937,6 +6982,25 @@ class GameInstance
                     return obj;
                 }
             }
+        }
+        return null;
+    }
+
+    getNearbyVehicle(_body)
+    {
+        var arr = [];
+        var objects = this.getVehicles();
+        for (var i = 0; i < objects.length; i++)
+        {
+            var obj = objects[i];
+            if (!obj.data.bPendingRemoval && this.hasAvailableSeat(obj) && this.DistBodies(obj, _body) < 1000)
+            {
+                arr.push(obj);
+            }
+        }
+        if (arr.length > 0)
+        {
+            return arr[this.Random(0, arr.length - 1)];
         }
         return null;
     }
@@ -10003,6 +10067,31 @@ class GameInstance
                     }
                 ]
                 break;
+            case MountedWeapon.BGM71_TOW:
+                data.health = 500;
+                data.weaponData = {
+                    type: _data.weaponType
+                };
+                data.seats = [
+                    {
+                        position: [-20, -10],
+                        bBack: true,
+                        bTurret: true
+                    }
+                ];
+                var wpn = this.getWeaponData("bgm71");
+                data.weapons = [
+                    {
+                        id: wpn.id,
+                        muzzlePos: [0, -20],
+                        aimRotation: 0,
+                        weaponData: wpn,
+                        overheat: 0,
+                        minAngle: this.ToRad(-90),
+                        maxAngle: this.ToRad(90)
+                    }
+                ]
+                break;
         }
         data.maxHealth = data.health;
         body.addShape(new p2.Box({
@@ -11178,14 +11267,7 @@ class GameInstance
 
                             case "obstacle":
                             case "destructableObject":
-                                if (this.game.bSurvival)
-                                {
-                                    if (dataA.rocketData.team == 0)
-                                    {
-                                        //Ignore
-                                    }
-                                }
-                                else
+                                if (!dataA.rocketData.bAirOnly && !this.game.bSurvival)
                                 {
                                     this.detonate(_bodyA);
                                 }
@@ -11292,7 +11374,11 @@ class GameInstance
             {
                 if (cur.data.controllableId)
                 {
-                    continue;
+                    var veh = this.getObjectById(cur.data.controllableId);
+                    if (veh.data.type != "mountedWeapon")
+                    {
+                        continue;
+                    }
                 }
                 var ps = this.getPlayerById(cur.data.id);
                 if (ps && ps.bSpawnProtection)
@@ -12384,6 +12470,11 @@ class GameInstance
         return Math.random() >= 0.5;
     }
 
+    DistBodies(_bodyA, _bodyB)
+    {
+        return this.Dist(_bodyA.position[0], _bodyA.position[1], _bodyB.position[0], _bodyB.position[1]);
+    }
+
     Dist(_x1, _y1, _x2, _y2)
     {
         return Math.sqrt((_x1 - _x2) * (_x1 - _x2) + (_y1 - _y2) * (_y1 - _y2));
@@ -12443,6 +12534,20 @@ class GameInstance
     RoundDecimalFine(_val)
     {
         return Math.trunc(_val * 10000) / 10000;
+    }
+
+    ShuffleArray(array)
+    {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+        while (0 !== currentIndex)
+        {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+        return array;
     }
 
 }
