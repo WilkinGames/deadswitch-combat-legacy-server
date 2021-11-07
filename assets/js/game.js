@@ -2440,6 +2440,7 @@ class GameInstance
                     case "tank":
                     case "helicopter":
                     case "car":
+                    case "mountedWeapon":
                         if (data.seatIndex == 0)
                         {
                             if (ai.enemy)
@@ -4659,7 +4660,7 @@ class GameInstance
             var pawn = this.getObjectById(_playerId);
             if (pawn)
             {
-                pawn.data.bSpawnProtection = ps.bSpawnProtection;
+                this.setDataValue(pawn, "bSpawnProtection", ps.bSpawnProtection);
             }
             this.onEvent({
                 eventId: GameServer.EVENT_PLAYER_UPDATE,
@@ -4683,7 +4684,7 @@ class GameInstance
                 var pawn = this.getObjectById(_playerId);
                 if (pawn)
                 {
-                    pawn.data.bSpawnProtection = ps.bSpawnProtection;
+                    this.setDataValue(pawn, "bSpawnProtection", ps.bSpawnProtection);
                 }
                 this.onEvent({
                     eventId: GameServer.EVENT_PLAYER_UPDATE,
@@ -8766,11 +8767,7 @@ class GameInstance
         if (ps)
         {
             this.removeEquipmentByPlayerId(ps.id);
-            this.removeGrenadesByPlayerId(ps.id);
-            if (this.matchInProgress() && this.game.gameModeData.bSpawnProtection)
-            {
-                this.startSpawnProtectionTimer(ps.id);
-            }
+            this.removeGrenadesByPlayerId(ps.id);            
             var classData = ps.classes[ps.currentClass];
             var inventory = [classData.primary, classData.secondary, { id: classData.melee }, { id: classData.grenade }, { id: classData.equipment }];
             var spawnPos = this.clone(this.getCurrentMapData().spawns[ps.desiredSpawn].position);
@@ -8796,6 +8793,10 @@ class GameInstance
             if (!ps.bBot)
             {
                 ps.bAutoRespawn = false;
+            }
+            if (this.matchInProgress() && this.game.gameModeData.bSpawnProtection)
+            {
+                this.startSpawnProtectionTimer(ps.id);
             }
         }
     }
