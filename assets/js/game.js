@@ -2325,7 +2325,7 @@ class GameInstance
             var veh = this.getObjectById(ai.desiredVehicleId);
             if (!veh || !this.hasAvailableSeat(veh))
             {
-                delete ai.desiredVehicleId;
+                ai.desiredVehicleId = null;
             }
         }
         else
@@ -2508,7 +2508,10 @@ class GameInstance
                                 if (ai.enemy)
                                 {
                                     var muzzle = this.getVehicleMuzzlePosition(controllable, data.seatIndex);
-                                    var rad = this.Angle(muzzle[0], muzzle[1], ai.enemy.position[0], ai.enemy.position[1]);
+                                    var aim = [ai.enemy.position[0], ai.enemy.position[1]];
+                                    aim[0] += ai.offsetX;
+                                    aim[1] += ai.offsetY;
+                                    var rad = this.Angle(muzzle[0], muzzle[1], aim[0], aim[1]);
                                     this.setVehicleWeaponAimRotation(controllable.data.scale, weapon, rad);
                                 }
                             }
