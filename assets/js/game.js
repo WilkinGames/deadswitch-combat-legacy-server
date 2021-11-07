@@ -1899,6 +1899,7 @@ class GameInstance
                                         {
                                             weapon.weaponData.overheatMax = 180;
                                         }
+                                        weapon.weaponData.cooldownNum = 1.5;
                                         weapon.overheat = 0;                                        
                                         this.requestEvent({
                                             eventId: GameServer.EVENT_PAWN_ACTION,
@@ -4970,6 +4971,7 @@ class GameInstance
         ps.bAutoRespawn = ps.bBot;
         ps.respawnTimer = this.matchInProgress() ? this.game.gameModeData.respawnTime : -1;
         ps.kills = 0;
+        ps.headshots = 0;
         ps.assists = 0;
         ps.deaths = 0;
         ps.melees = 0;    
@@ -7990,7 +7992,7 @@ class GameInstance
         var victim = this.getObjectById(_victimId);
         if (ps)
         {
-            var killedBy = ps["killedBy"];
+            var killedBy = ps.killedBy;
             if (killedBy)
             {
                 var index = killedBy.indexOf(_victimId);
@@ -8007,14 +8009,14 @@ class GameInstance
                 bAddToKills = bVictimIsCharacter;
                 if (bAddToKills)
                 {
-                    ps["kills"]++;
+                    ps.kills++;
                     if (_damageInfo.bHeadshot)
                     {
-                        ps["headshots"]++;
+                        ps.headshots++;
                     }
                     if (_damageInfo.bMelee)
                     {
-                        ps["melees"]++;
+                        ps.melees++;
                     }
                     ps["multiKillTimer"] = this.game.settings.fps;
                     ps["multiKillCount"]++;
@@ -8303,6 +8305,8 @@ class GameInstance
                         case "melee_machete":
                         case "melee_hatchet":
                         case "minigun":
+                        case "gatling":
+                        case "m2":
                         case "mg42":
                             bGib = true;
                             break;
