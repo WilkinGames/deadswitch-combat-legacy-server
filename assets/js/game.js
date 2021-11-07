@@ -2461,7 +2461,7 @@ class GameInstance
                                         }
                                         break;
                                 }
-                                desiredPos[1] = Math.max(400, desiredPos[1]);
+                                desiredPos[1] = Math.max(500, desiredPos[1]);
                                 var keyInfo = {};                                
                                 var dist = this.Dist(desiredPos[0], desiredPos[1], controllable.position[0], controllable.position[1]);
                                 if (dist > 100)
@@ -7001,7 +7001,7 @@ class GameInstance
         for (var i = 0; i < objects.length; i++)
         {
             var obj = objects[i];
-            if (!obj.data.bPendingRemoval && this.hasAvailableSeat(obj) && this.DistBodies(obj, _body) < 1000)
+            if (!obj.data.bPendingRemoval && obj.data.team == -1 || obj.data.team == _body.data.team || this.hasAvailableSeat(obj) && this.DistBodies(obj, _body) < 1000)
             {
                 arr.push(obj);
             }
