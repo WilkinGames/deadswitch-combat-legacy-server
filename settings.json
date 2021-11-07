@@ -13,11 +13,11 @@
     "Type /players to view players."
   ],
   "gameData": {
-    "gameModeId": "conquest",
+    "gameModeId": "team_deathmatch",
     "mapId": "map_siege",
     "settings": {
       "timeLimit": 10,
-      "scoreLimit": 300,
+      "scoreLimit": 100,
       "respawnTime": 1,
       "preGameTimer": 5,
       "bAllowRespawns": true,
@@ -28,7 +28,7 @@
       "bFallDamage": true,
       "vehicleRespawnTime": 120,
       "weaponRespawnTime": 120,
-      "bots": 12,
+      "bots": 20,
       "botSkill": 1,
       "tickRate": 30,
       "updateRate": 60
