@@ -2461,6 +2461,7 @@ class GameInstance
                                         }
                                         break;
                                 }
+                                desiredPos[1] = Math.max(400, desiredPos[1]);
                                 var keyInfo = {};                                
                                 var dist = this.Dist(desiredPos[0], desiredPos[1], controllable.position[0], controllable.position[1]);
                                 if (dist > 100)
@@ -2509,8 +2510,11 @@ class GameInstance
                                 {
                                     var muzzle = this.getVehicleMuzzlePosition(controllable, data.seatIndex);
                                     var aim = [ai.enemy.position[0], ai.enemy.position[1]];
-                                    aim[0] += ai.offsetX;
-                                    aim[1] += ai.offsetY;
+                                    if (controllable.data.type != "tank")
+                                    {
+                                        aim[0] += ai.offsetX;
+                                        aim[1] += ai.offsetY;
+                                    }
                                     var rad = this.Angle(muzzle[0], muzzle[1], aim[0], aim[1]);
                                     this.setVehicleWeaponAimRotation(controllable.data.scale, weapon, rad);
                                 }
