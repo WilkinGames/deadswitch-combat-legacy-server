@@ -199,7 +199,17 @@ log("Loaded", allMaps.length, "maps");
 log(chalk.green("Done"));
 
 var stats = {
-    kills: 0
+    kills: 0,
+    tankKills: 0,
+    heliKills: 0
+};
+function incrementStat(_id)
+{
+    if (stats[_id] == null)
+    {
+        stats[_id] = 0;
+    }
+    stats[_id]++;
 }
 
 app.use(cors({
@@ -322,7 +332,7 @@ io.on("connection", (socket) =>
                         sendChatMessageToSocket(socket, {
                             bServer: true,
                             bDirect: true,
-                            locText: "STR_SERVER_X_TOTAL_KILLS",
+                            locText: "STR_SERVER_X_PLAYER_KILLS",
                             params: [stats.kills]
                         });
                     }
@@ -374,7 +384,7 @@ io.on("connection", (socket) =>
                         sendChatMessageToSocket(socket, {
                             bServer: true,
                             bDirect: true,
-                            messageText: settings.rules
+                            locText: settings.rules
                         });
                     }
                     break;
@@ -659,7 +669,7 @@ io.on("connection", (socket) =>
                     sendChatMessageToSocket(socket, {
                         bServer: true,
                         bDirect: true,
-                        messageText: settings.welcome
+                        locText: settings.welcome
                     });
                 }
             }
@@ -829,7 +839,15 @@ function setLobbyState(_lobbyId, _state)
                     callbacks: {
                         onPlayerKill: () =>
                         {
-                            stats.kills++;
+                            incrementStat("kills");
+                        },
+                        onTankKill: () =>
+                        {
+                            incrementStat("tankKills");
+                        },
+                        onHeliKill: () =>
+                        {
+                            incrementStat("heliKills");
                         }
                     }
                 };
@@ -840,8 +858,22 @@ function setLobbyState(_lobbyId, _state)
                     {
                         if (MathUtil.RandomBoolean())
                         {
-                            var msg = "STR_SERVER_X_TOTAL_KILLS";
-                            var params = stats.kills;
+                            var rand = MathUtil.Random(1, 3);
+                            switch (rand)
+                            {
+                                case 1:
+                                    var msg = "STR_SERVER_X_PLAYER_KILLS";
+                                    var params = [stats.kills];
+                                    break;
+                                case 2:
+                                    msg = "STR_SERVER_X_TANK_KILLS";
+                                    params = [stats.tankKills];
+                                    break;
+                                case 3:
+                                    msg = "STR_SERVER_X_HELI_KILLS";
+                                    params = [stats.heliKills];
+                                    break;
+                            }
                         }
                         else
                         {

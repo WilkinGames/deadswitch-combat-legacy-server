@@ -116,9 +116,9 @@
     "width": 32,
     "height": 10
   },
-  "tac_insert": {
-    "width": 15,
-    "height": 6
+  "beacon": {
+    "width": 20,
+    "height": 32
   },
   "trophy": {
     "width": 40,

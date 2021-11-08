@@ -897,9 +897,10 @@ class GameInstance
             if (this.matchInProgress())
             {
                 var pawns = this.getCharacters().concat(this.getFlags());
-                for (var i = 0; i < this.game.gameModeData.spawns.length; i++)
+                var spawnPoints = this.game.gameModeData.spawns;
+                for (var i = 0; i < spawnPoints.length; i++)
                 {
-                    var spawn = this.game.gameModeData.spawns[i];                      
+                    var spawn = spawnPoints[i];                      
                     for (var j = 0; j < pawns.length; j++)
                     {
                         var pawn = pawns[j];
@@ -1886,6 +1887,7 @@ class GameInstance
                         if (playerVehicleData)
                         {
                             this.setDataValue(_vehicle, "camo", playerVehicleData.camo);
+                            this.setDataValue(_vehicle, "countermeasure", playerVehicleData.countermeasure);
                             if (playerVehicleData.weapons)
                             {
                                 var newData = this.getWeaponData(playerVehicleData.weapons[_seatIndex]);
@@ -3536,7 +3538,7 @@ class GameInstance
                     if (weapon.overheat > 0)
                     {
                         var cooldownNum = weapon.weaponData.cooldownNum ? weapon.weaponData.cooldownNum : 0.5;
-                        weapon.overheat -= (weapon.bCooldown ? cooldownNum : 1); // * this.game.fpsMult;
+                        weapon.overheat -= (weapon.bCooldown ? cooldownNum : 1) / this.game.fpsMult;
                         if (weapon.overheat <= 0 && weapon.bCooldown)
                         {
                             weapon.bCooldown = false;
@@ -4058,7 +4060,10 @@ class GameInstance
             if (weapon["equipmentDelayTimer"] > 0)
             {
                 weapon["equipmentDelayTimer"]--;
-                data.bCrouching = true;
+                if (!data.bCrouching)
+                {
+                    this.setDataValue(_body, "bCrouching", true);
+                }
             }
             else
             {
@@ -4068,7 +4073,7 @@ class GameInstance
                     pawnId: data.id,
                     type: GameServer.PAWN_END_EQUIPMENT_DELAY
                 });
-                data.bCrouching = false;
+                this.setDataValue(_body, "bCrouching", false);
             }
         }
         if (weapon["bUseDelay"])
@@ -4458,7 +4463,7 @@ class GameInstance
             var rand = this.Random(1, 2);
             var scaleVal = data.scale == 1 ? -1 : 1;
             var recoilMult = (data.bCrouching ? 0.5 : 1) * (data.bAiming ? 0.5 : 1);            
-            var recoilVal = useRecoil + (Math.abs(useRecoil) * 0.15);
+            var recoilVal = useRecoil + (Math.abs(useRecoil) * 0.1);
             data.weapon.recoil += -(recoilVal * recoilMult) * (rand == 1 ? scaleVal : -scaleVal);            
         }
         if (weapon.type == Weapon.TYPE_MELEE)
@@ -5008,7 +5013,7 @@ class GameInstance
         {
             if (spawns[i].team == _team)
             {
-                arr.push(i);
+                arr.push(spawns[i].position);
             }
         }
         return arr[this.Random(0, arr.length - 1)];
@@ -7021,7 +7026,7 @@ class GameInstance
         for (var i = 0; i < objects.length; i++)
         {
             var obj = objects[i];
-            if (!obj.data.bPendingRemoval && obj.data.team == -1 || obj.data.team == _body.data.team || this.hasAvailableSeat(obj) && this.DistBodies(obj, _body) < 1000)
+            if (!obj.data.bPendingRemoval && (obj.data.team == -1 || obj.data.team == _body.data.team) && this.hasAvailableSeat(obj) && this.DistBodies(obj, _body) < 1000)
             {
                 arr.push(obj);
             }
@@ -7878,9 +7883,9 @@ class GameInstance
                         break;
 
                     default:
-                        if (item.id == "tac_insert")
+                        if (item.id == "beacon")
                         {
-                            this.removeEquipmentByPlayerId(data.id, "tac_insert");
+                            this.removeEquipmentByPlayerId(data.id, "beacon");
                         }
                         if (item["bPassive"])
                         {
@@ -8122,6 +8127,18 @@ class GameInstance
             var bTeamKill = !bSuicide && (victim ? ps.team == victim.data.team : false);
             if (!bSuicide && !bTeamKill)
             {
+                switch (victim.data.type)
+                {
+                    case "character":
+                        this.triggerCallback("onPlayerKill");
+                        break;
+                    case "tank":
+                        this.triggerCallback("onTankKill");
+                        break;
+                    case "helicopter":
+                        this.triggerCallback("onHeliKill");
+                        break;
+                }
                 var bVictimIsCharacter = victim ? victim.data["type"] == "character" : false;
                 bAddToKills = bVictimIsCharacter;
                 if (bAddToKills)
@@ -8249,7 +8266,6 @@ class GameInstance
                 }
             }
         }
-        this.triggerCallback("onPlayerKill");
     }
 
     triggerCallback(_id)
@@ -8821,8 +8837,15 @@ class GameInstance
             this.removeEquipmentByPlayerId(ps.id);
             this.removeGrenadesByPlayerId(ps.id);            
             var classData = ps.classes[ps.currentClass];
-            var inventory = [classData.primary, classData.secondary, { id: classData.melee }, { id: classData.grenade }, { id: classData.equipment }];
-            var spawnPos = this.clone(this.getCurrentMapData().spawns[ps.desiredSpawn].position);
+            var inventory = [classData.primary, classData.secondary, { id: classData.melee }, { id: classData.grenade }, { id: classData.equipment }];            
+            if (ps.desiredSpawn && ps.desiredSpawn[0] != null && ps.desiredSpawn[1] != null)
+            {                
+                var spawnPos = ps.desiredSpawn;
+            }
+            else
+            {
+                spawnPos = this.getSpawnPointForTeam(ps.team);
+            }
             spawnPos[0] += this.Random(-150, 150);
             if (!this.getObjectById(ps.id))
             {
@@ -9244,8 +9267,9 @@ class GameInstance
             body.data["blockNum"] = 3;
             body.data["bCanMelee"] = true;
         }
-        else if (_weaponData.id == "tac_insert")
+        else if (_weaponData.id == "beacon")
         {
+            body.data["material"] = Material.METAL;
             body.fixedRotation = true;
         }
         if (_weaponData.radius)
@@ -11440,11 +11464,7 @@ class GameInstance
             {
                 if (cur.data.controllableId)
                 {
-                    var veh = this.getObjectById(cur.data.controllableId);
-                    if (veh.data.type != "mountedWeapon")
-                    {
-                        continue;
-                    }
+                    continue;
                 }
                 var ps = this.getPlayerById(cur.data.id);
                 if (ps && ps.bSpawnProtection)
@@ -11486,7 +11506,7 @@ class GameInstance
                     if (cur.data.type == "door" && cur.data.bClosed)
                     {
                         this.setDoorClosed(cur, false, causer);
-                    }                    
+                    }
                     if (!bLOSCheck)
                     {
                         continue;
@@ -11514,13 +11534,10 @@ class GameInstance
                     if (_weaponId == "bomb")
                     {
                         bAlly = false; //Bomb crates kill everyone
-                    }                    
-                    if (cur.data["type"] == "character")
+                    }
+                    if (cur.data["type"] == "character" && bAlly)
                     {
-                        if (bAlly || cur.data.id == _directHitId)
-                        {
-                            damageAmount = 0;
-                        }
+                        damageAmount = 0;
                     }
                     else if (cur.data["type"] == "turret" && bAlly)
                     {
@@ -11528,14 +11545,14 @@ class GameInstance
                     }
                     else if (this.isVehicle(cur) && this.vehicleHasOccupant(cur) && bAlly)
                     {
-                        damageAmount = 0;
+                        //damageAmount = 0;
                     }
                     else if (this.isVehicle(cur))
                     {
                         //Handle vehicle explosive damage
                         if (bAlly)
                         {
-                            damageAmount = 0;
+                            //damageAmount = 0;
                         }
                         else if (cur.data.id == _directHitId)
                         {
@@ -11721,7 +11738,6 @@ class GameInstance
         }
 
     }
-
     detonate(_body, _directHitId)
     {
         if (_body && _body.data)
