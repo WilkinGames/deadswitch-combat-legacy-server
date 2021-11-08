@@ -2039,16 +2039,16 @@ class GameInstance
                     ai.offsetY = 0;
                     break;
                 case BotSkill.SKILL_INSANE:
-                   ai.offsetX = 0;
+                    ai.offsetX = this.Random(-15, 15);
                     ai.offsetY = this.Random(-15, 15);
                     break;
                 case BotSkill.SKILL_HARD:
-                    ai.offsetX = this.Random(-5, 5);
-                    ai.offsetY = this.Random(-60, 60);
+                    ai.offsetX = this.Random(-30, 30);
+                    ai.offsetY = this.Random(-30, 30);
                     break;
                 default:
-                    ai.offsetX = this.Random(-10, 10);
-                    ai.offsetY = this.Random(-100, 100);
+                    ai.offsetX = this.Random(-50, 50);
+                    ai.offsetY = this.Random(-50, 50);
                     break;
             }
         }        
@@ -3449,6 +3449,11 @@ class GameInstance
             var enemy = this.getObjectById(data.rocketData["enemyId"]);
             if (enemy && enemy.data["health"])
             {
+                var dist = this.DistBodies(enemy, _body);
+                if (dist < 50)
+                {
+                    this.detonate(_body);
+                }
                 var distX = enemy.position[0] - _body.position[0];
                 var distY = enemy.position[1] - _body.position[1];
                 var rad = Math.atan2(distY, distX);
@@ -9957,7 +9962,7 @@ class GameInstance
 
             case Helicopter.COBRA:
                 data.health = 2000;
-                data.speed = 2750;
+                data.speed = 2800;
                 data.seats = [
                     {
                         position: [160, 20],
@@ -11547,7 +11552,11 @@ class GameInstance
             {
                 if (cur.data.controllableId)
                 {
-                    continue;
+                    var vehicle = this.getObjectById(cur.data.controllableId);
+                    if (vehicle.data.type != "mountedWeapon")
+                    {
+                        continue;
+                    }
                 }
                 var ps = this.getPlayerById(cur.data.id);
                 if (ps && ps.bSpawnProtection)
