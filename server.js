@@ -310,17 +310,22 @@ io.on("connection", (socket) =>
                         });
                         sendChatMessageToLobby(lobby.id, {
                             bServer: true,
-                            messageText: name + " changed name to " + socket.player.name
+                            locText: "STR_SERVER_X_CHANGED_NAME_TO_X",
+                            params: [name, socket.player.name]
                         });
                     }
                     break;
 
                 case "/stats":
-                    sendChatMessageToSocket(socket, {
-                        bServer: true,
-                        bDirect: true,
-                        messageText: stats.kills + " kills"
-                    });
+                    if (stats)
+                    {
+                        sendChatMessageToSocket(socket, {
+                            bServer: true,
+                            bDirect: true,
+                            locText: "STR_SERVER_X_TOTAL_KILLS",
+                            params: stats.kills
+                        });
+                    }
                     break;
 
                 case "/kick":
@@ -421,7 +426,7 @@ io.on("connection", (socket) =>
                                             sendChatMessageToSocket(socket, {
                                                 bServer: true,
                                                 bDirect: true,
-                                                messageText: "You can't votekick yourself."
+                                                locText: "STR_SERVER_VOTEKICK_SELF"
                                             });
                                             var kickNum = 0;
                                             continue;
@@ -431,7 +436,7 @@ io.on("connection", (socket) =>
                                             sendChatMessageToSocket(socket, {
                                                 bServer: true,
                                                 bDirect: true,
-                                                messageText: "You can't votekick an admin."
+                                                locText: "STR_SERVER_VOTEKICK_ADMIN"
                                             });
                                             var kickNum = 0;
                                             continue;
@@ -445,7 +450,8 @@ io.on("connection", (socket) =>
                                         kickNum = Math.ceil(lobby.players.length * 0.5) + 1;
                                         sendChatMessageToLobby(lobby.id, {
                                             bServer: true,
-                                            messageText: "Votes against " + p.name + ": " + numVotes + "/" + kickNum
+                                            locText: "STR_SERVER_VOTEKICK_VOTES_AGAINST_X_X_X",
+                                            params: [p.name, numVotes, kickNum]
                                         });
                                         if (numVotes >= kickNum)
                                         {
@@ -467,7 +473,7 @@ io.on("connection", (socket) =>
                                     sendChatMessageToSocket(socket, {
                                         bServer: true,
                                         bDirect: true,
-                                        messageText: "Player not found. Type /players"
+                                        locText: "STR_SERVER_VOTEKICK_NOT_FOUND"
                                     });
                                 }
                             }
@@ -476,7 +482,7 @@ io.on("connection", (socket) =>
                                 sendChatMessageToSocket(socket, {
                                     bServer: true,
                                     bDirect: true,
-                                    messageText: "Missing player index. Type /players"
+                                    locText: "STR_SERVER_VOTEKICK_INVALID"
                                 });
                             }
                         }
@@ -485,7 +491,7 @@ io.on("connection", (socket) =>
                             sendChatMessageToSocket(socket, {
                                 bServer: true,
                                 bDirect: true,
-                                messageText: "Votekick is disabled by this server."
+                                locText: "STR_SERVER_VOTEKICK_DISABLED"
                             });
                         }
                     }
@@ -589,7 +595,8 @@ io.on("connection", (socket) =>
             {
                 sendChatMessageToLobby(lobby.id, {
                     bServer: true,
-                    messageText: "Game settings changed (" + num + ")"
+                    locText: "STR_SERVER_SETTINGS_CHANGED_X",
+                    params: [num]
                 });
             }
         }
@@ -833,7 +840,8 @@ function setLobbyState(_lobbyId, _state)
                     {
                         if (MathUtil.RandomBoolean())
                         {
-                            var msg = stats.kills + " players have been killed on this server.";
+                            var msg = "STR_SERVER_X_TOTAL_KILLS";
+                            var params = stats.kills;
                         }
                         else
                         {
@@ -841,7 +849,8 @@ function setLobbyState(_lobbyId, _state)
                         }
                         sendChatMessageToLobby(lobby.id, {
                             bServer: true,
-                            messageText: msg
+                            locText: msg,
+                            params: params
                         });
                     }, 60000);
                 }

@@ -547,6 +547,39 @@
   "STR_PING": {
     "en": "Ping"
   },
+  "STR_SERVER_PLAYER_INFO": {
+    "en": "Type /players to view players."
+  },
+  "STR_SERVER_RULES_INFO": {
+    "en": "Type /rules for server rules."
+  },
+  "STR_SERVER_VOTEKICK_SELF": {
+    "en": "You can't votekick yourself."
+  },
+  "STR_SERVER_VOTEKICK_ADMIN": {
+    "en": "You can't votekick an admin."
+  },
+  "STR_SERVER_VOTEKICK_NOT_FOUND": {
+    "en": "Player not found. Type /players"
+  },
+  "STR_SERVER_VOTEKICK_INVALID": {
+    "en": "Missing player index. Type /players"
+  },
+  "STR_SERVER_VOTEKICK_DISABLED": {
+    "en": "Votekick is disabled by this server."
+  },
+  "STR_SERVER_VOTEKICK_VOTES_AGAINST_X_X_X": {
+    "en": "Votes against %1: %2/%3"
+  },
+  "STR_SERVER_X_TOTAL_KILLS": {
+    "en": "%1 players have been killed on this server."
+  },
+  "STR_SERVER_X_CHANGED_NAME_TO_X": {
+    "en": "%1 changed name to %2"
+  },
+  "STR_SERVER_SETTINGS_CHANGED_X": {
+    "en": "Game settings changed (%1)"
+  },
   "STR_VICTORY": {
     "en": "Victory",
     "ru": "Победа",
