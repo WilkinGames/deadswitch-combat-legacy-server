@@ -199,6 +199,7 @@ log("Loaded", allMaps.length, "maps");
 log(chalk.green("Done"));
 
 var stats = {
+    games: 0,
     kills: 0,
     tankKills: 0,
     heliKills: 0
@@ -337,11 +338,17 @@ io.on("connection", (socket) =>
                 case "/stats":
                     if (stats)
                     {
+                        var str = "";
+                        var keys = Object.keys(stats);
+                        for (var i = 0; i < keys.length; i++)
+                        {
+                            var key = keys[i];
+                            str += key + ": " + stats[key];
+                        }
                         sendChatMessageToSocket(socket, {
                             bServer: true,
                             bDirect: true,
-                            locText: "STR_SERVER_X_PLAYER_KILLS",
-                            params: [stats.kills]
+                            messageText: str
                         });
                     }
                     break;
@@ -829,6 +836,7 @@ function setLobbyState(_lobbyId, _state)
         switch (_state)
         {
             case LobbyState.IN_PROGRESS:  
+                incrementStat("games");
                 var gameData = lobby.gameData;
                 gameData.bMultiplayer = true;
                 gameData.lobbyId = lobby.id;
@@ -866,12 +874,16 @@ function setLobbyState(_lobbyId, _state)
                     {
                         if (MathUtil.RandomBoolean())
                         {
-                            var rand = MathUtil.Random(1, 3);
+                            var rand = MathUtil.Random(0, 3);
                             switch (rand)
                             {
+                                case 0:
+                                    var msg = "STR_SERVER_X_GAMES";
+                                    var params = [stats.games];
+                                    break;
                                 case 1:
-                                    var msg = "STR_SERVER_X_PLAYER_KILLS";
-                                    var params = [stats.kills];
+                                    msg = "STR_SERVER_X_PLAYER_KILLS";
+                                    params = [stats.kills];
                                     break;
                                 case 2:
                                     msg = "STR_SERVER_X_TANK_KILLS";
@@ -1024,7 +1036,7 @@ function startGame(_lobbyId, _gameData)
 
 function onEndGame(_lobbyId)
 {
-    log("End game", _lobbyId);
+    log("End game", _lobbyId);    
     setTimeout(() =>
     {
         var lobby = getLobbyData(_lobbyId);

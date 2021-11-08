@@ -2,6 +2,9 @@
   "STR_LOADING": {
     "en": "Loading"
   },
+  "STR_PRELOADING_TEXTURES": {
+    "en": "Preloading Textures"
+  },
   "STR_CONTINUE": {
     "en": "Continue"
   },
@@ -445,6 +448,9 @@
   "STR_SETTING_PERFORMANCE_MODE": {
     "en": "Performance Mode"
   },
+  "STR_SETTING_BLOOM": {
+    "en": "Bloom"
+  },
   "STR_SETTING_FULLSCREEN": {
     "en": "Fullscreen"
   },
@@ -576,6 +582,9 @@
   },
   "STR_SERVER_VOTEKICK_VOTES_AGAINST_X_X_X": {
     "en": "Votes against %1: %2/%3"
+  },
+  "STR_SERVER_X_GAMES": {
+    "en": "%1 game(s) have been played on this server."
   },
   "STR_SERVER_X_PLAYER_KILLS": {
     "en": "%1 player(s) have been killed on this server."

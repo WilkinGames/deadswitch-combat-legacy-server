@@ -947,7 +947,7 @@
     "type": "TYPE_LAUNCHER",
     "fireMode": "MODE_SEMI",
     "round": "rocket_heat",
-    "damage": 550,
+    "damage": 500,
     "radius": 550,
     "accuracy": 3,
     "fireRate": 60,
