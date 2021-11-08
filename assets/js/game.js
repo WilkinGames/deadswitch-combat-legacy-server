@@ -3717,7 +3717,7 @@ class GameInstance
 
     handleCharacter(_body)
     {
-        if (_body.position[1] > this.getCurrentMapData().height)
+        if (_body.position[1] > this.getCurrentMapData().height || _body.position[0] < 0 || _body.position[0] > this.getCurrentMapData().width)
         {
             this.killPawn(_body);
             return;
@@ -8856,7 +8856,7 @@ class GameInstance
             {
                 spawnPos = this.getSpawnPointForTeam(ps.team);
             }
-            spawnPos[0] += this.Random(-150, 150);
+            spawnPos[0] += this.Random(-100, 100);
             if (!this.getObjectById(ps.id))
             {
                 var char = this.createCharacter({
