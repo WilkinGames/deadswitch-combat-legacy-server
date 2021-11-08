@@ -2073,6 +2073,20 @@ class GameInstance
                 delete ai.bEnemyLOS;
                 delete ai.enemyDist;
             }
+            if (ai.actionTicker > 0)
+            {
+                ai.actionTicker--;
+            }
+            else
+            {
+                ai.actionTicker = ai.actionTickerMax;
+                ai.bWantsVehicle = this.Random(1, 4) == 1;
+                ai.desiredVehicleId = null;
+                if (ai.bWantsVehicle)
+                {
+                    this.setPawnRequest(_body, Commands.VEHICLE);
+                }
+            }
             if (ai.pathTicker > 0)
             {
                 ai.pathTicker--;
@@ -2349,10 +2363,13 @@ class GameInstance
             {
                 ai.moveToPos = null;
                 ai.desiredVehicleId = null;
-                desiredVehicle = this.getNearbyVehicle(_body);
-                if (desiredVehicle)
+                if (ai.bWantsVehicle)
                 {
-                    ai.desiredVehicleId = desiredVehicle.data.id;
+                    desiredVehicle = this.getNearbyVehicle(_body);
+                    if (desiredVehicle)
+                    {
+                        ai.desiredVehicleId = desiredVehicle.data.id;
+                    }
                 }
             }
         }
@@ -2465,7 +2482,6 @@ class GameInstance
                             var req = this.getNearbyRequest(_body, Commands.VEHICLE, 1500);
                             if (req && this.hasAvailableSeat(controllable))
                             {
-                                console.log("vehicle request");
                                 var desiredPos = req;
                             }
                             else if (ai.enemy)
@@ -5238,8 +5254,7 @@ class GameInstance
                             var pawn = this.getObjectById(_data.pawnId);
                             if (pawn)
                             {
-                                this.setDataValue(pawn, "currentRequest", _data.value);
-                                pawn.data.requestTimer = this.game.settings.fps * 5;
+                                this.setPawnRequest(pawn, _data.value);
                             }
                             break;
                     }
@@ -10013,6 +10028,12 @@ class GameInstance
         return body;
     }
 
+    setPawnRequest(_body, _value)
+    {
+        this.setDataValue(_body, "currentRequest", _value);
+        _body.data.requestTimer = this.game.settings.fps * 5;
+    }
+
     createDoor(_data)
     {
         var body = new p2.Body({
@@ -10629,10 +10650,12 @@ class GameInstance
     initAI(_body, _botSkill)
     {
         var ai = {
-            pathTicker: 0,
+            pathTicker: 1,
+            actionTicker: 0,
+            actionTickerMax: 30,
             ticker: 0,
             botSkill: _botSkill,
-            destThreshold: 50,
+            destThreshold: 30,
             fireBurstTimer: 0,
             fireBurstTimerMax: Math.round((this.Random(25, 30) + (_botSkill * 10)) * this.game.fpsMult),
             fireCooldownTimer: 0,
