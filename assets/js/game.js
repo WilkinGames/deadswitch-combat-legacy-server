@@ -2101,26 +2101,12 @@ class GameInstance
                 }
                 ai.pathTicker = pathTickerMax;
             }
-            var allies = this.getCharactersOnTeam(data.team);
-            for (var i = 0; i < allies.length; i++)
+            if (this.hasEquipment(_body, "ammo_box"))
             {
-                var ally = allies[i];
-                if (ally.data.id != data.id)
+                var req = this.getNearbyRequest(_body, Commands.AMMO);
+                if (req)
                 {
-                    if (ally.data.currentRequest == Commands.AMMO)
-                    {
-                        if (!data.controllableId)
-                        {                            
-                            var dist = this.Dist(ally.position[0], ally.position[1], _body.position[0], _body.position[1]);
-                            if (dist < 500)
-                            {
-                                if (this.hasEquipment(_body, "ammo_box"))
-                                {
-                                    this.useCharacterEquipment(_body, "equipment", ally.position[0], ally.position[1]);
-                                }
-                            }
-                        }
-                    }
+                    this.useCharacterEquipment(_body, "equipment", req[0], req[1]);
                 }
             }
         }
@@ -2320,32 +2306,51 @@ class GameInstance
             this.setDataValue(_body, "bCrouching", !data.bWantsToMove && !data.bClimbing && !data.bSprinting && !data.bParachute && this.characterCanCrouch(_body));
         }
 
-        if (!_body.data.controllableId)
+        if (data.controllableId)
         {
-            if (ai.desiredVehicleId)
+            ai.desiredVehicleId = null;
+            var desiredVehicle = this.getObjectById(data.controllableId);
+            if (desiredVehicle)
             {
-                var veh = this.getObjectById(ai.desiredVehicleId);
-                if (!veh || !this.hasAvailableSeat(veh))
+                if (desiredVehicle.data.seats.length > 1 && data.seatIndex != 0)
                 {
-                    ai.desiredVehicleId = null;
-                }
-            }
-            else
-            {
-                var desiredVehicle = this.getNearbyVehicle(_body);
-                if (desiredVehicle)
-                {
-                    ai.desiredVehicleId = desiredVehicle.data.id;
-                    ai.moveToPos = this.clone(desiredVehicle.position);
+                    if (!desiredVehicle.data.seats[0].pawnId)
+                    {                        
+                        this.switchSeats(_body);
+                    }
                 }
             }
         }
         else
         {
-            ai.desiredVehicleId = null;
+            var req = this.getNearbyRequest(_body, Commands.SUPPORT, 1000);
+            if (req)
+            {
+                ai.moveToPos = req;
+                ai.desiredVehicleId = null;
+            }
+            else if (ai.desiredVehicleId)
+            {
+                var desiredVehicle = this.getObjectById(ai.desiredVehicleId);
+                if (!desiredVehicle || !this.hasAvailableSeat(desiredVehicle))
+                {
+                    ai.desiredVehicleId = null;
+                    ai.moveToPos = null;
+                }
+                else
+                {
+                    ai.desiredVehicleId = desiredVehicle.data.id;
+                    ai.moveToPos = this.clone(desiredVehicle.position);
+                }
+            }
+            else
+            {
+                ai.moveToPos = null;
+                ai.desiredVehicleId = null;
+            }
         }
 
-        if (!ai.desiredVehicleId)
+        if (!ai.moveToPos)
         {
             switch (this.game.gameModeId)
             {
@@ -2448,14 +2453,20 @@ class GameInstance
                     case "helicopter":
                     case "car":
                     case "mountedWeapon":
-                        if (data.seatIndex == 0)
+                        if (data.seatIndex == 0 && controllable.data.type != "mountedWeapon")
                         {
-                            if (ai.enemy)
+                            var req = this.getNearbyRequest(_body, Commands.VEHICLE, 1500);
+                            if (req && this.hasAvailableSeat(controllable))
+                            {
+                                console.log("vehicle request");
+                                var desiredPos = req;
+                            }
+                            else if (ai.enemy)
                             {
                                 switch (ai.enemy.data.type)
                                 {
                                     case "helicopter":
-                                        var desiredPos = [ai.enemy.position[0], ai.enemy.position[1]];
+                                        desiredPos = [ai.enemy.position[0], ai.enemy.position[1]];
                                         break;
                                     default:
                                         if (controllable.data.type == "helicopter")
@@ -2468,8 +2479,11 @@ class GameInstance
                                         }
                                         break;
                                 }
-                                desiredPos[1] = Math.max(500, desiredPos[1]);
-                                var keyInfo = {};                                
+                                desiredPos[1] = Math.max(500, desiredPos[1]);                                
+                            }
+                            if (desiredPos)
+                            {
+                                var keyInfo = {};
                                 var dist = this.Dist(desiredPos[0], desiredPos[1], controllable.position[0], controllable.position[1]);
                                 if (dist > 100)
                                 {
@@ -2498,7 +2512,7 @@ class GameInstance
                                     }
                                 }
                                 if (Object.keys(keyInfo).length > 0)
-                                {                                    
+                                {
                                     this.requestEvent({
                                         eventId: GameServer.EVENT_PLAYER_INPUT,
                                         playerId: data.id,
@@ -2542,7 +2556,8 @@ class GameInstance
                 var interactable = this.getBestInteractable(_body);
                 if (interactable)
                 {
-                    this.attemptInteract(data.id);
+                    //this.attemptInteract(data.id);
+                    this.startInteraction(_body, interactable);
                 }
             }
         }
@@ -3521,7 +3536,7 @@ class GameInstance
                     if (weapon.overheat > 0)
                     {
                         var cooldownNum = weapon.weaponData.cooldownNum ? weapon.weaponData.cooldownNum : 0.5;
-                        weapon.overheat -= (weapon.bCooldown ? cooldownNum : 1) / this.game.fpsMult;
+                        weapon.overheat -= (weapon.bCooldown ? cooldownNum : 1) * this.game.fpsMult;
                         if (weapon.overheat <= 0 && weapon.bCooldown)
                         {
                             weapon.bCooldown = false;
@@ -3895,7 +3910,7 @@ class GameInstance
         var weapon = data.weapon;
         if (weapon)
         {
-            var recoilMult = 0.98; //Lower value is faster recoil recovery
+            var recoilMult = 0.99; //Lower value is faster recoil recovery
             var recoilDecay = recoilMult * this.game.fpsMult;
             weapon.recoil = this.RoundDecimal(weapon.recoil * recoilDecay);
         }        
@@ -4086,11 +4101,8 @@ class GameInstance
         if (data.seatTimer > 0)
         {
             data.seatTimer--;
-        }
-        else
-        {
-            if (data.seatTimer != null)
-            {                
+            if (data.seatTimer <= 0)
+            {
                 this.requestEvent({
                     eventId: GameServer.EVENT_PAWN_ACTION,
                     pawnId: data.id,
@@ -5026,7 +5038,8 @@ class GameInstance
         ps.headshots = 0;
         ps.assists = 0;
         ps.deaths = 0;
-        ps.melees = 0;    
+        ps.melees = 0;  
+        ps.killedBy = [];
         switch (this.game.gameModeId)
         {
             case GameMode.DOMINATION:
@@ -7283,6 +7296,31 @@ class GameInstance
             }
         }
         return arr;
+    }
+
+    getNearbyRequest(_body, _request, _dist = 500)
+    {
+        var data = _body.data;
+        var allies = this.getCharactersOnTeam(data.team);
+        for (var i = 0; i < allies.length; i++)
+        {
+            var ally = allies[i];
+            if (ally.data.id != data.id)
+            {
+                if (ally.data.currentRequest == _request)
+                {
+                    if (!data.controllableId || _request == Commands.VEHICLE)
+                    {
+                        var dist = this.Dist(ally.position[0], ally.position[1], _body.position[0], _body.position[1]);
+                        if (dist < _dist)
+                        {
+                            return ally.position;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     getCharactersOnTeam(_team)
