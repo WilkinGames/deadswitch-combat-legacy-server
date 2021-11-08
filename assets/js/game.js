@@ -2322,6 +2322,7 @@ class GameInstance
             this.setDataValue(_body, "bCrouching", !data.bWantsToMove && !data.bClimbing && !data.bSprinting && !data.bParachute && this.characterCanCrouch(_body));
         }
 
+        ai.destThreshold = 30;
         if (data.controllableId)
         {
             ai.desiredVehicleId = null;
@@ -2807,7 +2808,6 @@ class GameInstance
     {
         var pawns = this.getPawns();
         var bLOS = true;
-        var bTargetThermal = true;
         var bPreferDistance = false;
         var bIgnoreOutOfSight = false;
         var bAllTypes = false;
@@ -2839,10 +2839,6 @@ class GameInstance
             if (_settings["bIgnoreOutOfSight"] != undefined)
             {
                 bIgnoreOutOfSight = _settings["bIgnoreOutOfSight"];
-            }
-            if (_settings["bTargetThermal"] != undefined)
-            {
-                bTargetThermal = _settings["bTargetThermal"];
             }
             if (_settings["bAllTypes"] != undefined)
             {
@@ -2893,22 +2889,18 @@ class GameInstance
                         }
                     }
                 }
-                if (!bTargetThermal)
+                if (this.isCharacter(curPawn))
                 {
-                    if (curPawn.data.camo == "thermal")
-                    {
-                        continue;
-                    }
                     if (curPawn.data.controllableId)
-                    {
+                    {       
                         var veh = this.getObjectById(curPawn.data.controllableId);
-                        if (veh && veh.data.camo == "thermal")
+                        if (veh.data.type == "tank" || veh.data.type == "helicopter")
                         {
                             continue;
                         }
                     }
                 }
-                if (this.isVehicle(curPawn))
+                else if (this.isVehicle(curPawn))
                 {
                     if (!curPawn.data.health)
                     {
@@ -3439,7 +3431,6 @@ class GameInstance
         if (data.bAutoLock && !data.rocketData.enemyId)
         {
             var enemy = this.getNearestEnemyPawn(_body, {
-                bTargetThermal: false,
                 bIgnoreOutOfSight: false,
                 maxRange: 1000,
                 bLOS: true
@@ -4658,6 +4649,42 @@ class GameInstance
             }
         }
         return null;
+    }
+
+    isCharacter(_body)
+    {
+        if (_body)
+        {
+            return _body.data.type == "character";
+        }
+        return false;
+    }
+
+    isHelicopter(_body)
+    {
+        if (_body)
+        {
+            return _body.data.type == "helicopter";
+        }
+        return false;
+    }
+
+    isTank(_body)
+    {
+        if (_body)
+        {
+            return _body.data.type == "tank";
+        }
+        return false;
+    }
+
+    isCar(_body)
+    {
+        if (_body)
+        {
+            return _body.data.type == "car";
+        }
+        return false;
     }
 
     isVehicle(_body)
