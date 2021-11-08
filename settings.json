@@ -6,11 +6,11 @@
   "maxPlayers": 32,
   "bUseLobby": false,
   "bAllowVotekick": false,
-  "welcome": "Welcome to the Beta server.",
-  "rules": "This server has no rules.",
+  "welcome": "STR_SERVER_WELCOME",
+  "rules": "STR_SERVER_RULES_NONE",
   "info": [
-    "Type /rules for server rules.",
-    "Type /players to view players."
+    "STR_SERVER_RULES_INFO",
+    "STR_SERVER_PLAYER_INFO"
   ],
   "gameData": {
     "gameModeId": "team_deathmatch",
