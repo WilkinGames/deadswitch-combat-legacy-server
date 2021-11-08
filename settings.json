@@ -13,7 +13,7 @@
     "STR_SERVER_PLAYER_INFO"
   ],
   "gameData": {
-    "gameModeId": "team_deathmatch",
+    "gameModeId": "domination",
     "mapId": "map_siege",
     "settings": {
       "timeLimit": 10,
