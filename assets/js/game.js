@@ -2349,6 +2349,11 @@ class GameInstance
             {
                 ai.moveToPos = null;
                 ai.desiredVehicleId = null;
+                desiredVehicle = this.getNearbyVehicle(_body);
+                if (desiredVehicle)
+                {
+                    ai.desiredVehicleId = desiredVehicle.data.id;
+                }
             }
         }
 
