@@ -5021,6 +5021,11 @@ class GameInstance
                 arr.push(spawns[i].position);
             }
         }
+        if (arr.length == 0)
+        {
+            console.warn("No spawn points");
+            arr.push(spawns[this.Random(0, spawns.length - 1)].position);
+        }
         return arr[this.Random(0, arr.length - 1)];
     }
 
