@@ -326,6 +326,14 @@ io.on("connection", (socket) =>
                     }
                     break;
 
+                case "/server":
+                    sendChatMessageToSocket(socket, {
+                        bServer: true,
+                        bDirect: true,
+                        messageText: settings.name
+                    });
+                    break;
+
                 case "/stats":
                     if (stats)
                     {
