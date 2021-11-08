@@ -734,8 +734,12 @@ class GameInstance
                         {
                             weapons[j].bWantsToFire = false;
                         }
-                        break;
                     }
+                    break;
+                case "character":
+                    data.bWantsToMove = false;
+                    break;
+
             }
         }
         if (this.onEndCallback)
@@ -2080,7 +2084,7 @@ class GameInstance
             else
             {
                 ai.actionTicker = ai.actionTickerMax;
-                ai.bWantsVehicle = this.Random(1, 4) == 1;
+                ai.bWantsVehicle = !_body.data.controllableId && this.Random(1, 4) == 1;
                 ai.desiredVehicleId = null;
                 if (ai.bWantsVehicle)
                 {
@@ -8178,19 +8182,7 @@ class GameInstance
             }
             var bTeamKill = !bSuicide && (victim ? ps.team == victim.data.team : false);
             if (!bSuicide && !bTeamKill)
-            {
-                switch (victim.data.type)
-                {
-                    case "character":
-                        this.triggerCallback("onPlayerKill");
-                        break;
-                    case "tank":
-                        this.triggerCallback("onTankKill");
-                        break;
-                    case "helicopter":
-                        this.triggerCallback("onHeliKill");
-                        break;
-                }
+            {                
                 var bVictimIsCharacter = victim ? victim.data["type"] == "character" : false;
                 bAddToKills = bVictimIsCharacter;
                 if (bAddToKills)
@@ -8349,6 +8341,18 @@ class GameInstance
             vy = Math.round(Math.sin(rad) * force);
         }
         this.clearPlayerControllable(_pawnId);
+        switch (pawn.data.type)
+        {
+            case "character":
+                this.triggerCallback("onPlayerKill");
+                break;
+            case "tank":
+                this.triggerCallback("onTankKill");
+                break;
+            case "helicopter":
+                this.triggerCallback("onHeliKill");
+                break;
+        }
         switch (pawn.data.type)
         {
             case "obstacle":
@@ -10838,6 +10842,24 @@ class GameInstance
                         });
                         break;
                 }
+            }
+        }
+        var chars = this.getCharacters();
+        for (var i = 0; i < chars.length; i++)
+        {
+            var char = chars[i];
+            if (char.data.controllableId)
+            {
+                var veh = this.getObjectById(char.data.controllableId);
+                arr.push({
+                    eventId: GameServer.EVENT_PAWN_ACTION,
+                    pawnId: char.data.id,
+                    type: GameServer.PAWN_VEHICLE_START,
+                    vehicleId: veh.data.id,
+                    scale: veh.data.scale,
+                    seatIndex: char.data.seatIndex,
+                    seat: veh.seats[char.data.seatIndex]
+                });
             }
         }
         return arr;
