@@ -10858,7 +10858,7 @@ class GameInstance
                     vehicleId: veh.data.id,
                     scale: veh.data.scale,
                     seatIndex: char.data.seatIndex,
-                    seat: veh.seats[char.data.seatIndex]
+                    seat: veh.data.seats[char.data.seatIndex]
                 });
             }
         }
