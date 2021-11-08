@@ -344,6 +344,10 @@ io.on("connection", (socket) =>
                         {
                             var key = keys[i];
                             str += key + ": " + stats[key];
+                            if (i < keys.length - 1)
+                            {
+                                str += "\n";
+                            }
                         }
                         sendChatMessageToSocket(socket, {
                             bServer: true,
