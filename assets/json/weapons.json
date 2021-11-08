@@ -477,7 +477,7 @@
     "type": "TYPE_RIFLE",
     "fireMode": "MODE_AUTO",
     "round": "762mm",
-    "damage": 40,
+    "damage": 42,
     "accuracy": 1,
     "fireRate": 9,
     "magSize": 20,

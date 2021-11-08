@@ -5,6 +5,11 @@
     "score": 0
   },
   {
+    "id": "ejection_seat",
+    "name": "STR_COUNTERMEASURE_EJECTION_SEAT",
+    "score": 2500
+  },
+  {
     "id": "ecm",
     "name": "STR_COUNTERMEASURE_ECM",
     "score": 5000
