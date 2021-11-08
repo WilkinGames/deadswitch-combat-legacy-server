@@ -578,13 +578,13 @@
     "en": "Votes against %1: %2/%3"
   },
   "STR_SERVER_X_PLAYER_KILLS": {
-    "en": "%1 players have been killed on this server."
+    "en": "%1 player(s) have been killed on this server."
   },
   "STR_SERVER_X_TANK_KILLS": {
-    "en": "%1 tanks have been destroyed on this server."
+    "en": "%1 tank(s) have been destroyed on this server."
   },
   "STR_SERVER_X_HELI_KILLS": {
-    "en": "%1 helicopters have been destroyed on this server."
+    "en": "%1 helicopter(s) have been destroyed on this server."
   },
   "STR_SERVER_X_CHANGED_NAME_TO_X": {
     "en": "%1 changed name to %2"

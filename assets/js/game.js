@@ -9653,7 +9653,7 @@ class GameInstance
                     case "mountedWeapon":
                         pawn = this.createMountedWeapon(_spawner.position, {
                             weaponType: data.weaponType,
-                            team: data.team,
+                            team: data.team != null ? data.team : -1,
                             scale: data.scale
                         });
                         break;
@@ -10122,6 +10122,7 @@ class GameInstance
             id: _data.id ? _data.id : this.getRandomUniqueId(),
             rotation: _data.rotation,
             type: "mountedWeapon",
+            team: _data.team != null ? _data.team : -1,
             scale: _data.scale != null ? _data.scale : 1,
             mountedData: _data,
             damageMultipliers: {
