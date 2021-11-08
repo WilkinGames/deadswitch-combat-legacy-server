@@ -323,7 +323,7 @@ io.on("connection", (socket) =>
                             bServer: true,
                             bDirect: true,
                             locText: "STR_SERVER_X_TOTAL_KILLS",
-                            params: stats.kills
+                            params: [stats.kills]
                         });
                     }
                     break;

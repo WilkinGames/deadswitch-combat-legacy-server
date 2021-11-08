@@ -3536,7 +3536,7 @@ class GameInstance
                     if (weapon.overheat > 0)
                     {
                         var cooldownNum = weapon.weaponData.cooldownNum ? weapon.weaponData.cooldownNum : 0.5;
-                        weapon.overheat -= (weapon.bCooldown ? cooldownNum : 1) * this.game.fpsMult;
+                        weapon.overheat -= (weapon.bCooldown ? cooldownNum : 1); // * this.game.fpsMult;
                         if (weapon.overheat <= 0 && weapon.bCooldown)
                         {
                             weapon.bCooldown = false;
