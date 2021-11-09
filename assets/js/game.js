@@ -11252,7 +11252,14 @@ class GameInstance
                 case "grenade":
                     if (dataA.grenadeData.bImpact)
                     {
-                        if (this.isVehicle(_bodyB) && !this.vehicleHasOccupant(_bodyB))
+                        if (this.isVehicle(_bodyB))
+                        {
+                            if (!this.vehicleHasOccupant(_bodyB))
+                            {
+                                break;
+                            }                            
+                        }
+                        if (dataA.team == dataB.team)
                         {
                             break;
                         }
@@ -11262,6 +11269,8 @@ class GameInstance
                             switch (dataB["type"])
                             {
                                 case "helicopter":
+                                case "tank":
+                                case "car":
                                     var bDamage = true;
                                     var bDetonate = true;
                                     var attacker = this.getPlayerById(dataA.grenadeData.playerId);

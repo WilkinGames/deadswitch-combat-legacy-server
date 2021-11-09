@@ -931,7 +931,7 @@
     "speedModifier": 1,
     "range": 1500,
     "mag": 1,
-    "ammo": 3,
+    "ammo": 5,
     "recoil": 3,
     "penetration": 5,
     "lookModifier": 1.5,
