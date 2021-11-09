@@ -246,8 +246,8 @@ app.get("/data", (req, res) =>
         time: Date.now(),
         name: settings.name,
         country: settings.country,
-        numPlayers: getNumClients(),
-        maxPlayers: settings.maxPlayers,
+        numPlayers: lobby.game ? lobby.game.getNumPlayers() : lobby.players.length,
+        maxPlayers: lobby.maxPlayers,
         type: settings.type,
         state: lobby.state,
         gameData: {
@@ -256,6 +256,10 @@ app.get("/data", (req, res) =>
             settings: lobby.gameData.settings
         }
     };
+    if (lobby.game)
+    {
+        data.gameData.game = lobby.game.getCurrentGameData();
+    }
     res.send(data);
 });
 

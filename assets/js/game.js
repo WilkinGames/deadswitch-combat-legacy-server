@@ -10897,6 +10897,19 @@ class GameInstance
         };
     }
 
+    getNumPlayers()
+    {
+        return this.game.players.length;
+    }
+
+    getCurrentGameData()
+    {
+        return {
+            timer: this.game.gameTimer,
+            scores: this.game.gameModeData.scores
+        };
+    }
+
     getObjectsEventData()
     {
         var arr = [];
