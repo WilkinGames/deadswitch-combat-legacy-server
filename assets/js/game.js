@@ -269,6 +269,9 @@ const Mods = {
     AMMO_LAUNCHER_RADIUS: "ammo_radius",
     AMMO_LAUNCHER_EXPLOSIVE: "ammo_explosive",
     AMMO_SLUG: "ammo_slug",
+    AMMO_FRAG: "ammo_frag",
+    GRENADE_SMOKE: "grenade_smoke",
+    GRENADE_FLASH: "grenade_flash",
     ACCESSORY_MAG_ASSIST: "ammo_magpull",
     AMMO_SPEED_LOADER: "ammo_speed_loader",
     AMMO_HIGH_CALIBER: "ammo_range",
@@ -278,6 +281,7 @@ const Mods = {
     BARREL_BRAKE: "barrel_booster",
     BARREL_HEAVY: "barrel_range",
     ACCESSORY_LASER: "acc_laser",
+    ACCESSORY_MARKER: "acc_marker",
     ACCESSORY_GRIP: "acc_grip", 
     ACCESSORY_GRIP_ANGLED: "acc_grip_angled", 
     ACCESSORY_M203: "acc_m203",
@@ -1939,7 +1943,7 @@ class GameInstance
         this.setPlayerControllable(_char.data.id, _vehicle);
     }
 
-    exitVehicle(_char)
+    exitVehicle(_char, _bEject)
     {
         if (!_char)
         {
@@ -1973,7 +1977,8 @@ class GameInstance
                 this.requestEvent({
                     eventId: GameServer.EVENT_PAWN_ACTION,
                     pawnId: _char.data.id,
-                    type: GameServer.PAWN_VEHICLE_LEAVE
+                    type: GameServer.PAWN_VEHICLE_LEAVE,
+                    bEject: _bEject
                 });
             }
             this.pushObjectDataUpdate(vehicle.data.id, ["seats"]);
@@ -2002,6 +2007,35 @@ class GameInstance
                     type: GameServer.PAWN_VEHICLE_LEAVE
                 });
                 this.setDataValue(vehicle, "team", -1);
+            }
+        }
+    }
+
+    triggerCountermeasure(_char)
+    {
+        if (_char.data.seatTimer)
+        {
+            return;
+        }
+        var vehicle = this.getObjectById(_char.data.controllableId);
+        if (vehicle)
+        {
+            var cm = vehicle.data.countermeasure;
+            switch (cm)
+            {
+                case "ejection_seat":
+                    this.clearPlayerControllable(_char.data.id, true);
+                    if (_char.data.bBot)
+                    {
+                        _char.velocity = [0, this.getSharedData("character").ejectionVelocity];
+                    }
+                    break;
+                case "ecm":
+
+                    break;
+                case "flares":
+
+                    break;
             }
         }
     }
@@ -3739,7 +3773,7 @@ class GameInstance
             return;
         }
 
-        var data = _body.data;         
+        var data = _body.data;   
         if (data.bBot)
         {
             data.bOnGround = this.isOnGround(_body); 
@@ -4437,14 +4471,26 @@ class GameInstance
             }
             else if (weapon.bGrenade)
             {
+                var grenadeDamage = weapon.damage;
+                if (weapon.mods)
+                {
+                    switch (weapon.mods[Mods.TYPE_AMMO])
+                    {
+                        case Mods.GRENADE_SMOKE:
+                        case Mods.GRENADE_FLASH:
+                            grenadeDamage = 50;
+                            break;
+                    }
+                }
                 this.createGrenade(muzzlePos, {
                     team: data.team,
                     playerId: data.id,
                     causerId: data.id,
                     rotation: bulletRad,
                     velocity: weapon.velocity ? weapon.velocity : 1500,
-                    damage: weapon.damage,
+                    damage: grenadeDamage,
                     weaponId: weapon.id,
+                    type: weapon.mods ? weapon.mods[Mods.TYPE_AMMO] : null,
                     bImpact: true,
                     bMinimumDistance: true
                 });
@@ -4513,9 +4559,15 @@ class GameInstance
         }
         if (!weapon.bSilenced && !this.hasMod(weapon, Mods.BARREL_SILENCER))
         {
-            this.setDataValue(_body, "bExposed", true);
-            data.exposeTimer = this.game.settings.fps * 2;
+            this.exposePawn(_body);
         }
+    }
+
+    exposePawn(_body)
+    {
+        var data = _body.data;
+        this.setDataValue(_body, "bExposed", true);
+        data.exposeTimer = this.game.settings.fps * 2;
     }
 
     createBullet(_x, _y, _rotation, _range, _damage, _instigatorId, _causerId, _weaponId, _weaponData, _bDirectlyCausedByPlayer, _bMelee, _bIgnoreObstacles)
@@ -4554,6 +4606,11 @@ class GameInstance
         data.currentInventoryIndex = _index;
         data.lockOnTargetId = null;
         var item = this.getCurrentCharacterInventoryItem(_body);
+        if (!item)
+        {
+            console.warn("Invalid inventory item at index", _index);
+            return;
+        }
         if (prev)
         {            
             if (prev.id == "riot_shield")
@@ -5386,7 +5443,7 @@ class GameInstance
                                     this.setDataValue(pawnToDamage, "bTriggered", true);
                                 }
                                 break;
-                        }
+                        }                        
                         if (pawnToDamage.data.health <= 0)
                         {
                             _data.bKill = true;
@@ -5643,6 +5700,10 @@ class GameInstance
                                                     damageAmount += Math.max(0, (weaponData.penetration - 1));
                                                 }
                                             }
+                                            if (this.hasMod(weaponData, Mods.ACCESSORY_MARKER))
+                                            {
+                                                this.exposePawn(body);
+                                            }
                                             this.requestEvent({
                                                 eventId: GameServer.EVENT_PAWN_DAMAGE,
                                                 damageType: damageType,
@@ -5705,7 +5766,15 @@ class GameInstance
                     break;
 
                 case GameServer.EVENT_PLAYER_TRIGGER_EQUIPMENT:
-                    this.triggerCharacterEquipment(_data, "equipment");
+                    var char = this.getObjectById(_data.playerId);
+                    if (char.data.controllableId && char.data.seatIndex == 0)
+                    {
+                        this.triggerCountermeasure(char);
+                    }
+                    else
+                    {
+                        this.triggerCharacterEquipment(_data, "equipment");
+                    }
                     _data.bServer = true;
                     break;
 
@@ -6906,7 +6975,7 @@ class GameInstance
         return this.getAvailableSeatIndex(_vehicle) != null;
     }
 
-    clearPlayerControllable(_id)
+    clearPlayerControllable(_id, _bEject)
     {
         var pawn = this.getObjectById(_id);
         var controllable = this.getObjectById(pawn.data.controllableId);
@@ -6914,7 +6983,7 @@ class GameInstance
         {
             if (this.isVehicle(controllable))
             {
-                this.exitVehicle(pawn);
+                this.exitVehicle(pawn, _bEject);
             }
             delete pawn.data.controllableId;
             controllable.data.controllerId = null;
@@ -8338,12 +8407,19 @@ class GameInstance
         var causer = this.getObjectById(_causerId);
         if (causer)
         {
-            var rad = this.Angle(causer.position[0], causer.position[1], pawn.position[0], pawn.position[1]) + this.ToRad(this.Random(-5, 5));
-            var force = Math.max(100, (_damageAmount * 30)) * (bHeadshot ? 1.5 : 1);
-            var maxForce = _damageInfo.damageType == DamageType.DAMAGE_EXPLOSIVE ? 10000 : 7000;
-            force = Math.max(1000, Math.min(force, maxForce));
-            vx = Math.round(Math.cos(rad) * force);
-            vy = Math.round(Math.sin(rad) * force);
+            if (_damageInfo.weaponId == "fall")
+            {
+                vy = _damageAmount * 10;
+            }
+            else
+            {
+                var rad = this.Angle(causer.position[0], causer.position[1], pawn.position[0], pawn.position[1]) + this.ToRad(this.Random(-5, 5));
+                var force = Math.max(100, (_damageAmount * 30)) * (bHeadshot ? 1.5 : 1);
+                var maxForce = _damageInfo.damageType == DamageType.DAMAGE_EXPLOSIVE ? 10000 : 7000;
+                force = Math.max(1000, Math.min(force, maxForce));
+                vx = Math.round(Math.cos(rad) * force);
+                vy = Math.round(Math.sin(rad) * force);
+            }
         }
         this.clearPlayerControllable(_pawnId);
         switch (pawn.data.type)
@@ -9223,6 +9299,10 @@ class GameInstance
             var obj = objects[i];
             if (obj.data.type == "droppedWeapon")
             {
+                if (obj.data.bSpawned)
+                {
+                    continue;
+                }
                 if (!oldWeapon)
                 {
                     oldWeapon = obj;
@@ -11074,12 +11154,12 @@ class GameInstance
                             if (!dataA.controllableId && !dataA.bClimbing && !dataA.bLadderCooldown)
                             {
                                 this.setDataValue(_bodyA, "currentSurface", dataB.material ? dataB.material : Material.DEFAULT);
-                                if (this.game.gameModeData.bFallDamage)
+                                if (this.game.gameModeData.bFallDamage && dataA.bBot)
                                 {
                                     if (_bodyA.velocity)
                                     {
                                         var velY = _bodyA.velocity[1];
-                                        if (velY > 650)
+                                        if (velY > 500)
                                         {
                                             //Fall damage
                                             this.requestEvent({
@@ -11656,7 +11736,7 @@ class GameInstance
                             damageAmount = _damage * distMult;
                             if (cur.data["bDrone"])
                             {
-                                if (_weaponId == "stun" || _weaponId == "m203")
+                                if (_weaponId == "stun")
                                 {
                                     cur.data["bStunned"] = true;
                                     var maxStunTime = Math.round(this.game.settings.fps * 6);
@@ -11669,7 +11749,7 @@ class GameInstance
                                         time: cur.data["stunTimer"]
                                     });
                                 }
-                                else if (_weaponId == "flashbang" || _weaponId == "m320")
+                                else if (_weaponId == "flashbang" || _weaponId == Mods.GRENADE_FLASH)
                                 {
                                     cur.data["bFlashed"] = true;
                                     var maxFlashTime = Math.round(this.game.settings.fps * 6);
@@ -11729,7 +11809,7 @@ class GameInstance
                                 time: cur.data["stunTimer"]
                             });
                         }
-                        else if (_weaponId == "flashbang" || _weaponId == "m320")
+                        else if (_weaponId == "flashbang" || _weaponId == Mods.GRENADE_FLASH)
                         {
                             cur.data["bFlashed"] = true;
                             cur.data["flashIntensity"] = Math.min(1, distMult * 2);
@@ -11912,7 +11992,7 @@ class GameInstance
                             });
                         }
                     }
-                    if (grenadeData["weaponId"] == "smoke")
+                    if (grenadeData["weaponId"] == "smoke" || grenadeData.type == Mods.GRENADE_SMOKE)
                     {
                         _body.data["destroyTimer"] = this.game.settings.fps * 8;
                         this.setDataValue(_body, "bActivated", true);
@@ -11928,6 +12008,8 @@ class GameInstance
                             bDirectlyCausedByPlayer: true,
                             directHitId: _directHitId
                         });
+                        _body.velocity = [0, 0];
+                        _body.shapes[0].sensor = false;
                     }
                     else if (grenadeData["weaponId"] == "napalm" || grenadeData["weaponId"] == "molotov")
                     {                        
@@ -11975,7 +12057,7 @@ class GameInstance
                                 damage: data["damage"],
                                 playerId: grenadeData.playerId ? grenadeData.playerId : data.id,
                                 causerId: data.id,
-                                weaponId: weaponId,
+                                weaponId: grenadeData.type ? grenadeData.type : weaponId,
                                 bDirectlyCausedByPlayer: true
                             });
                             if (_body["constraint"])

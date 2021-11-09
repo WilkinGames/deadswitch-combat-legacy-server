@@ -919,6 +919,9 @@
   "STR_CAMO_THERMAL": {
     "en": "Thermal Camo"
   },
+  "STR_COUNTERMEASURE_EJECTION_SEAT": {
+    "en": "Ejection Seat"
+  },
   "STR_COUNTERMEASURE_ECM": {
     "en": "ECM Jammer"
   },
@@ -1263,6 +1266,14 @@
   "STR_WPN_ASVAL": {
     "en": "AS VAL"
   },
+  "STR_WPN_PDR": {
+    "en": "Magpull PDR",
+    "ru": "Magpull PDR",
+    "zh-CN": "Magpull PDR",
+    "tr": "Magpull PDR",
+    "es": "Magpull PDR",
+    "it": "Magpull PDR"
+  },
   "STR_WPN_RPG": {
     "en": "RPG-7V2",
     "ru": "РПГ-7",
@@ -1270,6 +1281,14 @@
     "tr": "RPG-7V2",
     "es": "RPG-7V2",
     "it": "RPG-7V2"
+  },
+  "STR_WPN_M320": {
+    "en": "M320",
+    "ru": "M320",
+    "zh-CN": "M320",
+    "tr": "M320",
+    "es": "M320",
+    "it": "M320"
   },
   "STR_WPN_MGL": {
     "en": "M32 MGL",
@@ -3232,6 +3251,12 @@
   "STR_MOD_MAGPULL": {
     "en": "Mag Assist"
   },
+  "STR_MOD_GRENADE_SMOKE": {
+    "en": "SMOKE"
+  },
+  "STR_MOD_GRENADE_FLASH": {
+    "en": "FLASH"
+  },
   "STR_MOD_REFLEX_DESC": {
     "en": "1.5x optical sight"
   },
@@ -3257,7 +3282,10 @@
     "en": "Underbarrel grenade launcher"
   },
   "STR_MOD_LASER_DESC": {
-    "en": "Increases accuracy and assists with aiming"
+    "en": "Increases weapon accuracy"
+  },
+  "STR_MOD_MARKER_DESC": {
+    "en": "Marks damaged enemies"
   },
   "STR_MOD_COMPENSATOR_DESC": {
     "en": "Reduces recoil"
@@ -3277,11 +3305,17 @@
   "STR_MOD_HOLLOW_POINT_DESC": {
     "en": "Increases headshot damage"
   },
+  "STR_MOD_STOPPING_POWER_DESC": {
+    "en": "Increases stopping power"
+  },
   "STR_MOD_EXTENDED_DESC": {
     "en": "Increases mag capacity"
   },
   "STR_MOD_SLUG_DESC": {
     "en": "Single high damage slug"
+  },
+  "STR_MOD_FRAG_DESC": {
+    "en": "High explosive"
   },
   "STR_MOD_MAGPULL_DESC": {
     "en": "Increases reload speed"
@@ -3291,6 +3325,12 @@
   },
   "STR_MOD_SCOPE_DESC": {
     "en": "8x optical scope"
+  },
+  "STR_MOD_GRENADE_SMOKE_DESC": {
+    "en": "Smoke grenade"
+  },
+  "STR_MOD_GRENADE_FLASH_DESC": {
+    "en": "Flashbang grenade"
   },
   "STR_COMMANDS": {
     "en": "Commands"
@@ -3378,6 +3418,9 @@
     "es": "Laser",
     "it": "Laser"
   },
+  "STR_MOD_MARKER": {
+    "en": "Target Finder"
+  },
   "STR_MOD_SUPPRESSOR": {
     "en": "Suppressor",
     "ru": "Глушитель",
@@ -3447,6 +3490,12 @@
     "tr": "Tüfek Kurşunu",
     "es": "Perdigones de plomo",
     "it": "Lumaca"
+  },
+  "STR_MOD_FRAG": {
+    "en": "FRAG"
+  },
+  "STR_MOD_STOPPING_POWER": {
+    "en": "Stopping Power"
   },
   "STR_MOD_PIERCING": {
     "en": "Piercing",

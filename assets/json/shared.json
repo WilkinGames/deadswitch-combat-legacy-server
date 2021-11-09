@@ -15,7 +15,8 @@
     "fixedRotation": true,
     "angularDamping": 1,
     "parachuteDamping": 0.98,
-    "parachuteVelocity": 400
+    "parachuteVelocity": 400,
+    "ejectionVelocity": -1250
   },
   "crate": {
     "width": 60,

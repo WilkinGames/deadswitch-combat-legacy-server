@@ -56,6 +56,13 @@
     "score": 7500
   },
   {
+    "id": "ammo_frag",
+    "type": "ammo",
+    "name": "STR_MOD_FRAG",
+    "desc": "STR_MOD_FRAG_DESC",
+    "score": 10000
+  },
+  {
     "id": "ammo_hollow_point",
     "type": "ammo",
     "name": "STR_MOD_HOLLOW_POINT",
@@ -63,11 +70,39 @@
     "score": 12500
   },
   {
+    "id": "ammo_high_caliber",
+    "type": "ammo",
+    "name": "STR_MOD_STOPPING_POWER",
+    "desc": "STR_MOD_STOPPING_POWER_DESC",
+    "score": 15000
+  },
+  {
+    "id": "grenade_smoke",
+    "type": "ammo",
+    "name": "STR_MOD_GRENADE_SMOKE",
+    "desc": "STR_MOD_GRENADE_SMOKE_DESC",
+    "score": 2500
+  },
+  {
+    "id": "grenade_flash",
+    "type": "ammo",
+    "name": "STR_MOD_GRENADE_FLASH",
+    "desc": "STR_MOD_GRENADE_FLASH_DESC",
+    "score": 5000
+  },
+  {
     "id": "acc_laser",
     "type": "accessory",
     "name": "STR_MOD_LASER",
     "desc": "STR_MOD_LASER_DESC",
     "score": 1500
+  },
+  {
+    "id": "acc_marker",
+    "type": "accessory",
+    "name": "STR_MOD_MARKER",
+    "desc": "STR_MOD_MARKER_DESC",
+    "score": 4000
   },
   {
     "id": "acc_masterkey",
