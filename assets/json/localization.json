@@ -3889,6 +3889,9 @@
     "es": "Comandante",
     "it": "Comandante"
   },
+  "STR_CHANGE_DIRECTION": {
+    "en": "Change Direction"
+  },
   "STR_CONTROL_MOVE": {
     "en": "Move",
     "ru": "Двигаться",
@@ -3981,7 +3984,7 @@
     "it": "Usa serie di uccisioni"
   },
   "STR_CONTROL_WEAPON": {
-    "en": "Equip Undebarrel"
+    "en": "Equip Underbarrel"
   },
   "STR_CONTROL_FIRE_WEAPON": {
     "en": "Fire Weapon",

@@ -4544,7 +4544,7 @@ class GameInstance
             var rand = this.Random(1, 2);
             var scaleVal = data.scale == 1 ? -1 : 1;
             var recoilMult = (data.bCrouching ? 0.5 : 1) * (data.bAiming ? 0.5 : 1);            
-            var recoilVal = useRecoil + (Math.abs(useRecoil) * 0.1);
+            var recoilVal = useRecoil + (Math.abs(useRecoil) * 0.2);
             data.weapon.recoil += -(recoilVal * recoilMult) * (rand == 1 ? scaleVal : -scaleVal);            
         }
         if (weapon.type == Weapon.TYPE_MELEE)
@@ -4619,7 +4619,16 @@ class GameInstance
         this.cancelCharacterReload(_body);
         this.cancelCharacterBoltPull(_body);
         var data = _body.data;
-        var prev = this.getCurrentCharacterInventoryItem(_body, false);
+        var prevIndex = data.currentInventoryIndex;
+        if (prevIndex == _index)
+        {
+            if (prev && prev.barrel)
+            {
+                this.toggleUnderbarrelEquipped(_body);
+                return;
+            }
+        }
+        var prev = data.inventory[prevIndex];
         data.currentInventoryIndex = _index;
         data.lockOnTargetId = null;
         var item = this.getCurrentCharacterInventoryItem(_body);
@@ -4628,8 +4637,12 @@ class GameInstance
             console.warn("Invalid inventory item at index", _index);
             return;
         }
+        if (item.bBarrel && item.barrel)
+        {
+            item = item.barrel;
+        }
         if (prev)
-        {            
+        {        
             if (prev.id == "riot_shield")
             {
                 data.bShieldCooldown = true;
@@ -4640,11 +4653,7 @@ class GameInstance
                     type: GameServer.PAWN_START_SHIELD_COOLDOWN
                 });
             }
-        }        
-        if (item.bBarrel && item.barrel)
-        {
-            item = item.barrel;
-        }
+        }      
         data["reloadTimerMax"] = Math.round(Math.ceil(item["reloadTime"] * this.game.settings.fps) / _body.data["reloadMultiplier"]);
         data["reloadTimer"] = _body.data["reloadTimerMax"];
         data["aimRotation"] = this.ToRad(-90);
@@ -5853,13 +5862,15 @@ class GameInstance
 
                             case GameServer.INV_FIRE:
                                 var curItem = inventory[_data["index"]];
+                                _data.bBarrel = curItem.bBarrel;
                                 if (curItem.bBarrel)
                                 {                                    
                                     var barrel = curItem.barrel;
                                     if (barrel)
                                     {
                                         barrel.mag--;
-                                        _data["item"] = barrel;
+                                        //_data["item"] = barrel;
+                                        _data.mag = barrel.mag;
                                     }
                                 }
                                 else
@@ -5871,7 +5882,8 @@ class GameInstance
                                         {
                                             curItem["bNeedsBoltPull"] = true;
                                         }
-                                        _data["item"] = curItem;
+                                        //_data["item"] = curItem;
+                                        _data.mag = curItem.mag;
                                     }
                                 }
                                 break;
@@ -5931,6 +5943,7 @@ class GameInstance
                                     weapon.bBarrel = _data.value;
                                     this.setCharacterCurrentInventoryItem(pawn, _data.index);
                                     _data.item = weapon;
+                                    _data.mag = weapon.barrel.mag;
                                     _data.ammo = weapon.barrel.ammo;
                                 }                                
                                 break;
@@ -6489,7 +6502,7 @@ class GameInstance
                     index: data.currentInventoryIndex,
                     value: !item.bBarrel
                 });
-                console.log(item.id, item.mods ? item.mods[Mods.TYPE_ACCESSORY] : null, item.bBarrel);
+                //console.log(item.id, item.mods ? item.mods[Mods.TYPE_ACCESSORY] : null, item.bBarrel);
             }
         }
     }
@@ -6512,6 +6525,26 @@ class GameInstance
             }
             switch (keyId)
             {
+                case Control.SWITCH:
+                    var inventory = data.inventory;
+                    if (inventory[data.currentInventoryIndex].barrel && inventory[data.currentInventoryIndex].bBarrel)
+                    {
+                        this.toggleUnderbarrelEquipped(_body);
+                    }
+                    else
+                    {
+                        if (inventory.length > 1)
+                        {
+                            this.requestEvent({
+                                eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                pawnId: data.id,
+                                type: GameServer.INV_CURRENT_INVENTORY_INDEX,
+                                value: data.currentInventoryIndex == 0 ? 1 : 0
+                            });
+                        }
+                    }
+                    break;
+
                 case Control.WEAPON:
                     this.toggleUnderbarrelEquipped(pawn);
                     break;
@@ -6748,6 +6781,48 @@ class GameInstance
                     console.log(_interactable.data);
                     break;
 
+                case "equipment":
+                    switch (data.weaponData.id)
+                    {
+                        case "ammo_box":
+                            var inventory = pawn.data["inventory"];
+                            var numMags = 1;
+                            for (var i = 0; i < inventory.length; i++)
+                            {
+                                var invItem = inventory[i];
+                                if (!invItem.bMelee && invItem.ammo != null)
+                                {
+                                    this.requestEvent({
+                                        eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                        pawnId: pawn.data.id,
+                                        index: i,
+                                        type: GameServer.INV_AMMO_ADD,
+                                        value: invItem.magSize * numMags,
+                                        barrelAmmo: 1
+                                    });
+                                }
+                            }
+                            this.requestEvent({
+                                eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                pawnId: pawn.data.id,
+                                type: GameServer.INV_EQUIPMENT_ADD,
+                                slot: "grenade",
+                                value: 1
+                            });
+                            if (pawn.data.equipment.id != "ammo_box")
+                            {
+                                this.requestEvent({
+                                    eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                    pawnId: pawn.data.id,
+                                    type: GameServer.INV_EQUIPMENT_ADD,
+                                    slot: "equipment",
+                                    value: 1
+                                });
+                            }
+                            break;
+                    }
+                    break;
+
                 case "crate":
                     switch (data.crateType)
                     {
@@ -6787,14 +6862,6 @@ class GameInstance
                                 });
                             }
                             break;
-                    }
-                    if (data.itemData.uses != null)
-                    {
-                        data.itemData.uses--;
-                        if (data.itemData.uses <= 0)
-                        {
-                            this.removeNextStep(_interactable);
-                        }
                     }
                     break;
 
@@ -6976,7 +7043,14 @@ class GameInstance
                     }
                     break;
             }
-
+            if (data.itemData && data.itemData.uses != null)
+            {
+                data.itemData.uses--;
+                if (data.itemData.uses <= 0)
+                {
+                    this.removeNextStep(_interactable);
+                }
+            }
         }
     }
 
@@ -7231,7 +7305,7 @@ class GameInstance
 
     getInteractableForPawn(_body)
     {
-        var objects = this.getDroppedWeapons().concat(this.getCrates()).concat(this.getVehicles()).concat(this.getDoors()).concat(this.getMountedWeapons());
+        var objects = this.getDroppedWeapons().concat(this.getCrates()).concat(this.getEquipment("ammo_box")).concat(this.getVehicles()).concat(this.getDoors()).concat(this.getMountedWeapons());
         for (var i = 0; i < objects.length; i++)
         {
             var obj = objects[i];
@@ -7910,6 +7984,7 @@ class GameInstance
                 switch (item.id)
                 {
                     case "ammo_box":
+                        /*
                         var crate = this.createCrate(_body.position, {
                             team: _body.data.team,
                             ownerId: _body.data.id,
@@ -7921,6 +7996,15 @@ class GameInstance
                         crate.data.destroyTimer = this.game.settings.fps * 60;
                         var force = Math.min(400, this.Dist(_worldX, _worldY, _body.position[0], _body.position[1]) * 4);
                         crate.applyImpulse([Math.cos(equipmentRot) * force, Math.sin(equipmentRot) * force], 0, 0);
+                        */
+                        var ammoBox = this.createEquipment([_body.position[0], _body.position[1] - 30], data.team, data.scale, data.id, item);
+                        ammoBox.data.itemData = {
+                            uses: 10,
+                            interactTime: this.game.settings.fps * 0.5
+                        };
+                        ammoBox.data.destroyTimer = this.game.settings.fps * 60;
+                        var force = Math.min(400, this.Dist(_worldX, _worldY, _body.position[0], _body.position[1]) * 5);
+                        ammoBox.applyImpulse([Math.cos(equipmentRot) * force, Math.sin(equipmentRot) * force], 0, 0);
                         data.weapon.bThrowDelay = true;
                         data.weapon.throwDelayTimer = Math.round(this.game.settings.fps * 0.5);
                         this.requestEvent({
@@ -9428,7 +9512,7 @@ class GameInstance
         var shared = this.getSharedData(_weaponData.id);
         var body = new p2.Body({
             mass: shared.mass ? shared.mass : 1,
-            damping: shared.damping != null ? shared.damping : 0.8,
+            damping: shared.damping != null ? shared.damping : 0.5,
             angularDamping: shared.angularDamping != null ? shared.angularDamping : 0.8,
             position: _position,
             allowSleep: true,
@@ -11064,12 +11148,15 @@ class GameInstance
                     break;
 
                 case "equipment":
-                    if (dataA.bMine)
+                    switch (dataA.weaponData.id)
                     {
-                        if (dataB.type == "ground")
-                        {
-                            //_bodyA.mass = 0;                         
-                        }
+                        case "ammo_box":
+                            this.onEvent({
+                                eventId: GameServer.EVENT_PAWN_ACTION,
+                                pawnId: dataA.id,
+                                type: GameServer.PAWN_HIT
+                            });
+                            break;
                     }
                     break;
 
