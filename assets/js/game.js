@@ -266,6 +266,7 @@ const Mods = {
     AMMO_IMPACT: "ammo_impact",
     AMMO_EXTENDED: "ammo_extended",
     AMMO_HOLLOW_POINT: "ammo_hollow_point",
+    AMMO_STOPPING_POWER: "ammo_high_caliber",
     AMMO_LAUNCHER_RADIUS: "ammo_radius",
     AMMO_LAUNCHER_EXPLOSIVE: "ammo_explosive",
     AMMO_SLUG: "ammo_slug",
@@ -2073,16 +2074,16 @@ class GameInstance
                     ai.offsetY = 0;
                     break;
                 case BotSkill.SKILL_INSANE:
-                    ai.offsetX = this.Random(-15, 15);
+                    ai.offsetX = this.Random(-5, 5);
                     ai.offsetY = this.Random(-15, 15);
                     break;
                 case BotSkill.SKILL_HARD:
-                    ai.offsetX = this.Random(-30, 30);
-                    ai.offsetY = this.Random(-30, 30);
+                    ai.offsetX = this.Random(-25, 25);
+                    ai.offsetY = this.Random(-50, 50);
                     break;
                 default:
                     ai.offsetX = this.Random(-50, 50);
-                    ai.offsetY = this.Random(-50, 50);
+                    ai.offsetY = this.Random(-75, 75);
                     break;
             }
         }        
@@ -3593,7 +3594,7 @@ class GameInstance
                     if (weapon.overheat > 0)
                     {
                         var cooldownNum = weapon.weaponData.cooldownNum ? weapon.weaponData.cooldownNum : 0.5;
-                        weapon.overheat -= (weapon.bCooldown ? cooldownNum : 1) / this.game.fpsMult;
+                        weapon.overheat -= (weapon.bCooldown ? cooldownNum : weapon.weaponData.overheatCooldownNum != null ? weapon.weaponData.overheatCooldownNum : 1) / this.game.fpsMult;
                         if (weapon.overheat <= 0 && weapon.bCooldown)
                         {
                             weapon.bCooldown = false;
@@ -3803,6 +3804,10 @@ class GameInstance
                 if (data.bStunned)
                 {
                     maxSpeed = maxSpeed * 0.2;
+                }
+                else if (data.bStoppingPower)
+                {
+                    maxSpeed = maxSpeed * this.getSharedData("character").stoppingPowerMult;
                 }
                 else if (!data.bClimbing)
                 {
@@ -4180,6 +4185,15 @@ class GameInstance
                         this.enterVehicle(_body, vehicle, seatIndex);
                     }
                 }
+            }
+        }
+        if (data.stoppingPowerTimer > 0)
+        {
+            data.stoppingPowerTimer--;
+            if (data.stoppingPowerTimer <= 0)
+            {
+                delete data.stoppingPowerTimer;
+                this.setDataValue(_body, "bStoppingPower", false)
             }
         }
         if (data.currentRequest)
@@ -4566,8 +4580,11 @@ class GameInstance
     exposePawn(_body)
     {
         var data = _body.data;
-        this.setDataValue(_body, "bExposed", true);
-        data.exposeTimer = this.game.settings.fps * 2;
+        if (data.type == "character")
+        {
+            this.setDataValue(_body, "bExposed", true);
+            data.exposeTimer = this.game.settings.fps * 2;
+        }
     }
 
     createBullet(_x, _y, _rotation, _range, _damage, _instigatorId, _causerId, _weaponId, _weaponData, _bDirectlyCausedByPlayer, _bMelee, _bIgnoreObstacles)
@@ -5675,18 +5692,25 @@ class GameInstance
                                             {
                                                 damageAmount *= 0.75;
                                             }
-                                            if (bNearshot)
+                                            if (weaponData)
                                             {
-                                                if (weaponData && weaponData.type == Weapon.TYPE_SHOTGUN)
+                                                if (bNearshot)
                                                 {
-                                                    damageAmount *= 1.5;
+                                                    if (weaponData.type == Weapon.TYPE_SHOTGUN)
+                                                    {
+                                                        damageAmount *= 1.5;
+                                                    }
                                                 }
-                                            }
-                                            else if (weaponData)
-                                            {
-                                                if (cur.distance > weaponData.dropRange)
+                                                else
                                                 {
-                                                    damageAmount *= 0.5;
+                                                    if (cur.distance > weaponData.dropRange)
+                                                    {
+                                                        damageAmount *= 0.5;
+                                                    }
+                                                }
+                                                if (this.hasMod(weaponData, Mods.AMMO_STOPPING_POWER))
+                                                {
+                                                    this.onStoppingPowerHit(body);
                                                 }
                                             }
                                             if (this.isVehicle(body))
@@ -6236,6 +6260,26 @@ class GameInstance
             this.handlePlayerInput(_char, _data);
         }
         var map = this.getCurrentMapData();
+        switch (keyId)
+        {
+            case Control.RELOAD:
+                var weapon = this.getVehicleWeapon(_controllable, _char.data.seatIndex);
+                if (weapon && weapon.weaponData)
+                {
+                    if (weapon.weaponData.overheatCooldownNum == 0 && !weapon.bCooldown)
+                    {
+                        weapon.bCooldown = true;
+                        this.onEvent({
+                            eventId: GameServer.EVENT_PAWN_ACTION,
+                            pawnId: _controllable.data.id,
+                            type: GameServer.PAWN_WEAPON_COOLDOWN,
+                            index: _char.data.seatIndex,
+                            value: weapon.bCooldown
+                        });
+                    }
+                }
+                break;
+        }
         switch (type)
         {
             case "mountedWeapon":
@@ -9498,6 +9542,16 @@ class GameInstance
         return arr;
     }
 
+    onStoppingPowerHit(_body)
+    {
+        var data = _body.data;  
+        if (data.type == "character")
+        {
+            data.stoppingPowerTimer = Math.round(this.game.settings.fps * 0.25);
+            this.setDataValue(_body, "bStoppingPower", true);
+        }
+    }
+
     startLadderClimb(_body, _ladder)
     {
         if (_body.data.controllableId)
@@ -11289,12 +11343,7 @@ class GameInstance
                                     var attacker = this.getPlayerById(dataA.grenadeData.playerId);
                                     if (attacker)
                                     {
-                                        if (attacker.id == dataB.heliData.playerId)
-                                        {
-                                            bDamage = this.game.bFriendlyFire && !dataB.bPlayerControlled;
-                                            bDetonate = bDamage;
-                                        }
-                                        else if (attacker.team == dataB.team)
+                                        if (attacker.team == dataB.team)
                                         {
                                             bDamage = false;
                                             bDetonate = false;
@@ -12580,10 +12629,14 @@ class GameInstance
                         case Weapon.TYPE_PISTOL:
                         case Weapon.TYPE_MACHINE_PISTOL:
                         case Weapon.TYPE_SHOTGUN:
-                            mods.push(Mods.ACCESSORY_LASER);
+                            mods.push(Mods.ACCESSORY_LASER, Mods.ACCESSORY_MARKER);
                             break;
                         default:
-                            mods.push(Mods.ACCESSORY_LASER, Mods.ACCESSORY_GRIP);
+                            mods.push(Mods.ACCESSORY_LASER, Mods.ACCESSORY_MARKER, Mods.ACCESSORY_GRIP, Mods.ACCESSORY_GRIP_ANGLED);
+                            if (wpn.type == Weapon.TYPE_RIFLE)
+                            {
+                                mods.push(wpn.id == "ak47" ? Mods.ACCESSORY_GP25 : Mods.ACCESSORY_M320);
+                            }
                             break;
                     }
                     if (!wpn.bSingleRoundLoaded)
@@ -12619,9 +12672,17 @@ class GameInstance
                     switch (wpn.type)
                     {
                         case Weapon.TYPE_LAUNCHER:
+                            if (wpn.bGrenade && wpn.magSize == 1)
+                            {
+                                mods.push(Mods.GRENADE_FLASH, Mods.GRENADE_SMOKE);
+                            }
                             break;
                         default:
-                            mods.push(Mods.AMMO_FMJ, Mods.AMMO_PIERCING, Mods.AMMO_HOLLOW_POINT, Mods.AMMO_EXTENDED);                            
+                            mods.push(Mods.AMMO_FMJ, Mods.AMMO_PIERCING, Mods.AMMO_HOLLOW_POINT, Mods.AMMO_EXTENDED, Mods.AMMO_STOPPING_POWER);
+                            if (wpn.type == Weapon.TYPE_SHOTGUN && wpn.bBoltAction)
+                            {
+                                mods.push(Mods.AMMO_SLUG, Mods.AMMO_FRAG);
+                            }
                             break;
                     }
                     break;

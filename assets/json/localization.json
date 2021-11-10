@@ -3468,7 +3468,7 @@
     "it": "Masterkey"
   },
   "STR_MOD_FMJ": {
-    "en": "FMJ",
+    "en": "FMJ Rounds",
     "ru": "ЦМО",
     "zh-CN": "全金属壳弹",
     "tr": "FMJ",
@@ -3495,10 +3495,10 @@
     "en": "FRAG"
   },
   "STR_MOD_STOPPING_POWER": {
-    "en": "Stopping Power"
+    "en": "SP Rounds"
   },
   "STR_MOD_PIERCING": {
-    "en": "Piercing",
+    "en": "AP Rounds",
     "ru": "Пробитие",
     "zh-CN": "穿甲弹",
     "tr": "Delici",
@@ -3506,7 +3506,7 @@
     "it": "Proiettile Perforante"
   },
   "STR_MOD_HOLLOW_POINT": {
-    "en": "Hollow Point",
+    "en": "HP Rounds",
     "ru": "Экспансивные",
     "zh-CN": "空尖弹",
     "tr": "Ucu Delik Mermi",
