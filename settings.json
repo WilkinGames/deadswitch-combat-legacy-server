@@ -31,7 +31,7 @@
       "bots": 24,
       "botSkill": 0,
       "tickRate": 30,
-      "updateRate": 60
+      "updateRate": 10
     }
   }
 }
