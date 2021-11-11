@@ -1120,7 +1120,7 @@
     "name": "STR_WPN_HYDRA",
     "type": "TYPE_LAUNCHER",
     "round": "rocket",
-    "damage": 500,
+    "damage": 600,
     "radius": 600,
     "accuracy": 5,
     "fireRate": 60,

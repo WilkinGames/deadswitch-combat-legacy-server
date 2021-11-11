@@ -2064,6 +2064,12 @@ class GameInstance
                 }
                 this.setDataValue(vehicle, "bCountermeasureCooldown", true);
                 vehicle.data.countermeasureCooldownTimer = this.game.settings.fps * cooldown;
+                this.requestEvent({
+                    eventId: GameServer.EVENT_PAWN_ACTION,
+                    pawnId: vehicle.data.id,
+                    type: GameServer.PAWN_VEHICLE_UPDATE,
+                    bUseCountermeasure: true
+                });
             }
         }
     }
@@ -3150,7 +3156,13 @@ class GameInstance
             }
         }
         var prevCaptureTimer = this.clone(data.captureTimer);
-        var prevTouching = data.charsTouching ? data.charsTouching.length : 0;
+        //var prevTouching = data.charsTouching ? data.charsTouching.length : 0;
+        var prevTouching = [0, 0];
+        if (data.charsTouching)
+        {
+            prevTouching[0] = data.charsTouching[0] != null ? data.charsTouching[0].length : 0;
+            prevTouching[1] = data.charsTouching[1] != null ? data.charsTouching[1].length : 0;
+        }
         var bWasBeingCaptured = data["bIsBeingCaptured"];
         var bWasContested = data["bIsContested"];
         var prevCapturingTeam = data["capturingTeam"];
@@ -3227,9 +3239,12 @@ class GameInstance
             }
         }
         var params = [];
-        if (prevTouching != (data.charsTouching ? data.charsTouching.length : 0))
+        if (data.charsTouching)
         {
-            params.push("charsTouching");
+            if (prevTouching[0] != (data.charsTouching[0] != null ? data.charsTouching[0].length : 0) || prevTouching[1] != (data.charsTouching[1] != null ? data.charsTouching[1].length : 0))
+            {
+                params.push("charsTouching");
+            }
         }
         if (bWasBeingCaptured != data.bIsBeingCaptured)
         {
@@ -11490,11 +11505,19 @@ class GameInstance
                     break;
 
                 case "helicopter":
-                    this.onEvent({
-                        eventId: GameServer.EVENT_PAWN_ACTION,
-                        pawnId: dataA.id,
-                        type: GameServer.PAWN_HIT
-                    });
+                    switch (dataB.type)
+                    {
+                        case "ground":
+                        case "platform":
+                        case "helicopter":
+                        case "tank":
+                            this.onEvent({
+                                eventId: GameServer.EVENT_PAWN_ACTION,
+                                pawnId: dataA.id,
+                                type: GameServer.PAWN_HIT
+                            });
+                            break;
+                    }
                     if (dataB.type == "ground" || dataB.type == "platform")
                     {
                         if (!dataA["health"])
