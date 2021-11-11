@@ -1008,6 +1008,7 @@
     "bNoShell": true,
     "bNoMag": true,
     "bCanLock": true,
+    "lockTimerMax": 60,
     "speedModifier": 0.5,
     "range": 2000,
     "mag": 1,
@@ -1126,13 +1127,12 @@
     "bRocket": true,
     "bNoShell": true,
     "bNoMag": true,
-    "range": 2000,
+    "range": 2000,d
     "recoil": 3,
     "penetration": 5,
-    "overheatMax": 300,
-    "overheatNum": 300,
-    "bVehicle": true,
-    "gravityScale": 1
+    "overheatMax": 150,
+    "overheatNum": 150,
+    "bVehicle": true
   },
   {
     "id": "rocket_guided",
