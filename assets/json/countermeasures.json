@@ -7,16 +7,19 @@
   {
     "id": "ejection_seat",
     "name": "STR_COUNTERMEASURE_EJECTION_SEAT",
-    "score": 2500
+    "score": 2500,
+    "cooldown": 10
   },
   {
     "id": "ecm",
     "name": "STR_COUNTERMEASURE_ECM",
-    "score": 5000
+    "score": 5000,
+    "cooldown": 60
   },
   {
     "id": "flares",
     "name": "STR_COUNTERMEASURE_FLARES",
-    "score": 10000
+    "score": 10000,
+    "cooldown": 60
   }
 ]

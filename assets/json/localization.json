@@ -3957,7 +3957,7 @@
     "it": "Cambia Arma"
   },
   "STR_CONTROL_EQUIPMENT": {
-    "en": "Use Equipment",
+    "en": "Use Equipment/Countermeasure",
     "ru": "Использ. снаряжение",
     "zh-CN": "使用道具",
     "tr": "Ekipman Kullan",

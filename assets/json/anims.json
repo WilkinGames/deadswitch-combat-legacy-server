@@ -242,6 +242,7 @@
       "fire": [ 2, 9 ],
       "idle": 0,
       "reload": [ 9, 97 ],
+      "reload_shell": [ 95, 159 ],
       "sounds": [
         {
           "frame": 20,
@@ -249,6 +250,10 @@
         },
         {
           "frame": 68,
+          "sound": "sfx_reload_end"
+        },
+        {
+          "frame": 128,
           "sound": "sfx_reload_end"
         }
       ]
@@ -350,6 +355,7 @@
       "fire": [ 2, 9 ],
       "idle": 0,
       "reload": [ 9, 129 ],
+      "reload_shell": [ 129, 193 ],
       "sounds": [
         {
           "frame": 35,
@@ -362,6 +368,10 @@
         {
           "frame": 95,
           "sound": "sfx_reload_bolt_close"
+        },
+        {
+          "frame": 168,
+          "sound": "sfx_reload_end"
         }
       ]
     },
@@ -2190,6 +2200,7 @@
       "fire": [ 2, 9 ],
       "idle": 0,
       "reload": [ 9, 97 ],
+      "reload_shell": [ 95, 159 ],
       "sounds": [
         {
           "frame": 20,
@@ -2197,6 +2208,10 @@
         },
         {
           "frame": 68,
+          "sound": "sfx_reload_end"
+        },
+        {
+          "frame": 128,
           "sound": "sfx_reload_end"
         }
       ]

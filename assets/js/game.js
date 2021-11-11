@@ -523,8 +523,8 @@ class GameInstance
                 bSpawnProtection: _data.settings.bSpawnProtection == true,
                 bVehicles: _data.settings.bVehicles == true,
                 bWeaponDrops: _data.settings.bWeaponDrops == true,
-                vehicleRespawnTime: _data.settings.vehicleRespawnTime ? _data.settings.vehicleRespawnTime : 60,
-                weaponRespawnTime: _data.settings.weaponRespawnTime ? _data.settings.weaponRespawnTime : 60,
+                vehicleRespawnTime: _data.settings.vehicleRespawnTime != null ? _data.settings.vehicleRespawnTime : 60,
+                weaponRespawnTime: _data.settings.weaponRespawnTime != null ? _data.settings.weaponRespawnTime : 60,
                 bAllowRespawns: true,
                 bHardcore: _data.settings.bHardcore == true,
                 bFallDamage: _data.settings.bFallDamage != null ? _data.settings.bFallDamage : true,
@@ -1664,7 +1664,7 @@ class GameInstance
                     {
                         this.createSpawner(object.position, {
                             type: object.type,
-                            timerMax: this.game.settings.fps * this.game.gameModeData.vehicleRespawnTime,
+                            timerMax: Math.max(1, this.game.settings.fps * this.game.gameModeData.vehicleRespawnTime),
                             data: {
                                 type: object.heliType,
                                 team: object.team,
@@ -1679,7 +1679,7 @@ class GameInstance
                     {
                         this.createSpawner(object.position, {
                             type: object.type,
-                            timerMax: this.game.settings.fps * this.game.gameModeData.vehicleRespawnTime,
+                            timerMax: Math.max(1, this.game.settings.fps * this.game.gameModeData.vehicleRespawnTime),
                             data: {
                                 type: object.tankType,
                                 team: object.team,
@@ -1914,7 +1914,10 @@ class GameInstance
                                         {
                                             weapon.weaponData.overheatMax = 180;
                                         }
-                                        weapon.weaponData.cooldownNum = 1.5;
+                                        if (weapon.weaponData.type == Weapon.TYPE_LMG)
+                                        {
+                                            weapon.weaponData.cooldownNum = 1.5;
+                                        }
                                         weapon.overheat = 0;                                        
                                         this.requestEvent({
                                             eventId: GameServer.EVENT_PAWN_ACTION,
@@ -2021,22 +2024,46 @@ class GameInstance
         var vehicle = this.getObjectById(_char.data.controllableId);
         if (vehicle)
         {
-            var cm = vehicle.data.countermeasure;
-            switch (cm)
+            if (!vehicle.data.bCountermeasureCooldown)
             {
-                case "ejection_seat":
-                    this.clearPlayerControllable(_char.data.id, true);
-                    if (_char.data.bBot)
-                    {
-                        _char.velocity = [0, this.getSharedData("character").ejectionVelocity];
-                    }
-                    break;
-                case "ecm":
-
-                    break;
-                case "flares":
-
-                    break;
+                var cm = vehicle.data.countermeasure;
+                var cooldown = 60;
+                switch (cm)
+                {
+                    case "ejection_seat":
+                        cooldown = 10;
+                        this.clearPlayerControllable(_char.data.id, true);
+                        if (_char.data.bBot)
+                        {
+                            _char.velocity = [0, this.getSharedData("character").ejectionVelocity];
+                        }
+                        break;
+                    case "ecm":
+                        this.setDataValue(vehicle, "bECM", true);
+                        vehicle.data.ecmTimer = this.game.settings.fps * 15;
+                        break;
+                    case "flares":
+                        cooldown = 5;
+                        for (var i = 0; i < 5; i++)
+                        {
+                            this.createRocket({
+                                x: vehicle.position[0],
+                                y: vehicle.position[1],
+                                type: Rocket.TYPE_DEFAULT,
+                                team: vehicle.data.team,
+                                playerId: vehicle.data.id,
+                                causerId: vehicle.data.id,
+                                angle: this.ToRad(-90) + this.ToRad(this.Random(-45, 45)),
+                                weaponId: "rocket_flare",
+                                damage: 0,
+                                radius: 100,
+                                gravityScale: 1
+                            });
+                        }
+                        break;
+                }
+                this.setDataValue(vehicle, "bCountermeasureCooldown", true);
+                vehicle.data.countermeasureCooldownTimer = this.game.settings.fps * cooldown;
             }
         }
     }
@@ -2105,6 +2132,10 @@ class GameInstance
                 ai.enemy = enemy;                
                 ai.bEnemyLOS = this.checkLineOfSight(_body.position, enemy.position, false, enemy);
                 ai.enemyDist = this.Dist(enemy.position[0], enemy.position[1], _body.position[0], _body.position[1]);
+                if (enemy.data.bECM)
+                {
+                    data.lockOnTargetId = null;
+                }
             }
             else
             {
@@ -2853,6 +2884,7 @@ class GameInstance
         var pawnTypes = null;
         var scale = undefined;
         var maxRange = Number.MAX_VALUE;
+        var bLockOn = false;
         if (_settings)
         {
             if (_settings["bLOS"] != undefined)
@@ -2882,6 +2914,10 @@ class GameInstance
             if (_settings["bAllTypes"] != undefined)
             {
                 bAllTypes = _settings["bAllTypes"];
+            }
+            if (_settings.bLockOn != undefined)
+            {
+                bLockOn = _settings.bLockOn;
             }
         }
         var enemies = [];
@@ -2926,6 +2962,13 @@ class GameInstance
                         {
                             continue;
                         }
+                    }
+                }
+                if (bLockOn)
+                {
+                    if (curPawn.data.bECM)
+                    {
+                        continue;
                     }
                 }
                 if (this.isCharacter(curPawn))
@@ -3472,36 +3515,49 @@ class GameInstance
             var enemy = this.getNearestEnemyPawn(_body, {
                 bIgnoreOutOfSight: false,
                 maxRange: 1000,
-                bLOS: true
+                bLOS: true,
+                bLockOn: true
             });
             if (enemy)
             {
                 data.rocketData["enemyId"] = enemy.data.id;
             }
         }
-        else if (data.rocketData["enemyId"] && !data["path"])
+        else if (data.rocketData["enemyId"] && !data.path)
         {
-            var enemy = this.getObjectById(data.rocketData["enemyId"]);
-            if (enemy && enemy.data["health"])
+            var flare = this.getNearbyFlare(_body);
+            if (flare)
             {
-                var dist = this.DistBodies(enemy, _body);
-                if (dist < 50)
+                data.rocketData.enemyId = flare.data.id;
+            }
+            var enemy = this.getObjectById(data.rocketData["enemyId"]);
+            if (enemy)
+            {
+                if (enemy.data.bECM)
                 {
-                    this.detonate(_body);
+                    data.rocketData.enemyId = null;
                 }
-                var distX = enemy.position[0] - _body.position[0];
-                var distY = enemy.position[1] - _body.position[1];
-                var rad = Math.atan2(distY, distX);
-                var speed = 300; //data.velocity ? data.velocity : 150;
-                var target = this.WrapAngle(_body.angle - rad, true);
-                if (_body.gravityScale > 0)
+                else if (enemy.data.health)
                 {
-                    _body.gravityScale = 0;
+                    var dist = this.DistBodies(enemy, _body);
+                    if (dist < 50)
+                    {
+                        this.detonate(_body);
+                    }
+                    var distX = enemy.position[0] - _body.position[0];
+                    var distY = enemy.position[1] - _body.position[1];
+                    var rad = Math.atan2(distY, distX);
+                    var speed = 300; //data.velocity ? data.velocity : 150;
+                    var target = this.WrapAngle(_body.angle - rad, true);
+                    if (_body.gravityScale > 0)
+                    {
+                        _body.gravityScale = 0;
+                    }
+                    _body.angle -= target * 0.5;
+                    _body.applyForce([Math.cos(_body.angle) * speed, Math.sin(_body.angle) * speed], 0, 0);
+                    this.constrainVelocity(_body, 1000);
                 }
-                _body.angle -= target * 0.5;
-                _body.applyForce([Math.cos(_body.angle) * speed, Math.sin(_body.angle) * speed], 0, 0);
-                this.constrainVelocity(_body, 1000);
-            }            
+            }
         }
         else if (data["bControllable"])
         {
@@ -3511,6 +3567,12 @@ class GameInstance
         }
         else if (data.path)
         {
+            var flare = this.getNearbyFlare(_body);
+            if (flare)
+            {
+                data.rocketData.enemyId = flare.data.id;
+                data.path = null;
+            }
             var path = data.path;
             if (path.length > 0)
             {
@@ -3547,6 +3609,30 @@ class GameInstance
         if (data.scaleCooldown > 0)
         {
             data.scaleCooldown--;
+        }
+        if (data.bECM)
+        {
+            if (data.ecmTimer > 0)
+            {
+                data.ecmTimer--;
+                if (data.ecmTimer <= 0)
+                {
+                    delete data.ecmTimer;
+                    this.setDataValue(_body, "bECM", false);
+                }
+            }
+        }
+        if (data.bCountermeasureCooldown)
+        {
+            if (data.countermeasureCooldownTimer > 0)
+            {
+                data.countermeasureCooldownTimer--;
+                if (data.countermeasureCooldownTimer <= 0)
+                {
+                    delete data.countermeasureCooldownTimer;
+                    this.setDataValue(_body, "bCountermeasureCooldown", false);
+                }
+            }
         }
         var seats = data.seats;
         if (seats)
@@ -5352,6 +5438,21 @@ class GameInstance
 
                 case GameServer.EVENT_PLAYER_INTERACT:
                     this.attemptInteract(_data.playerId);
+                    break;
+
+                case GameServer.PAWN_LOCK_ACQUIRED:
+                    if (_data.bRocket)
+                    {
+                        var pawn = this.getObjectById(_data.pawnId);
+                        if (pawn && pawn.data.bBot)
+                        {
+                            var veh = this.getObjectById(pawn.data.controllableId);
+                            if (veh)
+                            {
+                                this.triggerCountermeasure(pawn);
+                            }
+                        }
+                    }
                     break;
 
                 case GameServer.EVENT_PAWN_ACTION:
@@ -7889,6 +7990,31 @@ class GameInstance
         return arr;
     }
 
+    getNearbyFlare(_body)
+    {
+        var world = this.game.world;
+        for (var i = 0; i < world.bodies.length; i++)
+        {
+            var cur = world.bodies[i];
+            if (cur.data)
+            {
+                switch (cur.data.type)
+                {
+                    case "rocket":
+                        if (cur.data.rocketData.weaponId == "rocket_flare" && cur.data.team != _body.data.team)
+                        {
+                            if (this.DistBodies(_body, cur) < 1500)
+                            {
+                                return cur;
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+        return null;
+    }
+
     getRockets()
     {
         var world = this.game.world;
@@ -9105,7 +9231,7 @@ class GameInstance
             var inventory = [classData.primary, classData.secondary, { id: classData.melee }, { id: classData.grenade }, { id: classData.equipment }];            
             if (ps.desiredSpawn && ps.desiredSpawn[0] != null && ps.desiredSpawn[1] != null)
             {                
-                var spawnPos = ps.desiredSpawn;
+                var spawnPos = this.clone(ps.desiredSpawn);
             }
             else
             {
@@ -9282,7 +9408,6 @@ class GameInstance
                 velocity = 0;
                 bControllable = true;
                 break;
-
             case "javelin":
                 destroyTimer = this.game.settings.fps * 10;
                 var weaponData = this.getWeaponData(weaponId);
@@ -9292,8 +9417,14 @@ class GameInstance
                 var path = _data["path"];
                 bAirOnly = _data["bAirOnly"];
                 break;
-
+            case "rocket_flare":
+                var weaponData = this.getWeaponData(weaponId);
+                damage = 0;
+                radius = 100;
+                velocity = this.Random(75, 125);
+                break;
             default:
+                destroyTimer = this.game.settings.fps * 5;
                 var weaponData = this.getWeaponData(weaponId);
                 damage = _data["damage"] ? _data["damage"] : weaponData["damage"];
                 radius = _data["radius"] ? _data["radius"] : weaponData["radius"];
@@ -9310,7 +9441,8 @@ class GameInstance
             radius: radius,
             team: _data.team,
             rocketData: _data,
-            velocity: velocity
+            velocity: velocity,
+            health: 100
         };
         if (path)
         {
@@ -11151,6 +11283,7 @@ class GameInstance
                     switch (dataA.weaponData.id)
                     {
                         case "ammo_box":
+                        case "beacon":
                             this.onEvent({
                                 eventId: GameServer.EVENT_PAWN_ACTION,
                                 pawnId: dataA.id,
