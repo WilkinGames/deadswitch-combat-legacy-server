@@ -1127,7 +1127,7 @@
     "bRocket": true,
     "bNoShell": true,
     "bNoMag": true,
-    "range": 2000,d
+    "range": 2000,
     "recoil": 3,
     "penetration": 5,
     "overheatMax": 150,
