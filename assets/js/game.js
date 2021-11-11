@@ -85,7 +85,7 @@ const GameServer = {
     PAWN_DROP_CRATE: 46,
     PAWN_FLAG: 47,
     PAWN_HIT: 48,
-    PAWN_VEHICLE_START: 49,
+    PAWN_VEHICLE_ENTER: 49,
     PAWN_VEHICLE_LEAVE: 50,
     PAWN_UPDATE: 51,
     PAWN_PARACHUTE: 52,
@@ -1878,7 +1878,7 @@ class GameInstance
             this.requestEvent({
                 eventId: GameServer.EVENT_PAWN_ACTION,
                 pawnId: _char.data.id,
-                type: GameServer.PAWN_VEHICLE_START,
+                type: GameServer.PAWN_VEHICLE_ENTER,
                 vehicleId: _vehicle.data.id,
                 scale: _vehicle.data.scale,
                 seatIndex: _seatIndex,
@@ -1939,7 +1939,7 @@ class GameInstance
             this.requestEvent({
                 eventId: GameServer.EVENT_PAWN_ACTION,
                 pawnId: _vehicle.data.id,
-                type: GameServer.PAWN_VEHICLE_START,
+                type: GameServer.PAWN_VEHICLE_ENTER,
                 seatIndex: _seatIndex
             });
         }
@@ -3574,7 +3574,7 @@ class GameInstance
                 data.path = null;
             }
             var path = data.path;
-            if (path.length > 0)
+            if (path && path.length > 0)
             {
                 var curTarget = data.path[0];
                 if (curTarget)
@@ -11222,7 +11222,7 @@ class GameInstance
                 arr.push({
                     eventId: GameServer.EVENT_PAWN_ACTION,
                     pawnId: char.data.id,
-                    type: GameServer.PAWN_VEHICLE_START,
+                    type: GameServer.PAWN_VEHICLE_ENTER,
                     vehicleId: veh.data.id,
                     scale: veh.data.scale,
                     seatIndex: char.data.seatIndex,
