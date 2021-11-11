@@ -68,7 +68,8 @@
   "quad": {
     "width": 120,
     "height": 62,
-    "mass": 6
+    "mass": 6,
+    "angularDamping": 0.9
   },
   "abrams": {
     "width": 420,

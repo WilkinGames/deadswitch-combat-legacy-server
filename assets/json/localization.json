@@ -1790,6 +1790,9 @@
     "es": "Equipo destruido",
     "it": "Equipaggiamento distrutto"
   },
+  "STR_X_DESTROYED": {
+    "en": "%1 Destroyed"
+  },
   "STR_TANK_DESTROYED": {
     "en": "Tank Destroyed"
   },

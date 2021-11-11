@@ -1024,7 +1024,7 @@
     "type": "TYPE_SHOTGUN",
     "fireMode": "MODE_SEMI",
     "round": "12g",
-    "damage": 35,
+    "damage": 38,
     "accuracy": 8,
     "fireRate": 25,
     "magSize": 4,
@@ -1035,7 +1035,7 @@
     "speedModifier": 1,
     "range": 1000,
     "mag": 4,
-    "ammo": 8,
+    "ammo": 12,
     "recoil": 8,
     "penetration": 1,
     "bBarrel": true,
@@ -1395,7 +1395,7 @@
     "bPlaceable": true,
     "bExcludeFromStore": true,
     "bEquipment": true,
-    "health": 25
+    "health": 100
   },
   {
     "id": "ammo_box",

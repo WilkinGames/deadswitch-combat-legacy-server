@@ -2043,7 +2043,7 @@ class GameInstance
                         vehicle.data.ecmTimer = this.game.settings.fps * 15;
                         break;
                     case "flares":
-                        cooldown = 5;
+                        cooldown = 30;
                         for (var i = 0; i < 5; i++)
                         {
                             this.createRocket({
@@ -2068,7 +2068,8 @@ class GameInstance
                     eventId: GameServer.EVENT_PAWN_ACTION,
                     pawnId: vehicle.data.id,
                     type: GameServer.PAWN_VEHICLE_UPDATE,
-                    bUseCountermeasure: true
+                    bUseCountermeasure: true,
+                    cooldown: vehicle.data.countermeasureCooldownTimer
                 });
             }
         }
@@ -3354,8 +3355,12 @@ class GameInstance
 
     handleEquipment(_body)
     {
-        var data = _body.data;
+        var data = _body.data;        
         var weaponData = data.weaponData;
+        if (weaponData.id != "jammer")
+        {
+            this.setDataValue(_body, "bJammed", this.hasNearbyJammer(_body));
+        }
         switch (weaponData.id)
         {
             case "trophy":
@@ -3418,7 +3423,7 @@ class GameInstance
                             this.detonate(_body);
                         }
                     }
-                    else 
+                    else if (!data.bJammed)
                     {
                         var pawns = this.getPawns();
                         for (var i = 0; i < pawns.length; i++)
@@ -5617,8 +5622,8 @@ class GameInstance
                                                     victimClan: victim["clan"],
                                                     victimTeam: victim.team,
                                                     weaponId: _data["weaponId"],
-                                                    bHeadshot: _data["bHeadshot"],
-                                                    bDirectImpact: _data["bDirectImpact"],
+                                                    bHeadshot: _data.bHeadshot,
+                                                    bDirectImpact: _data.bDirectImpact,
                                                     bSuicide: bSuicide
                                                 });
                                             }
@@ -5629,6 +5634,16 @@ class GameInstance
                                         damageType: _data.damageType,
                                         weaponId: _data.weaponId
                                     };
+                                    switch (pawnToDamage.data.type)
+                                    {
+                                        case "equipment":
+                                            damageInfo.equipmentId = pawnToDamage.data.weaponData.id;
+                                            break;
+                                    }
+                                    if (pawnToDamage.data.controllableId)
+                                    {
+                                        damageInfo.bInVehicle = true;
+                                    }
                                     if (_data["bDirectlyCausedByPlayer"])
                                     {
                                         damageInfo["bDirectlyCausedByPlayer"] = true;
@@ -5645,17 +5660,17 @@ class GameInstance
                                     {
                                         damageInfo["bSuicide"] = true;
                                     }
-                                    if (_data["bHeadshot"])
+                                    if (_data.bHeadshot)
                                     {
-                                        damageInfo["bHeadshot"] = true;
+                                        damageInfo.bHeadshot = true;
                                     }
                                     if (_data["bLongshot"])
                                     {
                                         damageInfo["bLongshot"] = true;
                                     }
-                                    if (_data["bDirectImpact"])
+                                    if (_data.bDirectImpact)
                                     {
-                                        damageInfo["bDirectImpact"] = true;
+                                        damageInfo.bDirectImpact = true;
                                     }
                                     _data["damageAmount"] = damageAmount;
                                     this.onPlayerKill(_data["attackerId"], damageAmount, _data["pawnId"], _data["causerId"], damageInfo);
@@ -7975,6 +7990,31 @@ class GameInstance
         return arr;
     }
 
+    hasNearbyJammer(_body)
+    {
+        var world = this.game.world;
+        for (var i = 0; i < world.bodies.length; i++)
+        {
+            var cur = world.bodies[i];
+            if (cur.data)
+            {
+                switch (cur.data.type)
+                {
+                    case "equipment":
+                        if (cur.data.team != _body.data.team && cur.data.weaponData.id == "jammer")
+                        {
+                            if (this.DistBodies(_body, cur) <= cur.data.weaponData.radius)
+                            {
+                                return true;
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+        return false;
+    }
+
     getEquipment(_weaponId)
     {
         var world = this.game.world;
@@ -10219,7 +10259,7 @@ class GameInstance
         var body = new p2.Body({
             mass: shared.mass,
             position: _position,
-            angularDamping: 0.9,
+            angularDamping: shared.angularDamping,
             gravityScale: 1,
             allowSleep: true,
             sleepSpeedLimit: 1
