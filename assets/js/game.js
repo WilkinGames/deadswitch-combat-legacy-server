@@ -5954,13 +5954,16 @@ class GameInstance
 
                 case GameServer.EVENT_PLAYER_TRIGGER_EQUIPMENT:
                     var char = this.getObjectById(_data.playerId);
-                    if (char.data.controllableId && char.data.seatIndex == 0)
+                    if (char)
                     {
-                        this.triggerCountermeasure(char);
-                    }
-                    else
-                    {
-                        this.triggerCharacterEquipment(_data, "equipment");
+                        if (char.data.controllableId && char.data.seatIndex == 0)
+                        {
+                            this.triggerCountermeasure(char);
+                        }
+                        else
+                        {
+                            this.triggerCharacterEquipment(_data, "equipment");
+                        }
                     }
                     _data.bServer = true;
                     break;
