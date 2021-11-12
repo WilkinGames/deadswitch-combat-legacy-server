@@ -2104,20 +2104,24 @@ class GameInstance
             switch (ai.botSkill)
             {
                 case BotSkill.SKILL_GOD:
+                    ai.enemyDistMax = 3000;
                     ai.offsetX = 0;
                     ai.offsetY = 0;
                     break;
                 case BotSkill.SKILL_INSANE:
-                    ai.offsetX = this.Random(-5, 5);
-                    ai.offsetY = this.Random(-15, 15);
+                    ai.enemyDistMax = 2000;
+                    ai.offsetX = this.Random(-30, 30);
+                    ai.offsetY = this.Random(-30, 30);
                     break;
                 case BotSkill.SKILL_HARD:
-                    ai.offsetX = this.Random(-25, 25);
-                    ai.offsetY = this.Random(-50, 50);
+                    ai.enemyDistMax = 1500;
+                    ai.offsetX = this.Random(-100, 100);
+                    ai.offsetY = this.Random(-100, 100);
                     break;
                 default:
-                    ai.offsetX = this.Random(-50, 50);
-                    ai.offsetY = this.Random(-75, 75);
+                    ai.enemyDistMax = 1000;
+                    ai.offsetX = this.Random(-200, 200);
+                    ai.offsetY = this.Random(-200, 200);
                     break;
             }
         }        
@@ -2139,6 +2143,7 @@ class GameInstance
                 ai.enemy = enemy;                
                 ai.bEnemyLOS = this.checkLineOfSight(_body.position, enemy.position, false, enemy);
                 ai.enemyDist = this.Dist(enemy.position[0], enemy.position[1], _body.position[0], _body.position[1]);
+                ai.enemyDistMult = ai.enemyDist / ai.enemyDistMax;
                 if (enemy.data.bECM)
                 {
                     data.lockOnTargetId = null;
@@ -2405,11 +2410,8 @@ class GameInstance
             }        
             if (ai.offsetX)
             {
-                data.lookPos[0] += ai.offsetX;
-            }
-            if (ai.offsetY)
-            {
-                data.lookPos[1] += ai.offsetY;
+                data.lookPos[0] += ai.offsetX * ai.enemyDistMult;
+                data.lookPos[1] += ai.offsetY * ai.enemyDistMult;
             }
             if (ai.enemy.data.type == "character" && ai.enemyDist < data.melee.range && !ai.bFireCooldown)
             {
@@ -2657,8 +2659,8 @@ class GameInstance
                                     var aim = [ai.enemy.position[0], ai.enemy.position[1]];
                                     if (controllable.data.type != "tank")
                                     {
-                                        aim[0] += ai.offsetX;
-                                        aim[1] += ai.offsetY;
+                                        aim[0] += ai.offsetX * ai.enemyDistMult;
+                                        aim[1] += ai.offsetY * ai.enemyDistMult;
                                     }
                                     var rad = this.Angle(muzzle[0], muzzle[1], aim[0], aim[1]);
                                     this.setVehicleWeaponAimRotation(controllable.data.scale, weapon, rad);
@@ -2772,7 +2774,15 @@ class GameInstance
                 }
             }
             */
-            _weapon.aimRotation = val;
+            if (_weapon.weaponData && _weapon.weaponData.bRocket)
+            {
+                _weapon.aimRotation = val;
+            }
+            else
+            {
+                var rad = this.WrapAngle(_weapon.aimRotation - _val, true);
+                _weapon.aimRotation -= rad * 0.25;
+            }
         }
     }
 
@@ -11251,6 +11261,11 @@ class GameInstance
     getNumPlayers()
     {
         return this.game.players.length;
+    }
+
+    getPlayers()
+    {
+        return this.game.players;
     }
 
     getCurrentGameData()
