@@ -2216,6 +2216,29 @@ class GameInstance
             });
         }
 
+        //Handle equipment
+        var equipment = data.equipment;
+        if (equipment && equipment.ammo > 0)
+        {
+            switch (equipment.id)
+            {
+                case "stim":
+                    if (data.health < (data.maxHealth * 0.75))
+                    {
+                        this.useCharacterEquipment(_body, "equipment", _body.position[0], _body.position[1]);
+                    }
+                    break;
+
+                case "jammer":
+                case "sensor":
+                    if (ai.enemy && ai.enemyDist < equipment.radius)
+                    {
+                        this.useCharacterEquipment(_body, "equipment", ai.enemy.position[0], ai.enemy.position[1]);
+                    }
+                    break;
+            }
+        }
+
         var moveDirX = 0;
         var moveDirY = 0;
         var bMovingBack = false;
