@@ -4,7 +4,7 @@
   "type": "STR_OFFICIAL",
   "port": 8000,
   "maxPlayers": 32,
-  "bUseLobby": true,
+  "bUseLobby": false,
   "bAllowVotekick": true,
   "welcome": "STR_SERVER_WELCOME",
   "rules": "STR_SERVER_RULES_NONE",
@@ -13,7 +13,7 @@
     "STR_SERVER_PLAYER_INFO"
   ],
   "gameData": {
-    "gameModeId": "domination",
+    "gameModeId": "conquest",
     "mapId": "map_siege",
     "settings": {
       "timeLimit": 10,
