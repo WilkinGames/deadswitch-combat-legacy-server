@@ -3,7 +3,7 @@
   "country": "ca",
   "type": "STR_OFFICIAL",
   "port": 8000,
-  "maxPlayers": 100,
+  "maxPlayers": 32,
   "bUseLobby": false,
   "bAllowVotekick": true,
   "welcome": "STR_SERVER_WELCOME",
@@ -28,7 +28,7 @@
       "bFallDamage": true,
       "vehicleRespawnTime": 120,
       "weaponRespawnTime": 120,
-      "bots": 50,
+      "bots": 24,
       "botSkill": 0,
       "tickRate": 30,
       "updateRate": 10
