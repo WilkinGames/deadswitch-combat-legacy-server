@@ -218,8 +218,8 @@ app.use(cors({
 }));
 app.get("/", (req, res) =>
 {
-    var str = "<head><style>body { font-size: 12px; font-family:'Arial'; };</style>";
-    str += "<title>DS:C Multiplayer Server</title></head><body><h1>Deadswitch: Combat Multiplayer Server</h1>"
+    var str = "<head><style>body { font-size: 12px; font-family:'Arial'; } h1 { height: 10px; } td { text-align: center; vertical-align: middle; }</style>";
+    str += "<title>DS:C Multiplayer Server</title></head><body><h1>Deadswitch: Combat</h1><h3>MULTIPLAYER SERVER</h3>"
     var upTime = convertMS(Date.now() - serverStartTime);
     str += "<b>Uptime:</b> " + upTime.day + "d " + upTime.hour + "h " + upTime.minute + "m " + upTime.seconds + "s<br>";
     str += "<b>Version:</b> " + ServerData.VERSION + "<br>";
@@ -227,8 +227,16 @@ app.get("/", (req, res) =>
     var lobby = lobbies[0];
     if (lobby)
     {  
-        str += "<h2>" + lobby.gameData.mapId + "  -  " + lobby.gameData.gameModeId + "  -  " + lobby.state + "</h2>";        
-        str += "<h3>Players: " + (lobby.game ? lobby.game.getNumPlayers() : lobby.players.length) + "/" + lobby.maxPlayers + "</h3>";
+        str += "<h3>" + lobby.gameData.mapId + "  -  " + lobby.gameData.gameModeId + "  -  " + lobby.state + "</h3>";    
+        var players = lobby.game ? lobby.game.getPlayers() : lobby.players;
+        str += "<h3>Players: " + players.length + "/" + lobby.maxPlayers + "</h3>";
+        str += "<table width='100%'><tr><th>#</th><th>Name</th><th>Level</th><th>Ping</th></tr>"
+        for (var i = 0; i < players.length; i++)
+        {
+            var player = players[i];
+            str += "<tr><td>" + i + "</td><td>" + player.name + "</td><td>Level " + player.level + "</td><td>" + (player.ping != null ? player.ping : "-") + "</td></tr>";
+        }
+        str += "</table>";
     }
     var keys = Object.keys(lobby.gameData.settings);
     for (var i = 0; i < keys.length; i++)
