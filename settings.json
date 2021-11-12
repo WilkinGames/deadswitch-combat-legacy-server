@@ -17,7 +17,7 @@
     "mapId": "map_siege",
     "settings": {
       "timeLimit": 10,
-      "scoreLimit": 100,
+      "scoreLimit": 300,
       "respawnTime": 1,
       "preGameTimer": 5,
       "bAllowRespawns": true,
@@ -28,7 +28,7 @@
       "bFallDamage": true,
       "vehicleRespawnTime": 120,
       "weaponRespawnTime": 120,
-      "bots": 24,
+      "bots": 30,
       "botSkill": 0,
       "tickRate": 30,
       "updateRate": 10

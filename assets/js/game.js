@@ -2114,12 +2114,12 @@ class GameInstance
                     ai.offsetY = this.Random(-30, 30);
                     break;
                 case BotSkill.SKILL_HARD:
-                    ai.enemyDistMax = 1500;
+                    ai.enemyDistMax = 1000;
                     ai.offsetX = this.Random(-100, 100);
                     ai.offsetY = this.Random(-100, 100);
                     break;
                 default:
-                    ai.enemyDistMax = 1000;
+                    ai.enemyDistMax = 500;
                     ai.offsetX = this.Random(-200, 200);
                     ai.offsetY = this.Random(-200, 200);
                     break;
@@ -10445,8 +10445,8 @@ class GameInstance
                         bBack: true
                     },
                     {
-                        position: [150, 30],
-                        bBack: true
+                        position: [150, 45],
+                        bInput: true
                     }
                 ];
                 data.weapons = [
