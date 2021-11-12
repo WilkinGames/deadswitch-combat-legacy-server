@@ -228,7 +228,7 @@ app.get("/", (req, res) =>
     if (lobby)
     {  
         str += "<h2>" + lobby.gameData.mapId + "  -  " + lobby.gameData.gameModeId + "  -  " + lobby.state + "</h2>";        
-        str += "<h3>Players: " + lobby.players.length + "/" + lobby.maxPlayers + "</h3>";
+        str += "<h3>Players: " + lobby.game ? lobby.game.getNumPlayers() : lobby.players.length + "/" + lobby.maxPlayers + "</h3>";
     }
     var keys = Object.keys(lobby.gameData.settings);
     for (var i = 0; i < keys.length; i++)
