@@ -5479,6 +5479,7 @@ class GameInstance
                         this.exitVehicle(pawn);
                         this.removeNextStep(pawn);
                     }
+                    this.removeEquipmentByPlayerId(_data.playerId);
                     this.removePlayer(_data.playerId);
                     break;
 
