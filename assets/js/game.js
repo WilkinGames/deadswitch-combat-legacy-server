@@ -3388,6 +3388,10 @@ class GameInstance
 
     handleEquipment(_body)
     {
+        if (_body.position[1] > this.getCurrentMapData().height)
+        {
+            this.removeNextStep(_body);
+        }
         var data = _body.data;        
         var weaponData = data.weaponData;
         if (weaponData.id != "jammer")
@@ -3909,10 +3913,9 @@ class GameInstance
     {
         if (_body.position[1] > this.getCurrentMapData().height || _body.position[0] < 0 || _body.position[0] > this.getCurrentMapData().width)
         {
-            this.killPawn(_body);
+            this.killPawn(_body.data.id);
             return;
         }
-
         var data = _body.data;   
         if (data.bBot)
         {
@@ -12917,14 +12920,7 @@ class GameInstance
             }
             var wpns = this.getAllWeaponsByType(wpnType);
             primary.id = wpns[this.Random(0, wpns.length - 1)].id;
-            var mods = this.getModsForWeapon(primary.id, Mods.TYPE_OPTIC);
-            primary.mods.optic = mods[this.Random(0, mods.length - 1)];
-            mods = this.getModsForWeapon(primary.id, Mods.TYPE_ACCESSORY);
-            primary.mods.accessory = mods[this.Random(0, mods.length - 1)];
-            mods = this.getModsForWeapon(primary.id, Mods.TYPE_BARREL);
-            primary.mods.barrel = mods[this.Random(0, mods.length - 1)];
-            mods = this.getModsForWeapon(primary.id, Mods.TYPE_AMMO);
-            primary.mods.ammo = mods[this.Random(0, mods.length - 1)];
+            this.setRandomWeaponMods(primary);
             var secondary = curClass.secondary;
             switch (i)
             {
@@ -12937,8 +12933,25 @@ class GameInstance
             }
             var wpns = this.getAllWeaponsByType(s[this.Random(0, s.length - 1)]);
             secondary.id = wpns[this.Random(0, wpns.length - 1)].id;
+            this.setRandomWeaponMods(secondary);
         }
         return classes;
+    }
+
+    setRandomWeaponMods(_weaponData)
+    {
+        if (!_weaponData.mods)
+        {
+            _weaponData.mods = {};
+        }
+        var mods = this.getModsForWeapon(_weaponData.id, Mods.TYPE_OPTIC);
+        _weaponData.mods.optic = mods[this.Random(0, mods.length - 1)];
+        mods = this.getModsForWeapon(_weaponData.id, Mods.TYPE_ACCESSORY);
+        _weaponData.mods.accessory = mods[this.Random(0, mods.length - 1)];
+        mods = this.getModsForWeapon(_weaponData.id, Mods.TYPE_BARREL);
+        _weaponData.mods.barrel = mods[this.Random(0, mods.length - 1)];
+        mods = this.getModsForWeapon(_weaponData.id, Mods.TYPE_AMMO);
+        _weaponData.mods.ammo = mods[this.Random(0, mods.length - 1)];
     }
 
     getModsForWeapon(_weaponId, _modType)
