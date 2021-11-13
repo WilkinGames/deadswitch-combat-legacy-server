@@ -1916,7 +1916,7 @@ class GameInstance
                                         }
                                         if (weapon.weaponData.type == Weapon.TYPE_LMG)
                                         {
-                                            weapon.weaponData.cooldownNum = 1.5;
+                                            weapon.weaponData.cooldownNum = 2;
                                         }
                                         weapon.overheat = 0;                                        
                                         this.requestEvent({
@@ -2115,13 +2115,13 @@ class GameInstance
                     break;
                 case BotSkill.SKILL_HARD:
                     ai.enemyDistMax = 1000;
-                    ai.offsetX = this.Random(-100, 100);
-                    ai.offsetY = this.Random(-100, 100);
+                    ai.offsetX = this.Random(-75, 75);
+                    ai.offsetY = this.Random(-75, 75);
                     break;
                 default:
-                    ai.enemyDistMax = 500;
-                    ai.offsetX = this.Random(-200, 200);
-                    ai.offsetY = this.Random(-200, 200);
+                    ai.enemyDistMax = 750;
+                    ai.offsetX = this.Random(-125, 125);
+                    ai.offsetY = this.Random(-125, 125);
                     break;
             }
         }        
@@ -11355,6 +11355,20 @@ class GameInstance
             }
             switch (dataA.type)
             {
+                case "obstacle":
+                    switch (dataA.obstacleId)
+                    {
+                        case "barrel_generic":
+                        case "barrel_explosive":
+                            this.onEvent({
+                                eventId: GameServer.EVENT_PAWN_ACTION,
+                                pawnId: dataA.id,
+                                type: GameServer.PAWN_HIT
+                            });
+                            break;
+                    }
+                    break;
+
                 case "window":
                     if (this.isVehicle(_bodyB))
                     {

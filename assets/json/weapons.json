@@ -501,7 +501,7 @@
     "round": "762mm",
     "damage": 42,
     "accuracy": 1,
-    "fireRate": 9,
+    "fireRate": 8,
     "magSize": 20,
     "reloadTime": 2,
     "speedModifier": 0.8,

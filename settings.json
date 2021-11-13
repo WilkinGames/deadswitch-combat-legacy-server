@@ -28,8 +28,8 @@
       "bFallDamage": true,
       "vehicleRespawnTime": 120,
       "weaponRespawnTime": 120,
-      "bots": 30,
-      "botSkill": 0,
+      "bots": 24,
+      "botSkill": 1,
       "tickRate": 30,
       "updateRate": 10
     }
