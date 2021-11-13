@@ -11633,7 +11633,7 @@ class GameInstance
                             });
                             this.removeNextStep(_bodyA);
                         }
-                        else
+                        else if (this.matchInProgress())
                         {                            
                             var deg = Math.abs(this.ToDeg(_bodyA.angle));
                             if (deg)
