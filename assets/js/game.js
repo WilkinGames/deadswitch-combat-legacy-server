@@ -998,6 +998,9 @@ class GameInstance
 
                 switch (data.type)
                 {
+                    case "door":
+                        this.handleDoor(body);
+                        break;
                     case "character":
                         this.handleCharacter(body);
                         if (data.bBot && this.matchInProgress())
@@ -3916,6 +3919,15 @@ class GameInstance
         }
     }
 
+    handleDoor(_body)
+    {
+        var data = _body.data;
+        if (data.cooldownTimer > 0)
+        {
+            data.cooldownTimer--;
+        }
+    }
+
     handleCharacter(_body)
     {
         if (_body.position[1] > this.getCurrentMapData().height || _body.position[0] < 0 || _body.position[0] > this.getCurrentMapData().width)
@@ -4371,7 +4383,7 @@ class GameInstance
                     eventId: GameServer.EVENT_PAWN_ACTION,
                     pawnId: data.id,
                     type: GameServer.PAWN_END_SHIELD_COOLDOWN,
-                    bDoor: data["bDoorCooldown"]
+                    bDoor: data.bDoorCooldown
                 });
             }
         }
@@ -6956,7 +6968,6 @@ class GameInstance
                             position: pawn.position
                         });
                     }
-                    console.log(_interactable.data);
                     break;
 
                 case "equipment":
@@ -10524,6 +10535,7 @@ class GameInstance
 
     createDoor(_data)
     {
+        console.log(_data);
         var body = new p2.Body({
             mass: 0,
             position: _data.position,
@@ -10553,7 +10565,12 @@ class GameInstance
             cooldownTimer: 0,
             team: -1,
             doorType: _data.doorType,
-            doorData: { doorType: _data.doorType }
+            doorData: {
+                doorType: _data.doorType,
+                bClosed: _data.bClosed,
+                width: useWidth,
+                height: useHeight
+            }
         };
         body.addShape(new p2.Box({
             width: useWidth,
@@ -10606,10 +10623,10 @@ class GameInstance
                 }
                 this.onEvent({
                     eventId: GameServer.EVENT_PAWN_ACTION,
-                    pawnId: data["id"],
+                    pawnId: data.id,
                     causerId: _causer ? _causer.data.id : null,
                     type: GameServer.PAWN_UPDATE_DOOR,
-                    bClosed: data["bClosed"],
+                    bClosed: data.bClosed,
                     scale: scale,
                     bImpact: _bImpact
                 });

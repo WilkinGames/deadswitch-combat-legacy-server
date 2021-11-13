@@ -228,6 +228,24 @@
       ]
     },
     {
+      "type": "door",
+      "height": 100,
+      "bClosed": true,
+      "position": [
+        5476,
+        2829
+      ]
+    },
+    {
+      "type": "door",
+      "height": 100,
+      "bClosed": true,
+      "position": [
+        8524,
+        2829
+      ]
+    },
+    {
       "type": "window",
       "width": 3,
       "height": 84,
