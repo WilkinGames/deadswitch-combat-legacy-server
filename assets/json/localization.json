@@ -928,6 +928,15 @@
   "STR_COUNTERMEASURE_FLARES": {
     "en": "IR Flares"
   },
+  "STR_COUNTERMEASURE_EJECTION_SEAT_DESC": {
+    "en": "Eject from the vehicle to avoid impending destruction."
+  },
+  "STR_COUNTERMEASURE_ECM_DESC": {
+    "en": "Disable any guided projectiles and prevent further lock ons for 15 seconds."
+  },
+  "STR_COUNTERMEASURE_FLARES_DESC": {
+    "en": "Launch 5 infrared flares that distract guided projectiles."
+  },
   "STR_MH6": {
     "en": "AH-6J Little Bird"
   },
@@ -1202,10 +1211,13 @@
     "en": "120mm High Explosive"
   },
   "STR_WPN_SHELL_SABOT": {
-    "en": "25mm High Velocity"
+    "en": "25mm Sabot"
   },
   "STR_WPN_SHELL_AP": {
     "en": "120mm Armor Piercing"
+  },
+  "STR_COOLDOWN_TIME_X": {
+    "en": "Cooldown: %1 Seconds"
   },
   "STR_WPN_FAMAS": {
     "en": "FAMAS",

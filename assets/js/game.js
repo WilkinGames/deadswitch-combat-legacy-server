@@ -1042,6 +1042,13 @@ class GameInstance
                             this.handleFlag(body);
                         }
                         break;
+                    default:
+                        if (body.position[1] > this.getCurrentMapData().height)
+                        {
+                            console.warn("Out of bounds", data.type);
+                            this.removeNextStep(body);
+                        }
+                        break;
                 }
 
                 if (!data.bSkipServerUpdate)
@@ -12991,7 +12998,7 @@ class GameInstance
                             }
                             break;
                     }
-                    if (!wpn.bSingleRoundLoaded)
+                    if (!wpn.bSingleRoundLoaded && wpn.magSize > 1)
                     {
                         mods.push(Mods.ACCESSORY_MAG_ASSIST);
                     }
