@@ -334,7 +334,7 @@
     "magSize": 20,
     "reloadTime": 2,
     "speedModifier": 0.9,
-    "range": 1300,
+    "range": 1250,
     "mag": 20,
     "ammo": 80,
     "recoil": 0.6,
