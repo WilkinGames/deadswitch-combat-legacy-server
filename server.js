@@ -179,6 +179,7 @@ const shared = require("./assets/json/shared.json");
 const sprites = require("./assets/json/sprites.json");
 const weapons_world = require("./assets/images/world/atlas_weapons_world.json");
 const weapons = require("./assets/json/weapons.json");
+const vehicles = require("./assets/json/vehicles.json");
 const mods = require("./assets/json/mods.json");
 const modes = require("./assets/json/modes.json");
 const maps = require("./assets/json/maps.json");
@@ -336,6 +337,20 @@ io.on("connection", (socket) =>
                             locText: "STR_SERVER_X_CHANGED_NAME_TO_X",
                             params: [name, socket.player.name]
                         });
+                    }
+                    break;
+
+                case "/spawn":
+                    if (socket.player.bAdmin)
+                    {
+                        var lobby = getLobbyData(socket.player.lobbyId);
+                        if (lobby)
+                        {
+                            if (lobby.game)
+                            {
+                                lobby.game.spawn(socket.player.id, arr[1]);
+                            }
+                        }
                     }
                     break;
 
@@ -876,6 +891,7 @@ function setLobbyState(_lobbyId, _state)
                     sprites: sprites,
                     weapons_world: weapons_world,
                     weapons: weapons,
+                    vehicles: vehicles,
                     mods: mods,
                     modes: modes,
                     maps: allMaps,

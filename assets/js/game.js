@@ -2674,35 +2674,50 @@ class GameInstance
                             {
                                 var keyInfo = {};
                                 var dist = this.Dist(desiredPos[0], desiredPos[1], controllable.position[0], controllable.position[1]);
-                                var threshold = 100;
-                                if (controllable.data.type == "car")
+                                switch (controllable.data.type)
                                 {
-                                    threshold = 30;
+                                    case "car":
+                                        var threshold = 50;
+                                        break;
+                                    case "tank":
+                                        threshold = 1000;
+                                        break;
+                                    default:
+                                        threshold = 500;
+                                        break;
                                 }
                                 if (dist > threshold)
                                 {
-                                    if (Math.abs(desiredPos[0] - controllable.position[0]) > threshold)
+                                    this.setVehicleScale(controllable, desiredPos[0] < controllable.position[0] ? -1 : 1);
+                                    if (desiredPos[0] < controllable.position[0])
                                     {
-                                        this.setVehicleScale(controllable, desiredPos[0] < controllable.position[0] ? -1 : 1);
-                                        if (desiredPos[0] < controllable.position[0])
-                                        {
-                                            keyInfo[Control.LEFT] = true;
-                                        }
-                                        else
-                                        {
-                                            keyInfo[Control.RIGHT] = true;
-                                        }
+                                        keyInfo[Control.LEFT] = true;
                                     }
-                                    if (Math.abs(desiredPos[1] - controllable.position[1]) > 200)
+                                    else
                                     {
-                                        if (desiredPos[1] < controllable.position[1])
-                                        {
-                                            keyInfo[Control.UP] = true;
-                                        }
-                                        else
-                                        {
-                                            keyInfo[Control.DOWN] = true;
-                                        }
+                                        keyInfo[Control.RIGHT] = true;
+                                    }
+                                }
+                                else
+                                {
+                                    if (desiredPos[0] < controllable.position[0])
+                                    {
+                                        keyInfo[Control.RIGHT] = true;
+                                    }
+                                    else
+                                    {
+                                        keyInfo[Control.LEFT] = true;
+                                    }
+                                }
+                                if (Math.abs(desiredPos[1] - controllable.position[1]) > 200)
+                                {
+                                    if (desiredPos[1] < controllable.position[1])
+                                    {
+                                        keyInfo[Control.UP] = true;
+                                    }
+                                    else
+                                    {
+                                        keyInfo[Control.DOWN] = true;
                                     }
                                 }
                                 if (Object.keys(keyInfo).length > 0)
@@ -10027,6 +10042,67 @@ class GameInstance
         });
     }
 
+    createVehicle(_position, _id)
+    {
+        var veh = this.getVehicleData(_id);
+        if (veh)
+        {
+            var data = {
+                type: veh.id,
+                scale: 1,
+                team: 0,
+                weaponId: _id,
+            }
+            switch (veh.type)
+            {
+                case "droppedWeapon":
+                    var pawn = this.createDroppedWeapon(_position, {
+                        scale: data.scale,
+                        weaponData: this.getWeaponData(data.weaponId)
+                    });
+                    pawn.data.bSpawned = true;
+                    break;
+                case "helicopter":
+                    pawn = this.createHelicopter(_position, {
+                        type: data.type,
+                        team: data.team,
+                        scale: data.scale
+                    });
+                    break;
+                case "tank":
+                    pawn = this.createTank(_position, {
+                        type: data.type,
+                        team: data.team,
+                        scale: data.scale
+                    });
+                    break;
+                case "car":
+                    pawn = this.createCar(_position, {
+                        type: data.type,
+                        team: data.team,
+                        scale: data.scale
+                    });
+                    break;
+                case "mountedWeapon":
+                    pawn = this.createMountedWeapon(_position, {
+                        weaponType: data.weaponType,
+                        team: data.team != null ? data.team : -1,
+                        scale: data.scale
+                    });
+                    break;
+            }
+        }
+    }
+
+    spawn(_playerId, _id)
+    {
+        var curPawn = this.getObjectById(_playerId);
+        if (curPawn)
+        {
+            this.createVehicle(curPawn.position, _id);
+        }
+    }
+
     ejectPawn(_id)
     {
         var curPawn = this.getObjectById(_id);
@@ -12916,6 +12992,20 @@ class GameInstance
         return shared[_id];
     }
 
+    getVehicleData(_id)
+    {
+        var vehicles = this.data.vehicles;
+        for (var i = 0; i < vehicles.length; i++)
+        {
+            var veh = vehicles[i];
+            if (veh.id == _id)
+            {
+                return veh;
+            }
+        }
+        return null;
+    }
+
     getWeaponData(_id, _options)
     {
         var weapons = this.data.weapons;
@@ -13157,6 +13247,8 @@ class GameInstance
                         case Weapon.TYPE_SHOTGUN:
                             mods.push(Mods.OPTIC_REFLEX, Mods.OPTIC_EOTECH);
                             break;
+                        case Weapon.TYPE_LAUNCHER:
+                            return mods;
                         default:
                             mods.push(Mods.OPTIC_REFLEX, Mods.OPTIC_EOTECH, Mods.OPTIC_ACOG);
                             break;
