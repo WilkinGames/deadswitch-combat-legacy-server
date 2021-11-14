@@ -995,6 +995,27 @@ class GameInstance
                         });
                     }
                 }
+                if (data.bRegenHealth && data.health > 0)
+                {
+                    var regenThreshold = data.maxHealth * (data.regenThreshold != null ? data.regenThreshold : 1);
+                    if (data.health < regenThreshold)
+                    {
+                        if (data.regenTimer == 0)
+                        {
+                            var regenAmount = data.regenAmount ? data.regenAmount : 1;
+                            data.health = Math.min(data.maxHealth, data.health + regenAmount);
+                            this.pushObjectDataUpdate(data.id, ["health"]);
+                            if (data.damagedBy)
+                            {
+                                delete data.damagedBy;
+                            }
+                        }
+                        else
+                        {
+                            data.regenTimer--;
+                        }
+                    }
+                }
 
                 switch (data.type)
                 {
@@ -1281,7 +1302,10 @@ class GameInstance
                 for (var i = 0; i < links.length; i++)
                 {
                     var link = links[i];
-                    graph.addLink(link.source, link.target);
+                    if (!link.bDisabled)
+                    {
+                        graph.addLink(link.source, link.target);
+                    }
                 }
                 this.game.graph = graph;
                 var path = this.data.path;
@@ -1302,6 +1326,21 @@ class GameInstance
             if (!links)
             {
                 console.warn("Missing link data!");
+            }
+        }
+    }
+
+    setPathLinkDisabled(_id, _bDisabled)
+    {
+        var map = this.getCurrentMapData();
+        var links = map.links;
+        for (var i = 0; i < links.length; i++)
+        {
+            var link = links[i];
+            if (link.id == _id)
+            {
+                link.bDisabled = _bDisabled;                
+                break;
             }
         }
     }
@@ -2635,9 +2674,14 @@ class GameInstance
                             {
                                 var keyInfo = {};
                                 var dist = this.Dist(desiredPos[0], desiredPos[1], controllable.position[0], controllable.position[1]);
-                                if (dist > 100)
+                                var threshold = 100;
+                                if (controllable.data.type == "car")
                                 {
-                                    if (Math.abs(desiredPos[0] - controllable.position[0]) > 100)
+                                    threshold = 30;
+                                }
+                                if (dist > threshold)
+                                {
+                                    if (Math.abs(desiredPos[0] - controllable.position[0]) > threshold)
                                     {
                                         this.setVehicleScale(controllable, desiredPos[0] < controllable.position[0] ? -1 : 1);
                                         if (desiredPos[0] < controllable.position[0])
@@ -3686,7 +3730,7 @@ class GameInstance
 
     handleVehicle(_body)
     {
-        var data = _body.data;        
+        var data = _body.data;
         if (data.scaleCooldown > 0)
         {
             data.scaleCooldown--;
@@ -4118,28 +4162,7 @@ class GameInstance
                 }
                 _body.wakeUp();
             }
-        }   
-        if (data.bRegenHealth)
-        {
-            var regenThreshold = data.maxHealth;
-            if (data.health < regenThreshold)
-            {
-                if (data.regenTimer == 0)
-                {
-                    var regenAmount = data.regenAmount ? data.regenAmount : 1;
-                    data.health = Math.min(data.maxHealth, data.health + regenAmount);
-                    this.pushObjectDataUpdate(data.id, ["health"]);
-                    if (data.damagedBy)
-                    {
-                        delete data.damagedBy;
-                    }
-                }
-                else
-                {
-                    data.regenTimer--;
-                }
-            }
-        }
+        }         
         var weapon = data.weapon;
         if (weapon)
         {
@@ -4996,7 +5019,7 @@ class GameInstance
         var ps = this.getPlayerById(_playerId);
         if (ps)
         {
-            var protectionTime = 1.5;
+            var protectionTime = 0.5;
             ps.timer_spawnProtection = Math.ceil(this.game.settings.fps * protectionTime);
             ps.bSpawnProtection = true;
             var pawn = this.getObjectById(_playerId);
@@ -6972,15 +6995,27 @@ class GameInstance
             switch (data.type)
             {
                 case "lever":
-                    var target = this.getObjectById(data.targetId);
-                    if (target)
+                    if (!pawn.data.shieldCooldownTimer)
                     {
-                        switch (target.data.type)
+                        var target = this.getObjectById(data.targetId);
+                        if (target)
                         {
-                            case "door":
-                                this.setDoorClosed(target, !target.data.bClosed);
-                                this.startCharacterShieldCooldown(pawn);                                
-                                break;
+                            switch (target.data.type)
+                            {
+                                case "door":
+                                    this.setDoorClosed(target, !target.data.bClosed);
+                                    this.startCharacterShieldCooldown(pawn);
+                                    var links = data.links;
+                                    if (links)
+                                    {
+                                        for (var i = 0; i < links.length; i++)
+                                        {
+                                            this.setPathLinkDisabled(links[i], target.data.bClosed);
+                                        }
+                                        this.generateMapNodes();
+                                    }
+                                    break;
+                            }
                         }
                     }
                     break;
@@ -9572,7 +9607,7 @@ class GameInstance
                 var weaponData = this.getWeaponData(weaponId);
                 damage = 0;
                 radius = 100;
-                velocity = this.Random(75, 125);
+                velocity = this.Random(100, 150);
                 break;
             default:
                 destroyTimer = this.game.settings.fps * 5;
@@ -10252,7 +10287,11 @@ class GameInstance
             team: _data.team != null ? _data.team : -1,
             scale: _data.scale != null ? _data.scale : 1,
             tankData: _data,
-            vehicleId: _data.type
+            vehicleId: _data.type,
+            bRegenHealth: true,
+            regenTimerMax: 180 * this.game.fpsMult,
+            regenTimer: 0,
+            regenThreshold: 0.25
         };
         var data = body.data;
         switch (_data.type)
@@ -10448,7 +10487,11 @@ class GameInstance
             scale: _data.scale != null ? _data.scale : 1,
             heliData: _data,
             angleMult: 0.015,
-            vehicleId: _data.type
+            vehicleId: _data.type,
+            bRegenHealth: true,
+            regenTimerMax: 180 * this.game.fpsMult,
+            regenTimer: 0,
+            regenThreshold: 0.25
         };
         var data = body.data;
         switch (_data.type)
@@ -10973,6 +11016,7 @@ class GameInstance
             type: "lever",
             itemData: _data.itemData,
             targetId: _data.targetId,
+            links: _data.links,
             bEnabled: true
         };
         var shape = new p2.Box({
