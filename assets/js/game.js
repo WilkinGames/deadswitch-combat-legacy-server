@@ -1751,6 +1751,14 @@ class GameInstance
                     this.createDoor(object);
                     break;
 
+                case "crate":
+                    this.createCrate(object.position, object);
+                    break;
+
+                case "lever":
+                    this.createLever(object.position, object);
+                    break;
+
                 case "window":
                     this.createWindow(object);
                     break;
@@ -5811,6 +5819,16 @@ class GameInstance
                                         penetration = penetrationMax;
                                         bHit = true;
                                         break;
+                                    case "door":
+                                        if (data.bClosed)
+                                        {
+                                            if (data.material == Material.METAL)
+                                            {
+                                                penetration = penetrationMax;
+                                            }
+                                            bHit = true;
+                                        }
+                                        break;
                                     case "obstacle":
                                         if (_data.bIgnoreObstacles && !body.data.health)
                                         {
@@ -6951,22 +6969,25 @@ class GameInstance
         {
             switch (data.type)
             {
+                case "lever":
+                    var target = this.getObjectById(data.targetId);
+                    if (target)
+                    {
+                        switch (target.data.type)
+                        {
+                            case "door":
+                                this.setDoorClosed(target, !target.data.bClosed);
+                                this.startCharacterShieldCooldown(pawn);                                
+                                break;
+                        }
+                    }
+                    break;
+
                 case "door":
-                    if (!data.cooldownTimer)
+                    if (!data.cooldownTimer && data.material != Material.METAL)
                     {
                         this.setDoorClosed(_interactable, !data.bClosed, pawn);
-                        this.cancelCharacterBoltPull(pawn);
-                        this.cancelCharacterReload(pawn);
-                        pawn.data.bShieldCooldown = true;
-                        pawn.data.shieldCooldownTimer = Math.ceil(this.game.settings.fps * 0.5);
-                        pawn.data.bDoorCooldown = true;
-                        this.requestEvent({
-                            eventId: GameServer.EVENT_PAWN_ACTION,
-                            pawnId: pawn.data.id,
-                            type: GameServer.PAWN_START_SHIELD_COOLDOWN,
-                            bDoor: true,
-                            position: pawn.position
-                        });
+                        this.startCharacterShieldCooldown(pawn); 
                     }
                     break;
 
@@ -7494,7 +7515,7 @@ class GameInstance
 
     getInteractableForPawn(_body)
     {
-        var objects = this.getDroppedWeapons().concat(this.getCrates()).concat(this.getEquipment("ammo_box")).concat(this.getVehicles()).concat(this.getDoors()).concat(this.getMountedWeapons());
+        var objects = this.getDroppedWeapons().concat(this.getCrates()).concat(this.getEquipment("ammo_box")).concat(this.getVehicles()).concat(this.getDoors()).concat(this.getMountedWeapons()).concat(this.getLevers());
         for (var i = 0; i < objects.length; i++)
         {
             var obj = objects[i];
@@ -7502,6 +7523,10 @@ class GameInstance
             {
                 if (obj.getAABB().overlaps(_body.getAABB()))
                 {
+                    if (this.isVehicle(obj) && !this.hasAvailableSeat(obj))
+                    {
+                        continue;
+                    }
                     return obj;
                 }
             }
@@ -7828,6 +7853,26 @@ class GameInstance
         return arr;
     }
 
+    getLevers()
+    {
+        var world = this.game.world;
+        var arr = [];
+        for (var i = 0; i < world.bodies.length; i++)
+        {
+            var cur = world.bodies[i];
+            if (cur.data)
+            {
+                switch (cur.data.type)
+                {
+                    case "lever":
+                        arr.push(cur);
+                        break;
+                }
+            }
+        }
+        return arr;
+    }
+
     getCrates()
     {
         var world = this.game.world;
@@ -7890,18 +7935,9 @@ class GameInstance
                 switch (cur.data.type)
                 {
                     case "crate":
-                        switch (cur.data.crateType)
+                        if (cur.data.bDisposable)
                         {
-                            case Crate.AMMO:
-                            case Crate.WEAPON:
-                            case Crate.PERK:
-                            case Crate.DECOY:
-                            case Crate.KILLSTREAK:
-                            case Crate.XP:
-                            case Crate.LIFE:
-                            case Crate.SHARD:
-                                arr.push(cur);
-                                break;
+                            arr.push(cur);
                         }
                         break;
                 }
@@ -10192,7 +10228,7 @@ class GameInstance
         body.data = {
             id: this.getRandomUniqueId(),
             type: "tank",
-            material: "metal",
+            material: Material.METAL,
             damageMultipliers: {
                 1: 0.1,
                 2: 0,
@@ -10325,7 +10361,7 @@ class GameInstance
         body.data = {
             id: this.getRandomUniqueId(),
             type: "car",
-            material: "metal",
+            material: Material.METAL,
             damageMultipliers: {
                 1: 0.1,
                 2: 0,
@@ -10384,7 +10420,7 @@ class GameInstance
         body.data = {
             id: this.getRandomUniqueId(),
             type: "helicopter",
-            material: "metal",
+            material: Material.METAL,
             damageMultipliers: {
                 1: 0.1,
                 2: 0,
@@ -10535,7 +10571,6 @@ class GameInstance
 
     createDoor(_data)
     {
-        console.log(_data);
         var body = new p2.Body({
             mass: 0,
             position: _data.position,
@@ -10553,7 +10588,7 @@ class GameInstance
 
         var useWidth = Math.max(50, width);
         var useHeight = Math.max(100, height);
-        var material = _data.material ? _data.material : "wood";
+        var material = _data.material ? _data.material : Material.WOOD;
         body.data = {
             id: _data.id ? _data.id : this.getRandomUniqueId(),
             type: "door",
@@ -10908,11 +10943,64 @@ class GameInstance
         });
     }
 
+    createLever(_position, _data)
+    {
+        var shared = this.getSharedData("lever");
+        var body = new p2.Body({
+            mass: shared.mass ? shared.mass : 0,
+            position: _position,
+            allowSleep: true,
+            sleepSpeedLimit: 1,
+            sleepTimeLimit: 1
+        });
+        body.data = {
+            id: this.getRandomUniqueId(),
+            type: "lever",
+            itemData: _data.itemData,
+            targetId: _data.targetId,
+            bEnabled: true
+        };
+        var shape = new p2.Box({
+            width: shared.width,
+            height: shared.height,
+            collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM
+        });
+        body.addShape(shape);
+        this.addWorldBody(body);
+        this.onEvent({
+            eventId: GameServer.EVENT_SPAWN_OBJECT,
+            type: "lever",
+            position: body.position,
+            data: body.data
+        });
+        return body;
+    }
+
+    startCharacterShieldCooldown(_body)
+    {
+        if (_body)
+        {
+            this.cancelCharacterBoltPull(_body);
+            this.cancelCharacterReload(_body);
+            var data = _body.data;
+            data.bShieldCooldown = true;
+            data.shieldCooldownTimer = Math.ceil(this.game.settings.fps * 0.5);
+            data.bDoorCooldown = true;
+            this.requestEvent({
+                eventId: GameServer.EVENT_PAWN_ACTION,
+                pawnId: data.id,
+                type: GameServer.PAWN_START_SHIELD_COOLDOWN,
+                bDoor: true,
+                position: _body.position
+            });
+        }
+    }
+
     createCrate(_position, _data)
     {
         var shared = this.getSharedData(_data.frame ? _data.frame : "crate");
         var body = new p2.Body({
-            mass: shared.mass ? shared.mass : 1,
+            mass: _data.mass != null ? _data.mass : (shared.mass ? shared.mass : 1),
             position: _position,
             allowSleep: true,
             sleepSpeedLimit: 1,
@@ -10921,10 +11009,11 @@ class GameInstance
         body.data = {
             id: this.getRandomUniqueId(),
             type: "crate",
-            itemData: _data,
+            itemData: _data.itemData,
             team: _data.team,
             crateType: _data.type,            
-            bEnabled: true           
+            bEnabled: true,
+            bDisposable: _data.bDisposable != null ? _data.bDisposable : true
         };        
         var shape = new p2.Box({
             width: shared.width,
@@ -11405,11 +11494,19 @@ class GameInstance
                     break;
 
                 case "door":
-                    if (dataA.bClosed)
+                    if (dataA.bClosed && dataA.material != Material.METAL)
                     {
                         if (dataB.type == "character")
                         {
                             if (dataB.bBot || dataB.bSprinting)
+                            {
+                                this.setDoorClosed(_bodyA, false, _bodyB, true, dataB.bBot);
+                            }
+                        }
+                        else if (this.isVehicle(_bodyB))
+                        {
+                            var vel = Math.abs(_bodyB.velocity[0]);
+                            if (vel > 50)
                             {
                                 this.setDoorClosed(_bodyA, false, _bodyB, true, dataB.bBot);
                             }
@@ -12987,6 +13084,11 @@ class GameInstance
             switch (_modType)
             {
                 case Mods.TYPE_OPTIC:
+                    switch (wpn.id)
+                    {
+                        case "deagle":
+                            return mods;
+                    }
                     switch (wpn.type)
                     {
                         case Weapon.TYPE_PISTOL:

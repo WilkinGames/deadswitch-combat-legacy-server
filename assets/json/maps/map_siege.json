@@ -228,6 +228,46 @@
       ]
     },
     {
+      "type": "lever",
+      "targetId": "door_garage_0",
+      "position": [
+        5710,
+        2667
+      ]
+    },
+    {
+      "type": "lever",
+      "targetId": "door_garage_1",
+      "position": [
+        8290,
+        2667
+      ]
+    },
+    {
+      "type": "door",
+      "id": "door_garage_0",
+      "height": 105,
+      "bClosed": true,
+      "doorType": "garage",
+      "material": "metal",
+      "position": [
+        5285,
+        2400
+      ]
+    },
+    {
+      "type": "door",
+      "id": "door_garage_1",
+      "height": 105,
+      "bClosed": true,
+      "doorType": "garage",
+      "material": "metal",
+      "position": [
+        8715,
+        2400
+      ]
+    },
+    {
       "type": "door",
       "height": 100,
       "bClosed": true,
