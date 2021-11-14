@@ -239,8 +239,7 @@
       "type": "lever",
       "targetId": "door_garage_0",
       "links": [
-        "garage_0",
-        "garage_1"
+        "garage_0"
       ],
       "position": [
         5710,
@@ -251,8 +250,7 @@
       "type": "lever",
       "targetId": "door_garage_1",
       "links": [
-        "garage_2",
-        "garage_3"
+        "garage_1"
       ],
       "position": [
         8290,
@@ -1289,997 +1287,1011 @@
   ],
   "nodes": [
     {
-      "id": "node_1",
       "data": {
         "type": "node_jump",
         "position": [ 3526.7, 2425 ]
-      }
+      },
+      "id": "node_1"
     },
     {
-      "id": "node_3",
       "data": {
         "type": "node_walk",
         "position": [ 3914.9, 2425 ]
-      }
+      },
+      "id": "node_3"
     },
     {
-      "id": "node_5",
       "data": {
         "type": "node_jump",
         "position": [ 4745.25, 2418.1 ]
-      }
+      },
+      "id": "node_5"
     },
     {
-      "id": "node_6",
       "data": {
         "type": "node_jump",
         "position": [ 4878.5, 2418 ]
-      }
+      },
+      "id": "node_6"
     },
     {
-      "id": "node_9",
       "data": {
         "type": "node_walk",
         "position": [ 6078.85, 2616.25 ]
-      }
+      },
+      "id": "node_9"
     },
     {
-      "id": "node_24",
       "data": {
         "type": "node_walk",
         "position": [ 3405, 2845 ]
-      }
+      },
+      "id": "node_24"
     },
     {
-      "id": "node_25",
       "data": {
         "type": "node_walk",
         "position": [ 3847.3, 2845 ]
-      }
+      },
+      "id": "node_25"
     },
     {
-      "id": "node_26",
       "data": {
         "type": "node_walk",
         "position": [ 4019.6, 2811 ]
-      }
+      },
+      "id": "node_26"
     },
     {
-      "id": "node_27",
       "data": {
         "type": "node_walk",
         "position": [ 4215, 2811 ]
-      }
+      },
+      "id": "node_27"
     },
     {
-      "id": "node_28",
       "data": {
         "type": "node_walk",
         "position": [ 4425.15, 2845 ]
-      }
+      },
+      "id": "node_28"
     },
     {
-      "id": "node_30",
       "data": {
         "type": "node_walk",
         "position": [ 5443.55, 2827 ]
-      }
+      },
+      "id": "node_30"
     },
     {
-      "id": "node_29",
       "data": {
         "type": "node_walk",
         "position": [ 4827.35, 2845 ]
-      }
+      },
+      "id": "node_29"
     },
     {
-      "id": "node_31",
       "data": {
         "type": "node_walk",
         "position": [ 5682.9, 2646.35 ]
-      }
+      },
+      "id": "node_31"
     },
     {
-      "id": "node_13",
       "data": {
         "type": "node_walk",
         "position": [ 6372, 2678 ]
-      }
+      },
+      "id": "node_13"
     },
     {
-      "id": "node_14",
       "data": {
         "type": "node_walk",
         "position": [ 6573.05, 2646.35 ]
-      }
+      },
+      "id": "node_14"
     },
     {
-      "id": "node_15",
       "data": {
         "type": "node_walk",
         "position": [ 6640.05, 2646.35 ]
-      }
+      },
+      "id": "node_15"
     },
     {
-      "id": "node_17",
       "data": {
         "type": "node_walk",
         "position": [ 3962.75, 2118 ]
-      }
+      },
+      "id": "node_17"
     },
     {
-      "id": "node_20",
       "data": {
         "type": "node_walk",
         "position": [ 5327.55, 2117 ]
-      }
+      },
+      "id": "node_20"
     },
     {
-      "id": "node_21",
       "data": {
         "type": "node_walk",
         "position": [ 5863.7, 2117 ]
-      }
+      },
+      "id": "node_21"
     },
     {
-      "id": "node_22",
       "data": {
         "type": "node_walk",
         "position": [ 5944, 2274.2 ]
-      }
+      },
+      "id": "node_22"
     },
     {
-      "id": "node_23",
       "data": {
         "type": "node_walk",
         "position": [ 6103.75, 2275.05 ]
-      }
+      },
+      "id": "node_23"
     },
     {
-      "id": "node_67",
       "data": {
-        "position": [ 3405, 2825 ],
+        "ladderId": "ladder_0",
         "type": "node_climb",
-        "ladderId": "ladder_0"
-      }
+        "position": [ 3405, 2825 ]
+      },
+      "id": "node_67"
     },
     {
-      "id": "node_7",
       "data": {
         "type": "node_walk",
         "position": [ 5250, 2425 ]
-      }
+      },
+      "id": "node_7"
     },
     {
-      "id": "node_19",
       "data": {
-        "position": [ 5250, 2412 ],
+        "ladderId": "ladder_2",
         "type": "node_climb",
-        "ladderId": "ladder_2"
-      }
+        "position": [ 5250, 2412 ]
+      },
+      "id": "node_19"
     },
     {
-      "id": "node_12",
       "data": {
         "type": "node_walk",
         "position": [ 6145, 2616.35 ]
-      }
+      },
+      "id": "node_12"
     },
     {
-      "id": "node_70",
       "data": {
-        "position": [ 6145, 2596.35 ],
+        "ladderId": "ladder_5",
         "type": "node_climb",
-        "ladderId": "ladder_5"
-      }
+        "position": [ 6145, 2596.35 ]
+      },
+      "id": "node_70"
     },
     {
-      "id": "node_2",
       "data": {
         "type": "node_walk",
         "position": [ 3623, 2425 ]
-      }
+      },
+      "id": "node_2"
     },
     {
-      "id": "node_16",
       "data": {
-        "position": [ 3623, 2416 ],
+        "ladderId": "ladder_1",
         "type": "node_climb",
-        "ladderId": "ladder_1"
-      }
+        "position": [ 3623, 2416 ]
+      },
+      "id": "node_16"
     },
     {
-      "id": "node_10",
       "data": {
         "type": "node_walk",
         "position": [ 5779, 2646.35 ]
-      }
+      },
+      "id": "node_10"
     },
     {
-      "id": "node_68",
       "data": {
-        "position": [ 5779, 2626.35 ],
+        "ladderId": "l_ramp_0",
         "type": "node_climb",
-        "ladderId": "l_ramp_0"
-      }
+        "position": [ 5779, 2626.35 ]
+      },
+      "id": "node_68"
     },
     {
-      "id": "node_69",
       "data": {
-        "position": [ 5944, 2254.2 ],
+        "ladderId": "ladder_4",
         "type": "node_climb",
-        "ladderId": "ladder_4"
-      }
+        "position": [ 5944, 2254.2 ]
+      },
+      "id": "node_69"
     },
     {
-      "id": "node_62",
       "data": {
         "type": "node_jump",
         "position": [ 10476.4, 2426 ]
-      }
+      },
+      "id": "node_62"
     },
     {
-      "id": "node_60",
       "data": {
         "type": "node_walk",
         "position": [ 10085.2, 2425 ]
-      }
+      },
+      "id": "node_60"
     },
     {
-      "id": "node_58",
       "data": {
         "type": "node_jump",
         "position": [ 9273.8, 2417.1 ]
-      }
+      },
+      "id": "node_58"
     },
     {
-      "id": "node_57",
       "data": {
         "type": "node_jump",
         "position": [ 9145.55, 2418 ]
-      }
+      },
+      "id": "node_57"
     },
     {
-      "id": "node_54",
       "data": {
         "type": "node_walk",
         "position": [ 7938.2, 2637.35 ]
-      }
+      },
+      "id": "node_54"
     },
     {
-      "id": "node_45",
       "data": {
         "type": "node_walk",
         "position": [ 10585.1, 2845 ]
-      }
+      },
+      "id": "node_45"
     },
     {
-      "id": "node_44",
       "data": {
         "type": "node_walk",
         "position": [ 10117.8, 2845 ]
-      }
+      },
+      "id": "node_44"
     },
     {
-      "id": "node_43",
       "data": {
         "type": "node_walk",
         "position": [ 9945.5, 2800 ]
-      }
+      },
+      "id": "node_43"
     },
     {
-      "id": "node_42",
       "data": {
         "type": "node_walk",
         "position": [ 9722, 2800 ]
-      }
+      },
+      "id": "node_42"
     },
     {
-      "id": "node_41",
       "data": {
         "type": "node_walk",
         "position": [ 9560.9, 2845 ]
-      }
+      },
+      "id": "node_41"
     },
     {
-      "id": "node_39",
       "data": {
         "type": "node_walk",
         "position": [ 8556.2, 2827 ]
-      }
+      },
+      "id": "node_39"
     },
     {
-      "id": "node_40",
       "data": {
         "type": "node_walk",
         "position": [ 9184.7, 2845 ]
-      }
+      },
+      "id": "node_40"
     },
     {
-      "id": "node_38",
       "data": {
         "type": "node_walk",
         "position": [ 8269.2, 2646.35 ]
-      }
+      },
+      "id": "node_38"
     },
     {
-      "id": "node_34",
       "data": {
         "type": "node_walk",
         "position": [ 7615.1, 2678 ]
-      }
+      },
+      "id": "node_34"
     },
     {
-      "id": "node_33",
       "data": {
         "type": "node_walk",
         "position": [ 7427.05, 2646.35 ]
-      }
+      },
+      "id": "node_33"
     },
     {
-      "id": "node_32",
       "data": {
         "type": "node_walk",
         "position": [ 7365, 2646.35 ]
-      }
+      },
+      "id": "node_32"
     },
     {
-      "id": "node_65",
       "data": {
         "type": "node_walk",
         "position": [ 10017.75, 2117 ]
-      }
+      },
+      "id": "node_65"
     },
     {
-      "id": "node_51",
       "data": {
         "type": "node_walk",
         "position": [ 8672.55, 2117 ]
-      }
+      },
+      "id": "node_51"
     },
     {
-      "id": "node_50",
       "data": {
         "type": "node_walk",
         "position": [ 8136.4, 2117 ]
-      }
+      },
+      "id": "node_50"
     },
     {
-      "id": "node_48",
       "data": {
         "type": "node_walk",
         "position": [ 8057, 2271 ]
-      }
+      },
+      "id": "node_48"
     },
     {
-      "id": "node_47",
       "data": {
         "type": "node_walk",
         "position": [ 7902.1, 2266.1 ]
-      }
+      },
+      "id": "node_47"
     },
     {
-      "id": "node_71",
       "data": {
-        "position": [ 10585.1, 2825 ],
+        "ladderId": "ladder_11",
         "type": "node_climb",
-        "ladderId": "ladder_11"
-      }
+        "position": [ 10585.1, 2825 ]
+      },
+      "id": "node_71"
     },
     {
-      "id": "node_56",
       "data": {
         "type": "node_walk",
         "position": [ 8750.1, 2425 ]
-      }
+      },
+      "id": "node_56"
     },
     {
-      "id": "node_52",
       "data": {
-        "position": [ 8750.1, 2412 ],
+        "ladderId": "ladder_9",
         "type": "node_climb",
-        "ladderId": "ladder_9"
-      }
+        "position": [ 8750.1, 2412 ]
+      },
+      "id": "node_52"
     },
     {
-      "id": "node_35",
       "data": {
         "type": "node_walk",
         "position": [ 7854.1, 2636.35 ]
-      }
+      },
+      "id": "node_35"
     },
     {
-      "id": "node_46",
       "data": {
-        "position": [ 7854.1, 2616.35 ],
+        "ladderId": "ladder_6",
         "type": "node_climb",
-        "ladderId": "ladder_6"
-      }
+        "position": [ 7854.1, 2616.35 ]
+      },
+      "id": "node_46"
     },
     {
-      "id": "node_61",
       "data": {
         "type": "node_walk",
         "position": [ 10377.1, 2425 ]
-      }
+      },
+      "id": "node_61"
     },
     {
-      "id": "node_64",
       "data": {
-        "position": [ 10377.1, 2412 ],
+        "ladderId": "ladder_10",
         "type": "node_climb",
-        "ladderId": "ladder_10"
-      }
+        "position": [ 10377.1, 2412 ]
+      },
+      "id": "node_64"
     },
     {
-      "id": "node_37",
       "data": {
         "type": "node_walk",
         "position": [ 8228.1, 2646.35 ]
-      }
+      },
+      "id": "node_37"
     },
     {
-      "id": "node_53",
       "data": {
-        "position": [ 8228.1, 2626.35 ],
+        "ladderId": "l_ramp_1",
         "type": "node_climb",
-        "ladderId": "l_ramp_1"
-      }
+        "position": [ 8228.1, 2626.35 ]
+      },
+      "id": "node_53"
     },
     {
-      "id": "node_49",
       "data": {
-        "position": [ 8057, 2251 ],
+        "ladderId": "ladder_7",
         "type": "node_climb",
-        "ladderId": "ladder_7"
-      }
+        "position": [ 8057, 2251 ]
+      },
+      "id": "node_49"
     },
     {
-      "id": "node_2_1",
       "data": {
         "type": "node_walk",
         "position": [ 7100, 2444 ]
-      }
+      },
+      "id": "node_2_1"
     },
     {
-      "id": "node_2_0",
       "data": {
         "type": "node_walk",
         "position": [ 6900, 2444 ]
-      }
+      },
+      "id": "node_2_0"
     },
     {
-      "id": "node_15_climb",
       "data": {
-        "position": [ 6640.05, 2626.35 ],
+        "ladderId": "ladder_12",
         "type": "node_climb",
-        "ladderId": "ladder_12"
-      }
+        "position": [ 6640.05, 2626.35 ]
+      },
+      "id": "node_15_climb"
     },
     {
-      "id": "node_32_climb",
       "data": {
-        "position": [ 7365, 2626.35 ],
+        "ladderId": "ladder_13",
         "type": "node_climb",
-        "ladderId": "ladder_13"
-      }
+        "position": [ 7365, 2626.35 ]
+      },
+      "id": "node_32_climb"
     },
     {
-      "id": "node_3_1",
       "data": {
         "type": "node_walk",
         "position": [ 4092, 2251 ]
-      }
+      },
+      "id": "node_3_1"
     },
     {
-      "id": "node_4_1",
       "data": {
         "type": "node_walk",
         "position": [ 9953.05, 2251 ]
-      }
+      },
+      "id": "node_4_1"
     },
     {
-      "id": "node_29_climb",
       "data": {
-        "position": [ 4827.35, 2825 ],
+        "ladderId": "ladder_sewer_0",
         "type": "node_climb",
-        "ladderId": "ladder_sewer_0"
-      }
+        "position": [ 4827.35, 2825 ]
+      },
+      "id": "node_29_climb"
     },
     {
-      "id": "node_40_climb",
       "data": {
-        "position": [ 9184.7, 2825 ],
+        "ladderId": "ladder_sewer_1",
         "type": "node_climb",
-        "ladderId": "ladder_sewer_1"
-      }
+        "position": [ 9184.7, 2825 ]
+      },
+      "id": "node_40_climb"
     },
     {
-      "id": "node_building_0",
       "data": {
         "type": "node_walk",
         "position": [ 5602.8, 2271.85 ]
-      }
+      },
+      "id": "node_building_0"
     },
     {
-      "id": "node_building_1",
       "data": {
         "type": "node_walk",
         "position": [ 8416.45, 2265 ]
-      }
+      },
+      "id": "node_building_1"
     },
     {
-      "id": "n_u_0",
       "data": {
         "type": "node_walk",
         "position": [ 5908.8, 2845 ]
-      }
+      },
+      "id": "n_u_0"
     },
     {
-      "id": "n_u_1",
       "data": {
         "type": "node_walk",
         "position": [ 6409.75, 2897 ]
-      }
+      },
+      "id": "n_u_1"
     },
     {
-      "id": "n_u_2",
       "data": {
         "type": "node_walk",
         "position": [ 6947, 2849.85 ]
-      }
+      },
+      "id": "n_u_2"
     },
     {
-      "id": "n_u_3",
       "data": {
         "type": "node_walk",
         "position": [ 7059.7, 2849.85 ]
-      }
+      },
+      "id": "n_u_3"
     },
     {
-      "id": "n_u_5",
       "data": {
         "type": "node_walk",
         "position": [ 8040.1, 2842.85 ]
-      }
+      },
+      "id": "n_u_5"
     },
     {
-      "id": "n_u_4",
       "data": {
         "type": "node_walk",
         "position": [ 7581.65, 2891.85 ]
-      }
+      },
+      "id": "n_u_4"
     },
     {
-      "id": "n_u_3_climb",
       "data": {
-        "position": [ 7059.7, 2835.85 ],
+        "ladderId": "l_u_2",
         "type": "node_climb",
-        "ladderId": "l_u_2"
-      }
+        "position": [ 7059.7, 2835.85 ]
+      },
+      "id": "n_u_3_climb"
     },
     {
-      "id": "n_u_2_climb",
       "data": {
-        "position": [ 6947, 2836.85 ],
+        "ladderId": "l_u_1",
         "type": "node_climb",
-        "ladderId": "l_u_1"
-      }
+        "position": [ 6947, 2836.85 ]
+      },
+      "id": "n_u_2_climb"
     },
     {
-      "id": "node_30_climb",
       "data": {
-        "position": [ 5443.55, 2813 ],
+        "ladderId": "l_u_0",
         "type": "node_climb",
-        "ladderId": "l_u_0"
-      }
+        "position": [ 5443.55, 2813 ]
+      },
+      "id": "node_30_climb"
     },
     {
-      "id": "node_39_climb",
       "data": {
-        "position": [ 8556.2, 2813 ],
+        "ladderId": "l_u_3",
         "type": "node_climb",
-        "ladderId": "l_u_3"
-      }
+        "position": [ 8556.2, 2813 ]
+      },
+      "id": "node_39_climb"
     },
     {
-      "id": "n_mid_0",
       "data": {
         "type": "node_walk",
         "position": [ 7000, 2245 ]
-      }
+      },
+      "id": "n_mid_0"
     },
     {
-      "id": "n_mid_1",
       "data": {
         "type": "node_walk",
         "position": [ 7000, 2076 ]
-      }
+      },
+      "id": "n_mid_1"
     },
     {
-      "id": "n_mid_2",
       "data": {
         "type": "node_walk",
         "position": [ 7000, 1886.9 ]
-      }
+      },
+      "id": "n_mid_2"
     },
     {
-      "id": "n_n_0",
       "data": {
         "type": "node_walk",
         "position": [ 3590.2, 2616.35 ]
-      }
+      },
+      "id": "n_n_0"
     },
     {
-      "id": "n_n_50",
       "data": {
         "type": "node_walk",
         "position": [ 10440.3, 2624.7 ]
-      }
+      },
+      "id": "n_n_50"
     },
     {
-      "id": "n_n_14",
       "data": {
         "type": "node_jump",
         "position": [ 3370.8, 2416.4 ]
-      }
+      },
+      "id": "n_n_14"
     },
     {
-      "id": "n_n_8",
       "data": {
         "type": "node_walk",
         "position": [ 2554.95, 2390 ]
-      }
+      },
+      "id": "n_n_8"
     },
     {
-      "id": "n_n_7",
       "data": {
         "type": "node_walk",
         "position": [ 2252, 2381.9 ]
-      }
+      },
+      "id": "n_n_7"
     },
     {
-      "id": "n_n_2",
       "data": {
         "type": "node_walk",
         "position": [ 508.55, 2381.8 ]
-      }
+      },
+      "id": "n_n_2"
     },
     {
-      "id": "n_n_11",
       "data": {
         "type": "node_walk",
         "position": [ 2719, 2225 ]
-      }
+      },
+      "id": "n_n_11"
     },
     {
-      "id": "n_n_9",
       "data": {
         "type": "node_walk",
         "position": [ 2558.95, 2064.85 ]
-      }
+      },
+      "id": "n_n_9"
     },
     {
-      "id": "n_n_10",
       "data": {
         "type": "node_walk",
         "position": [ 2554.95, 1927.3 ]
-      }
+      },
+      "id": "n_n_10"
     },
     {
-      "id": "n_n_7_c",
       "data": {
-        "position": [ 2252, 2361.8 ],
+        "ladderId": "l_0",
         "type": "node_climb",
-        "ladderId": "l_0"
-      }
+        "position": [ 2252, 2361.8 ]
+      },
+      "id": "n_n_7_c"
     },
     {
-      "id": "n_n_12",
       "data": {
         "type": "node_walk",
         "position": [ 2414.85, 2683.9 ]
-      }
+      },
+      "id": "n_n_12"
     },
     {
-      "id": "n_n_12_c",
       "data": {
-        "position": [ 2414.85, 2663.8 ],
+        "ladderId": "l_n_0",
         "type": "node_climb",
-        "ladderId": "l_n_0"
-      }
+        "position": [ 2414.85, 2663.8 ]
+      },
+      "id": "n_n_12_c"
     },
     {
-      "id": "n_n_13",
       "data": {
         "type": "node_walk",
         "position": [ 2837, 2683.9 ]
-      }
+      },
+      "id": "n_n_13"
     },
     {
-      "id": "n_n_2_c",
       "data": {
-        "position": [ 508.55, 2363.8 ],
+        "ladderId": "l_3",
         "type": "node_climb",
-        "ladderId": "l_3"
-      }
+        "position": [ 508.55, 2363.8 ]
+      },
+      "id": "n_n_2_c"
     },
     {
-      "id": "n_n_1",
       "data": {
         "type": "node_walk",
         "position": [ 96.6, 2383 ]
-      }
+      },
+      "id": "n_n_1"
     },
     {
-      "id": "n_n_1_c",
       "data": {
-        "position": [ 96.6, 2365 ],
+        "ladderId": "l_2",
         "type": "node_climb",
-        "ladderId": "l_2"
-      }
+        "position": [ 96.6, 2365 ]
+      },
+      "id": "n_n_1_c"
     },
     {
-      "id": "n_n_6",
       "data": {
         "type": "node_walk",
         "position": [ 629.8, 2217 ]
-      }
+      },
+      "id": "n_n_6"
     },
     {
-      "id": "n_n_3",
       "data": {
         "type": "node_walk",
         "position": [ 209.65, 2008.3 ]
-      }
+      },
+      "id": "n_n_3"
     },
     {
-      "id": "n_n_4",
       "data": {
         "type": "node_walk",
         "position": [ 209.65, 1822 ]
-      }
+      },
+      "id": "n_n_4"
     },
     {
-      "id": "n_n_5",
       "data": {
         "type": "node_walk",
         "position": [ 209.65, 1630.1 ]
-      }
+      },
+      "id": "n_n_5"
     },
     {
-      "id": "n_n_8_c",
       "data": {
-        "position": [ 2554.95, 2374 ],
+        "ladderId": "l_b_0",
         "type": "node_climb",
-        "ladderId": "l_b_0"
-      }
+        "position": [ 2554.95, 2374 ]
+      },
+      "id": "n_n_8_c"
     },
     {
-      "id": "n_bridge_0",
       "data": {
         "type": "node_walk",
         "position": [ 1553.4, 2370 ]
-      }
+      },
+      "id": "n_bridge_0"
     },
     {
-      "id": "n_r_0",
       "data": {
         "type": "node_jump",
         "position": [ 10648.05, 2427 ]
-      }
+      },
+      "id": "n_r_0"
     },
     {
-      "id": "n_r_1",
       "data": {
         "type": "node_walk",
         "position": [ 11447.05, 2387.8 ]
-      }
+      },
+      "id": "n_r_1"
     },
     {
-      "id": "n_r_5",
       "data": {
         "type": "node_walk",
         "position": [ 11744, 2382.8 ]
-      }
+      },
+      "id": "n_r_5"
     },
     {
-      "id": "n_r_8",
       "data": {
         "type": "node_walk",
         "position": [ 12435.4, 2365.9 ]
-      }
+      },
+      "id": "n_r_8"
     },
     {
-      "id": "n_r_9",
       "data": {
         "type": "node_walk",
         "position": [ 13507.35, 2385.8 ]
-      }
+      },
+      "id": "n_r_9"
     },
     {
-      "id": "n_r_10",
       "data": {
         "type": "node_walk",
         "position": [ 13914.35, 2385.8 ]
-      }
+      },
+      "id": "n_r_10"
     },
     {
-      "id": "n_r_11",
       "data": {
         "type": "node_walk",
         "position": [ 13341.1, 2212 ]
-      }
+      },
+      "id": "n_r_11"
     },
     {
-      "id": "n_r_12",
       "data": {
         "type": "node_walk",
         "position": [ 13836.95, 2006.3 ]
-      }
+      },
+      "id": "n_r_12"
     },
     {
-      "id": "n_r_13",
       "data": {
         "type": "node_walk",
         "position": [ 13836.95, 1822 ]
-      }
+      },
+      "id": "n_r_13"
     },
     {
-      "id": "n_r_14",
       "data": {
         "type": "node_walk",
         "position": [ 13836.95, 1630.1 ]
-      }
+      },
+      "id": "n_r_14"
     },
     {
-      "id": "n_r_7",
       "data": {
         "type": "node_walk",
         "position": [ 11179, 2678 ]
-      }
+      },
+      "id": "n_r_7"
     },
     {
-      "id": "n_r_6",
       "data": {
         "type": "node_walk",
         "position": [ 11585.75, 2676.05 ]
-      }
+      },
+      "id": "n_r_6"
     },
     {
-      "id": "n_r_1_c",
       "data": {
-        "position": [ 11447.05, 2370 ],
+        "ladderId": "l_b_1",
         "type": "node_climb",
-        "ladderId": "l_b_1"
-      }
+        "position": [ 11447.05, 2370 ]
+      },
+      "id": "n_r_1_c"
     },
     {
-      "id": "n_r_5_c",
       "data": {
-        "position": [ 11744, 2364.8 ],
+        "ladderId": "l_1",
         "type": "node_climb",
-        "ladderId": "l_1"
-      }
+        "position": [ 11744, 2364.8 ]
+      },
+      "id": "n_r_5_c"
     },
     {
-      "id": "n_r_3",
       "data": {
         "type": "node_walk",
         "position": [ 11461.05, 2072.3 ]
-      }
+      },
+      "id": "n_r_3"
     },
     {
-      "id": "n_r_4",
       "data": {
         "type": "node_walk",
         "position": [ 11447.05, 1927.3 ]
-      }
+      },
+      "id": "n_r_4"
     },
     {
-      "id": "n_r_6_c",
       "data": {
-        "position": [ 11585.75, 2657.35 ],
+        "ladderId": "l_n_1",
         "type": "node_climb",
-        "ladderId": "l_n_1"
-      }
+        "position": [ 11585.75, 2657.35 ]
+      },
+      "id": "n_r_6_c"
     },
     {
-      "id": "n_r_9_c",
       "data": {
-        "position": [ 13507.35, 2363.8 ],
+        "ladderId": "l_1_1",
         "type": "node_climb",
-        "ladderId": "l_1_1"
-      }
+        "position": [ 13507.35, 2363.8 ]
+      },
+      "id": "n_r_9_c"
     },
     {
-      "id": "n_r_10_c",
       "data": {
-        "position": [ 13914.35, 2365.8 ],
+        "ladderId": "l_2_1",
         "type": "node_climb",
-        "ladderId": "l_2_1"
-      }
+        "position": [ 13914.35, 2365.8 ]
+      },
+      "id": "n_r_10_c"
     },
     {
-      "id": "n_r_2",
       "data": {
         "type": "node_walk",
         "position": [ 11285.35, 2225 ]
-      }
+      },
+      "id": "n_r_2"
     },
     {
-      "id": "n_n_50_2",
       "data": {
         "type": "node_walk",
         "position": [ 9293.8, 2624.7 ]
-      }
+      },
+      "id": "n_n_50_2"
     },
     {
-      "id": "n_n_0_2",
       "data": {
         "type": "node_walk",
         "position": [ 4715.25, 2616.35 ]
-      }
+      },
+      "id": "n_n_0_2"
     },
     {
-      "id": "n_br_4",
       "data": {
         "type": "node_walk",
         "position": [ 9249.35, 1877.9 ]
-      }
+      },
+      "id": "n_br_4"
     },
     {
-      "id": "n_br_3",
       "data": {
         "type": "node_walk",
         "position": [ 8483.8, 2121.25 ]
-      }
+      },
+      "id": "n_br_3"
     },
     {
-      "id": "n_br_3_climb",
       "data": {
-        "position": [ 8483.8, 2101.25 ],
+        "ladderId": "l_bridge_2",
         "type": "node_climb",
-        "ladderId": "l_bridge_2"
-      }
+        "position": [ 8483.8, 2101.25 ]
+      },
+      "id": "n_br_3_climb"
     },
     {
-      "id": "node_65_climb",
       "data": {
-        "position": [ 10017.5, 2096.25 ],
+        "ladderId": "l_bridge_3",
         "type": "node_climb",
-        "ladderId": "l_bridge_3"
-      }
+        "position": [ 10017.5, 2096.25 ]
+      },
+      "id": "node_65_climb"
     },
     {
-      "id": "node_17_climb",
       "data": {
-        "position": [ 3963.75, 2098.25 ],
+        "ladderId": "l_bridge_0",
         "type": "node_climb",
-        "ladderId": "l_bridge_0"
-      }
+        "position": [ 3963.75, 2098.25 ]
+      },
+      "id": "node_17_climb"
     },
     {
-      "id": "n_br_1",
       "data": {
         "type": "node_walk",
         "position": [ 5496.1, 2118 ]
-      }
+      },
+      "id": "n_br_1"
     },
     {
-      "id": "n_br_1_climb",
       "data": {
-        "position": [ 5496.1, 2098 ],
+        "ladderId": "l_bridge_1",
         "type": "node_climb",
-        "ladderId": "l_bridge_1"
-      }
+        "position": [ 5496.1, 2098 ]
+      },
+      "id": "n_br_1_climb"
     },
     {
-      "id": "n_br_0",
       "data": {
         "type": "node_walk",
         "position": [ 4731.65, 1875.9 ]
-      }
+      },
+      "id": "n_br_0"
+    },
+    {
+      "data": {
+        "type": "node_walk",
+        "position": [ 8440.5, 2435.1 ]
+      },
+      "id": "node_56_2"
+    },
+    {
+      "data": {
+        "type": "node_walk",
+        "position": [ 5564.7, 2431 ]
+      },
+      "id": "node_9_2"
     }
   ],
 
@@ -2357,13 +2369,13 @@
       "source": "node_70"
     },
     {
-      "source": "node_7",
       "id": "garage_0",
-      "target": "node_9"
+      "target": "node_9_2",
+      "source": "node_7"
     },
     {
       "target": "node_68",
-      "source": "node_9"
+      "source": "node_9_2"
     },
     {
       "target": "node_10",
@@ -2458,13 +2470,17 @@
       "source": "node_52"
     },
     {
-      "target": "node_54",
-      "source": "node_56"
+      "id": "garage_1",
+      "target": "node_56",
+      "source": "node_56_2"
     },
     {
-      "source": "node_54",
-      "id": "garage_2",
-      "target": "node_53"
+      "target": "node_54",
+      "source": "node_56_2"
+    },
+    {
+      "target": "node_53",
+      "source": "node_54"
     },
     {
       "target": "node_54",
@@ -2552,6 +2568,10 @@
     },
     {
       "target": "node_12",
+      "source": "node_9"
+    },
+    {
+      "target": "node_9_2",
       "source": "node_9"
     },
     {
@@ -2911,14 +2931,12 @@
       "source": "node_40_climb"
     },
     {
-      "source": "node_53",
-      "id": "garage_3",
-      "target": "node_56"
+      "target": "node_56_2",
+      "source": "node_53"
     },
     {
-      "source": "node_68",
-      "id": "garage_1",
-      "target": "node_7"
+      "target": "node_9",
+      "source": "node_68"
     },
     {
       "target": "node_65_climb",

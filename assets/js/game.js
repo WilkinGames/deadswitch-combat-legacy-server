@@ -3225,7 +3225,7 @@ class GameInstance
                                 break;
                             case "door":
                                 if (_bObstaclesBlock) return false;
-                                if (cur.data["bClosed"]) return false;
+                                if (cur.data.bClosed) return false;
                                 break;
                         }
                     }
@@ -12268,7 +12268,7 @@ class GameInstance
                 }
                 if (cur.data.health > 0)
                 {
-                    if (cur.data.type == "door" && cur.data.bClosed)
+                    if (cur.data.type == "door" && cur.data.bClosed && cur.data.material != Material.METAL)
                     {
                         this.setDoorClosed(cur, false, causer);
                     }
