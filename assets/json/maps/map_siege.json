@@ -247,7 +247,7 @@
       "type": "door",
       "id": "door_garage_0",
       "height": 105,
-      "bClosed": true,
+      "bClosed": false,
       "doorType": "garage",
       "material": "metal",
       "position": [
@@ -259,7 +259,7 @@
       "type": "door",
       "id": "door_garage_1",
       "height": 105,
-      "bClosed": true,
+      "bClosed": false,
       "doorType": "garage",
       "material": "metal",
       "position": [
