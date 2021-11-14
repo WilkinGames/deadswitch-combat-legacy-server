@@ -350,17 +350,6 @@ io.on("connection", (socket) =>
                     }
                     break;
 
-                case "/eject":
-                    var lobby = getLobbyData(socket.player.lobbyId);
-                    if (lobby)
-                    {
-                        if (lobby.game)
-                        {
-                            lobby.game.ejectPawn(socket.player.id);
-                        }
-                    }
-                    break;
-
                 case "/server":
                     sendChatMessageToSocket(socket, {
                         bServer: true,
