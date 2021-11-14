@@ -1421,7 +1421,7 @@
     "desc": "STR_WPN_DESC_TROPHY",
     "type": "TYPE_TACTICAL",
     "damage": 0,
-    "radius": 400,
+    "radius": 500,
     "ammo": 1,
     "ammoMax": 1,
     "speedModifier": 1,

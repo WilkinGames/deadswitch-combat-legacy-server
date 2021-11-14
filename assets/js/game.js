@@ -9814,7 +9814,7 @@ class GameInstance
         if (_weaponData.id == "trophy")
         {
             body.data["material"] = Material.METAL;
-            body.data["blockNum"] = 3;
+            body.data["blockNum"] = 5;
             body.data["bCanMelee"] = true;
         }
         else if (_weaponData.id == "beacon")
@@ -12304,6 +12304,7 @@ class GameInstance
                     {
                         distMult = 1 - distFromCenter / _radius;
                         damageAmount = _damage * distMult;
+                        /*
                         if (distFromCenter > _radius * 0.8)
                         {
                             damageAmount *= 0.2;
@@ -12316,6 +12317,7 @@ class GameInstance
                         {
                             damageAmount *= 0.8;
                         }
+                        */
                         var flashMult = 1;
                         if (_weaponId == "stun" || _weaponId == "m203")
                         {
