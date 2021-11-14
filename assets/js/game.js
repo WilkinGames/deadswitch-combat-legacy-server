@@ -10000,9 +10000,8 @@ class GameInstance
             var veh = this.getObjectById(curPawn.data.controllableId);
             if (veh)
             {
-                veh.applyImpulse([0, -100000000]);
+                veh.position[1] -= 200;
             }
-            curPawn.applyImpulse([0, -100000000]);
         }
     }
 
