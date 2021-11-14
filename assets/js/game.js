@@ -9997,7 +9997,11 @@ class GameInstance
         var curPawn = this.getObjectById(_id);
         if (curPawn)
         {
-            
+            var veh = this.getObjectById(curPawn.data.controllableId);
+            if (veh)
+            {
+                veh.position[1] -= 500;
+            }
         }
     }
 
