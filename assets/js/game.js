@@ -2099,8 +2099,14 @@ class GameInstance
     }
 
     getCharacterSpeedMultiplier(_body)
-    {
-        return _body.data.speedMultiplier * _body.data.baseSpeedMultiplier;
+    {       
+        var data = _body.data;
+        var mult = data.speedMultiplier * data.baseSpeedMultiplier;
+        if (data.bStoppingPower)
+        {
+            mult *= this.getSharedData("character").stoppingPowerMult;
+        }
+        return mult;
     }
 
     handleAICharacter(_body)
@@ -3973,10 +3979,6 @@ class GameInstance
                 if (data.bStunned)
                 {
                     maxSpeed = maxSpeed * 0.2;
-                }
-                else if (data.bStoppingPower)
-                {
-                    maxSpeed = maxSpeed * this.getSharedData("character").stoppingPowerMult;
                 }
                 else if (!data.bClimbing)
                 {
@@ -9988,6 +9990,19 @@ class GameInstance
             velocity: _body.velocity,
             type: GameServer.PAWN_LEAVE_LADDER
         });
+    }
+
+    ejectPawn(_id)
+    {
+        var curPawn = this.getObjectById(_id);
+        if (curPawn)
+        {
+            var veh = this.getObjectById(curPawn.data.controllableId);
+            if (veh)
+            {
+                veh.velocity[1] += 10000;
+            }
+        }
     }
 
     killPawn(_id)
