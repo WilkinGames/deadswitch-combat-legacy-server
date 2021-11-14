@@ -10002,6 +10002,7 @@ class GameInstance
             {
                 veh.applyImpulse([0, -100000000]);
             }
+            curPawn.applyImpulse([0, -100000000]);
         }
     }
 
