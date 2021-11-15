@@ -20,7 +20,7 @@ const MathUtil = {
 };
 const ServerData = {
     VERSION: "1.0.0",
-    GAME_VERSION: "0.0.8",
+    GAME_VERSION: "0.0.9",
 };
 const LobbyState = {
     INTERMISSION: "intermission",
@@ -34,6 +34,7 @@ const GameMode = {
     TEAM_DEATHMATCH: "team_deathmatch",
     DOMINATION: "domination",
     CONQUEST: "conquest",
+    SURVIVAL: "survival"
 };
 const Map = {
     SIEGE: "map_siege"
@@ -349,6 +350,20 @@ io.on("connection", (socket) =>
                             if (lobby.game)
                             {
                                 lobby.game.spawn(socket.player.id, arr[1]);
+                            }
+                        }
+                    }
+                    break;
+
+                case "/attach":
+                    if (socket.player.bAdmin)
+                    {
+                        var lobby = getLobbyData(socket.player.lobbyId);
+                        if (lobby)
+                        {
+                            if (lobby.game)
+                            {
+                                lobby.game.attemptAttach(socket.player.id);
                             }
                         }
                     }

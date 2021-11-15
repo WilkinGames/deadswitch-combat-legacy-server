@@ -16,5 +16,11 @@
     "name": "STR_MODE_CONQUEST",
     "desc": "STR_MODE_CONQUEST_DESC",
     "bTeam": true
+  },
+  {
+    "id": "survival",
+    "name": "STR_MODE_SURVIVAL",
+    "desc": "STR_MODE_SURVIVAL_DESC",
+    "bTeam": false
   }
 ]

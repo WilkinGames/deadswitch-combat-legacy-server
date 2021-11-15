@@ -189,7 +189,8 @@ const Helicopter = {
     MH6: "mh6",
     COBRA: "cobra",
     OH58: "oh58",
-    BLACKHAWK: "blackhawk"
+    BLACKHAWK: "blackhawk",
+    OSPREY: "osprey"
 };
 const Tank = {
     ABRAMS: "abrams",
@@ -737,7 +738,10 @@ class GameInstance
                     {
                         for (var j = 0; j < weapons.length; j++)
                         {
-                            weapons[j].bWantsToFire = false;
+                            if (weapons[j])
+                            {
+                                weapons[j].bWantsToFire = false;
+                            }
                         }
                     }
                     break;
@@ -1118,12 +1122,15 @@ class GameInstance
                             for (var j = 0; j < weapons.length; j++)
                             {
                                 var curWeapon = weapons[j];
-                                objData.weapons[j] = {
-                                    aimRotation: curWeapon.aimRotation
-                                }
-                                if (curWeapon.weaponData && curWeapon.weaponData.overheatMax)
+                                if (curWeapon)
                                 {
-                                    objData.weapons[j].overheat = curWeapon.overheat;
+                                    objData.weapons[j] = {
+                                        aimRotation: curWeapon.aimRotation
+                                    }
+                                    if (curWeapon.weaponData && curWeapon.weaponData.overheatMax)
+                                    {
+                                        objData.weapons[j].overheat = curWeapon.overheat;
+                                    }
                                 }
                             }
                         }
@@ -2686,9 +2693,9 @@ class GameInstance
                                         threshold = 500;
                                         break;
                                 }
+                                this.setVehicleScale(controllable, desiredPos[0] < controllable.position[0] ? -1 : 1);
                                 if (dist > threshold)
-                                {
-                                    this.setVehicleScale(controllable, desiredPos[0] < controllable.position[0] ? -1 : 1);
+                                {                                    
                                     if (desiredPos[0] < controllable.position[0])
                                     {
                                         keyInfo[Control.LEFT] = true;
@@ -3938,6 +3945,11 @@ class GameInstance
     {
         this.handleVehicle(_body);
         this.constrainVelocity(_body, 275);
+        var data = _body.data;
+        if (!data.bOnGround)
+        {
+            _body.angularVelocity += -(_body.angle) * 0.01;
+        }
     }
 
     handleCar(_body)
@@ -5363,6 +5375,15 @@ class GameInstance
             if (spawns[i].team == _team)
             {
                 arr.push(spawns[i].position);
+            }
+        }
+        var beacons = this.getEquipment("beacon");
+        for (var i = 0; i < beacons.length; i++)
+        {
+            var beacon = beacons[i];
+            if (beacon.data.team == _team)
+            {
+                arr.push(beacon.position);
             }
         }
         if (arr.length == 0)
@@ -8877,6 +8898,11 @@ class GameInstance
             }
         }
         this.clearPlayerControllable(_pawnId);
+        if (pawn.constraint)
+        {
+            this.game.world.removeConstraint(pawn.constraint);
+            delete pawn.constraint;
+        }
         switch (pawn.data.type)
         {
             case "character":
@@ -9540,14 +9566,14 @@ class GameInstance
         if (_body)
         {
             var world = this.game.world;
-            if (_body["constraint"])
+            if (_body.constraint)
             {
-                world.removeConstraint(_body["constraint"]);
-                delete _body["constraint"];
+                world.removeConstraint(_body.constraint);
+                delete _body.constraint;
             }
             var data = _body.data;
             var id = data ? data.id : undefined;
-            var type = data ? data["type"] : undefined;
+            var type = data ? data.type : null;
             delete _body.data;
             world.removeBody(_body);
             if (id)
@@ -10103,6 +10129,26 @@ class GameInstance
         }
     }
 
+    attemptAttach(_playerId)
+    {
+        var curPawn = this.getObjectById(_playerId);
+        if (curPawn)
+        {
+            var veh = this.getObjectById(curPawn.data.controllableId);
+            if (veh)
+            {
+                if (veh.constraint)
+                {
+                    this.detachVehicle(veh);
+                }
+                else
+                {
+                    this.attachVehicle(veh);
+                }
+            }
+        }
+    }
+
     ejectPawn(_id)
     {
         var curPawn = this.getObjectById(_id);
@@ -10536,10 +10582,78 @@ class GameInstance
         return body;
     }
 
+    detachVehicle(_body)
+    {
+        var data = _body.data;
+        if (data.attachId)
+        {
+            this.game.world.removeConstraint(_body.constraint);
+            delete _body.constraint;
+            var attached = this.getObjectById(data.attachId);
+            if (attached)
+            {
+                //var shared = this.getSharedData(attached.vehicleId);
+                if (attached.type == "helicopter" && this.vehicleHasOccupant(attached))
+                {
+                    attached.gravityScale = 0;
+                }
+                else
+                {
+                    attached.gravityScale = 1;
+                }
+                this.game.world.removeConstraint(attached.constraint);
+                delete attached.constraint;
+                delete attached.data.attachToId;
+                attached.updateMassProperties();
+            }
+            this.setDataValue(_body, "attachId", null);
+        }
+    }
+
+    attachVehicle(_body)
+    {
+        var vehicles = this.getVehicles();
+        for (var i = 0; i < vehicles.length; i++)
+        {
+            var cur = vehicles[i];
+            if (cur != _body)
+            {
+                var bOverlap = _body.getAABB().overlaps(cur.getAABB());
+                if (bOverlap)
+                {
+                    var target = cur;
+                    break;
+                }
+            }
+        }
+        if (target)
+        {
+            //target.mass = 1;
+            //target.updateMassProperties();
+            //target.angularDamping = 0.5;
+            target.gravityScale = 0.1;
+            target.data.attachToId = _body.data.id;
+            var constraint = new p2.RevoluteConstraint(_body, target, {
+                worldPivot: [_body.position[0], _body.position[1]]
+            });
+            constraint.setRelaxation(1000000);
+            constraint.setStiffness(1);
+            constraint.upperLimit = this.ToRad(75);
+            constraint.upperLimitEnabled = true;
+            constraint.lowerLimit = this.ToRad(-75);
+            constraint.lowerLimitEnabled = true;
+            this.game.world.addConstraint(constraint);
+            target.constraint = constraint;
+            _body.constraint = constraint;
+            this.setDataValue(_body, "attachId", target.data.id);
+        }
+    }
+
     createHelicopter(_position, _data)
     {
+        var shared = this.getSharedData(_data.type);
         var body = new p2.Body({
-            mass: 10,
+            mass: shared.mass ? shared.mass : 10,
             position: _position,
             gravityScale: 1,
             angularDamping: 0.8,
@@ -10677,9 +10791,55 @@ class GameInstance
                     }
                 ];
                 break;
+
+            case Helicopter.OSPREY:
+                data.health = 3000;
+                data.speed = 2000;
+                data.seats = [
+                    {
+                        position: [350, 60],
+                        bBack: true
+                    },
+                    {
+                        position: [310, 60],
+                        bBack: true
+                    },
+                    {
+                        position: [180, 60],
+                        bBack: true
+                    },
+                    {
+                        position: [15, 60],
+                        bBack: true
+                    }
+                ];
+                data.weapons = [
+                    null,
+                    {
+                        id: "m242",
+                        muzzlePos: [280, 125],
+                        aimRotation: 0,
+                        weaponData: this.getWeaponData("m242"),
+                        overheat: 0
+                    },
+                    {
+                        id: "minigun",
+                        muzzlePos: [180, 125],
+                        aimRotation: 0,
+                        weaponData: this.getWeaponData("minigun"),
+                        overheat: 0
+                    },
+                    {
+                        id: "minigun",
+                        muzzlePos: [0, 125],
+                        aimRotation: 0,
+                        weaponData: this.getWeaponData("minigun"),
+                        overheat: 0
+                    }
+                ]
+                break;
         }
-        data.maxHealth = data.health;
-        var shared = this.getSharedData(_data.type);
+        data.maxHealth = data.health;       
         var shape = new p2.Box({
             width: shared.width,
             height: shared.height,
@@ -12064,7 +12224,10 @@ class GameInstance
 
                                 case "door":
                                     this.detonate(_bodyA);
-                                    this.setDoorClosed(_bodyB, false, _bodyA, true);
+                                    if (dataB.material != Material.METAL)
+                                    {
+                                        this.setDoorClosed(_bodyB, false, _bodyA, true);
+                                    }
                                     break;
 
                                 default:
@@ -12864,7 +13027,7 @@ class GameInstance
                 case Mods.ACCESSORY_GP25:
                     if (!_weaponData.barrel)
                     {
-                        _weaponData.barrel = this.getWeaponData("acc_m320");
+                        _weaponData.barrel = this.getWeaponData(mods[Mods.TYPE_ACCESSORY]);
                     }
                     break;
                 case Mods.ACCESSORY_MASTERKEY:

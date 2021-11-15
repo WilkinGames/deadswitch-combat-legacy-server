@@ -199,6 +199,70 @@
     ]
   },
   {
+    "id": "osprey",
+    "name": "STR_OSPREY",
+    "type": "helicopter",
+    "uiScale": 3,
+    "seats": [
+      [ 100, 25 ],
+      [ 85, 25 ],
+      [ 46, 25 ],
+      [ -17, 25 ]
+    ],
+    "weapons": [
+      null,
+      [
+        {
+          "id": "m242"
+        }
+      ],
+      [
+        {
+          "id": "minigun"
+        },
+        {
+          "id": "gatling"
+        },
+        {
+          "id": "m2"
+        }
+      ],
+      [
+        {
+          "id": "minigun"
+        },
+        {
+          "id": "gatling"
+        },
+        {
+          "id": "m2"
+        }
+      ]
+    ],
+    "camos": [
+      {
+        "id": null
+      },
+      {
+        "id": "thermal"
+      }
+    ],
+    "countermeasures": [
+      {
+        "id": null
+      },
+      {
+        "id": "ejection_seat"
+      },
+      {
+        "id": "ecm"
+      },
+      {
+        "id": "flares"
+      }
+    ]
+  },
+  {
     "id": "abrams",
     "name": "STR_ABRAMS",
     "type": "tank",

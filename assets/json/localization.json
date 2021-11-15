@@ -684,6 +684,9 @@
   "STR_MODE_CONQUEST": {
     "en": "Conquest"
   },
+  "STR_MODE_SURVIVAL": {
+    "en": "Survival"
+  },
   "STR_MODE_TDM_DESC": {
     "en": "Eliminate the enemy team to win.",
     "ru": "Уничтожьте вражескую команду.",
@@ -898,6 +901,9 @@
   "STR_SECONDARY_WEAPON": {
     "en": "Secondary Weapon"
   },
+  "STR_GUNNER_WEAPON": {
+    "en": "Gunner Weapon"
+  },
   "STR_GRENADE": {
     "en": "Grenade"
   },
@@ -948,6 +954,9 @@
   },
   "STR_BLACKHAWK": {
     "en": "UH-60 Black Hawk"
+  },
+  "STR_OSPREY": {
+    "en": "V-22 Osprey"
   },
   "STR_ABRAMS": {
     "en": "M1 Abrams"
@@ -1191,6 +1200,9 @@
   },
   "STR_WPN_M2": {
     "en": "M2HB"
+  },
+  "STR_WPN_M242": {
+    "en": "M242 Bushmaster"
   },
   "STR_WPN_BGM71": {
     "en": "BGM-71 TOW"
@@ -3632,6 +3644,9 @@
     "es": ".50 BMG",
     "it": ".50 BMG"
   },
+  "STR_ROUND_25MM": {
+    "en": "25mm×137mm Autocannon"
+  },
   "STR_ROUND_45ACP": {
     "en": ".45 ACP",
     "ru": ".45 ACP",
@@ -3983,7 +3998,7 @@
     "en": "Throw Grenade"
   },
   "STR_CONTROL_MELEE": {
-    "en": "Melee Attack",
+    "en": "Use Melee",
     "ru": "Ближний Бой",
     "zh-CN": "近战攻击",
     "tr": "Bıçak Saldırısı",

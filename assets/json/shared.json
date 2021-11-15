@@ -100,6 +100,11 @@
     "width": 700,
     "height": 255
   },
+  "osprey": {
+    "mass": 12,
+    "width": 820,
+    "height": 270
+  },
   "grenade": {
     "width": 20,
     "height": 20
