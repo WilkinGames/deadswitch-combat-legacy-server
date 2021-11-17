@@ -9985,6 +9985,7 @@ class GameInstance
                     radius: 30
                 });
                 body.gravityScale = 0;
+                data.bHitSameTeam = true;
                 data.destroyTimer = this.game.settings.fps * 0.5;
                 break;
             default:
@@ -11959,7 +11960,7 @@ class GameInstance
                     if (!dataA["bHit"])
                     {
                         var bHit = true;  
-                        if (this.game.bSurvival)
+                        if (!dataA.bHitSameTeam)
                         {
                             bHit = dataA.team != dataB.team;
                         }
@@ -11990,8 +11991,6 @@ class GameInstance
                         }
                         if (bHit)
                         {
-                            dataA["bHit"] = true;
-
                             if (dataA.projectileData.weaponId == "rope" && _bodyB.mass > 0 && !dataB.controllableId)
                             {
                                 switch (dataB.type)
@@ -12006,8 +12005,18 @@ class GameInstance
                                             this.attachRope(source, _bodyB);
                                         }
                                         break;
+                                    default:
+                                        if (dataB.health)
+                                        {
+                                            bHit = false;
+                                        }
+                                        break;
                                 }
                             }
+                        }
+                        if (bHit)
+                        {
+                            dataA.bHit = true;
 
                             if (dataB["type"] == "character")
                             {
