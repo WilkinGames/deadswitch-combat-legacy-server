@@ -355,20 +355,6 @@ io.on("connection", (socket) =>
                     }
                     break;
 
-                case "/attach":
-                    if (socket.player.bAdmin)
-                    {
-                        var lobby = getLobbyData(socket.player.lobbyId);
-                        if (lobby)
-                        {
-                            if (lobby.game)
-                            {
-                                lobby.game.attemptAttach(socket.player.id);
-                            }
-                        }
-                    }
-                    break;
-
                 case "/kill":
                     var lobby = getLobbyData(socket.player.lobbyId);
                     if (lobby)
@@ -897,7 +883,6 @@ function setLobbyState(_lobbyId, _state)
                 var gameData = lobby.gameData;
                 gameData.bMultiplayer = true;
                 gameData.lobbyId = lobby.id;
-                gameData.settings.factions = [Faction.US, Faction.RU];
                 gameData.data = {
                     p2: p2,
                     graph: graph,

@@ -690,7 +690,6 @@
     "recoil": 0.5,
     "penetration": 3,
     "overheatMax": 60,
-    "cooldownNum": 0.5,
     "bVehicle": true
   },
   {
@@ -699,7 +698,7 @@
     "type": "TYPE_LMG",
     "round": "25mm",
     "damage": 75,
-    "accuracy": 10,
+    "accuracy": 12,
     "fireRate": 12,
     "range": 4000,
     "recoil": 1,
@@ -715,7 +714,7 @@
     "fireMode": "MODE_AUTO",
     "round": "50bmg",
     "damage": 50,
-    "accuracy": 12,
+    "accuracy": 13,
     "fireRate": 10,
     "range": 4000,
     "recoil": 1,
@@ -1221,6 +1220,27 @@
     "bVehicle": true
   },
   {
+    "id": "rope",
+    "name": "STR_WPN_ROPE",
+    "desc": "STR_WPN_DESC_ROPE",
+    "type": "TYPE_LAUNCHER",
+    "damage": 0,
+    "accuracy": 0,
+    "ammo": 1,
+    "ammoMax": 1,
+    "speedModifier": 1,
+    "range": 1500,
+    "recoil": 0.2,
+    "fireRate": 30,
+    "overheatNum": 60,
+    "overheatMax": 60,
+    "frameId": "melee_bowie",
+    "bNoShell": true,
+    "bProjectile": true,
+    "bNoMuzzleFlash": true,
+    "bVehicle": true
+  },
+  {
     "id": "m256a1",
     "soundId": "rpg",
     "name": "STR_WPN_M256A1",
@@ -1485,6 +1505,7 @@
     "speedModifier": 1,
     "range": 1500,
     "bEquipment": true,
+    "bProjectile": true,
     "score": 5000
   },
   {

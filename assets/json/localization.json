@@ -687,6 +687,9 @@
   "STR_MODE_SURVIVAL": {
     "en": "Survival"
   },
+  "STR_MODE_SURVIVAL_DESC": {
+    "en": "Survive as long as possible."
+  },
   "STR_MODE_TDM_DESC": {
     "en": "Eliminate the enemy team to win.",
     "ru": "Уничтожьте вражескую команду.",
@@ -720,6 +723,12 @@
   },
   "STR_SELECT_SPAWN": {
     "en": "Select a spawn point"
+  },
+  "STR_WAVE_X": {
+    "en": "Wave %1"
+  },
+  "STR_X_ENEMIES": {
+    "en": "%1 Enemies"
   },
   "STR_X_MS": {
     "en": "%1 ms",
@@ -1204,6 +1213,9 @@
   "STR_WPN_M242": {
     "en": "M242 Bushmaster"
   },
+  "STR_WPN_ROPE": {
+    "en": "Grapple Rope"
+  },
   "STR_WPN_BGM71": {
     "en": "BGM-71 TOW"
   },
@@ -1240,12 +1252,12 @@
     "it": "FAMAS"
   },
   "STR_WPN_MP7": {
-    "en": "MP7",
-    "ru": "MP7",
-    "zh-CN": "MP7",
-    "tr": "MP7",
-    "es": "MP7",
-    "it": "MP7"
+    "en": "MP7A1",
+    "ru": "MP7A1",
+    "zh-CN": "MP7A1",
+    "tr": "MP7A1",
+    "es": "MP7A1",
+    "it": "MP7A1"
   },
   "STR_WPN_P90": {
     "en": "P90",
@@ -3487,12 +3499,7 @@
     "en": "GP-25"
   },
   "STR_MOD_MASTERKEY": {
-    "en": "Masterkey",
-    "ru": "\"Взломщик\"",
-    "zh-CN": "万能钥匙",
-    "tr": "Masterkey",
-    "es": "Llave maestra",
-    "it": "Masterkey"
+    "en": "M26 MASS"
   },
   "STR_MOD_FMJ": {
     "en": "FMJ Rounds",
@@ -3921,6 +3928,9 @@
   },
   "STR_CHANGE_DIRECTION": {
     "en": "Change Direction"
+  },
+  "STR_SWITCH_SEAT": {
+    "en": "Switch Seat"
   },
   "STR_CONTROL_MOVE": {
     "en": "Move",

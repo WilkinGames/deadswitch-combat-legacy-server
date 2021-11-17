@@ -1161,7 +1161,7 @@
     },
     {
       "type": "helicopter",
-      "heliType": "osprey",
+      "heliType": "mh6",
       "position": [
         2550,
         1900
