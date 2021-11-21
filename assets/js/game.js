@@ -971,7 +971,7 @@ class GameInstance
                             console.log(numOnTeam);
                             if (numOnTeam < Settings.MAX_ENEMIES)
                             {
-                                if (numOnTeam < gameData.enemies * 0.5 && this.Random(1, 5) == 1)
+                                if (numOnTeam < (gameData.numEnemies * 0.5) && this.Random(1, 5) == 1)
                                 {
                                     var heli = this.spawnSurvivalEnemyVehicle();
                                     gameData.enemiesSpawned += heli.data.seats.length;
