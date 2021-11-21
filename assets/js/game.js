@@ -974,7 +974,8 @@ class GameInstance
                             var numOnTeam = this.getNumCharactersOnTeam(1);
                             if (numOnTeam < Settings.MAX_ENEMIES)
                             {
-                                if (numOnTeam < (gameData.numEnemies * 0.5) && this.Random(1, 5) == 1)
+                                var wave = this.game.gameModeData.wave;
+                                if (wave > 1 && numOnTeam < (gameData.numEnemies * 0.5) && this.Random(1, 5) == 1)
                                 {
                                     this.spawnSurvivalEnemyVehicle();                                    
                                 }
@@ -2344,7 +2345,7 @@ class GameInstance
             else
             {
                 ai.actionTicker = ai.actionTickerMax;
-                ai.bWantsVehicle = !_body.data.controllableId && this.Random(1, 4) == 1 && (this.getVehicles().length > 0);
+                ai.bWantsVehicle = !_body.data.controllableId && this.Random(1, 4) == 1 && (this.getAvailableVehicles(_body).length > 0);
                 ai.desiredVehicleId = null;
                 if (ai.bWantsVehicle)
                 {
@@ -2882,6 +2883,13 @@ class GameInstance
                             }
                         }
                         break;
+                }
+                if (controllable.data.type == "car")
+                {
+                    if (ai.enemyDist < 200 && Math.abs(controllable.velocity[0] < 50))
+                    {
+                        this.clearPlayerControllable(data.id);
+                    }
                 }
             }
         }
@@ -7265,7 +7273,13 @@ class GameInstance
             {
                 case "reviver":
                     this.respawnPlayer(data.itemData.playerId, [_interactable.position[0], _interactable.position[1] - 30]);
-                    this.removeNextStep(_interactable);
+                    this.onEvent({
+                        eventId: GameServer.EVENT_PAWN_ACTION,
+                        pawnId: _playerId,
+                        type: GameServer.PAWN_END_REVIVE,
+                        reviveId: data.itemData.playerId
+                    });
+                    this.removeNextStep(_interactable);                    
                     break;
 
                 case "lever":
@@ -7831,7 +7845,10 @@ class GameInstance
     getBestInteractable(_body)
     {
         var objects = this.getVehicles();
-        objects = objects.concat(this.getRevivers());
+        if (_body.data.team == 0)
+        {
+            objects = objects.concat(this.getRevivers());
+        }
         for (var i = 0; i < objects.length; i++)
         {
             var obj = objects[i];
@@ -8441,6 +8458,24 @@ class GameInstance
                     case "mountedWeapon":
                         arr.push(cur);
                         break;
+                }
+            }
+        }
+        return arr;
+    }
+
+    getAvailableVehicles(_body)
+    {
+        var world = this.game.world;
+        var arr = [];
+        for (var i = 0; i < world.bodies.length; i++)
+        {
+            var cur = world.bodies[i];
+            if (cur.data && cur.data.health && (cur.data.team == -1 || cur.data.team == _body.data.team))
+            {
+                if (this.isVehicle(cur))
+                {
+                    arr.push(cur);
                 }
             }
         }
@@ -9524,7 +9559,7 @@ class GameInstance
                     break;
             }
         }
-        var bReviver = pawn.data.type == "character" && this.game.gameModeData.bAllowRevives && pawnTeam == 0;        
+        var bReviver = pawn.data.type == "character" && this.game.gameModeData.bAllowRevives && pawnTeam == 0 && this.getNumCharactersOnTeam(0) > 1;        
         this.onEvent({
             eventId: GameServer.EVENT_PAWN_DIE,
             data: {
@@ -9553,22 +9588,43 @@ class GameInstance
                     this.requestEvent({
                         eventId: GameServer.EVENT_GAME_END,
                         condition: MatchState.END_CONDITION_KIA,
-                        result: MatchState.END_RESULT_LOSS
+                        result: MatchState.END_RESULT_LOSS,
+                        winningTeam: 1
                     });
                 }
             }
-            else if (pawn.data.type == "character")
+            else
             {
-                this.game.gameModeData.enemiesRemaining--;
-                this.onEvent({
-                    eventId: GameServer.EVENT_GAME_UPDATE,
-                    data: {
-                        enemiesRemaining: this.game.gameModeData.enemiesRemaining
-                    }
-                });
-                if (this.game.gameModeData.enemiesRemaining <= 0)
+                this.game.gameModeData.waveKills++;
+                if (_damageInfo.bMelee)
                 {
-                    this.onSurvivalWaveComplete();
+                    this.game.gameModeData.waveMelees++;
+                }
+                else if (_damageInfo.bHeadshot)
+                {
+                    this.game.gameModeData.waveHeadshots++;
+                }
+                if (this.game.gameModeData.killTypes)
+                {
+                    if (this.game.gameModeData.killTypes[pawn.data.type] == null)
+                    {
+                        this.game.gameModeData.killTypes[pawn.data.type] = 0;
+                    }
+                    this.game.gameModeData.killTypes[pawn.data.type]++;
+                }
+                if (pawn.data.type == "character")
+                {
+                    this.game.gameModeData.enemiesRemaining--;
+                    this.onEvent({
+                        eventId: GameServer.EVENT_GAME_UPDATE,
+                        data: {
+                            enemiesRemaining: this.game.gameModeData.enemiesRemaining
+                        }
+                    });
+                    if (this.game.gameModeData.enemiesRemaining <= 0)
+                    {
+                        this.onSurvivalWaveComplete();
+                    }
                 }
             }
         }
@@ -9893,9 +9949,10 @@ class GameInstance
         console.log("startSurvivalWave");
         var gameData = this.game.gameModeData;
         gameData.wave++;
-        gameData.waveKills = 0;
+        gameData.waveKills = 0;        
         gameData.waveHeadshots = 0;
         gameData.waveMelees = 0;
+        gameData.killTypes = {};
         gameData.numEnemies = Math.min(100, 5 * gameData.wave);
         gameData.enemiesSpawned = 0;
         gameData.enemiesRemaining = gameData.numEnemies;
@@ -9998,7 +10055,7 @@ class GameInstance
         }
         if (wave >= 3)
         {
-            weaponTypes.push(Weapon.TYPE_SMG, Weapon.TYPE_SHOTGUN);
+            weaponTypes.push(Weapon.TYPE_SMG);
         }
 
         var wpns = [];
@@ -10014,9 +10071,21 @@ class GameInstance
                 mods: primary.mods
             }
         ];
+        var secondaryTypes = [];
         if (wave >= 10)
         {
-            inventory.push({ id: "smaw" });
+            secondaryTypes.push(Weapon.TYPE_LAUNCHER);
+        }
+        else if (wave >= 3)
+        {
+            secondaryTypes.push(Weapon.TYPE_SHOTGUN);
+        }
+        if (secondaryTypes.length > 1)
+        {
+            var secondary = this.getAllWeaponsByType(secondaryTypes[this.Random(0, secondaryTypes.length - 1)]);
+            inventory.push({
+                id: secondary[this.Random(0, secondary.length - 1)].id
+            });
         }
         var grenade = null;
         var equipment = null;
@@ -10049,6 +10118,26 @@ class GameInstance
         waveBonus += Math.round(gameData.waveKills * 2.5);
         waveBonus += gameData.waveHeadshots * 10;
         waveBonus += gameData.waveMelees * 25;
+        var keys = Object.keys(gameData.killTypes);
+        for (var i = 0; i < keys.length; i++)
+        {
+            var key = keys[i];
+            var reward = 0;
+            switch (key)
+            {
+                case "tank":
+                    reward = 500;
+                    break;
+                case "helicopter":
+                    reward = 250;
+                    break;
+                case "car":
+                    reward = 100;
+                    break;
+            }
+            waveBonus += reward * gameData.killTypes[key];
+        }
+        waveBonus = this.RoundToNearest(waveBonus);
         this.onEvent({
             eventId: GameServer.EVENT_GAME_UPDATE,
             data: {
@@ -11932,9 +12021,9 @@ class GameInstance
                 };
                 break;
             case "barrel_generic":
-                data.health = 2000;
+                data.health = 1;
                 data.material = Material.METAL;
-                //data.bGodMode = true;
+                data.bGodMode = true;
                 break;
             case "sandbags":
                 data.material = Material.SANDBAG;
@@ -11970,7 +12059,7 @@ class GameInstance
                 width: shared.width,
                 height: shared.height,
                 collisionGroup: CollisionGroups.OBJECT,
-                collisionMask: CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE
+                collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE
             }));
         }
         else
@@ -12228,7 +12317,7 @@ class GameInstance
                 recoil: 0
             },
             bBot: _data.bBot,
-            bExposed: this.game.bSurvival,
+            bExposed: false,
             avatar: _data.avatar
         };
         var data = body.data;
@@ -12325,14 +12414,11 @@ class GameInstance
             semiCooldownTimerMax: Math.round((this.Random(15, 20) - (_botSkill * 2)) * this.game.fpsMult),
             lookRange: 2500 + (_botSkill * 500),
             bFireCooldown: true,
+            bInteract: true
         };
         if (this.game.bSurvival)
         {
-            ai.bInteract = _body.data.team == 0;
-        }
-        else
-        {
-            ai.bInteract = true;
+            //ai.bInteract = _body.data.team == 0;
         }
         if (_botSkill == BotSkill.SKILL_EASY)
         {
@@ -14493,6 +14579,11 @@ class GameInstance
             return [Math.round(_arr[0]), Math.round(_arr[1])];
         }
         return _arr;
+    }
+
+    RoundToNearest(_val)
+    {
+        return Math.ceil(_val / 5) * 5;
     }
 
     RoundDecimal(_val)

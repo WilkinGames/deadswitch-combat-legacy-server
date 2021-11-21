@@ -767,11 +767,11 @@
     },
     {
       "type": "platform",
-      "width": 800,
+      "width": 750,
       "height": 8,
       "position": [
         7000,
-        2689
+        2690
       ]
     },
     {
