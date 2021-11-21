@@ -597,6 +597,7 @@ class GameInstance
                 this.game.bRanked = false;
                 this.game.bSurvival = true;
                 this.game.bFriendlyFire = false;
+                this.game.gameModeData.bIntermission = true;
                 this.game.gameModeData.scores = null;
                 this.game.gameModeData.bAllowRevives = true;
                 this.game.gameModeData.timeLimit = null;
