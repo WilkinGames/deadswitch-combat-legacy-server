@@ -10505,7 +10505,7 @@ class GameInstance
                 });
                 body.gravityScale = 0;
                 data.bHitSameTeam = true;
-                data.destroyTimer = this.game.settings.fps * 0.5;
+                data.destroyTimer = this.game.settings.fps * 1;
                 break;
             default:
                 shape = new p2.Circle({
@@ -10795,7 +10795,26 @@ class GameInstance
         var curPawn = this.getObjectById(_playerId);
         if (curPawn)
         {
-            this.createVehicle(curPawn.position, _id);
+            switch (_id)
+            {
+                case "barrel":
+                    this.createObstacle({
+                        type: "obstacle",
+                        position: curPawn.position,
+                        obstacleId: "barrel_generic"
+                    });
+                    break;
+                case "barrel_explosive":
+                    this.createObstacle({
+                        type: "obstacle",
+                        position: curPawn.position,
+                        obstacleId: "barrel_explosive"
+                    });
+                    break;
+                default:
+                    this.createVehicle(curPawn.position, _id);
+                    break;
+            }
         }
     }
 
@@ -12585,7 +12604,7 @@ class GameInstance
                                         }
                                         break;
                                     default:
-                                        if (dataB.health)
+                                        if (!dataB.health)
                                         {
                                             bHit = false;
                                         }
@@ -14006,6 +14025,15 @@ class GameInstance
         if (_body)
         {
             this.detachRope(_body);
+            var data = _body.data;
+            if (data.attachToId)
+            {
+                var attached = this.getObjectById(data.attachToId);
+                if (attached)
+                {
+                    this.detachRope(attached);
+                }
+            }
             this.game.world.removeBody(_body);
         }
     }
