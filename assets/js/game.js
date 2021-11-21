@@ -10007,7 +10007,7 @@ class GameInstance
         var equipment = null;
         var melee = "melee_knife";        
         var botSkill = Math.min(BotSkill.SKILL_GOD, Math.floor(wave * 0.25));
-        var health = this.getCharacterMaxHealth() + (wave * 25);
+        var health = this.getCharacterMaxHealth() + (wave * 10);
         var char = this.createCharacter({
             id: this.getRandomUniqueId(),
             x: spawnPos[0],
@@ -10022,6 +10022,7 @@ class GameInstance
             botSkill: botSkill,
             health: health
         });
+        char.data.bExposed = true;
         return char;
     }
 
