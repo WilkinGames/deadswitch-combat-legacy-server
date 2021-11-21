@@ -10086,7 +10086,7 @@ class GameInstance
             if (this.game.bSurvival)
             {
                 grenade = "frag";
-                equipment = "stim";
+                equipment = this.RandomBoolean() ? "ammo_box" : "stim";
                 var inventory = [
                     {
                         id: "mp5",
@@ -10098,11 +10098,11 @@ class GameInstance
                         ammo: 300
                     },
                     {
-                        id: "usp45",
+                        id: "smaw",
                         mods: {
                             accessory: Mods.ACCESSORY_LASER
                         },
-                        ammo: 120
+                        ammo: 10
                     },
                     { id: melee },
                     { id: equipment },
