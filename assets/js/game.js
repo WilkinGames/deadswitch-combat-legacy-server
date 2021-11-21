@@ -10022,8 +10022,6 @@ class GameInstance
             botSkill: botSkill,
             health: health
         });
-        char.data.bExposed = true;
-        delete char.data.exposeTimer;
         return char;
     }
 
@@ -12210,7 +12208,7 @@ class GameInstance
                 recoil: 0
             },
             bBot: _data.bBot,
-            bExposed: false,
+            bExposed: this.game.bSurvival,
             avatar: _data.avatar
         };
         var data = body.data;
