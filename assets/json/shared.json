@@ -108,7 +108,7 @@
   "reviver": {
     "width": 20,
     "height": 20,
-    "mass": 2,
+    "mass": 10,
     "damping": 0.5
   },
   "grenade": {

@@ -1,7 +1,7 @@
 [
   {
-    "id": "map_siege",
-    "name": "STR_MAP_SIEGE",
+    "id": "map_downturn",
+    "name": "STR_MAP_DOWNTURN",
     "sliceData": {
       "num": 14,
       "fg": [

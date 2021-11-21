@@ -1,5 +1,5 @@
 {
-  "id": "map_siege",
+  "id": "map_downturn",
   "width": 14000,
   "height": 3000,
   "flags": {
@@ -67,7 +67,7 @@
   "objects": [
     {
       "type": "polygon",
-      "spriteId": "map_siege",
+      "spriteId": "map_downturn",
       "width": 14000,
       "height": 3000,
       "position": [

@@ -661,6 +661,9 @@
   "STR_INTERMISSION": {
     "en": "Intermission"
   },
+  "STR_X_NEEDS_REVIVE": {
+    "en": "%1 needs to be revived"
+  },
   "STR_MODE_FFA": {
     "en": "Free-for-All",
     "ru": "Каждый сам за себя",
@@ -721,8 +724,8 @@
   "STR_MODE_CONQUEST_DESC": {
     "en": "Capture and defend the 5 flag positions."
   },
-  "STR_MAP_SIEGE": {
-    "en": "Siege"
+  "STR_MAP_DOWNTURN": {
+    "en": "Downturn"
   },
   "STR_SPAWN": {
     "en": "Spawn"

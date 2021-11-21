@@ -604,8 +604,7 @@ class GameInstance
                 this.game.gameModeData.bWeaponDrops = false;
                 this.game.gameModeData.bAllowRespawns = false;
                 this.game.gameModeData.wave = 0;
-                this.game.gameModeData.enemies = 0;
-                this.startSurvivalWaveIntermission();
+                this.game.gameModeData.enemies = 0;                
                 break;
         }
 
@@ -658,6 +657,11 @@ class GameInstance
                 eventId: GameServer.EVENT_GAME_UPDATE,
                 data: this.game.gameModeData
             });
+        }
+
+        if (this.game.bSurvival)
+        {
+            this.startSurvivalWaveIntermission();
         }
 
         this.game.interval = setInterval(this.tick.bind(this), 1000 / this.game.settings.fps);
@@ -968,13 +972,11 @@ class GameInstance
                         if (gameData.enemiesSpawned < gameData.numEnemies)
                         {
                             var numOnTeam = this.getNumCharactersOnTeam(1);
-                            console.log(numOnTeam);
                             if (numOnTeam < Settings.MAX_ENEMIES)
                             {
                                 if (numOnTeam < (gameData.numEnemies * 0.5) && this.Random(1, 5) == 1)
                                 {
-                                    var heli = this.spawnSurvivalEnemyVehicle();
-                                    gameData.enemiesSpawned += heli.data.seats.length;
+                                    this.spawnSurvivalEnemyVehicle();                                    
                                 }
                                 else
                                 {
@@ -988,7 +990,7 @@ class GameInstance
                 }
             }
 
-            if (this.matchInProgress())
+            if (this.matchInProgress() && this.game.gameModeData.bAllowRespawns)
             {
                 var pawns = this.getCharacters().concat(this.getFlags());
                 var spawnPoints = this.game.gameModeData.spawns;
@@ -4177,6 +4179,11 @@ class GameInstance
 
     handleReviver(_body)
     {
+        var map = this.getCurrentMapData();
+        if (_body[1] > map.height)
+        {
+            _body[1] = 0;
+        }
         var data = _body.data;
         if (!data.currentPawnId && data.bleedTimer != null)
         {
@@ -7257,9 +7264,8 @@ class GameInstance
             switch (data.type)
             {
                 case "reviver":
-                    this.respawnPlayer(data.itemData.playerId, _interactable.position);
+                    this.respawnPlayer(data.itemData.playerId, [_interactable.position[0], _interactable.position[1] - 30]);
                     this.removeNextStep(_interactable);
-                    console.log("REMOVE REVIVER", _interactable.data.id);
                     break;
 
                 case "lever":
@@ -9253,7 +9259,7 @@ class GameInstance
             {
                 var rad = this.Angle(causer.position[0], causer.position[1], pawn.position[0], pawn.position[1]) + this.ToRad(this.Random(-5, 5));
                 var force = Math.max(100, (_damageAmount * 30)) * (bHeadshot ? 1.5 : 1);
-                var maxForce = _damageInfo.damageType == DamageType.DAMAGE_EXPLOSIVE ? 10000 : 7000;
+                var maxForce = _damageInfo.damageType == DamageType.DAMAGE_EXPLOSIVE ? 7500 : 5000;
                 force = Math.max(1000, Math.min(force, maxForce));
                 vx = Math.round(Math.cos(rad) * force);
                 vy = Math.round(Math.sin(rad) * force);
@@ -9551,7 +9557,7 @@ class GameInstance
                     });
                 }
             }
-            else
+            else if (pawn.data.type == "character")
             {
                 this.game.gameModeData.enemiesRemaining--;
                 this.onEvent({
@@ -9871,12 +9877,13 @@ class GameInstance
     {
         console.log("startSurvivalWaveIntermission");
         var gameData = this.game.gameModeData;
-        gameData.intermissionTimer = Settings.INTERMISSION_TIMER; //gameData.wave == 0 ? 15 : 30;
+        gameData.intermissionTimer = Settings.INTERMISSION_TIMER;
         gameData.waveTimer = this.game.settings.fps;
         this.onEvent({
             eventId: GameServer.EVENT_GAME_UPDATE,
             data: {
-                timer: gameData.intermissionTimer
+                timer: gameData.intermissionTimer,
+                bIntermission: true
             }
         });
     }
@@ -9954,8 +9961,16 @@ class GameInstance
         {
             for (var i = 0; i < seats.length; i++)
             {
-                var char = this.spawnSurvivalEnemyCharacter();
-                this.executeInteractable(vehicle, char.data.id);
+                if (this.game.gameModeData.enemiesSpawned < this.game.gameModeData.numEnemies)
+                {
+                    var char = this.spawnSurvivalEnemyCharacter();
+                    this.executeInteractable(vehicle, char.data.id);
+                    this.game.gameModeData.enemiesSpawned++;
+                }
+                else
+                {
+                    break;
+                }
             }
         }
         return vehicle;
@@ -10042,6 +10057,16 @@ class GameInstance
                 reward: waveBonus
             }
         });
+        for (var i = 0; i < this.game.players.length; i++)
+        {
+            var ps = this.game.players[i];
+            if (!ps.bHasPawn)
+            {
+                var reviver = this.getReviverByPlayerId(ps.id);
+                this.respawnPlayer(ps.id, reviver ? [reviver.position[0], reviver.position[1] - 30] : null);
+                this.removeNextStep(reviver);                
+            }
+        }
     }
 
     isOnGround(_body)
@@ -10246,10 +10271,6 @@ class GameInstance
     {
         if (_body)
         {
-            if (_body.data && _body.data.type == "reviver")
-            {
-                console.log("remove reviver", _body.data);
-            }
             var world = this.game.world;
             if (_body.constraint)
             {
@@ -11905,11 +11926,15 @@ class GameInstance
             case "barrel_explosive":
                 data.health = 100;
                 data.material = Material.METAL;
+                data.damageMultipliers = {
+                    1: 1,
+                    3: 50
+                };
                 break;
             case "barrel_generic":
-                data.health = 1;
+                data.health = 2000;
                 data.material = Material.METAL;
-                data.bGodMode = true;
+                //data.bGodMode = true;
                 break;
             case "sandbags":
                 data.material = Material.SANDBAG;
@@ -11937,12 +11962,7 @@ class GameInstance
         if (data.health > 0)
         {
             body.data.maxHealth = data.health;
-            data.team = -1;
-            data.damageMultipliers = {
-                1: 1,
-                2: 0.1,
-                3: 50
-            };
+            data.team = -1;            
         }
         if (shared.mass > 0)
         {
@@ -13295,7 +13315,7 @@ class GameInstance
                         continue;
                     }
                 }
-            }
+            }            
 
             var distMult = 1;
             var distFromCenter = this.Dist(_x, _y, cur.position[0], cur.position[1]);
@@ -13334,7 +13354,7 @@ class GameInstance
                     {
                         bAlly = false;
                     }
-                    if (!this.game["bFriendlyFire"])
+                    if (!this.game.bFriendlyFire)
                     {
                         bAlly = bAlly || bSelf;
                     }
@@ -13350,9 +13370,9 @@ class GameInstance
                     {
                         damageAmount = 0; //TODO: Can destroy own turrets
                     }
-                    else if (this.isVehicle(cur) && this.vehicleHasOccupant(cur) && bAlly)
+                    else if (this.isVehicle(cur) && this.vehicleHasOccupant(cur) && bAlly && !this.game.bFriendlyFire)
                     {
-                        //damageAmount = 0;
+                        damageAmount = 0;
                     }
                     else if (this.isVehicle(cur))
                     {

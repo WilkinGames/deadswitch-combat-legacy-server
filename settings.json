@@ -13,14 +13,13 @@
     "STR_SERVER_PLAYER_INFO"
   ],
   "gameData": {
-    "gameModeId": "conquest",
-    "mapId": "map_siege",
+    "gameModeId": "survival",
+    "mapId": "map_downturn",
     "settings": {
       "timeLimit": 10,
       "scoreLimit": 300,
       "respawnTime": 1,
       "preGameTimer": 5,
-      "bAllowRespawns": true,
       "bSpawnProtection": true,
       "bVehicles": true,
       "bWeaponDrops": true,
@@ -28,8 +27,8 @@
       "bFallDamage": true,
       "vehicleRespawnTime": 120,
       "weaponRespawnTime": 120,
-      "bots": 12,
-      "botSkill": 1,
+      "bots": 4,
+      "botSkill": 3,
       "tickRate": 30,
       "updateRate": 10
     }
