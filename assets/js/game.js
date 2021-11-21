@@ -5663,7 +5663,14 @@ class GameInstance
             eventId: GameServer.EVENT_PLAYER_JOIN,
             player: ps
         });
-        if (ps.bAutoRespawn)
+        if (this.game.bSurvival)
+        {
+            if (this.game.gameModeData.bIntermission)
+            {
+                this.respawnPlayer(ps.id);
+            }
+        }
+        else if (ps.bAutoRespawn)
         {
             this.respawnPlayer(ps.id);
         }
