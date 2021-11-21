@@ -10023,6 +10023,7 @@ class GameInstance
             health: health
         });
         char.data.bExposed = true;
+        delete char.data.exposeTimer;
         return char;
     }
 
