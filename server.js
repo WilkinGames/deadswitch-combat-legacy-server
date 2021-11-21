@@ -787,6 +787,18 @@ function createLobby()
     lobbies.push(lobby);
 }
 
+function getLobbyPlayerTeam(_lobby)
+{
+    switch (_lobby.gameData.gameModeId)
+    {
+        case GameMode.SURVIVAL:
+            return 0;
+        default:
+            return _lobby.players.length % 2 == 0 ? 0 : 1;
+            break;
+    }
+}
+
 function joinLobby(_player, _lobbyId)
 {
     var lobby = getLobbyData(_lobbyId);
@@ -798,15 +810,7 @@ function joinLobby(_player, _lobbyId)
             socket.join(_lobbyId);            
         }
         _player.lobbyId = _lobbyId;
-        switch (lobby.gameData.gameModeId)
-        {
-            case GameMode.SURVIVAL:
-                _player.team = 0;
-                break;
-            default:
-                _player.team = lobby.players.length % 2 == 0 ? 0 : 1;
-                break;
-        }
+        _player.team = getLobbyPlayerTeam(lobby);
         lobby.players.push(_player);
         log(lobby.players.length, "in lobby");  
         if (socket)
@@ -1063,7 +1067,7 @@ function startGame(_lobbyId, _gameData)
         {
             var bot = getBot(_gameData.settings.botSkill);
             bot.name = "Bot " + i;
-            bot.team = _gameData.settings.botTeam >= 0 ? _gameData.settings.botTeam : (i % 2 == 0 ? 1 : 0);
+            bot.team = _gameData.settings.botTeam >= 0 ? _gameData.settings.botTeam : getLobbyPlayerTeam(lobby);
             players.push(bot);
         }
         _gameData.players = players;
