@@ -10088,6 +10088,7 @@ class GameInstance
             {
                 grenade = "frag";
                 equipment = this.RandomBoolean() ? "ammo_box" : "stim";
+                var secondary = ["smaw", "javelin", "rpg", "mgl", "m320"];
                 var inventory = [
                     {
                         id: "mp5",
@@ -10099,11 +10100,7 @@ class GameInstance
                         ammo: 300
                     },
                     {
-                        id: "smaw",
-                        mods: {
-                            accessory: Mods.ACCESSORY_LASER
-                        },
-                        ammo: 10
+                        id: secondary[this.Random(0, secondary.length - 1)],
                     },
                     { id: melee },
                     { id: equipment },
