@@ -9518,7 +9518,7 @@ class GameInstance
                     break;
             }
         }
-        var bReviver = this.game.gameModeData.bAllowRevives && pawnTeam == 0;        
+        var bReviver = pawn.data.type == "character" && this.game.gameModeData.bAllowRevives && pawnTeam == 0;        
         this.onEvent({
             eventId: GameServer.EVENT_PAWN_DIE,
             data: {
