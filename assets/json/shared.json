@@ -105,6 +105,12 @@
     "width": 820,
     "height": 270
   },
+  "reviver": {
+    "width": 20,
+    "height": 20,
+    "mass": 1,
+    "damping": 0.8
+  },
   "grenade": {
     "width": 20,
     "height": 20

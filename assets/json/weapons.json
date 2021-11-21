@@ -129,7 +129,7 @@
     "range": 1300,
     "mag": 7,
     "ammo": 28,
-    "recoil": 8,
+    "recoil": 6,
     "penetration": 5,
     "lookModifier": 1,
     "score": 10000
@@ -141,7 +141,7 @@
     "type": "TYPE_MACHINE_PISTOL",
     "fireMode": "MODE_AUTO",
     "round": "9mm",
-    "damage": 28,
+    "damage": 30,
     "accuracy": 2.5,
     "fireRate": 3,
     "magSize": 20,
@@ -161,7 +161,7 @@
     "type": "TYPE_MACHINE_PISTOL",
     "fireMode": "MODE_BURST",
     "round": "9mm",
-    "damage": 32,
+    "damage": 35,
     "accuracy": 1.5,
     "fireRate": 3,
     "burstFireRate": 16,
@@ -183,7 +183,7 @@
     "type": "TYPE_MACHINE_PISTOL",
     "fireMode": "MODE_AUTO",
     "round": "9mm",
-    "damage": 24,
+    "damage": 28,
     "accuracy": 2,
     "fireRate": 3,
     "magSize": 30,
@@ -675,7 +675,6 @@
     "recoil": 0.1,
     "penetration": 2,
     "overheatMax": 180,
-    "cooldownNum": 1.5,
     "bVehicle": true
   },
   {
@@ -1124,6 +1123,8 @@
     "bNoMag": true,
     "range": 2000,
     "recoil": 2,
+    "ammo": 5,
+    "ammoMax": 5,
     "penetration": 3,
     "overheatMax": 90,
     "overheatNum": 18,
@@ -1144,6 +1145,8 @@
     "bNoShell": true,
     "bNoMag": true,
     "range": 2000,
+    "ammo": 1,
+    "ammoMax": 1,
     "recoil": 3,
     "penetration": 5,
     "overheatMax": 150,
@@ -1166,6 +1169,8 @@
     "bCanLock": true,
     "range": 2000,
     "recoil": 1,
+    "ammo": 3,
+    "ammoMax": 3,
     "penetration": 3,
     "overheatMax": 120,
     "overheatNum": 40,
@@ -1260,6 +1265,8 @@
     "velocity": 350,
     "overheatNum": 180,
     "overheatMax": 180,
+    "ammo": 1,
+    "ammoMax": 1,
     "bVehicle": true
   },
   {
@@ -1281,6 +1288,8 @@
     "gravityScale": 1,
     "overheatNum": 180,
     "overheatMax": 180,
+    "ammo": 1,
+    "ammoMax": 1,
     "bVehicle": true
   },
   {
@@ -1303,6 +1312,8 @@
     "velocity": 500,
     "overheatNum": 120,
     "overheatMax": 120,
+    "ammo": 1,
+    "ammoMax": 1,
     "bVehicle": true
   },
   {
@@ -1325,6 +1336,8 @@
     "velocity": 350,
     "overheatNum": 200,
     "overheatMax": 200,
+    "ammo": 1,
+    "ammoMax": 1,
     "bVehicle": true
   },
   {

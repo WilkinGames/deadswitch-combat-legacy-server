@@ -649,6 +649,18 @@
     "es": "Límite de tiempo alcanzado",
     "it": "Limite Tempo Raggiunto"
   },
+  "STR_CONDITION_KIA": {
+    "en": "Killed In Action"
+  },
+  "STR_WAVE_X_STARTING": {
+    "en": "Wave %1 Starting"
+  },
+  "STR_WAVE_X_COMPLETE": {
+    "en": "Wave %1 Complete"
+  },
+  "STR_INTERMISSION": {
+    "en": "Intermission"
+  },
   "STR_MODE_FFA": {
     "en": "Free-for-All",
     "ru": "Каждый сам за себя",
@@ -3309,7 +3321,7 @@
     "en": "Reduces recoil"
   },
   "STR_MOD_GRIP_ANGLED_DESC": {
-    "en": "Reduces recoil when ADS"
+    "en": "Reduces recoil when aiming"
   },
   "STR_MOD_SUPPRESSOR_DESC": {
     "en": "Suppresses weapon"
