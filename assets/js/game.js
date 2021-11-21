@@ -9942,11 +9942,12 @@ class GameInstance
         var gameData = this.game.gameModeData;
         gameData.intermissionTimer = Settings.INTERMISSION_TIMER;
         gameData.waveTimer = this.game.settings.fps;
+        gameData.bIntermission = true;
         this.onEvent({
             eventId: GameServer.EVENT_GAME_UPDATE,
             data: {
                 timer: gameData.intermissionTimer,
-                bIntermission: true
+                bIntermission: gameData.bIntermission
             }
         });
     }
@@ -9955,6 +9956,7 @@ class GameInstance
     {
         console.log("startSurvivalWave");
         var gameData = this.game.gameModeData;
+        gameData.bIntermission = false;
         gameData.wave++;
         gameData.waveKills = 0;        
         gameData.waveHeadshots = 0;
