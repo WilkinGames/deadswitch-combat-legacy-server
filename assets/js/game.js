@@ -8473,7 +8473,7 @@ class GameInstance
             var cur = world.bodies[i];
             if (cur.data && cur.data.health && (cur.data.team == -1 || cur.data.team == _body.data.team))
             {
-                if (this.isVehicle(cur))
+                if (this.isVehicle(cur) && this.hasAvailableSeat(cur))
                 {
                     arr.push(cur);
                 }
@@ -12741,7 +12741,6 @@ class GameInstance
                                     case "tank":
                                     case "car":
                                     case "obstacle":
-                                    case "character":
                                         var source = this.getObjectById(dataA.sourceId);
                                         if (source)
                                         {
