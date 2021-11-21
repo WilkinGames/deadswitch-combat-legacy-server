@@ -20,7 +20,7 @@ const MathUtil = {
 };
 const ServerData = {
     VERSION: "1.0.0",
-    GAME_VERSION: "0.0.9",
+    GAME_VERSION: "0.0.10",
 };
 const LobbyState = {
     INTERMISSION: "intermission",
