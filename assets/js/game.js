@@ -2346,7 +2346,10 @@ class GameInstance
                 ai.desiredVehicleId = null;
                 if (ai.bWantsVehicle)
                 {
-                    this.setPawnRequest(_body, Commands.VEHICLE);
+                    if (!this.game.bSurvival || data.team == 0)
+                    {
+                        this.setPawnRequest(_body, Commands.VEHICLE);
+                    }
                 }
             }
             if (ai.pathTicker > 0)
@@ -2762,7 +2765,10 @@ class GameInstance
                     case "mountedWeapon":
                         if (data.seatIndex == 0 && controllable.data.type != "mountedWeapon")
                         {
-                            var req = this.getNearbyRequest(_body, Commands.VEHICLE, 1500);
+                            if (!this.game.bSurvival || data.team == 0)
+                            {
+                                var req = this.getNearbyRequest(_body, Commands.VEHICLE, 1500);
+                            }
                             if (req && this.hasAvailableSeat(controllable))
                             {
                                 var desiredPos = req;
@@ -2846,7 +2852,7 @@ class GameInstance
                         }
                         if (controllable.data.weapons)
                         {
-                            var weapon = controllable.data.weapons[data.seatIndex];
+                            var weapon = this.getVehicleWeapon(controllable, data.seatIndex); //controllable.data.weapons[data.seatIndex];
                             if (weapon && weapon.weaponData && weapon.weaponData.damage > 0)
                             {
                                 weapon.bWantsToFire = ai.bEnemyLOS && ai.enemyDist < ai.lookRange;
@@ -6538,7 +6544,7 @@ class GameInstance
                     var keyInfo = _data.keyInfo;
                     if (keyInfo)
                     {
-                        var ps = this.getPlayerById(_data.playerId);
+                        //var ps = this.getPlayerById(_data.playerId);
                         var pawn = this.getObjectById(_data.playerId);
                         var keys = Object.keys(keyInfo);
                         for (var i = 0; i < keys.length; i++)
@@ -6548,9 +6554,9 @@ class GameInstance
                                 keyId: curKey,
                                 value: keyInfo[curKey]
                             };                            
-                            if (ps && ps.controllableId)
+                            if (pawn && pawn.data.controllableId)
                             {
-                                var controllablePawn = this.getObjectById(ps.controllableId);
+                                var controllablePawn = this.getObjectById(pawn.data.controllableId);
                                 this.handleControllableInput(pawn, controllablePawn, sendData);
                             }
                             else
@@ -9912,7 +9918,7 @@ class GameInstance
         {
             types.push(Helicopter.OSPREY);
         }
-        var heli = this.createHelicopter([map.width * 0.5, 1600], {
+        var heli = this.createHelicopter([map.width * 0.5, 0], {
             type: types[this.Random(0, types.length - 1)],
             team: 1,
             scale: 1
@@ -10060,7 +10066,8 @@ class GameInstance
                         id: "mp5",
                         mods: {
                             optic: Mods.OPTIC_EOTECH,
-                            accessory: Mods.ACCESSORY_LASER
+                            accessory: Mods.ACCESSORY_LASER,
+                            ammo: Mods.AMMO_PIERCING
                         },
                         ammo: 150
                     },
