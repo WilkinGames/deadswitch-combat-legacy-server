@@ -798,7 +798,15 @@ function joinLobby(_player, _lobbyId)
             socket.join(_lobbyId);            
         }
         _player.lobbyId = _lobbyId;
-        _player.team = lobby.players.length % 2 == 0 ? 0 : 1;
+        switch (lobby.gameData.gameModeId)
+        {
+            case GameMode.SURVIVAL:
+                _player.team = 0;
+                break;
+            default:
+                _player.team = lobby.players.length % 2 == 0 ? 0 : 1;
+                break;
+        }
         lobby.players.push(_player);
         log(lobby.players.length, "in lobby");  
         if (socket)
