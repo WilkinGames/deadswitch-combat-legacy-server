@@ -10095,10 +10095,11 @@ class GameInstance
                             accessory: Mods.ACCESSORY_LASER,
                             ammo: Mods.AMMO_PIERCING
                         },
-                        ammo: 150
+                        ammo: 300
                     },
                     {
                         id: "usp45",
+                        accessory: Mods.ACCESSORY_LASER,
                         ammo: 120
                     },
                     { id: melee },
