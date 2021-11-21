@@ -9530,7 +9530,7 @@ class GameInstance
         });
         if (bReviver)
         {
-            this.createReviver(pawn.position, [vx, vy], va, this.game.bOperation, {
+            this.createReviver([pawn.position[0], pawn.position[1] - 30], [vx, vy], va, this.game.bOperation, {
                 playerId: _pawnId,
                 interactTime: this.game.settings.fps * 1
             });
@@ -10748,6 +10748,7 @@ class GameInstance
         {
             var data = {
                 type: veh.id,
+                weaponType: _id,
                 scale: 1,
                 team: 0,
                 weaponId: _id,
