@@ -7080,11 +7080,14 @@ class GameInstance
                     data.bAiming = value.bAiming == true ? 1 : 0;
                     if (value.char && !data.bBot)
                     {
-                        data.clientPos = value.char; 
-                        _body.position[0] = (value.char[0] + _body.position[0]) * 0.5;
-                        _body.position[1] = (value.char[1] + _body.position[1]) * 0.5;
-                        _body.velocity[1] = -value.vel[1] / 0.05;
-                        data.bOnGround = value.bOnGround;
+                        data.clientPos = value.char;
+                        if (!data.attachToId)
+                        {
+                            _body.position[0] = (value.char[0] + _body.position[0]) * 0.5;
+                            _body.position[1] = (value.char[1] + _body.position[1]) * 0.5;
+                            _body.velocity[1] = -value.vel[1] / 0.05;
+                            data.bOnGround = value.bOnGround;
+                        }
                     }
                     break;
 
