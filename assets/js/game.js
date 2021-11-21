@@ -5720,7 +5720,10 @@ class GameInstance
                         {
                             if (_data.data.team != null)
                             {
-                                this.changeTeam(ps.id, _data.data.team);
+                                if (this.isTeamGameMode())
+                                {
+                                    this.changeTeam(ps.id, _data.data.team);
+                                }
                             }
                             if (_data.data.currentClass)
                             {
