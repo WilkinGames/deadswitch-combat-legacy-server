@@ -10101,7 +10101,7 @@ class GameInstance
                         id: "usp45",
                         mods: {
                             accessory: Mods.ACCESSORY_LASER
-                        }
+                        },
                         ammo: 120
                     },
                     { id: melee },
