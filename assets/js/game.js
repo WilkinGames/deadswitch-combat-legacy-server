@@ -973,7 +973,7 @@ class GameInstance
                             {
                                 if (numOnTeam == 0)
                                 {
-                                    var heli = this.spawnSurvivalEnemyHelicopter();
+                                    var heli = this.spawnSurvivalEnemyVehicle();
                                     gameData.enemiesSpawned += heli.data.seats.length;
                                 }
                                 else
@@ -9904,11 +9904,11 @@ class GameInstance
         });
     }
 
-    spawnSurvivalEnemyHelicopter()
+    spawnSurvivalEnemyVehicle()
     {
         var map = this.getCurrentMapData();
         var wave = this.game.gameModeData.wave;
-        var types = [Helicopter.MH6];
+        var types = [Helicopter.MH6, Car.QUAD];
         if (wave >= 5)
         {
             types.push(Helicopter.BLACKHAWK);
@@ -9919,23 +9919,43 @@ class GameInstance
         }
         if (wave >= 15)
         {
-            types.push(Helicopter.OSPREY);
+            types.push(Helicopter.OSPREY, Tank.T90);
         }
-        var heli = this.createHelicopter([map.width * 0.5, 0], {
-            type: types[this.Random(0, types.length - 1)],
-            team: 1,
-            scale: 1
-        });
-        var seats = heli.data.seats;
+        var veh = this.getVehicleData(types[this.Random(0, types.length - 1)]);
+        switch (veh.type)
+        {
+            case "helicopter":
+                var vehicle = this.createHelicopter([map.width * 0.5, 0], {
+                    type: veh.id,
+                    team: 1,
+                    scale: 1
+                });
+                break;
+            case "tank":
+                vehicle = this.createTank([map.width * Math.random(), 0], {
+                    type: veh.id,
+                    team: 1,
+                    scale: 1
+                });
+                break;
+            case "car":
+                vehicle = this.createCar([map.width * Math.random(), 0], {
+                    type: veh.id,
+                    team: 1,
+                    scale: 1
+                });
+                break;
+        }
+        var seats = vehicle.data.seats;
         if (seats)
         {
             for (var i = 0; i < seats.length; i++)
             {
                 var char = this.spawnSurvivalEnemyCharacter();
-                this.executeInteractable(heli, char.data.id);
+                this.executeInteractable(vehicle, char.data.id);
             }
         }
-        return heli;
+        return vehicle;
     }
 
     spawnSurvivalEnemyCharacter()
@@ -10802,6 +10822,13 @@ class GameInstance
         {
             switch (_id)
             {
+                case "m2":
+                case "bgm71":
+                    this.createMountedWeapon(curPawn.position, {
+                        weaponType: _id,
+                        scale: curPawn.data.scale
+                    });
+                    break;
                 case "barrel":
                     this.createObstacle({
                         type: "obstacle",
@@ -10817,7 +10844,11 @@ class GameInstance
                     });
                     break;
                 default:
-                    this.createVehicle(curPawn.position, _id);
+                    var veh = this.getVehicleData(_id);
+                    if (veh)
+                    {
+                        this.createVehicle(curPawn.position, _id);
+                    }
                     break;
             }
         }
