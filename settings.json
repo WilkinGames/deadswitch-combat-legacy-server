@@ -4,7 +4,7 @@
   "type": "STR_OFFICIAL",
   "port": 8000,
   "maxPlayers": 32,
-  "bUseLobby": true,
+  "bUseLobby": false,
   "bAllowVotekick": true,
   "welcome": "STR_SERVER_WELCOME",
   "rules": "STR_SERVER_RULES_NONE",
@@ -28,7 +28,7 @@
       "bFallDamage": true,
       "vehicleRespawnTime": 120,
       "weaponRespawnTime": 120,
-      "bots": 20,
+      "bots": 12,
       "botSkill": 1,
       "tickRate": 30,
       "updateRate": 10
