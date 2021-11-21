@@ -10744,6 +10744,7 @@ class GameInstance
     createVehicle(_position, _id)
     {
         var veh = this.getVehicleData(_id);
+        console.log(veh);
         if (veh)
         {
             var data = {
