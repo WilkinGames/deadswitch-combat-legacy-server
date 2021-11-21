@@ -119,7 +119,7 @@ const GameServer = {
     INV_UNDERBARREL_EQUIP: 23
 };
 const Settings = {
-    INTERMISSION_TIMER: 5,
+    INTERMISSION_TIMER: 10,
     MAX_CRATES: 10,
     MAX_ENEMIES: 10,
     MAX_DROPPED_WEAPONS: 8,
@@ -11236,37 +11236,40 @@ class GameInstance
 
     detachRope(_body)
     {
-        var data = _body.data;
-        if (data.attachId)
+        if (_body)
         {
-            this.game.world.removeConstraint(_body.constraint);
-            delete _body.constraint;
-            var attached = this.getObjectById(data.attachId);
-            if (attached)
+            var data = _body.data;
+            if (data.attachId)
             {
-                var shared = this.getSharedData(attached.data.vehicleId);
-                if (shared && shared.mass)
+                this.game.world.removeConstraint(_body.constraint);
+                delete _body.constraint;
+                var attached = this.getObjectById(data.attachId);
+                if (attached)
                 {
-                    attached.mass = shared.mass;
+                    var shared = this.getSharedData(attached.data.vehicleId);
+                    if (shared && shared.mass)
+                    {
+                        attached.mass = shared.mass;
+                    }
+                    else
+                    {
+                        attached.mass = this.isVehicle(attached) ? 10 : 1;
+                    }
+                    if (attached.type == "helicopter" && this.vehicleHasOccupant(attached))
+                    {
+                        attached.gravityScale = 0;
+                    }
+                    else
+                    {
+                        attached.gravityScale = 1;
+                    }
+                    this.game.world.removeConstraint(attached.constraint);
+                    delete attached.constraint;
+                    this.setDataValue(attached, "attachToId", null);
+                    attached.updateMassProperties();
                 }
-                else
-                {
-                    attached.mass = this.isVehicle(attached) ? 10 : 1;
-                }
-                if (attached.type == "helicopter" && this.vehicleHasOccupant(attached))
-                {
-                    attached.gravityScale = 0;
-                }
-                else
-                {
-                    attached.gravityScale = 1;
-                }
-                this.game.world.removeConstraint(attached.constraint);
-                delete attached.constraint;
-                this.setDataValue(attached, "attachToId", null);
-                attached.updateMassProperties();
+                this.setDataValue(_body, "attachId", null);
             }
-            this.setDataValue(_body, "attachId", null);
         }
     }
 
@@ -14001,6 +14004,7 @@ class GameInstance
     {
         if (_body)
         {
+            this.detachRope(_body);
             this.game.world.removeBody(_body);
         }
     }
