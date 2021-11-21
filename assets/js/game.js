@@ -12577,6 +12577,7 @@ class GameInstance
                                     case "tank":
                                     case "car":
                                     case "obstacle":
+                                    case "character":
                                         var source = this.getObjectById(dataA.sourceId);
                                         if (source)
                                         {
