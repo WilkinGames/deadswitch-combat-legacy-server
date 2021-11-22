@@ -596,7 +596,7 @@ class GameInstance
             case GameMode.SURVIVAL:                
                 this.game.bRanked = false;
                 this.game.bSurvival = true;
-                this.game.bFriendlyFire = false;
+                //this.game.bFriendlyFire = false;
                 this.game.gameModeData.bIntermission = true;
                 this.game.gameModeData.scores = null;
                 this.game.gameModeData.bAllowRevives = true;
@@ -616,7 +616,8 @@ class GameInstance
             eventId: GameServer.EVENT_GAME_INIT,
             mapId: this.game.mapId,
             gameModeId: this.game.gameModeId,
-            settings: this.game.settings
+            settings: this.game.settings,
+            gameModeData: this.game.gameModeData
         });
 
         if (this.game.gameModeData.timeLimit)
@@ -4408,7 +4409,7 @@ class GameInstance
         var weapon = data.weapon;
         if (weapon)
         {
-            var recoilMult = 0.99; //Lower value is faster recoil recovery
+            var recoilMult = 0.95; //Lower value is faster recoil recovery
             var recoilDecay = recoilMult * this.game.fpsMult;
             weapon.recoil = this.RoundDecimal(weapon.recoil * recoilDecay);
         }        
@@ -6685,7 +6686,7 @@ class GameInstance
 
     getVehicleMuzzlePosition(_body, _index)
     {
-        var weapon = _body.data.weapons[_index];
+        var weapon = this.getVehicleWeapon(_body, _index); //_body.data.weapons[_index];
         var pos = [_body.position[0], _body.position[1]];
         if (weapon.muzzlePos)
         {
@@ -12390,13 +12391,20 @@ class GameInstance
         {
             this.initAI(body, _data.botSkill);
         }
-        if (this.game.bSurvival && data.team == 0)
+        if (this.game.bSurvival)
         {
-            data.damageMultipliers = {
-                1: 0.5,
-                2: 0.5,
-                3: 0.5,
-                4: 0.5
+            if (data.team == 0)
+            {
+                data.damageMultipliers = {
+                    1: 0.5,
+                    2: 0.5,
+                    3: 0.5,
+                    4: 0.5
+                }
+            }
+            else
+            {
+                data.weapon.bUnlimitedAmmo = true;
             }
         }
         this.onEvent({
@@ -12526,7 +12534,8 @@ class GameInstance
             eventId: GameServer.EVENT_GAME_INIT,
             mapId: this.game.mapId,
             gameModeId: this.game.gameModeId,
-            settings: this.game.settings
+            settings: this.game.settings,
+            gameModeData: this.game.gameModeData
         }
     }
 
