@@ -605,7 +605,8 @@ class GameInstance
                 this.game.gameModeData.bWeaponDrops = false;
                 this.game.gameModeData.bAllowRespawns = false;
                 this.game.gameModeData.wave = 0;
-                this.game.gameModeData.enemies = 0;                
+                this.game.gameModeData.enemies = 0;  
+                this.game.gameModeData.kills = 0;  
                 break;
         }
 
@@ -9604,6 +9605,7 @@ class GameInstance
             }
             else
             {
+                this.game.gameModeData.kills++;
                 this.game.gameModeData.waveKills++;
                 if (_damageInfo.bMelee)
                 {
@@ -9627,7 +9629,8 @@ class GameInstance
                     this.onEvent({
                         eventId: GameServer.EVENT_GAME_UPDATE,
                         data: {
-                            enemiesRemaining: this.game.gameModeData.enemiesRemaining
+                            enemiesRemaining: this.game.gameModeData.enemiesRemaining,
+                            kills: this.game.gameModeData.kills
                         }
                     });
                     if (this.game.gameModeData.enemiesRemaining <= 0)

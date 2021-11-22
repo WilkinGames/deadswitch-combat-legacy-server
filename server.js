@@ -225,11 +225,23 @@ app.get("/", (req, res) =>
     var upTime = convertMS(Date.now() - serverStartTime);
     str += "<b>Uptime:</b> " + upTime.day + "d " + upTime.hour + "h " + upTime.minute + "m " + upTime.seconds + "s<br>";
     str += "<b>Version:</b> " + ServerData.VERSION + "<br>";
-    str += "<b>Game Version:</b> " + ServerData.GAME_VERSION;      
+    str += "<b>Game Version:</b> " + ServerData.GAME_VERSION;
+    str += "<h3>Stats</h3>";
+    var keys = Object.keys(stats);
+    for (var i = 0; i < keys.length; i++)
+    {
+        var key = keys[i];
+        str += "<b>" + key + ":</b> " + stats[key];
+        if (i < keys.length - 1)
+        {
+            str += "<br>";
+        }
+    }
     var lobby = lobbies[0];
     if (lobby)
     {  
-        str += "<h3>" + lobby.gameData.mapId + "  -  " + lobby.gameData.gameModeId + "  -  " + lobby.state + "</h3>";    
+        str += "<h3>Lobby</h3>"
+        str += lobby.gameData.mapId + "  -  " + lobby.gameData.gameModeId + "  -  " + lobby.state;    
         var players = lobby.game ? lobby.game.getPlayers() : lobby.players;
         str += "<h3>Players: " + players.length + "/" + lobby.maxPlayers + "</h3>";
         str += "<table width='100%'><tr><th>#</th><th>Name</th><th>Level</th><th>Ping</th></tr>"
@@ -793,10 +805,8 @@ function getLobbyPlayerTeam(_lobby)
     {
         case GameMode.SURVIVAL:
             return 0;
-        default:
-            return _lobby.players.length % 2 == 0 ? 0 : 1;
-            break;
     }
+    return _lobby.players.length % 2 == 0 ? 0 : 1
 }
 
 function joinLobby(_player, _lobbyId)
@@ -1067,7 +1077,15 @@ function startGame(_lobbyId, _gameData)
         {
             var bot = getBot(_gameData.settings.botSkill);
             bot.name = "Bot " + i;
-            bot.team = _gameData.settings.botTeam >= 0 ? _gameData.settings.botTeam : getLobbyPlayerTeam(lobby);
+            switch (lobby.gameData.gameModeId)
+            {
+                case GameMode.SURVIVAL:
+                    bot.team = 0;
+                    break;
+                default:
+                    bot.team = _gameData.settings.botTeam >= 0 ? _gameData.settings.botTeam : (i % 2 == 0 ? 0 : 1);
+                    break;
+            }            
             players.push(bot);
         }
         _gameData.players = players;
