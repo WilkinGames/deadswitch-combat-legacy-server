@@ -596,7 +596,7 @@ class GameInstance
             case GameMode.SURVIVAL:                
                 this.game.bRanked = false;
                 this.game.bSurvival = true;
-                //this.game.bFriendlyFire = false;
+                this.game.bFriendlyFire = false;
                 this.game.gameModeData.bIntermission = true;
                 this.game.gameModeData.scores = null;
                 this.game.gameModeData.bAllowRevives = true;
@@ -10047,7 +10047,8 @@ class GameInstance
     spawnSurvivalEnemyCharacter()
     {
         var map = this.getCurrentMapData();
-        var spawnPos = map.spawns[this.Random(0, map.spawns.length - 1)].position;
+        var spawns = map.survivalSpawns ? map.survivalSpawns : map.spawns;
+        var spawnPos = spawns[this.Random(0, spawns.length - 1)].position;
 
         var classData = this.getBotClasses();
         var classes = [Classes.ASSAULT, Classes.ENGINEER, Classes.SUPPORT, Classes.RECON];
@@ -10164,6 +10165,12 @@ class GameInstance
             {
                 var reviver = this.getReviverByPlayerId(ps.id);
                 this.respawnPlayer(ps.id, reviver ? [reviver.position[0], reviver.position[1] - 30] : null);
+                this.onEvent({
+                    eventId: GameServer.EVENT_PAWN_ACTION,
+                    pawnId: ps.id,
+                    type: GameServer.PAWN_END_REVIVE,
+                    reviveId: ps.id
+                });
                 this.removeNextStep(reviver);                
             }
         }
@@ -12402,7 +12409,7 @@ class GameInstance
                     4: 0.5
                 }
             }
-            else
+            if (data.bBot)
             {
                 data.weapon.bUnlimitedAmmo = true;
             }

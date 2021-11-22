@@ -18,7 +18,7 @@
     "en": "\u00A92021 Wilkin Games"
   },
   "STR_DSC_COPYRIGHT": {
-    "en": "\u00A92021 Wilkin Games.\nDeadswitch: Combat is developed by Wilkin Games.\nAll rights reserved."
+    "en": "\u00A92021 Wilkin Games.\nDeadswitch: Combat is developed by Wilkin Games.\nAll rights reserved.\n\nNote: This beta build does not represent the game in its final state."
   },
   "STR_DSC": {
     "en": "Deadswitch: Combat"
@@ -43,6 +43,9 @@
   },
   "STR_MULTIPLAYER": {
     "en": "Multiplayer"
+  },
+  "STR_HOME": {
+    "en": "Home"
   },
   "STR_PLAY": {
     "en": "Play"
@@ -509,7 +512,10 @@
     "en": "Locking On..."
   },
   "STR_CLEAR_PENDING": {
-    "en": "Clear Pending Items"
+    "en": "Clear Pending"
+  },
+  "STR_PREVIEW": {
+    "en": "Preview"
   },
   "STR_RANK": {
     "en": "Rank"
