@@ -310,8 +310,10 @@ const GameMode = {
     TEAM_DEATHMATCH: "team_deathmatch",
     DOMINATION: "domination",
     CONQUEST: "conquest",
+    DESTRUCTION: "destruction",
     CAPTURE_THE_FLAG: "capture_the_flag",
-    SURVIVAL: "survival"
+    SURVIVAL: "survival",
+    SURVIVAL_CLASSIC: "survival_classic"
 };
 const Classes = {
     ASSAULT: "ASSAULT",
@@ -1184,8 +1186,11 @@ class GameInstance
                     var arr = toUpdate[id];
                     var objData = {}; //this.clone(data);
                     objData.id = id;
-                    objData.position = this.RoundNumberArray(body.position);
-                    objData.velocity = this.clone(body.velocity);
+                    if (body.position != body.previousPosition)
+                    {
+                        objData.position = this.RoundNumberArray(body.position);
+                    }
+                    objData.velocity = this.RoundNumberArray(body.velocity);
                     objData.rotation = body.angle;
                     if (data.bOnGround != null)
                     {
@@ -2887,7 +2892,7 @@ class GameInstance
                         }
                         break;
                 }
-                if (controllable.data.type == "car")
+                if (controllable.data.type == "car" && this.canExitVehicle(_body))
                 {
                     if (ai.enemyDist < 200 && Math.abs(controllable.velocity[0] < 50))
                     {
@@ -5643,6 +5648,13 @@ class GameInstance
             case GameMode.CONQUEST:
                 ps.captures = 0;
                 break;
+            case GameMode.CONQUEST:
+                ps.plants = 0;
+                ps.defuses = 0;
+                break;
+            case GameMode.SURVIVAL_CLASSIC:
+                ps.money = 0;
+                break;
         }        
         if (ps.currentClass == null)
         {
@@ -6542,7 +6554,7 @@ class GameInstance
                                 break;
 
                             case GameServer.INV_CURRENT_INVENTORY_INDEX:
-                                if (this.seatCanInput(pawn) && !pawn.data.weapon.bFireDelay && !pawn.data.bInteracting && !pawn.data.bClimbing && !pawn.data.bShieldCooldown && !pawn.data.weapon.bMeleeDelay)
+                                if (this.characterCanSwitchWeapons(pawn))
                                 {
                                     if (pawn.data.inventory[_data.value])
                                     {
@@ -6601,6 +6613,12 @@ class GameInstance
                 this.onEvent(_data);
             }
         }
+    }
+
+    characterCanSwitchWeapons(_body)
+    {
+        var data = _body.data;
+        return this.seatCanInput(_body) && !data.weapon.bFireDelay && !data.bInteracting && !data.bClimbing && !data.bShieldCooldown && !data.weapon.bMeleeDelay;
     }
 
     characterCanMelee(_body)
@@ -7048,7 +7066,7 @@ class GameInstance
                     {
                         this.toggleUnderbarrelEquipped(_body);
                     }
-                    else
+                    else if (data.bBot)
                     {
                         if (inventory.length > 1)
                         {
