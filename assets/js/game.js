@@ -2422,13 +2422,15 @@ class GameInstance
         {
             switch (equipment.id)
             {
+                case "ammo_box":
+
+                    break;
                 case "stim":
                     if (data.health < (data.maxHealth * 0.75))
                     {
                         this.useCharacterEquipment(_body, "equipment", _body.position[0], _body.position[1]);
                     }
                     break;
-
                 case "jammer":
                 case "sensor":
                     if (ai.enemy && ai.enemyDist < equipment.radius)
@@ -2436,7 +2438,6 @@ class GameInstance
                         this.useCharacterEquipment(_body, "equipment", ai.enemy.position[0], ai.enemy.position[1]);
                     }
                     break;
-
                 default:
                     if (ai.enemy && ai.enemyDist < 750)
                     {
@@ -8981,7 +8982,7 @@ class GameInstance
         }
         this.cancelCharacterReload(_body);
         this.cancelCharacterBoltPull(_body);
-        if (!data.weapon.bUnlimitedAmmo)
+        if (!data.weapon.bUnlimitedAmmo || data.bBot)
         {
             item.ammo--;
         }
