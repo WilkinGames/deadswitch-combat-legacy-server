@@ -30,7 +30,7 @@
       "bots": 4,
       "botSkill": 3,
       "tickRate": 30,
-      "updateRate": 10
+      "updateRate": 30
     }
   }
 }

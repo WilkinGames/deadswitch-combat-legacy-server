@@ -2436,6 +2436,13 @@ class GameInstance
                         this.useCharacterEquipment(_body, "equipment", ai.enemy.position[0], ai.enemy.position[1]);
                     }
                     break;
+
+                default:
+                    if (ai.enemy && ai.enemyDist < 750)
+                    {
+                        this.useCharacterEquipment(_body, "equipment", ai.enemy.position[0], ai.enemy.position[1] - ai.enemyDist);
+                    }
+                    break;
             }
         }
 
@@ -9588,7 +9595,7 @@ class GameInstance
                     break;
             }
         }
-        var bReviver = pawn.data.type == "character" && this.game.gameModeData.bAllowRevives && pawnTeam == 0 && this.getNumCharactersOnTeam(0) > 1;        
+        var bReviver = pawn.data.type == "character" && this.game.gameModeData.bAllowRevives && pawnTeam == 0 && this.getNumCharactersOnTeam(0) >= 1;        
         this.onEvent({
             eventId: GameServer.EVENT_PAWN_DIE,
             data: {
