@@ -1187,7 +1187,7 @@ class GameInstance
                     var arr = toUpdate[id];
                     var objData = {}; //this.clone(data);
                     objData.id = id;
-                    if (body.position != body.previousPosition)
+                    if (!body.previousPosition || body.position[0] != body.previousPosition[0] || body.position[1] != body.previousPosition[1])
                     {
                         objData.position = this.RoundNumberArray(body.position);
                     }
