@@ -595,7 +595,8 @@ class GameInstance
                     this.createFlag(map.flags[this.game.gameModeId][i], { num: i });
                 }
                 break;
-            case GameMode.SURVIVAL:                
+            case GameMode.SURVIVAL:
+            case GameMode.SURVIVAL_CLASSIC:
                 this.game.bRanked = false;
                 this.game.bSurvival = true;
                 this.game.bFriendlyFire = false;
@@ -8915,7 +8916,7 @@ class GameInstance
                             eventId: GameServer.EVENT_PAWN_ACTION,
                             pawnId: data.id,
                             type: GameServer.PAWN_PLACE_EQUIPMENT,
-                            equipmentId: item.id
+                            weaponId: item.id
                         });
                         break;
 
@@ -8960,7 +8961,7 @@ class GameInstance
                                 eventId: GameServer.EVENT_PAWN_ACTION,
                                 pawnId: data.id,
                                 type: GameServer.PAWN_PLACE_EQUIPMENT,
-                                equipmentId: item.id
+                                weaponId: item.id
                             });
                         }
                         break;
@@ -12168,8 +12169,7 @@ class GameInstance
                 eventId: GameServer.EVENT_PAWN_ACTION,
                 pawnId: data.id,
                 type: GameServer.PAWN_START_SHIELD_COOLDOWN,
-                bDoor: true,
-                position: _body.position
+                bDoor: true
             });
         }
     }
