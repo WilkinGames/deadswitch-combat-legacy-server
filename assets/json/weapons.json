@@ -29,7 +29,7 @@
     "mag": 1,
     "speedModifier": 1,
     "range": 50,
-    "recoil": 1,
+    "recoil": 0.5,
     "penetration": 1,
     "lookModifier": 1
   },
@@ -150,7 +150,7 @@
     "range": 1250,
     "mag": 20,
     "ammo": 60,
-    "recoil": 1,
+    "recoil": 0.8,
     "penetration": 1,
     "lookModifier": 1
   },
@@ -171,7 +171,7 @@
     "range": 1250,
     "mag": 15,
     "ammo": 60,
-    "recoil": 0.5,
+    "recoil": 0.4,
     "penetration": 1,
     "lookModifier": 1,
     "score": 5000
@@ -192,7 +192,7 @@
     "range": 1250,
     "mag": 30,
     "ammo": 90,
-    "recoil": 0.5,
+    "recoil": 0.2,
     "penetration": 1,
     "lookModifier": 1,
     "score": 10000
@@ -334,7 +334,7 @@
     "magSize": 20,
     "reloadTime": 2,
     "speedModifier": 0.9,
-    "range": 1250,
+    "range": 1300,
     "mag": 20,
     "ammo": 80,
     "recoil": 0.6,
@@ -826,7 +826,7 @@
     "range": 2000,
     "mag": 5,
     "ammo": 20,
-    "recoil": 10,
+    "recoil": 8,
     "penetration": 4,
     "lookModifier": 2,
     "headshotMult": 2,

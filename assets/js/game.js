@@ -1192,7 +1192,10 @@ class GameInstance
                         objData.position = this.RoundNumberArray(body.position);
                     }
                     objData.velocity = this.RoundNumberArray(body.velocity);
-                    objData.rotation = body.angle;
+                    if (!body.previousAngle || body.previousAngle != body.angle)
+                    {
+                        objData.rotation = body.angle;
+                    }
                     if (data.bOnGround != null)
                     {
                         objData.bOnGround = data.bOnGround;
@@ -9105,7 +9108,7 @@ class GameInstance
                         {
                             this.toggleUnderbarrelEquipped(pawn);
                         }
-                        else
+                        else if (pawn.data.bBot)
                         {
                             var otherIndex = pawn.data["currentInventoryIndex"] == 1 ? 0 : 1;
                             var otherItem = pawn.data.inventory[otherIndex];
@@ -10247,26 +10250,46 @@ class GameInstance
             var equipment = null;
             if (this.game.bSurvival)
             {
-                grenade = "frag";
-                equipment = this.RandomBoolean() ? "ammo_box" : "stim";
-                var secondary = ["smaw", "javelin", "rpg", "mgl", "m320"];
-                var inventory = [
-                    {
-                        id: "mp5",
-                        mods: {
-                            optic: Mods.OPTIC_EOTECH,
-                            accessory: Mods.ACCESSORY_LASER,
-                            ammo: Mods.AMMO_PIERCING
-                        },
-                        ammo: 300
-                    },
-                    {
-                        id: secondary[this.Random(0, secondary.length - 1)],
-                    },
-                    { id: melee },
-                    { id: equipment },
-                    { id: grenade }
-                ];                
+                switch (this.game.gameModeId)
+                {
+                    case GameMode.SURVIVAL:
+                        grenade = "frag";
+                        equipment = this.RandomBoolean() ? "ammo_box" : "stim";
+                        var secondary = ["smaw", "javelin", "rpg", "mgl", "m320"];
+                        var inventory = [
+                            {
+                                id: "mp5",
+                                mods: {
+                                    optic: Mods.OPTIC_EOTECH,
+                                    accessory: Mods.ACCESSORY_LASER,
+                                    ammo: Mods.AMMO_PIERCING
+                                },
+                                ammo: 300
+                            },
+                            {
+                                id: secondary[this.Random(0, secondary.length - 1)],
+                            },
+                            { id: melee },
+                            { id: equipment },
+                            { id: grenade }
+                        ];   
+                        break;
+
+                    case GameMode.SURVIVAL_CLASSIC:
+                        grenade = "frag";
+                        equipment = "stim";
+                        var inventory = [
+                            {
+                                id: "m9",
+                                ammo: 150
+                            },
+                            null,
+                            { id: melee },
+                            { id: equipment },
+                            { id: grenade }
+                        ];   
+                        break;
+                }                             
             }
             else if (this.game.bRanked)
             {

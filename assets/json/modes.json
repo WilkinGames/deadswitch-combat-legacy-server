@@ -18,9 +18,23 @@
     "bTeam": true
   },
   {
+    "id": "destruction",
+    "name": "STR_MODE_DESTRUCTION",
+    "desc": "STR_MODE_DESTRUCTION_DESC",
+    "bTeam": true
+  },
+  {
     "id": "survival",
     "name": "STR_MODE_SURVIVAL",
     "desc": "STR_MODE_SURVIVAL_DESC",
+    "bSurvival": true,
+    "bTeam": false
+  },
+  {
+    "id": "survival_classic",
+    "name": "STR_MODE_SURVIVAL_CLASSIC",
+    "desc": "STR_MODE_SURVIVAL_DESC",
+    "bSurvival": true,
     "bTeam": false
   }
 ]

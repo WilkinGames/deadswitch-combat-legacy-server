@@ -1,7 +1,7 @@
 {
   "name": "Beta Server - Canada",
   "country": "ca",
-  "type": "STR_OFFICIAL",
+  "type": "STR_INTERNET",
   "port": 8000,
   "maxPlayers": 32,
   "bUseLobby": false,

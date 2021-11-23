@@ -21,6 +21,13 @@
     "score": 15000
   },
   {
+    "id": "scope",
+    "type": "optic",
+    "name": "STR_MOD_SCOPE",
+    "desc": "STR_MOD_SCOPE_DESC",
+    "score": 0
+  },
+  {
     "id": "ammo_fmj",
     "type": "ammo",
     "name": "STR_MOD_FMJ",

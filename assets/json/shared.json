@@ -228,7 +228,7 @@
     "RECON": {
       "primary": {
         "id": "m40a3",
-        "mods": { "optic": null }
+        "mods": { "optic": "scope" }
       },
       "secondary": {
         "id": "m9",

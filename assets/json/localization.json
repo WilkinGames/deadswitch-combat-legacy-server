@@ -460,6 +460,9 @@
   "STR_SETTING_CAMERA_SPEED": {
     "en": "Camera Speed"
   },
+  "STR_SETTING_CLIENT_PREDICTION": {
+    "en": "Client Prediction"
+  },
   "STR_SETTING_CHAT_FILTER": {
     "en": "Filter Chat Profanity"
   },
@@ -543,6 +546,12 @@
   },
   "STR_OFFICIAL": {
     "en": "Official"
+  },
+  "STR_INTERNET": {
+    "en": "Internet"
+  },
+  "STR_LAN": {
+    "en": "LAN"
   },
   "STR_SERVER": {
     "en": "Server"
@@ -711,8 +720,14 @@
   "STR_MODE_CONQUEST": {
     "en": "Conquest"
   },
+  "STR_MODE_DESTRUCTION": {
+    "en": "Destruction"
+  },
   "STR_MODE_SURVIVAL": {
     "en": "Survival"
+  },
+  "STR_MODE_SURVIVAL_CLASSIC": {
+    "en": "Classic Survival"
   },
   "STR_MODE_SURVIVAL_DESC": {
     "en": "Survive as long as possible."
@@ -735,6 +750,9 @@
   },
   "STR_MODE_CONQUEST_DESC": {
     "en": "Capture and defend the 5 flag positions."
+  },
+  "STR_MODE_DESTRUCTION_DESC": {
+    "en": "Teams fight for control of the bomb to destroy the targets."
   },
   "STR_MAP_DOWNTURN": {
     "en": "Downturn"
@@ -3317,6 +3335,9 @@
   "STR_MOD_ACOG": {
     "en": "ACOG"
   },
+  "STR_MOD_SCOPE": {
+    "en": "Scope"
+  },
   "STR_MOD_MAGPULL": {
     "en": "Mag Assist"
   },
@@ -3473,11 +3494,26 @@
   "STR_X_%": {
     "en": "%1%"
   },
+  "STR_X_TICK_RATE": {
+    "en": "%1hz"
+  },
   "STR_MOD_BRAKE": {
     "en": "Muzzle Brake"
   },
   "STR_MOD_HEAVY": {
     "en": "Heavy Barrel"
+  },
+  "STR_RECOIL_MINIMAL": {
+    "en": "Minimal"
+  },
+  "STR_RECOIL_LOW": {
+    "en": "Low"
+  },
+  "STR_RECOIL_MODERATE": {
+    "en": "Moderate"
+  },
+  "STR_RECOIL_HIGH": {
+    "en": "High"
   },
   "STR_MOD_COMPENSATOR": {
     "en": "Compensator",
