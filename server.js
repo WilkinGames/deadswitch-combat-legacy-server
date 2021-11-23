@@ -222,6 +222,10 @@ app.get("/", (req, res) =>
 {
     var str = "<head><style>body { font-size: 12px; font-family:'Arial'; } h1 { height: 10px; } td { text-align: center; vertical-align: middle; }</style>";
     str += "<title>[DS:C] Multiplayer Server</title></head><body><h1>Deadswitch: Combat</h1><h3>MULTIPLAYER SERVER</h3>"
+    if (settings.name)
+    {
+        str += "<h3>" + settings.name + "</h3>";
+    }
     var upTime = convertMS(Date.now() - serverStartTime);
     str += "<b>Uptime:</b> " + upTime.day + "d " + upTime.hour + "h " + upTime.minute + "m " + upTime.seconds + "s<br>";
     str += "<b>Version:</b> " + ServerData.VERSION + "<br>";
@@ -1121,7 +1125,7 @@ function onEndGame(_lobbyId)
         {
             setLobbyState(_lobbyId, LobbyState.IN_PROGRESS);
         }
-    }, 10000);
+    }, 15000);
 }
 
 function destroyLobbyGame(_lobbyId)
