@@ -2436,7 +2436,13 @@ class GameInstance
             switch (equipment.id)
             {
                 case "ammo_box":
-
+                    break;
+                case "claymore":
+                case "betty":
+                    if (ai.enemy && ai.enemyDist < 1000 && Math.random() > 0.8)
+                    {
+                        this.useCharacterEquipment(_body, "equipment", ai.enemy.position[0], ai.enemy.position[1]);
+                    }
                     break;
                 case "stim":
                     if (data.health < (data.maxHealth * 0.75))
@@ -2454,7 +2460,22 @@ class GameInstance
                 default:
                     if (ai.enemy && ai.enemyDist < 750)
                     {
-                        this.useCharacterEquipment(_body, "equipment", ai.enemy.position[0], ai.enemy.position[1] - ai.enemyDist);
+                        this.useCharacterEquipment(_body, "equipment", ai.enemy.position[0], ai.enemy.position[1]);
+                    }
+                    break;
+            }
+        }
+
+        //Handle grenade
+        var grenade = data.grenade;
+        if (grenade && grenade.ammo > 0)
+        {
+            switch (grenade.id)
+            {
+                default:
+                    if (ai.enemy && ai.enemyDist > 250 && ai.enemyDist < 1000 && Math.random() > 0.9)
+                    {
+                        this.useCharacterEquipment(_body, "grenade", ai.enemy.position[0], ai.enemy.position[1] - ai.enemyDist);
                     }
                     break;
             }
@@ -8203,7 +8224,6 @@ class GameInstance
 
     triggerCharacterEquipment(_data, _slot)
     {
-        console.log(_data, _slot);
         if (!this.matchInProgress())
         {
             return;
@@ -8212,7 +8232,6 @@ class GameInstance
         if (pawn)
         {
             var item = pawn.data[_slot];
-            console.log(item);
             if (item)
             {                
                 if (item.ammo > 0)
@@ -10198,8 +10217,28 @@ class GameInstance
                 id: secondary[this.Random(0, secondary.length - 1)].id
             });
         }
-        var grenade = null;
-        var equipment = null;
+        var grenades = [];
+        if (wave >= 5)
+        {
+            grenades.push("frag", "stun", "flashbang");
+        }
+        var equipment = [];
+        if (wave >= 3)
+        {
+            equipment.push("trophy", "jammer");
+        }
+        if (wave >= 5)
+        {
+            equipment.push("stim");
+        }
+        if (wave >= 8)
+        {
+            equipment.push("claymore");
+        }
+        if (wave >= 10)
+        {
+            equipment.push("knife");
+        }
         var melee = "melee_knife";        
         var botSkill = Math.min(BotSkill.SKILL_GOD, Math.floor(wave * 0.25));
         var health = this.getCharacterMaxHealth() + (wave * 10);
@@ -10210,8 +10249,8 @@ class GameInstance
             team: 1,
             inventory: inventory,
             melee: melee,
-            grenade: grenade,
-            equipment: equipment,
+            grenade: grenades[this.Random(0, grenades.length - 1)],
+            equipment: equipment[this.Random(0, equipment.length - 1)],
             avatar: avatar,
             bBot: true,
             botSkill: botSkill,
@@ -12514,10 +12553,10 @@ class GameInstance
             if (data.team == 0)
             {
                 data.damageMultipliers = {
-                    1: 0.5,
-                    2: 0.5,
-                    3: 0.5,
-                    4: 0.5
+                    1: 0.25,
+                    2: 0.25,
+                    3: 0.25,
+                    4: 0.25
                 }
             }
             if (data.bBot)
