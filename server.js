@@ -1088,6 +1088,7 @@ function startGame(_lobbyId, _gameData)
             switch (lobby.gameData.gameModeId)
             {
                 case GameMode.SURVIVAL:
+                case GameMode.SURVIVAL_CLASSIC:
                     bot.team = 0;
                     break;
                 default:
