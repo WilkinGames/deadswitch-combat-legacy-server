@@ -610,7 +610,8 @@ class GameInstance
                 this.game.gameModeData.bWeaponDrops = false;
                 this.game.gameModeData.bAllowRespawns = false;
                 this.game.gameModeData.wave = 0;
-                this.game.gameModeData.enemies = 0;                
+                this.game.gameModeData.enemies = 0;    
+                this.game.gameModeData.kills = 0;  
                 break;
         }
 
@@ -5674,7 +5675,7 @@ class GameInstance
                 ps.defuses = 0;
                 break;
             case GameMode.SURVIVAL_CLASSIC:
-                ps.money = 0;
+                ps.money = 1000000;
                 break;
         }        
         if (ps.currentClass == null)
@@ -6313,7 +6314,6 @@ class GameInstance
                     break;
 
                 case GameServer.EVENT_BUY:
-                    console.log(_data);
                     var ps = this.getPlayerById(_data.pawnId);
                     if (ps)
                     {
@@ -6323,13 +6323,40 @@ class GameInstance
                             var newItem = this.getWeaponData(_data.itemId);
                             if (newItem)
                             {
-                                this.requestEvent({
-                                    eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
-                                    pawnId: pawn.data.id,
-                                    index: _data.index,
-                                    item: newItem,
-                                    type: GameServer.INV_ITEM_REPLACE
-                                });
+                                var moneyCost = newItem.score ? newItem.score : 1000;
+                                if (ps.money >= moneyCost)
+                                {
+                                    ps.money -= moneyCost;
+                                    this.onEvent({
+                                        eventId: GameServer.EVENT_PLAYER_UPDATE,
+                                        playerId: pawn.data.id,
+                                        data: {
+                                            money: ps.money
+                                        }
+                                    });
+                                    if (_data.index <= 2)
+                                    {
+                                        this.requestEvent({
+                                            eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                            pawnId: pawn.data.id,
+                                            index: _data.index,
+                                            item: newItem,
+                                            type: GameServer.INV_ITEM_REPLACE
+                                        });
+                                    }
+                                    else
+                                    {
+                                        var slot = _data.index == 3 ? "equipment" : "grenade";
+                                        this.requestEvent({
+                                            eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                            pawnId: pawn.data.id,
+                                            slot: slot,
+                                            value: newItem.id,
+                                            type: GameServer.INV_EQUIPMENT_SET,
+                                            sfxId: "wpn_ammo"
+                                        });
+                                    }
+                                }
                             }
                         }
                     }
@@ -7397,7 +7424,7 @@ class GameInstance
                             for (var i = 0; i < inventory.length; i++)
                             {
                                 var invItem = inventory[i];
-                                if (!invItem.bMelee && invItem.ammo != null)
+                                if (invItem && !invItem.bMelee && invItem.ammo != null)
                                 {
                                     this.requestEvent({
                                         eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
@@ -8176,6 +8203,7 @@ class GameInstance
 
     triggerCharacterEquipment(_data, _slot)
     {
+        console.log(_data, _slot);
         if (!this.matchInProgress())
         {
             return;
@@ -8184,8 +8212,9 @@ class GameInstance
         if (pawn)
         {
             var item = pawn.data[_slot];
+            console.log(item);
             if (item)
-            {
+            {                
                 if (item.ammo > 0)
                 {
                     this.useCharacterEquipment(pawn, _slot, _data.worldX, _data.worldY);
@@ -8941,7 +8970,14 @@ class GameInstance
                     case "deployable_cover":
                         data.weapon["bEquipmentDelay"] = true;
                         data.weapon["equipmentDelayTimer"] = Math.round(this.game.settings.fps * 0.3);
-                        this.createDeployableCover(this.getRandomUniqueId(), [_body.position[0], _body.position[1] + 10], data.id);
+                        //this.createDeployableCover(this.getRandomUniqueId(), [_body.position[0], _body.position[1] + 10], data.id);
+                        var cover = this.createObstacle({
+                            type: "obstacle",
+                            position: _body.position,
+                            obstacleId: "barrel_generic"
+                        });
+                        cover.data.health = 500;
+                        cover.data.bGodMode = false;
                         this.requestEvent({
                             eventId: GameServer.EVENT_PAWN_ACTION,
                             pawnId: data.id,
@@ -9260,10 +9296,18 @@ class GameInstance
                         bAvenger: bAvenger
                     }
                 };
-                if (game.bSurvival)
+                if (game.bSurvival && victim)
                 {
-                    ps.money += _damageInfo.bMelee ? 200 : (_damageInfo.bHeadshot ? 150 : 100);
-                    eventObj.data.money = ps.money;
+                    switch (victim.data.type)
+                    {
+                        case "character":
+                        case "car":
+                        case "helicopter":
+                        case "tank":
+                            ps.money += _damageInfo.bMelee ? 200 : (_damageInfo.bHeadshot ? 150 : 100);
+                            eventObj.data.money = ps.money;
+                            break;
+                    }                    
                 }
                 else
                 {
@@ -9993,7 +10037,6 @@ class GameInstance
 
     startSurvivalWaveIntermission()
     {
-        console.log("startSurvivalWaveIntermission");
         var gameData = this.game.gameModeData;
         gameData.intermissionTimer = Settings.INTERMISSION_TIMER;
         gameData.waveTimer = this.game.settings.fps;
@@ -10009,7 +10052,6 @@ class GameInstance
 
     startSurvivalWave()
     {
-        console.log("startSurvivalWave");
         var gameData = this.game.gameModeData;
         gameData.bIntermission = false;
         gameData.wave++;
@@ -10180,7 +10222,6 @@ class GameInstance
 
     onSurvivalWaveComplete()
     {
-        console.log("onSurvivalWaveComplete");
         this.startSurvivalWaveIntermission();
         var gameData = this.game.gameModeData;
         var waveBonus = gameData.wave * 100;
@@ -10230,6 +10271,14 @@ class GameInstance
                 });
                 this.removeNextStep(reviver);                
             }
+            ps.money += waveBonus;
+            this.onEvent({
+                eventId: GameServer.EVENT_PLAYER_UPDATE,
+                playerId: ps.id,
+                data: {
+                    money: ps.money
+                }
+            });
         }
     }
 
@@ -12166,6 +12215,7 @@ class GameInstance
             rotation: body.angle,
             data: body.data
         });
+        return body;
     }
 
     createLever(_position, _data)
