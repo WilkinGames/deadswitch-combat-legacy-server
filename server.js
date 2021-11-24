@@ -34,7 +34,10 @@ const GameMode = {
     TEAM_DEATHMATCH: "team_deathmatch",
     DOMINATION: "domination",
     CONQUEST: "conquest",
-    SURVIVAL: "survival"
+    DESTRUCTION: "destruction",
+    CAPTURE_THE_FLAG: "capture_the_flag",
+    SURVIVAL: "survival",
+    SURVIVAL_CLASSIC: "survival_classic"
 };
 const Map = {
     SIEGE: "map_siege"
@@ -808,6 +811,7 @@ function getLobbyPlayerTeam(_lobby)
     switch (_lobby.gameData.gameModeId)
     {
         case GameMode.SURVIVAL:
+        case GameMode.SURVIVAL_CLASSIC:
             return 0;
     }
     return _lobby.players.length % 2 == 0 ? 0 : 1
