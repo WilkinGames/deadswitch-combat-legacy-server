@@ -7424,7 +7424,7 @@ class GameInstance
                             for (var i = 0; i < inventory.length; i++)
                             {
                                 var invItem = inventory[i];
-                                if (invItem && !invItem.bMelee && invItem.ammo != null)
+                                if (invItem && !invItem.bMelee && !invItem.bEquipment && invItem.ammo != null)
                                 {
                                     this.requestEvent({
                                         eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
