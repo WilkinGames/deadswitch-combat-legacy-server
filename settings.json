@@ -13,7 +13,7 @@
     "STR_SERVER_PLAYER_INFO"
   ],
   "gameData": {
-    "gameModeId": "survival",
+    "gameModeId": "survival_classic",
     "mapId": "map_downturn",
     "settings": {
       "timeLimit": 10,
@@ -30,7 +30,7 @@
       "bots": 4,
       "botSkill": 3,
       "tickRate": 30,
-      "updateRate": 30
+      "updateRate": 10
     }
   }
 }

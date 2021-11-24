@@ -149,6 +149,12 @@
   "STR_X_MPS": {
     "en": "%1 m/s"
   },
+  "STR_X_MONEY": {
+    "en": "$%1"
+  },
+  "STR_TACTICAL_CRATE": {
+    "en": "Tactical Crate"
+  },
   "STR_BOTS": {
     "en": "Bots",
     "ru": "ИИ",
@@ -543,6 +549,9 @@
   },
   "STR_MENU": {
     "en": "Menu"
+  },
+  "STR_DATE_X_X": {
+    "en": "%1h %2m"
   },
   "STR_OFFICIAL": {
     "en": "Official"
@@ -957,6 +966,9 @@
   },
   "STR_GUNNER_WEAPON": {
     "en": "Gunner Weapon"
+  },
+  "STR_WEAPON": {
+    "en": "Weapon"
   },
   "STR_GRENADE": {
     "en": "Grenade"

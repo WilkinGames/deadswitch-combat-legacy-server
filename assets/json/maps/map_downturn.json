@@ -16,7 +16,11 @@
       [ 13539, 1986 ]
     ]
   },
-  "survivalSpawns": [
+  "spawn_survival": [
+    7000,
+    2380
+  ],
+  "spawns_survival": [
     {
       "position": [ 200, 2380 ]
     },

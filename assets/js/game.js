@@ -37,6 +37,7 @@ const GameServer = {
     EVENT_GAME_PAUSE: 50,
     EVENT_INTERACTABLE_USED: 60,
     EVENT_REMOVE_OBJECT: 61,
+    EVENT_BUY: 62,
     PAWN_FIRE_WEAPON: 1,
     PAWN_HIT_SHIELD: 2,
     PAWN_START_REVIVE: 3,
@@ -95,6 +96,7 @@ const GameServer = {
     PAWN_REQUEST: 56,
     PAWN_WEAPON_COOLDOWN: 57,
     PAWN_LOCK_ACQUIRED: 58,
+    PAWN_INTERACTABLE_USED: 59,
     INV_CLASS_DATA: 1,
     INV_CURRENT_INVENTORY_INDEX: 2,
     INV_FIRE: 3,
@@ -575,7 +577,7 @@ class GameInstance
         var map = this.getCurrentMapData();
         this.game.gameModeData.spawns = this.clone(map.spawns);
         this.game.gameModeData.scores = [0, 0];
-        this.game.gameModeData.scoreLimit = _data.settings.scoreLimit;       
+        this.game.gameModeData.scoreLimit = _data.settings.scoreLimit;
 
         switch (this.game.gameModeId)
         {
@@ -608,9 +610,16 @@ class GameInstance
                 this.game.gameModeData.bWeaponDrops = false;
                 this.game.gameModeData.bAllowRespawns = false;
                 this.game.gameModeData.wave = 0;
-                this.game.gameModeData.enemies = 0;  
-                this.game.gameModeData.kills = 0;  
+                this.game.gameModeData.enemies = 0;                
                 break;
+        }
+
+        if (this.game.gameModeId == GameMode.SURVIVAL_CLASSIC)
+        {
+            var storeCrate = this.createCrate(map.spawn_survival, {
+                team: 0,
+                type: Crate.STORE
+            });
         }
 
         this.initMap();
@@ -981,7 +990,7 @@ class GameInstance
                             if (numOnTeam < Settings.MAX_ENEMIES)
                             {
                                 var wave = this.game.gameModeData.wave;
-                                if (wave > 1 && numOnTeam < (gameData.numEnemies * 0.5) && this.Random(1, 5) == 1)
+                                if (wave > 1 && numOnTeam < (gameData.numEnemies * 0.5) && this.Random(1, 10) == 1)
                                 {
                                     this.spawnSurvivalEnemyVehicle();                                    
                                 }
@@ -6303,6 +6312,29 @@ class GameInstance
                     this.game.bPaused = _data.bPaused;
                     break;
 
+                case GameServer.EVENT_BUY:
+                    console.log(_data);
+                    var ps = this.getPlayerById(_data.pawnId);
+                    if (ps)
+                    {
+                        var pawn = this.getObjectById(_data.pawnId);
+                        if (pawn)
+                        {
+                            var newItem = this.getWeaponData(_data.itemId);
+                            if (newItem)
+                            {
+                                this.requestEvent({
+                                    eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                    pawnId: pawn.data.id,
+                                    index: _data.index,
+                                    item: newItem,
+                                    type: GameServer.INV_ITEM_REPLACE
+                                });
+                            }
+                        }
+                    }
+                    break;
+
                 case GameServer.EVENT_GAME_START:
 
                     break;
@@ -6555,6 +6587,7 @@ class GameInstance
                                 {
                                     this.setCharacterCurrentInventoryItem(pawn, _data["index"]);
                                 }
+                                _data.bReplace = true;
                                 _data["inventory"] = inventory;
                                 break;
 
@@ -7299,11 +7332,10 @@ class GameInstance
             delete _interactable.data["currentPawnId"];
         }
         this.onEvent({
-            eventId: GameServer.EVENT_INTERACTABLE_USED,
-            data: {
-                interactableId: _interactable.data.id,
-                playerId: _playerId
-            }
+            eventId: GameServer.EVENT_PAWN_ACTION, 
+            pawnId: _playerId,
+            type: GameServer.PAWN_INTERACTABLE_USED,
+            interactableId: _interactable.data.id
         });
         var pawn = this.getObjectById(_playerId);
         var data = _interactable.data;
@@ -8774,20 +8806,7 @@ class GameInstance
             default:
                 switch (item.id)
                 {
-                    case "ammo_box":
-                        /*
-                        var crate = this.createCrate(_body.position, {
-                            team: _body.data.team,
-                            ownerId: _body.data.id,
-                            interactTime: this.game.settings.fps * 0.5,
-                            type: Crate.AMMO,
-                            uses: 10,
-                            frame: item.id
-                        });
-                        crate.data.destroyTimer = this.game.settings.fps * 60;
-                        var force = Math.min(400, this.Dist(_worldX, _worldY, _body.position[0], _body.position[1]) * 4);
-                        crate.applyImpulse([Math.cos(equipmentRot) * force, Math.sin(equipmentRot) * force], 0, 0);
-                        */
+                    case "ammo_box":                        
                         var ammoBox = this.createEquipment([_body.position[0], _body.position[1] - 30], data.team, data.scale, data.id, item);
                         ammoBox.data.itemData = {
                             uses: 10,
@@ -9243,7 +9262,8 @@ class GameInstance
                 };
                 if (game.bSurvival)
                 {
-                    //TODO
+                    ps.money += _damageInfo.bMelee ? 200 : (_damageInfo.bHeadshot ? 150 : 100);
+                    eventObj.data.money = ps.money;
                 }
                 else
                 {
@@ -10080,7 +10100,11 @@ class GameInstance
     spawnSurvivalEnemyCharacter()
     {
         var map = this.getCurrentMapData();
-        var spawns = map.survivalSpawns ? map.survivalSpawns : map.spawns;
+        var spawns = map.spawns_survival;
+        if (!spawns)
+        {
+            spawns = map.spawns;
+        }
         var spawnPos = spawns[this.Random(0, spawns.length - 1)].position;
 
         var classData = this.getBotClasses();
@@ -10268,25 +10292,18 @@ class GameInstance
                             },
                             {
                                 id: secondary[this.Random(0, secondary.length - 1)],
-                            },
-                            { id: melee },
-                            { id: equipment },
-                            { id: grenade }
+                            }
                         ];   
                         break;
 
                     case GameMode.SURVIVAL_CLASSIC:
                         grenade = "frag";
-                        equipment = "stim";
                         var inventory = [
                             {
                                 id: "m9",
                                 ammo: 150
                             },
-                            null,
-                            { id: melee },
-                            { id: equipment },
-                            { id: grenade }
+                            null
                         ];   
                         break;
                 }                             
@@ -10299,10 +10316,7 @@ class GameInstance
                 equipment = classData.equipment;
                 inventory = [
                     classData.primary,
-                    classData.secondary,
-                    { id: melee },
-                    { id: equipment },
-                    { id: grenade }
+                    classData.secondary
                 ];
             }
             else
@@ -10310,16 +10324,18 @@ class GameInstance
                 inventory = [
                     {
                         id: "m9"
-                    },
-                    null,
-                    { id: melee },
-                    { id: equipment },
-                    { id: grenade }
+                    }
                 ]; 
             }
             if (_position)
             {
                 var spawnPos = _position;
+            }
+            else if (this.game.gameModeId == GameMode.SURVIVAL_CLASSIC)
+            {
+                var map = this.getCurrentMapData();
+                spawnPos = this.clone(map.spawn_survival);
+                spawnPos[0] += this.Random(-100, 100);
             }
             else if (ps.desiredSpawn && ps.desiredSpawn[0] != null && ps.desiredSpawn[1] != null)
             {                
@@ -12218,9 +12234,10 @@ class GameInstance
         body.data = {
             id: this.getRandomUniqueId(),
             type: "crate",
-            itemData: _data.itemData,
+            itemData: _data.itemData ? _data.itemData : {},
             team: _data.team,
-            crateType: _data.type,            
+            crateType: _data.type,
+            ownerId: _data.ownerId,
             bEnabled: true,
             bDisposable: _data.bDisposable != null ? _data.bDisposable : true
         };        
@@ -12413,10 +12430,10 @@ class GameInstance
                         {
                             item.ammo = curItem.ammo;
                         }
-                        this.applyWeaponMods(item, curItem.mods);
+                        this.applyWeaponMods(item, curItem.mods);  
                         inventory.push(item);
                     }
-                    else
+                    else if (curItem.id)
                     {
                         console.warn("Invalid item:", curItem.id);
                     }
@@ -12433,18 +12450,10 @@ class GameInstance
         {
             data.inventory = [];
         }
-        if (_data.grenade)
-        {
-            data.grenade = this.getWeaponData(_data.grenade);
-        }
-        if (_data.equipment)
-        {
-            data.equipment = this.getWeaponData(_data.equipment);
-        }
-        if (_data.melee)
-        {
-            data.melee = this.getWeaponData(_data.melee);
-        }
+        data.melee = this.getWeaponData(_data.melee ? _data.melee : "none");
+        data.grenade = this.getWeaponData(_data.grenade);
+        data.equipment = this.getWeaponData(_data.equipment);        
+        data.inventory.push(data.melee, data.equipment, data.grenade);
         this.addWorldBody(body);
         if (data.bBot)
         {
