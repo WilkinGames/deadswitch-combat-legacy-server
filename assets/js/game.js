@@ -1177,7 +1177,7 @@ class GameInstance
                         if (body.position[1] > this.getCurrentMapData().height)
                         {
                             console.warn("Out of bounds", data.type);
-                            this.removeNextStep(body);
+                            //this.removeNextStep(body);
                         }
                         break;
                 }
@@ -10126,7 +10126,7 @@ class GameInstance
         gameData.numEnemies = Math.min(100, 5 * gameData.wave);
         gameData.enemiesSpawned = 0;
         gameData.enemiesRemaining = gameData.numEnemies;
-        gameData.spawnTimer = this.game.settings.fps * 0.5;
+        gameData.spawnTimer = Math.round(this.game.settings.fps * 0.1);
         gameData.spawnTimerMax = gameData.spawnTimer;
         this.onEvent({
             eventId: GameServer.EVENT_GAME_UPDATE,
@@ -10791,7 +10791,7 @@ class GameInstance
         this.addWorldBody(body);
         if (weaponData["ammo"] == 0 && weaponData["mag"] == 0)
         {
-            body.data["destroyTimer"] = this.game.settings.fps;
+            //body.data["destroyTimer"] = this.game.settings.fps;
         }
         if (_data.velocity)
         {
@@ -10825,7 +10825,8 @@ class GameInstance
                 num++;
                 if (num > Settings.MAX_DROPPED_WEAPONS)
                 {
-                    //this.removeNextStep(oldWeapon);
+                    console.warn("Remove old weapon");
+                    this.removeNextStep(oldWeapon);
                     break;
                 }
             }
@@ -11186,6 +11187,12 @@ class GameInstance
                         type: "obstacle",
                         position: curPawn.position,
                         obstacleId: "barrel_explosive"
+                    });
+                    break;
+                case "weapon":
+                    var wpns = this.getAllWeaponsByType(Weapon.TYPE_RIFLE);
+                    this.createDroppedWeapon(curPawn.position, {
+                        weaponData: this.getWeaponData(wpns[this.Random(0, wpns.length - 1)])
                     });
                     break;
                 default:
