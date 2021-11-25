@@ -991,7 +991,7 @@ class GameInstance
                             if (numOnTeam < Settings.MAX_ENEMIES)
                             {
                                 var wave = this.game.gameModeData.wave;
-                                if (wave > 1 && numOnTeam < (gameData.numEnemies * 0.5) && this.Random(1, 10) == 1)
+                                if (wave > 1 && numOnTeam < (gameData.numEnemies * 0.5) && this.Random(1, 6) == 1)
                                 {
                                     this.spawnSurvivalEnemyVehicle();                                    
                                 }
@@ -1859,16 +1859,18 @@ class GameInstance
                     break;
 
                 case "mountedWeapon":
-                    //if (this.game.gameModeData.bVehicles)
-                    this.createSpawner(object.position, {
-                        type: object.type,
-                        timerMax: this.game.settings.fps * this.game.gameModeData.vehicleRespawnTime,
-                        data: {
-                            weaponType: object.weaponType,
-                            team: object.team,
-                            scale: object.scale
-                        }
-                    });
+                    if (this.game.gameModeData.bVehicles)
+                    {
+                        this.createSpawner(object.position, {
+                            type: object.type,
+                            timerMax: this.game.settings.fps * this.game.gameModeData.vehicleRespawnTime,
+                            data: {
+                                weaponType: object.weaponType,
+                                team: object.team,
+                                scale: object.scale
+                            }
+                        });
+                    }
                     break;
 
                 case "droppedWeapon":
@@ -5730,7 +5732,7 @@ class GameInstance
                 ps.defuses = 0;
                 break;
             case GameMode.SURVIVAL_CLASSIC:
-                ps.money = 5000;
+                ps.money = 0;
                 break;
         }        
         if (ps.currentClass == null)
@@ -9654,11 +9656,7 @@ class GameInstance
                         delete interactable.data["currentPawnId"];
                     }
                 }
-                if (this.game.bSurvival && pawn.data.team == 0)
-                {
-
-                }
-                else if (this.Random(1, 3) == 1)
+                if (this.Random(1, 3) == 1)
                 {
                     this.dropCharacterWeapon(pawn, pawn.data.currentInventoryIndex);
                 }
@@ -10128,7 +10126,7 @@ class GameInstance
         gameData.numEnemies = Math.min(100, 5 * gameData.wave);
         gameData.enemiesSpawned = 0;
         gameData.enemiesRemaining = gameData.numEnemies;
-        gameData.spawnTimer = this.game.settings.fps;
+        gameData.spawnTimer = this.game.settings.fps * 0.5;
         gameData.spawnTimerMax = gameData.spawnTimer;
         this.onEvent({
             eventId: GameServer.EVENT_GAME_UPDATE,
