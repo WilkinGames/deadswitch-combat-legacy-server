@@ -10599,6 +10599,13 @@ class GameInstance
                 delete _body.constraint;
             }
             var data = _body.data;
+            if (data)
+            {
+                if (data.type == "droppedWeapon")
+                {
+                    console.warn("Remove dropped", data);
+                }
+            }
             var id = data ? data.id : undefined;
             var type = data ? data.type : null;
             delete _body.data;
@@ -11192,7 +11199,7 @@ class GameInstance
                 case "weapon":
                     var wpns = this.getAllWeaponsByType(Weapon.TYPE_RIFLE);
                     this.createDroppedWeapon(curPawn.position, {
-                        weaponData: this.getWeaponData(wpns[this.Random(0, wpns.length - 1)])
+                        weaponData: this.getWeaponData(wpns[this.Random(0, wpns.length - 1)].id)
                     });
                     break;
                 default:
