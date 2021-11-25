@@ -4,7 +4,7 @@
   "type": "STR_INTERNET",
   "port": 8000,
   "maxPlayers": 32,
-  "bUseLobby": true,
+  "bUseLobby": false,
   "bAllowVotekick": true,
   "welcome": "STR_SERVER_WELCOME",
   "rules": "STR_SERVER_RULES_NONE",
@@ -13,7 +13,7 @@
     "STR_SERVER_PLAYER_INFO"
   ],
   "gameData": {
-    "gameModeId": "survival_classic",
+    "gameModeId": "survival",
     "mapId": "map_downturn",
     "settings": {
       "timeLimit": 10,
@@ -27,7 +27,7 @@
       "bFallDamage": true,
       "vehicleRespawnTime": 120,
       "weaponRespawnTime": 120,
-      "bots": 8,
+      "bots": 5,
       "botSkill": 1,
       "tickRate": 30,
       "updateRate": 10
