@@ -4328,8 +4328,15 @@ class GameInstance
             data.bCrouching = false;
         }        
 
-        var target = this.WrapAngle(data.aimRotation - data.desiredAimRotation, true);
-        data.aimRotation -= target * data.aimSpeed;
+        if (data.bBot)
+        {
+            data.aimRotation = data.desiredAimRotation;
+        }
+        else
+        {
+            var target = this.WrapAngle(data.aimRotation - data.desiredAimRotation, true);
+            data.aimRotation -= target * data.aimSpeed;
+        }
         var deg = this.ToDeg(this.WrapAngle(data.aimRotation, true));
         var abs = Math.abs(deg);
         data.scale = abs < 90 ? 1 : -1;
@@ -12538,7 +12545,7 @@ class GameInstance
             team: _data.team,
             health: _data.health ? _data.health : this.getCharacterMaxHealth(),
             aimRotation: 0,
-            aimSpeed: 0.5 / this.game.fpsMult,
+            aimSpeed: 0.25 / this.game.fpsMult,
             desiredAimRotation: this.ToRad(this.RandomBoolean() ? 0 : 180),
             lookPos: [_data.x + this.RandomBoolean() ? 100 : -1000, _data.y],
             maxSpeed: shared.maxSpeed,
