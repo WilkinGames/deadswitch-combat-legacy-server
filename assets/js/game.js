@@ -7500,7 +7500,7 @@ class GameInstance
                                 slot: "grenade",
                                 value: 1
                             });
-                            if (pawn.data.equipment.id != "ammo_box")
+                            if (pawn.data.equipment && pawn.data.equipment.id != "ammo_box")
                             {
                                 this.requestEvent({
                                     eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
@@ -10825,7 +10825,7 @@ class GameInstance
                 num++;
                 if (num > Settings.MAX_DROPPED_WEAPONS)
                 {
-                    this.removeNextStep(oldWeapon);
+                    //this.removeNextStep(oldWeapon);
                     break;
                 }
             }
