@@ -991,7 +991,7 @@ class GameInstance
                             if (numOnTeam < Settings.MAX_ENEMIES)
                             {
                                 var wave = this.game.gameModeData.wave;
-                                if (wave > 1 && && this.Random(1, 8) == 1)
+                                if (wave > 1 && this.Random(1, 8) == 1)
                                 {
                                     this.spawnSurvivalEnemyVehicle();                                    
                                 }
