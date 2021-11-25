@@ -4270,9 +4270,9 @@ class GameInstance
     handleReviver(_body)
     {
         var map = this.getCurrentMapData();
-        if (_body[1] > map.height)
+        if (_body.position[1] > map.height)
         {
-            _body[1] = 0;
+            _body.position[1] = 0;
         }
         var data = _body.data;
         if (!data.currentPawnId && data.bleedTimer != null)
@@ -10206,7 +10206,7 @@ class GameInstance
     spawnSurvivalEnemyCharacter()
     {
         var map = this.getCurrentMapData();
-        var spawns = map.spawns_survival;
+        var spawns = map.spawns; //map.spawns_survival;
         if (!spawns)
         {
             spawns = map.spawns;
@@ -10268,7 +10268,7 @@ class GameInstance
             grenades.push("frag", "stun", "flashbang");
         }
         var equipment = [];
-        if (wave >= 3)
+        if (wave >= 3 && this.Random(1, 50) == 1)
         {
             equipment.push("trophy", "jammer");
         }
