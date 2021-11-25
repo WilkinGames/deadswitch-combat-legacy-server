@@ -4329,12 +4329,7 @@ class GameInstance
         }        
 
         var target = this.WrapAngle(data.aimRotation - data.desiredAimRotation, true);
-        var aimSpeed = data.aimSpeed;
-        if (data.bStunned)
-        {
-            aimSpeed = 0.1;
-        }
-        data.aimRotation -= target * aimSpeed;
+        data.aimRotation -= target * data.aimSpeed;
         var deg = this.ToDeg(this.WrapAngle(data.aimRotation, true));
         var abs = Math.abs(deg);
         data.scale = abs < 90 ? 1 : -1;
