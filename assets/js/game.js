@@ -13000,10 +13000,15 @@ class GameInstance
                                     case "tank":
                                     case "car":
                                     case "obstacle":
-                                        var source = this.getObjectById(dataA.sourceId);
-                                        if (source)
+                                    case "droppedWeapon":
+                                    case "crate":
+                                        if (!dataB.controllableId)
                                         {
-                                            this.attachRope(source, _bodyB);
+                                            var source = this.getObjectById(dataA.sourceId);
+                                            if (source)
+                                            {
+                                                this.attachRope(source, _bodyB);
+                                            }
                                         }
                                         break;
                                     default:
