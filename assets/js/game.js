@@ -123,7 +123,7 @@ const GameServer = {
 const Settings = {
     INTERMISSION_TIMER: 10,
     MAX_CRATES: 10,
-    MAX_ENEMIES: 10,
+    MAX_ENEMIES: 20,
     MAX_DROPPED_WEAPONS: 8,
     VEHICLE_EXPLOSION_DAMAGE: 200
 };
@@ -10791,11 +10791,11 @@ class GameInstance
         this.addWorldBody(body);
         if (weaponData["ammo"] == 0 && weaponData["mag"] == 0)
         {
-            //body.data["destroyTimer"] = this.game.settings.fps;
+            body.data["destroyTimer"] = this.game.settings.fps;
         }
         if (_data.velocity)
         {
-            body.applyImpulse([_data.velocity[0], _data.velocity[1]], 0, 0);
+            //body.applyImpulse([_data.velocity[0], _data.velocity[1]], 0, 0);
         }
         this.onEvent({
             eventId: GameServer.EVENT_SPAWN_OBJECT,
@@ -12634,10 +12634,10 @@ class GameInstance
             if (data.team == 0)
             {
                 data.damageMultipliers = {
-                    1: 0.25,
-                    2: 0.25,
+                    1: 0.5,
+                    2: 0.5,
                     3: 0.25,
-                    4: 0.25
+                    4: 0.5
                 }
             }
             if (data.bBot)
