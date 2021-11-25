@@ -991,7 +991,7 @@ class GameInstance
                             if (numOnTeam < Settings.MAX_ENEMIES)
                             {
                                 var wave = this.game.gameModeData.wave;
-                                if (wave > 1 && this.Random(1, 8) == 1)
+                                if (wave > 1 && this.Random(1, 6) == 1)
                                 {
                                     this.spawnSurvivalEnemyVehicle();                                    
                                 }
@@ -1177,7 +1177,7 @@ class GameInstance
                         if (body.position[1] > this.getCurrentMapData().height)
                         {
                             console.warn("Out of bounds", data.type);
-                            //this.removeNextStep(body);
+                            this.removeNextStep(body);
                         }
                         break;
                 }
@@ -10263,7 +10263,7 @@ class GameInstance
             });
         }
         var grenades = [];
-        if (wave >= 5)
+        if (wave >= 5 && this.Random(1, 5) == 1)
         {
             grenades.push("frag", "stun", "flashbang");
         }
@@ -10599,13 +10599,6 @@ class GameInstance
                 delete _body.constraint;
             }
             var data = _body.data;
-            if (data)
-            {
-                if (data.type == "droppedWeapon")
-                {
-                    console.warn("Remove dropped", data);
-                }
-            }
             var id = data ? data.id : undefined;
             var type = data ? data.type : null;
             delete _body.data;
@@ -11197,10 +11190,13 @@ class GameInstance
                     });
                     break;
                 case "weapon":
-                    var wpns = this.getAllWeaponsByType(Weapon.TYPE_RIFLE);
+                    var wpns = this.getAllWeapons();
                     this.createDroppedWeapon(curPawn.position, {
                         weaponData: this.getWeaponData(wpns[this.Random(0, wpns.length - 1)].id)
                     });
+                    break;
+                case "ammo":
+
                     break;
                 default:
                     var veh = this.getVehicleData(_id);
@@ -14681,6 +14677,21 @@ class GameInstance
             {
                 arr.push(wpn);
             }
+        }
+        return arr;
+    }
+
+    getAllWeapons()
+    {
+        var arr = [];
+        for (var i = 0; i < this.data.weapons.length; i++)
+        {
+            var wpn = this.data.weapons[i];
+            if (wpn.bHidden || wpn.bVehicle)
+            {
+                continue;
+            }
+            arr.push(wpn);
         }
         return arr;
     }
