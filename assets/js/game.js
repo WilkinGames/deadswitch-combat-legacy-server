@@ -13002,6 +13002,7 @@ class GameInstance
                                     case "obstacle":
                                     case "droppedWeapon":
                                     case "crate":
+                                    case "reviver":
                                         if (!dataB.controllableId)
                                         {
                                             var source = this.getObjectById(dataA.sourceId);
