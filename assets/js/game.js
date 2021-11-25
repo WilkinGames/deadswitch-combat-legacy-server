@@ -1859,18 +1859,16 @@ class GameInstance
                     break;
 
                 case "mountedWeapon":
-                    if (this.game.gameModeData.bVehicles)
-                    {
-                        this.createSpawner(object.position, {
-                            type: object.type,
-                            timerMax: this.game.settings.fps * this.game.gameModeData.vehicleRespawnTime,
-                            data: {
-                                weaponType: object.weaponType,
-                                team: object.team,
-                                scale: object.scale
-                            }
-                        });
-                    }
+                    //if (this.game.gameModeData.bVehicles)
+                    this.createSpawner(object.position, {
+                        type: object.type,
+                        timerMax: this.game.settings.fps * this.game.gameModeData.vehicleRespawnTime,
+                        data: {
+                            weaponType: object.weaponType,
+                            team: object.team,
+                            scale: object.scale
+                        }
+                    });
                     break;
 
                 case "droppedWeapon":
@@ -2286,35 +2284,7 @@ class GameInstance
         else
         {
             ai.tickerMax = Math.round(this.game.settings.fps * 0.5);
-            ai.ticker = ai.tickerMax;
-            switch (ai.botSkill)
-            {
-                case BotSkill.SKILL_GOD:
-                    ai.enemyDistMax = 3000;
-                    ai.offsetX = 0;
-                    ai.offsetY = 0;
-                    break;
-                case BotSkill.SKILL_INSANE:
-                    ai.enemyDistMax = 2000;
-                    ai.offsetX = this.Random(-30, 30);
-                    ai.offsetY = this.Random(-30, 30);
-                    break;
-                case BotSkill.SKILL_HARD:
-                    ai.enemyDistMax = 1000;
-                    ai.offsetX = this.Random(-75, 75);
-                    ai.offsetY = this.Random(-75, 75);
-                    break;
-                case BotSkill.SKILL_NORMAL:
-                    ai.enemyDistMax = 750;
-                    ai.offsetX = this.Random(-100, 100);
-                    ai.offsetY = this.Random(-100, 100);
-                    break;
-                default:
-                    ai.enemyDistMax = 500;
-                    ai.offsetX = this.Random(-150, 150);
-                    ai.offsetY = this.Random(-150, 150);
-                    break;
-            }
+            ai.ticker = ai.tickerMax;            
         }        
 
         if (data.bFlashed || data.bStunned)
@@ -2367,6 +2337,15 @@ class GameInstance
             else
             {
                 ai.actionTicker = ai.actionTickerMax;
+                if (data.team == 0)
+                {
+                    var revivers = this.getRevivers();
+                    if (revivers.length > 0)
+                    {
+                        ai.desiredItemId = revivers[0].data.id;
+                        ai.bWantsItem = true;
+                    }
+                }
                 ai.bWantsVehicle = !_body.data.controllableId && this.Random(1, 4) == 1 && (this.getAvailableVehicles(_body).length > 0);
                 ai.desiredVehicleId = null;
                 if (ai.bWantsVehicle)
@@ -2406,6 +2385,34 @@ class GameInstance
                         break;
                 }
                 ai.pathTicker = pathTickerMax;
+                switch (ai.botSkill)
+                {
+                    case BotSkill.SKILL_GOD:
+                        ai.enemyDistMax = 3000;
+                        ai.offsetX = 0;
+                        ai.offsetY = 0;
+                        break;
+                    case BotSkill.SKILL_INSANE:
+                        ai.enemyDistMax = 2000;
+                        ai.offsetX = this.Random(-30, 30);
+                        ai.offsetY = this.Random(-30, 30);
+                        break;
+                    case BotSkill.SKILL_HARD:
+                        ai.enemyDistMax = 1000;
+                        ai.offsetX = this.Random(-75, 75);
+                        ai.offsetY = this.Random(-75, 75);
+                        break;
+                    case BotSkill.SKILL_NORMAL:
+                        ai.enemyDistMax = 750;
+                        ai.offsetX = this.Random(-100, 100);
+                        ai.offsetY = this.Random(-100, 100);
+                        break;
+                    default:
+                        ai.enemyDistMax = 500;
+                        ai.offsetX = this.Random(-150, 150);
+                        ai.offsetY = this.Random(-150, 150);
+                        break;
+                }
             }
             if (this.hasEquipment(_body, "ammo_box"))
             {
@@ -2475,7 +2482,7 @@ class GameInstance
                 default:
                     if (ai.enemy && ai.enemyDist > 250 && ai.enemyDist < 1000 && Math.random() > 0.9)
                     {
-                        this.useCharacterEquipment(_body, "grenade", ai.enemy.position[0], ai.enemy.position[1] - ai.enemyDist);
+                        this.useCharacterEquipment(_body, "grenade", ai.enemy.position[0], ai.enemy.position[1] - (ai.enemyDist * 0.25));
                     }
                     break;
             }
@@ -2550,11 +2557,11 @@ class GameInstance
                         }
                         if (data.bClimbing)
                         {
-                            if (node.data.position[1] < (_body.position[1] + 70))
+                            if (node.data.position[1] < (_body.position[1] + 50))
                             {
                                 moveDirY = -1;
                             }
-                            else if (node.data.position[1] > (_body.position[1] + 100))
+                            else if (node.data.position[1] > (_body.position[1] + 60))
                             {
                                 moveDirY = 1;
                             }
@@ -2685,6 +2692,20 @@ class GameInstance
                 ai.moveToPos = req;
                 ai.desiredVehicleId = null;
             }
+            else if (ai.desiredItemId)
+            {
+                var desiredItem = this.getObjectById(ai.desiredItemId);
+                if (!desiredItem)
+                {
+                    ai.desiredItem = null;
+                    ai.moveToPos = null;
+                }
+                else
+                {
+                    ai.desiredItemId = desiredItem.data.id;
+                    ai.moveToPos = this.clone(desiredItem.position);
+                }
+            }
             else if (ai.desiredVehicleId)
             {
                 var desiredVehicle = this.getObjectById(ai.desiredVehicleId);
@@ -2703,7 +2724,15 @@ class GameInstance
             {
                 ai.moveToPos = null;
                 ai.desiredVehicleId = null;
-                if (ai.bWantsVehicle)
+                if (ai.bWantsItem)
+                {
+                    desiredItem = this.getNearbyVehicle(_body);
+                    if (desiredItem)
+                    {
+                        ai.desiredItemId = desiredItem.data.id;
+                    }
+                }
+                else if (ai.bWantsVehicle)
                 {
                     desiredVehicle = this.getNearbyVehicle(_body);
                     if (desiredVehicle)
@@ -4298,7 +4327,12 @@ class GameInstance
         }        
 
         var target = this.WrapAngle(data.aimRotation - data.desiredAimRotation, true);
-        data.aimRotation -= target * data.aimSpeed;
+        var aimSpeed = data.aimSpeed;
+        if (data.bStunned)
+        {
+            aimSpeed = 0.1;
+        }
+        data.aimRotation -= target * aimSpeed;
         var deg = this.ToDeg(this.WrapAngle(data.aimRotation, true));
         var abs = Math.abs(deg);
         data.scale = abs < 90 ? 1 : -1;
@@ -5696,7 +5730,7 @@ class GameInstance
                 ps.defuses = 0;
                 break;
             case GameMode.SURVIVAL_CLASSIC:
-                ps.money = 1000000;
+                ps.money = 5000;
                 break;
         }        
         if (ps.currentClass == null)
@@ -9620,7 +9654,11 @@ class GameInstance
                         delete interactable.data["currentPawnId"];
                     }
                 }
-                if (this.Random(1, 3) == 1)
+                if (this.game.bSurvival && pawn.data.team == 0)
+                {
+
+                }
+                else if (this.Random(1, 3) == 1)
                 {
                     this.dropCharacterWeapon(pawn, pawn.data.currentInventoryIndex);
                 }
@@ -9667,6 +9705,15 @@ class GameInstance
                             break;
                     }
                 }
+            }
+            switch (this.game.gameModeId)
+            {
+                case GameMode.SURVIVAL_CLASSIC:
+                    ps.inventory = [pawn.data.inventory[0], pawn.data.inventory[1]];
+                    ps.melee = pawn.data.melee ? pawn.data.melee.id : null;
+                    ps.equipment = pawn.data.equipment ? pawn.data.equipment : null;
+                    ps.grenade = pawn.data.grenade ? pawn.data.grenade : null;
+                    break;
             }
         }
         var useCauserId = _causerId;
@@ -10254,7 +10301,8 @@ class GameInstance
             avatar: avatar,
             bBot: true,
             botSkill: botSkill,
-            health: health
+            health: health,
+            bRegenHealth: false
         });
         return char;
     }
@@ -10362,39 +10410,50 @@ class GameInstance
             var equipment = null;
             if (this.game.bSurvival)
             {
-                switch (this.game.gameModeId)
+                if (ps.inventory)
                 {
-                    case GameMode.SURVIVAL:
-                        grenade = "frag";
-                        equipment = this.RandomBoolean() ? "ammo_box" : "stim";
-                        var secondary = ["smaw", "javelin", "rpg", "mgl", "m320"];
-                        var inventory = [
-                            {
-                                id: "mp5",
-                                mods: {
-                                    optic: Mods.OPTIC_EOTECH,
-                                    accessory: Mods.ACCESSORY_LASER,
-                                    ammo: Mods.AMMO_PIERCING
+                    var inventory = this.clone(ps.inventory);
+                    ps.inventory = null;
+                    melee = ps.melee;
+                    equipment = ps.equipment;
+                    grenade = ps.grenade;
+                }
+                else
+                {
+                    switch (this.game.gameModeId)
+                    {
+                        case GameMode.SURVIVAL:
+                            grenade = "frag";
+                            equipment = this.RandomBoolean() ? "ammo_box" : "stim";
+                            var secondary = ["smaw", "javelin", "rpg", "mgl", "m320"];
+                            inventory = [
+                                {
+                                    id: "mp5",
+                                    mods: {
+                                        optic: Mods.OPTIC_EOTECH,
+                                        accessory: Mods.ACCESSORY_LASER,
+                                        ammo: Mods.AMMO_PIERCING
+                                    },
+                                    ammo: 300
                                 },
-                                ammo: 300
-                            },
-                            {
-                                id: secondary[this.Random(0, secondary.length - 1)],
-                            }
-                        ];   
-                        break;
+                                {
+                                    id: secondary[this.Random(0, secondary.length - 1)],
+                                }
+                            ];
+                            break;
 
-                    case GameMode.SURVIVAL_CLASSIC:
-                        grenade = "frag";
-                        var inventory = [
-                            {
-                                id: "m9",
-                                ammo: 150
-                            },
-                            null
-                        ];   
-                        break;
-                }                             
+                        case GameMode.SURVIVAL_CLASSIC:
+                            grenade = "frag";
+                            inventory = [
+                                {
+                                    id: "m9",
+                                    ammo: 150
+                                },
+                                null
+                            ];
+                            break;
+                    }
+                }
             }
             else if (this.game.bRanked)
             {
@@ -12476,7 +12535,7 @@ class GameInstance
             team: _data.team,
             health: _data.health ? _data.health : this.getCharacterMaxHealth(),
             aimRotation: 0,
-            aimSpeed: 0.25 / this.game.fpsMult,
+            aimSpeed: 0.5 / this.game.fpsMult,
             desiredAimRotation: this.ToRad(this.RandomBoolean() ? 0 : 180),
             lookPos: [_data.x + this.RandomBoolean() ? 100 : -1000, _data.y],
             maxSpeed: shared.maxSpeed,
@@ -12540,8 +12599,22 @@ class GameInstance
             data.inventory = [];
         }
         data.melee = this.getWeaponData(_data.melee ? _data.melee : "none");
-        data.grenade = this.getWeaponData(_data.grenade);
-        data.equipment = this.getWeaponData(_data.equipment);        
+        if (typeof _data.grenade == "string")
+        {
+            data.grenade = this.getWeaponData(_data.grenade);
+        }
+        else
+        {
+            data.grenade = _data.grenade;
+        }
+        if (typeof _data.equipment == "string")
+        {
+            data.equipment = this.getWeaponData(_data.equipment);
+        }
+        else
+        {
+            data.equipment = _data.equipment;
+        }
         data.inventory.push(data.melee, data.equipment, data.grenade);
         this.addWorldBody(body);
         if (data.bBot)
@@ -13469,7 +13542,10 @@ class GameInstance
 
                             case "door":
                                 this.detonate(_bodyA);
-                                this.setDoorClosed(_bodyB, false, _bodyA, true);
+                                if (dataB.materail != Material.METAL)
+                                {
+                                    this.setDoorClosed(_bodyB, false, _bodyA, true);
+                                }
                                 break;
 
                             default:

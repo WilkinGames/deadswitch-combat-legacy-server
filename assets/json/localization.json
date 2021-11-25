@@ -30,7 +30,7 @@
     "en": "Thank you for participating in the Deadswitch: Combat Beta.\n\nPlease note that the beta build does not represent the game in its final state.\n\nPlease provide any feedback or issues to the official Deadswitch: Combat Discord.\n\nHave fun!"
   },
   "STR_DISCORD": {
-    "en": "Discord"
+    "en": "Join Discord"
   },
   "STR_HOMEPAGE": {
     "en": "Homepage"
@@ -154,6 +154,9 @@
   },
   "STR_TACTICAL_CRATE": {
     "en": "Tactical Crate"
+  },
+  "STR_REVIVE": {
+    "en": "Revive"
   },
   "STR_BOTS": {
     "en": "Bots",
