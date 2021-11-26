@@ -1799,7 +1799,7 @@ class GameInstance
                     body.data = {
                         id: object.id,
                         type: object.type,
-                        width: 10,
+                        width: 20,
                         height: object.height,
                         direction: object.direction,
                         bSkipServerUpdate: true
