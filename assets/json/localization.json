@@ -56,6 +56,9 @@
   "STR_CONNECT_BY_IP": {
     "en": "Connect by IP"
   },
+  "STR_CONNECT": {
+    "en": "Connect"
+  },
   "STR_CONNECT_BY_IP_DESC": {
     "en": "Enter the IP address of the Deadswitch: Combat server you want to join."
   },
@@ -69,7 +72,7 @@
     "en": "Quick Join"
   },
   "STR_JOIN_SERVER": {
-    "en": "Join Server"
+    "en": "Join Server ‣"
   },
   "STR_CONNECTING": {
     "en": "Connecting"
@@ -568,6 +571,9 @@
   "STR_SERVER": {
     "en": "Server"
   },
+  "STR_COUNTRY": {
+    "en": "Country"
+  },
   "STR_REFRESH": {
     "en": "Refresh"
   },
@@ -729,6 +735,9 @@
     "es": "Dominación",
     "it": "Dominazione"
   },
+  "STR_MODE_CTF": {
+    "en": "Capture the Flag"
+  },
   "STR_MODE_CONQUEST": {
     "en": "Conquest"
   },
@@ -759,6 +768,9 @@
     "tr": "3 Bayrak pozisyonunu ele geçir ve savun.",
     "es": "Captura y defiende las 3 posiciones de la bandera.",
     "it": "Cattura e difendi le 3 posizioni della bandiera."
+  },
+  "STR_MODE_CTF_DESC": {
+    "en": "Capture the enemy flag and protect yours."
   },
   "STR_MODE_CONQUEST_DESC": {
     "en": "Capture and defend the 5 flag positions."
@@ -895,6 +907,9 @@
   "STR_STATE_WAITING": {
     "en": "Waiting"
   },
+  "STR_STATE_LOBBY": {
+    "en": "Lobby"
+  },
   "STR_STATE_IN_PROGRESS": {
     "en": "In Progress"
   },
@@ -943,8 +958,11 @@
   "STR_HARDCORE": {
     "en": "Hardcore"
   },
-  "STR_WEAPON_DROPS": {
-    "en": "Weapon Spawns"
+  "STR_SPECIAL_WEAPONS": {
+    "en": "Special Weapons"
+  },
+  "STR_MOUNTED_WEAPONS": {
+    "en": "Mounted Weapons"
   },
   "STR_WEAPON_RESPAWN_TIME": {
     "en": "Weapon Respawn Time"
@@ -3741,7 +3759,7 @@
     "it": ".50 BMG"
   },
   "STR_ROUND_25MM": {
-    "en": "25mm×137mm Autocannon"
+    "en": "25mm×137mm"
   },
   "STR_ROUND_45ACP": {
     "en": ".45 ACP",

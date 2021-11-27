@@ -122,7 +122,7 @@
     "round": "50cal",
     "damage": 100,
     "accuracy": 2,
-    "fireRate": 15,
+    "fireRate": 14,
     "magSize": 7,
     "reloadTime": 1.8,
     "speedModifier": 1,
@@ -372,7 +372,7 @@
     "type": "TYPE_RIFLE",
     "fireMode": "MODE_BURST",
     "round": "556mm",
-    "damage": 32,
+    "damage": 33,
     "accuracy": 0.5,
     "fireRate": 3,
     "burstFireRate": 22,
@@ -382,7 +382,7 @@
     "range": 1700,
     "mag": 30,
     "ammo": 90,
-    "recoil": 0.5,
+    "recoil": 0.3,
     "penetration": 2,
     "lookModifier": 1.5
   },
@@ -445,7 +445,7 @@
     "range": 1600,
     "mag": 30,
     "ammo": 90,
-    "recoil": 0.4,
+    "recoil": 0.2,
     "penetration": 2,
     "lookModifier": 1.5,
     "score": 10000
@@ -702,7 +702,7 @@
     "range": 4000,
     "recoil": 1,
     "penetration": 8,
-    "overheatMax": 120,
+    "overheatMax": 180,
     "bVehicle": true
   },
   {

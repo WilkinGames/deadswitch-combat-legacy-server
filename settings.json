@@ -1,5 +1,5 @@
 {
-  "name": "Beta Server - Canada",
+  "name": "Digital Ocean - Canada",
   "country": "ca",
   "type": "STR_INTERNET",
   "port": 8000,
@@ -22,13 +22,14 @@
       "preGameTimer": 10,
       "bSpawnProtection": true,
       "bVehicles": true,
-      "bWeaponDrops": true,
+	  "bMountedWeapons": true,
+      "bSpecialWeapons": true,
       "bHardcore": false,
       "bFallDamage": true,
       "vehicleRespawnTime": 120,
       "weaponRespawnTime": 120,
-      "bots": 5,
-      "botSkill": 1,
+      "bots": 4,
+      "botSkill": 2,
       "tickRate": 30,
       "updateRate": 10
     }

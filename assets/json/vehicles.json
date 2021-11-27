@@ -45,6 +45,39 @@
     ]
   },
   {
+    "id": "blackhawk",
+    "name": "STR_BLACKHAWK",
+    "type": "helicopter",
+    "uiScale": 3,
+    "seats": [
+      [ 58, 3 ],
+      [ 30, 7 ],
+      [ 17, 7 ]
+    ],
+    "camos": [
+      {
+        "id": null
+      },
+      {
+        "id": "thermal"
+      }
+    ],
+    "countermeasures": [
+      {
+        "id": null
+      },
+      {
+        "id": "ejection_seat"
+      },
+      {
+        "id": "ecm"
+      },
+      {
+        "id": "flares"
+      }
+    ]
+  },
+  {
     "id": "cobra",
     "name": "STR_COBRA",
     "type": "helicopter",
@@ -125,7 +158,11 @@
         },
         {
           "id": "m2",
-          "score": 5000
+          "score": 10000
+        },
+        {
+          "id": "m242",
+          "score": 25000
         }
       ],
       [
@@ -138,42 +175,13 @@
         },
         {
           "id": "m2",
-          "score": 5000
+          "score": 10000
+        },
+        {
+          "id": "m242",
+          "score": 25000
         }
       ]
-    ],
-    "camos": [
-      {
-        "id": null
-      },
-      {
-        "id": "thermal"
-      }
-    ],
-    "countermeasures": [
-      {
-        "id": null
-      },
-      {
-        "id": "ejection_seat"
-      },
-      {
-        "id": "ecm"
-      },
-      {
-        "id": "flares"
-      }
-    ]
-  },
-  {
-    "id": "blackhawk",
-    "name": "STR_BLACKHAWK",
-    "type": "helicopter",
-    "uiScale": 3,
-    "seats": [
-      [ 58, 3 ],
-      [ 30, 7 ],
-      [ 17, 7 ]
     ],
     "camos": [
       {
@@ -300,6 +308,9 @@
           "id": "m240"
         },
         {
+          "id": "m249"
+        },
+        {
           "id": "m60e4",
           "score": 2500
         },
@@ -359,6 +370,9 @@
       [
         {
           "id": "m240"
+        },
+        {
+          "id": "m249"
         },
         {
           "id": "m60e4",

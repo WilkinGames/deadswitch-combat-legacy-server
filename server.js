@@ -20,7 +20,7 @@ const MathUtil = {
 };
 const ServerData = {
     VERSION: "1.0.0",
-    GAME_VERSION: "0.0.10",
+    GAME_VERSION: "0.0.11",
 };
 const LobbyState = {
     INTERMISSION: "intermission",
@@ -316,6 +316,34 @@ io.on("connection", (socket) =>
             _func();
         }
     });
+    socket.on("vote", (_val) =>
+    {
+        log(chalk.cyan(socket.id), "vote", _val);
+        var lobby = getLobbyData(socket.player.lobbyId);
+        if (lobby)
+        {
+            var votes = lobby.votes;
+            if (votes)
+            {
+                var index = -1;
+                for (var i = 0; i < votes.length; i++)
+                {
+                    var vote = votes[i];
+                    index = vote.players.indexOf(socket.id);
+                    if (index >= 0)
+                    {
+                        vote.players.splice(index, 1);
+                    }
+                }
+                var cur = votes[_val];
+                if (cur)
+                {                    
+                    cur.players.push(socket.id);              
+                }
+                io.to(lobby.id).emit("updateLobby", { votes: votes });
+            }
+        }
+    });
     socket.on("chat", (_message) =>
     {
         log(chalk.cyan(socket.id), "chat", _message);
@@ -324,13 +352,25 @@ io.on("connection", (socket) =>
             playerId: socket.player.id,
             messageText: _message
         });
-        var arr = _message.split(" ");
-        if (arr && arr.length > 0)
+        var args = _message.split(" ");
+        if (args && args.length > 0)
         {
             var lobby = getLobbyData(socket.player.lobbyId);
-            switch (arr[0])
+            switch (args[0])
             {
                 case "/end":
+                    if (socket.player.bAdmin)
+                    {
+                        if (lobby.game)
+                        {
+                            lobby.game.requestEvent({
+                                eventId: GameServer.EVENT_GAME_END
+                            });
+                        }
+                    }
+                    break;
+
+                case "/stop":
                     if (socket.player.bAdmin)
                     {
                         setLobbyState(lobby.id, LobbyState.WAITING);
@@ -350,7 +390,7 @@ io.on("connection", (socket) =>
                     {
                         var name = socket.player.name;
                         updatePlayerData(socket, {
-                            name: arr[1]
+                            name: args[1]
                         });
                         sendChatMessageToLobby(lobby.id, {
                             bServer: true,
@@ -368,7 +408,7 @@ io.on("connection", (socket) =>
                         {
                             if (lobby.game)
                             {
-                                lobby.game.spawn(socket.player.id, arr[1]);
+                                lobby.game.spawn(socket.player.id, args);
                             }
                         }
                     }
@@ -418,7 +458,7 @@ io.on("connection", (socket) =>
                 case "/kick":
                     if (socket.player.bAdmin)
                     {
-                        var index = parseInt(arr[1], 10);
+                        var index = parseInt(args[1], 10);
                         if (index != null && !isNaN(index))
                         {
                             for (var i = 0; i < lobby.players.length; i++)
@@ -448,9 +488,9 @@ io.on("connection", (socket) =>
                 case "/bot":
                     if (socket.player.bAdmin)
                     {
-                        var bot = getBot(arr[2] != null ? parseInt(arr[2]) : BotSkill.AUTO);
+                        var bot = getBot(args[2] != null ? parseInt(args[2]) : BotSkill.AUTO);
                         bot.name = "Bot " + lobby.players.length;
-                        bot.team = arr[1] != null ? parseInt(arr[1], 10) : MathUtil.Random(0, 1);
+                        bot.team = args[1] != null ? parseInt(args[1], 10) : MathUtil.Random(0, 1);
                         joinLobby(bot, lobby.id);
                     }
                     break;
@@ -500,7 +540,7 @@ io.on("connection", (socket) =>
                     {
                         if (settings.bAllowVotekick)
                         {
-                            var index = parseInt(arr[1], 10);
+                            var index = parseInt(args[1], 10);
                             if (index != null && !isNaN(index))
                             {
                                 for (var i = 0; i < lobby.players.length; i++)
@@ -770,24 +810,6 @@ function createLobby()
 {
     if (settings.bUseLobby)
     {
-        /*
-        var gameData = {
-            gameModeId: GameMode.TEAM_DEATHMATCH,
-            mapId: Map.SIEGE,
-            settings: {
-                timeLimit: 10,
-                scoreLimit: 100,
-                respawnTime: 5,
-                preGameTimer: 10,
-                bAllowRespawns: true,
-                bSpawnProtection: true,
-                bVehicles: true,
-                bWeaponDrops: true,
-                bots: 0,
-                botSkill: BotSkill.EASY
-            }
-        }
-        */
         var gameData = clone(settings.gameData);
     }
     else
@@ -901,6 +923,10 @@ function setLobbyState(_lobbyId, _state)
         destroyLobbyGame(lobby.id);
         lobby.state = _state;
         lobby.chat = [];
+        if (lobby.interval)
+        {
+            clearInterval(lobby.interval);
+        }
         if (lobby.infoInterval)
         {
             clearInterval(lobby.infoInterval);
@@ -1014,6 +1040,7 @@ function getClientLobbyData(_lobby)
             {
                 case "game":
                 case "infoInterval":
+                case "interval":
                     break;                
                 default:
                     data[key] = _lobby[key];
@@ -1117,20 +1144,56 @@ function startGame(_lobbyId, _gameData)
 }
 
 function onEndGame(_lobbyId)
-{
-    log("End game", _lobbyId);    
-    setTimeout(() =>
+{  
+    var lobby = getLobbyData(_lobbyId);
+    if (lobby)
     {
-        var lobby = getLobbyData(_lobbyId);
-        if (settings.bUseLobby)
+        var votes = [];
+        var gameModes = clone(modes);
+        shuffleArray(gameModes);
+        for (var i = 0; i < 3; i++)
         {
-            setLobbyState(_lobbyId, LobbyState.WAITING);
+            var vote = {
+                id: gameModes[i].id,
+                players: []
+            };
+            votes.push(vote);
         }
-        else
+        lobby.votes = votes;
+        log(votes);
+        io.to(lobby.id).emit("updateLobby", { votes: votes });
+        lobby.timer = 15;
+        lobby.interval = setInterval(() =>
         {
-            setLobbyState(_lobbyId, LobbyState.IN_PROGRESS);
-        }
-    }, 15000);
+            var lobby = getLobbyData(_lobbyId);            
+            lobby.timer--;            
+            if (lobby.timer < 0)
+            {
+                if (settings.bUseLobby)
+                {
+                    setLobbyState(_lobbyId, LobbyState.WAITING);
+                }
+                else
+                {
+                    if (settings.bAllowVotes && lobby.votes)
+                    {
+                        votes.sort((a, b) =>
+                        {
+                            if (a.players.length > b.players.length) return -1;
+                            if (a.players.length < b.players.length) return 1;
+                            return 0;
+                        });
+                        lobby.gameData.gameModeId = votes[0].id;
+                    }
+                    setLobbyState(_lobbyId, LobbyState.IN_PROGRESS);
+                }
+            }
+            else
+            {
+                io.to(lobby.id).emit("updateLobby", { timer: lobby.timer });
+            }
+        }, 1000);
+    }
 }
 
 function destroyLobbyGame(_lobbyId)
@@ -1316,6 +1379,20 @@ function getVotesAgainstPlayer(_id)
 function getRandomUniqueId()
 {
     return Math.random().toString(36).substr(2, 4);
+}
+
+function shuffleArray(array)
+{
+    var currentIndex = array.length, temporaryValue, randomIndex;
+    while (0 !== currentIndex)
+    {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+    return array;
 }
 
 function clone(_data)

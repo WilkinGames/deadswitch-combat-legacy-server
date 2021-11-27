@@ -50,6 +50,10 @@
       "position": [ 450, 1820 ]
     },
     {
+      "team": 0,
+      "position": [ 760, 2650 ]
+    },
+    {
       "position": [ 2558, 2360 ]
     },
     {
@@ -65,6 +69,10 @@
     {
       "team": 1,
       "position": [ 13650, 1820 ]
+    },
+    {
+      "team": 1,
+      "position": [ 13240, 2650 ]
     },
     {
       "position": [ 11442, 2360 ]
@@ -88,42 +96,25 @@
       ]
     },
     {
-      "type": "ground",
-      "width": 2535,
-      "height": 24,
-      "position": [
-        4515,
-        2895
-      ],
-      "material": "water"
-    },
-    {
-      "type": "ground",
-      "width": 2535,
-      "height": 24,
-      "position": [
-        9485,
-        2895
-      ],
-      "material": "water"
-    },
-    {
-      "type": "ground",
-      "width": 2535,
-      "height": 64,
+      "type": "polygon",
+      "spriteId": "map_downturn_platforms",
+      "bPlatform": true,
+      "width": 14000,
+      "height": 3000,
       "position": [
         7000,
-        2968
-      ],
-      "material": "water"
+        1500
+      ]
     },
     {
-      "type": "ground",
-      "width": 642,
-      "height": 24,
+      "type": "polygon",
+      "spriteId": "map_downturn_water",
+      "material": "water",
+      "width": 14000,
+      "height": 3000,
       "position": [
-        454,
-        1681
+        7000,
+        1500
       ]
     },
     {
@@ -234,8 +225,8 @@
       "weaponType": "m2",
       "scale": 1,
       "position": [
-        4165,
-        2140
+        2805,
+        1950
       ]
     },
     {
@@ -243,8 +234,8 @@
       "weaponType": "m2",
       "scale": -1,
       "position": [
-        9835,
-        2140
+        11195,
+        1950
       ]
     },
     {
@@ -312,6 +303,42 @@
       ]
     },
     {
+      "type": "door",
+      "height": 100,
+      "bClosed": true,
+      "position": [
+        1208,
+        2728
+      ]
+    },
+    {
+      "type": "door",
+      "height": 128,
+      "bClosed": true,
+      "position": [
+        2000,
+        2660
+      ]
+    },
+    {
+      "type": "door",
+      "height": 130,
+      "bClosed": true,
+      "position": [
+        12000,
+        2657
+      ]
+    },
+    {
+      "type": "door",
+      "height": 100,
+      "bClosed": true,
+      "position": [
+        12792,
+        2728
+      ]
+    },
+    {
       "type": "window",
       "width": 3,
       "height": 84,
@@ -369,7 +396,7 @@
       "id": "l_n_0",
       "type": "ladder",
       "position": [
-        2413,
+        2382,
         2513
       ],
       "direction": -1,
@@ -379,7 +406,7 @@
       "id": "l_n_1",
       "type": "ladder",
       "position": [
-        11587,
+        11617,
         2513
       ],
       "direction": 1,
@@ -389,7 +416,7 @@
       "id": "l_b_0",
       "type": "ladder",
       "position": [
-        2555,
+        2585,
         2280
       ],
       "direction": 1,
@@ -400,7 +427,7 @@
       "id": "l_b_1",
       "type": "ladder",
       "position": [
-        11445,
+        11415,
         2280
       ],
       "direction": -1,
@@ -411,7 +438,7 @@
       "id": "l_ramp_0",
       "type": "ladder",
       "position": [
-        5778,
+        5808,
         2563
       ],
       "direction": 1,
@@ -422,7 +449,7 @@
       "id": "l_ramp_1",
       "type": "ladder",
       "position": [
-        8230,
+        8200,
         2563
       ],
       "direction": -1,
@@ -433,7 +460,7 @@
       "id": "l_0",
       "type": "ladder",
       "position": [
-        2251,
+        2281,
         2127
       ],
       "direction": 1,
@@ -444,7 +471,7 @@
       "id": "l_1",
       "type": "ladder",
       "position": [
-        11749,
+        11719,
         2127
       ],
       "direction": -1,
@@ -455,7 +482,7 @@
       "id": "l_2",
       "type": "ladder",
       "position": [
-        97,
+        127,
         2002
       ],
       "direction": 1,
@@ -466,7 +493,7 @@
       "id": "l_1_1",
       "type": "ladder",
       "position": [
-        13508,
+        13478,
         2277
       ],
       "direction": -1,
@@ -477,7 +504,7 @@
       "id": "l_2_1",
       "type": "ladder",
       "position": [
-        13913,
+        13883,
         2002
       ],
       "direction": -1,
@@ -488,7 +515,7 @@
       "id": "l_3",
       "type": "ladder",
       "position": [
-        507,
+        537,
         2277
       ],
       "direction": 1,
@@ -499,7 +526,7 @@
       "id": "ladder_0",
       "type": "ladder",
       "position": [
-        3410,
+        3380,
         2630
       ],
       "direction": -1,
@@ -510,7 +537,7 @@
       "id": "ladder_1",
       "type": "ladder",
       "position": [
-        3615,
+        3645,
         2260
       ],
       "direction": 1,
@@ -521,7 +548,7 @@
       "id": "ladder_2",
       "type": "ladder",
       "position": [
-        5245,
+        5275,
         2230
       ],
       "direction": 1,
@@ -532,7 +559,7 @@
       "id": "ladder_4",
       "type": "ladder",
       "position": [
-        5945,
+        5915,
         2184
       ],
       "direction": -1,
@@ -543,7 +570,7 @@
       "id": "ladder_5",
       "type": "ladder",
       "position": [
-        6146,
+        6116,
         2415
       ],
       "direction": -1,
@@ -554,7 +581,7 @@
       "id": "ladder_6",
       "type": "ladder",
       "position": [
-        7850,
+        7889,
         2415
       ],
       "direction": 1,
@@ -565,7 +592,7 @@
       "id": "ladder_7",
       "type": "ladder",
       "position": [
-        8050,
+        8080,
         2184
       ],
       "direction": 1,
@@ -576,7 +603,7 @@
       "id": "ladder_9",
       "type": "ladder",
       "position": [
-        8755,
+        8725,
         2230
       ],
       "direction": -1,
@@ -587,7 +614,7 @@
       "id": "ladder_10",
       "type": "ladder",
       "position": [
-        10385,
+        10355,
         2260
       ],
       "direction": -1,
@@ -598,7 +625,7 @@
       "id": "ladder_11",
       "type": "ladder",
       "position": [
-        10585,
+        10615,
         2630
       ],
       "direction": 1,
@@ -609,7 +636,7 @@
       "id": "ladder_12",
       "type": "ladder",
       "position": [
-        6643,
+        6673,
         2260
       ],
       "direction": 1,
@@ -619,11 +646,51 @@
       "id": "ladder_13",
       "type": "ladder",
       "position": [
-        7355,
+        7325,
         2260
       ],
       "direction": -1,
       "height": 750
+    },
+    {
+      "id": "l_z_0",
+      "type": "ladder",
+      "position": [
+        235,
+        2560
+      ],
+      "direction": -1,
+      "height": 370
+    },
+    {
+      "id": "l_z_1",
+      "type": "ladder",
+      "position": [
+        1993,
+        2466
+      ],
+      "direction": 1,
+      "height": 240
+    },
+    {
+      "id": "l_z_2",
+      "type": "ladder",
+      "position": [
+        13765,
+        2560
+      ],
+      "direction": 1,
+      "height": 370
+    },
+    {
+      "id": "l_z_3",
+      "type": "ladder",
+      "position": [
+        12007,
+        2466
+      ],
+      "direction": -1,
+      "height": 240
     },
     {
       "type": "obstacle",
@@ -761,6 +828,16 @@
     },
     {
       "type": "platform",
+      "material": "wood",
+      "width": 920,
+      "height": 20,
+      "position": [
+        1570,
+        2418
+      ]
+    },
+    {
+      "type": "platform",
       "width": 1500,
       "height": 12,
       "position": [
@@ -788,19 +865,19 @@
     },
     {
       "type": "obstacle",
-      "obstacleId": "sandbags_edge",
+      "obstacleId": "sandbags",
       "position": [
-        2820,
-        1943
+        2805,
+        1950
       ],
       "scale": 1
     },
     {
       "type": "obstacle",
-      "obstacleId": "sandbags_edge",
+      "obstacleId": "sandbags",
       "position": [
-        11180,
-        1943
+        11195,
+        1950
       ],
       "scale": -1
     },
@@ -824,7 +901,7 @@
       "type": "obstacle",
       "position": [
         7000,
-        2260
+        2076
       ],
       "obstacleId": "barrel_explosive"
     },
@@ -932,7 +1009,7 @@
       "id": "l_bridge_0",
       "type": "ladder",
       "position": [
-        3955,
+        3985,
         2000
       ],
       "direction": 1,
@@ -942,7 +1019,7 @@
       "id": "l_bridge_1",
       "type": "ladder",
       "position": [
-        5505,
+        5475,
         2000
       ],
       "direction": -1,
@@ -952,7 +1029,7 @@
       "id": "l_bridge_2",
       "type": "ladder",
       "position": [
-        8483,
+        8513,
         2000
       ],
       "direction": 1,
@@ -962,7 +1039,7 @@
       "id": "l_bridge_3",
       "type": "ladder",
       "position": [
-        10017,
+        9987,
         2000
       ],
       "direction": -1,
@@ -972,7 +1049,7 @@
       "id": "ladder_left",
       "type": "ladder",
       "position": [
-        4220,
+        4190,
         2144
       ],
       "direction": -1,
@@ -982,7 +1059,7 @@
       "id": "ladder_right",
       "type": "ladder",
       "position": [
-        9780,
+        9810,
         2144
       ],
       "direction": 1,
@@ -992,7 +1069,7 @@
       "id": "l_u_0",
       "type": "ladder",
       "position": [
-        5443,
+        5473,
         2757
       ],
       "direction": 1,
@@ -1002,8 +1079,8 @@
       "id": "l_u_1",
       "type": "ladder",
       "position": [
-        6946,
-        2730
+        6916,
+        2720
       ],
       "direction": -1,
       "height": 150
@@ -1012,8 +1089,8 @@
       "id": "l_u_2",
       "type": "ladder",
       "position": [
-        7058,
-        2730
+        7088,
+        2720
       ],
       "direction": 1,
       "height": 150
@@ -1022,7 +1099,7 @@
       "id": "l_u_3",
       "type": "ladder",
       "position": [
-        8557,
+        8527,
         2757
       ],
       "direction": -1,
@@ -1040,7 +1117,7 @@
       "id": "ladder_sewer_0",
       "type": "ladder",
       "position": [
-        4828,
+        4858,
         2604
       ],
       "direction": 1,
@@ -1112,7 +1189,7 @@
       "id": "ladder_sewer_1",
       "type": "ladder",
       "position": [
-        9185,
+        9155,
         2604
       ],
       "direction": -1,
@@ -1218,7 +1295,7 @@
       "type": "car",
       "carType": "quad",
       "position": [
-        2500,
+        760,
         2665
       ]
     },
@@ -1226,7 +1303,7 @@
       "type": "car",
       "carType": "quad",
       "position": [
-        11500,
+        13240,
         2665
       ],
       "scale": -1
@@ -1447,8 +1524,8 @@
     },
     {
       "data": {
-        "ladderId": "ladder_0",
         "type": "node_climb",
+        "ladderId": "ladder_0",
         "position": [ 3405, 2825 ]
       },
       "id": "node_67"
@@ -1462,8 +1539,8 @@
     },
     {
       "data": {
-        "ladderId": "ladder_2",
         "type": "node_climb",
+        "ladderId": "ladder_2",
         "position": [ 5250, 2412 ]
       },
       "id": "node_19"
@@ -1477,8 +1554,8 @@
     },
     {
       "data": {
-        "ladderId": "ladder_5",
         "type": "node_climb",
+        "ladderId": "ladder_5",
         "position": [ 6145, 2596.35 ]
       },
       "id": "node_70"
@@ -1492,8 +1569,8 @@
     },
     {
       "data": {
-        "ladderId": "ladder_1",
         "type": "node_climb",
+        "ladderId": "ladder_1",
         "position": [ 3623, 2416 ]
       },
       "id": "node_16"
@@ -1507,16 +1584,16 @@
     },
     {
       "data": {
-        "ladderId": "l_ramp_0",
         "type": "node_climb",
+        "ladderId": "l_ramp_0",
         "position": [ 5779, 2626.35 ]
       },
       "id": "node_68"
     },
     {
       "data": {
-        "ladderId": "ladder_4",
         "type": "node_climb",
+        "ladderId": "ladder_4",
         "position": [ 5944, 2254.2 ]
       },
       "id": "node_69"
@@ -1670,8 +1747,8 @@
     },
     {
       "data": {
-        "ladderId": "ladder_11",
         "type": "node_climb",
+        "ladderId": "ladder_11",
         "position": [ 10585.1, 2825 ]
       },
       "id": "node_71"
@@ -1685,8 +1762,8 @@
     },
     {
       "data": {
-        "ladderId": "ladder_9",
         "type": "node_climb",
+        "ladderId": "ladder_9",
         "position": [ 8750.1, 2412 ]
       },
       "id": "node_52"
@@ -1700,8 +1777,8 @@
     },
     {
       "data": {
-        "ladderId": "ladder_6",
         "type": "node_climb",
+        "ladderId": "ladder_6",
         "position": [ 7854.1, 2616.35 ]
       },
       "id": "node_46"
@@ -1715,8 +1792,8 @@
     },
     {
       "data": {
-        "ladderId": "ladder_10",
         "type": "node_climb",
+        "ladderId": "ladder_10",
         "position": [ 10377.1, 2412 ]
       },
       "id": "node_64"
@@ -1730,16 +1807,16 @@
     },
     {
       "data": {
-        "ladderId": "l_ramp_1",
         "type": "node_climb",
+        "ladderId": "l_ramp_1",
         "position": [ 8228.1, 2626.35 ]
       },
       "id": "node_53"
     },
     {
       "data": {
-        "ladderId": "ladder_7",
         "type": "node_climb",
+        "ladderId": "ladder_7",
         "position": [ 8057, 2251 ]
       },
       "id": "node_49"
@@ -1760,16 +1837,16 @@
     },
     {
       "data": {
-        "ladderId": "ladder_12",
         "type": "node_climb",
+        "ladderId": "ladder_12",
         "position": [ 6640.05, 2626.35 ]
       },
       "id": "node_15_climb"
     },
     {
       "data": {
-        "ladderId": "ladder_13",
         "type": "node_climb",
+        "ladderId": "ladder_13",
         "position": [ 7365, 2626.35 ]
       },
       "id": "node_32_climb"
@@ -1790,16 +1867,16 @@
     },
     {
       "data": {
-        "ladderId": "ladder_sewer_0",
         "type": "node_climb",
+        "ladderId": "ladder_sewer_0",
         "position": [ 4827.35, 2825 ]
       },
       "id": "node_29_climb"
     },
     {
       "data": {
-        "ladderId": "ladder_sewer_1",
         "type": "node_climb",
+        "ladderId": "ladder_sewer_1",
         "position": [ 9184.7, 2825 ]
       },
       "id": "node_40_climb"
@@ -1862,32 +1939,32 @@
     },
     {
       "data": {
-        "ladderId": "l_u_2",
         "type": "node_climb",
+        "ladderId": "l_u_2",
         "position": [ 7059.7, 2835.85 ]
       },
       "id": "n_u_3_climb"
     },
     {
       "data": {
-        "ladderId": "l_u_1",
         "type": "node_climb",
+        "ladderId": "l_u_1",
         "position": [ 6947, 2836.85 ]
       },
       "id": "n_u_2_climb"
     },
     {
       "data": {
-        "ladderId": "l_u_0",
         "type": "node_climb",
+        "ladderId": "l_u_0",
         "position": [ 5443.55, 2813 ]
       },
       "id": "node_30_climb"
     },
     {
       "data": {
-        "ladderId": "l_u_3",
         "type": "node_climb",
+        "ladderId": "l_u_3",
         "position": [ 8556.2, 2813 ]
       },
       "id": "node_39_climb"
@@ -1978,8 +2055,8 @@
     },
     {
       "data": {
-        "ladderId": "l_0",
         "type": "node_climb",
+        "ladderId": "l_0",
         "position": [ 2252, 2361.8 ]
       },
       "id": "n_n_7_c"
@@ -1993,8 +2070,8 @@
     },
     {
       "data": {
-        "ladderId": "l_n_0",
         "type": "node_climb",
+        "ladderId": "l_n_0",
         "position": [ 2414.85, 2663.8 ]
       },
       "id": "n_n_12_c"
@@ -2008,8 +2085,8 @@
     },
     {
       "data": {
-        "ladderId": "l_3",
         "type": "node_climb",
+        "ladderId": "l_3",
         "position": [ 508.55, 2363.8 ]
       },
       "id": "n_n_2_c"
@@ -2023,8 +2100,8 @@
     },
     {
       "data": {
-        "ladderId": "l_2",
         "type": "node_climb",
+        "ladderId": "l_2",
         "position": [ 96.6, 2365 ]
       },
       "id": "n_n_1_c"
@@ -2059,8 +2136,8 @@
     },
     {
       "data": {
-        "ladderId": "l_b_0",
         "type": "node_climb",
+        "ladderId": "l_b_0",
         "position": [ 2554.95, 2374 ]
       },
       "id": "n_n_8_c"
@@ -2158,16 +2235,16 @@
     },
     {
       "data": {
-        "ladderId": "l_b_1",
         "type": "node_climb",
+        "ladderId": "l_b_1",
         "position": [ 11447.05, 2370 ]
       },
       "id": "n_r_1_c"
     },
     {
       "data": {
-        "ladderId": "l_1",
         "type": "node_climb",
+        "ladderId": "l_1",
         "position": [ 11744, 2364.8 ]
       },
       "id": "n_r_5_c"
@@ -2188,24 +2265,24 @@
     },
     {
       "data": {
-        "ladderId": "l_n_1",
         "type": "node_climb",
+        "ladderId": "l_n_1",
         "position": [ 11585.75, 2657.35 ]
       },
       "id": "n_r_6_c"
     },
     {
       "data": {
-        "ladderId": "l_1_1",
         "type": "node_climb",
+        "ladderId": "l_1_1",
         "position": [ 13507.35, 2363.8 ]
       },
       "id": "n_r_9_c"
     },
     {
       "data": {
-        "ladderId": "l_2_1",
         "type": "node_climb",
+        "ladderId": "l_2_1",
         "position": [ 13914.35, 2365.8 ]
       },
       "id": "n_r_10_c"
@@ -2247,24 +2324,24 @@
     },
     {
       "data": {
-        "ladderId": "l_bridge_2",
         "type": "node_climb",
+        "ladderId": "l_bridge_2",
         "position": [ 8483.8, 2101.25 ]
       },
       "id": "n_br_3_climb"
     },
     {
       "data": {
-        "ladderId": "l_bridge_3",
         "type": "node_climb",
+        "ladderId": "l_bridge_3",
         "position": [ 10017.5, 2096.25 ]
       },
       "id": "node_65_climb"
     },
     {
       "data": {
-        "ladderId": "l_bridge_0",
         "type": "node_climb",
+        "ladderId": "l_bridge_0",
         "position": [ 3963.75, 2098.25 ]
       },
       "id": "node_17_climb"
@@ -2278,8 +2355,8 @@
     },
     {
       "data": {
-        "ladderId": "l_bridge_1",
         "type": "node_climb",
+        "ladderId": "l_bridge_1",
         "position": [ 5496.1, 2098 ]
       },
       "id": "n_br_1_climb"
@@ -2304,81 +2381,155 @@
         "position": [ 5564.7, 2431 ]
       },
       "id": "node_9_2"
+    },
+    {
+      "data": {
+        "type": "node_walk",
+        "position": [ 257.5, 2727.7 ]
+      },
+      "id": "n_z_0"
+    },
+    {
+      "data": {
+        "type": "node_walk",
+        "position": [ 1240.5, 2732.7 ]
+      },
+      "id": "n_z_1"
+    },
+    {
+      "data": {
+        "type": "node_walk",
+        "position": [ 1964.4, 2676.9 ]
+      },
+      "id": "n_z_2"
+    },
+    {
+      "data": {
+        "type": "node_climb",
+        "ladderId": "l_z_0",
+        "position": [ 257.5, 2712.6 ]
+      },
+      "id": "n_z_0_c"
+    },
+    {
+      "data": {
+        "type": "node_climb",
+        "ladderId": "l_z_1",
+        "position": [ 1964.4, 2659.9 ]
+      },
+      "id": "n_z_2_c"
+    },
+    {
+      "data": {
+        "type": "node_walk",
+        "position": [ 12022.7, 2678 ]
+      },
+      "id": "n_z_3"
+    },
+    {
+      "data": {
+        "type": "node_climb",
+        "ladderId": "l_z_3",
+        "position": [ 12022.7, 2661 ]
+      },
+      "id": "n_z_3_c"
+    },
+    {
+      "data": {
+        "type": "node_walk",
+        "position": [ 12758.2, 2732.7 ]
+      },
+      "id": "n_z_4"
+    },
+    {
+      "data": {
+        "type": "node_walk",
+        "position": [ 13750.15, 2727.35 ]
+      },
+      "id": "n_z_4"
+    },
+    {
+      "data": {
+        "type": "node_climb",
+        "ladderId": "l_z_2",
+        "position": [ 13750.15, 2713.35 ]
+      },
+      "id": "n_z_4_c"
     }
   ],
 
   "links": [
     {
-      "target": "node_67",
-      "source": "node_24"
+      "source": "node_24",
+      "target": "node_67"
     },
     {
-      "target": "node_1",
-      "source": "node_67"
+      "source": "node_67",
+      "target": "node_1"
     },
     {
-      "target": "node_2",
-      "source": "node_1"
+      "source": "node_1",
+      "target": "node_2"
     },
     {
-      "target": "node_16",
-      "source": "node_2"
+      "source": "node_2",
+      "target": "node_16"
     },
     {
-      "target": "node_17",
-      "source": "node_16"
+      "source": "node_16",
+      "target": "node_17"
     },
     {
-      "target": "node_3",
-      "source": "node_2"
+      "source": "node_2",
+      "target": "node_3"
     },
     {
-      "target": "node_5",
-      "source": "node_3"
+      "source": "node_3",
+      "target": "node_5"
     },
     {
-      "target": "node_6",
-      "source": "node_5"
+      "source": "node_5",
+      "target": "node_6"
     },
     {
-      "target": "node_6",
-      "source": "node_5"
+      "source": "node_5",
+      "target": "node_6"
     },
     {
-      "target": "node_7",
-      "source": "node_6"
+      "source": "node_6",
+      "target": "node_7"
     },
     {
-      "target": "node_19",
-      "source": "node_7"
+      "source": "node_7",
+      "target": "node_19"
     },
     {
-      "target": "node_20",
-      "source": "node_19"
+      "source": "node_19",
+      "target": "node_20"
     },
     {
-      "target": "node_21",
-      "source": "node_20"
+      "source": "node_20",
+      "target": "node_21"
     },
     {
-      "target": "node_69",
-      "source": "node_21"
+      "source": "node_21",
+      "target": "node_69"
     },
     {
-      "target": "node_22",
-      "source": "node_69"
+      "source": "node_69",
+      "target": "node_22"
     },
     {
-      "target": "node_23",
-      "source": "node_22"
+      "source": "node_22",
+      "target": "node_23"
     },
     {
-      "target": "node_70",
-      "source": "node_23"
+      "source": "node_23",
+      "target": "node_70"
     },
     {
-      "target": "node_12",
-      "source": "node_70"
+      "source": "node_70",
+      "target": "node_12"
     },
     {
       "id": "garage_0",
@@ -2386,100 +2537,100 @@
       "source": "node_7"
     },
     {
-      "target": "node_68",
-      "source": "node_9_2"
+      "source": "node_9_2",
+      "target": "node_68"
     },
     {
-      "target": "node_10",
-      "source": "node_68"
+      "source": "node_68",
+      "target": "node_10"
     },
     {
-      "target": "node_25",
-      "source": "node_24"
+      "source": "node_24",
+      "target": "node_25"
     },
     {
-      "target": "node_26",
-      "source": "node_25"
+      "source": "node_25",
+      "target": "node_26"
     },
     {
-      "target": "node_27",
-      "source": "node_26"
+      "source": "node_26",
+      "target": "node_27"
     },
     {
-      "target": "node_28",
-      "source": "node_27"
+      "source": "node_27",
+      "target": "node_28"
     },
     {
-      "target": "node_29",
-      "source": "node_28"
+      "source": "node_28",
+      "target": "node_29"
     },
     {
-      "target": "node_30",
-      "source": "node_29"
+      "source": "node_29",
+      "target": "node_30"
     },
     {
-      "target": "node_10",
-      "source": "node_31"
+      "source": "node_31",
+      "target": "node_10"
     },
     {
-      "target": "node_13",
-      "source": "node_12"
+      "source": "node_12",
+      "target": "node_13"
     },
     {
-      "target": "node_14",
-      "source": "node_13"
+      "source": "node_13",
+      "target": "node_14"
     },
     {
-      "target": "node_15",
-      "source": "node_14"
+      "source": "node_14",
+      "target": "node_15"
     },
     {
-      "target": "node_32",
-      "source": "node_15"
+      "source": "node_15",
+      "target": "node_32"
     },
     {
-      "target": "node_33",
-      "source": "node_32"
+      "source": "node_32",
+      "target": "node_33"
     },
     {
-      "target": "node_34",
-      "source": "node_33"
+      "source": "node_33",
+      "target": "node_34"
     },
     {
-      "target": "node_35",
-      "source": "node_34"
+      "source": "node_34",
+      "target": "node_35"
     },
     {
-      "target": "node_46",
-      "source": "node_35"
+      "source": "node_35",
+      "target": "node_46"
     },
     {
-      "target": "node_47",
-      "source": "node_46"
+      "source": "node_46",
+      "target": "node_47"
     },
     {
-      "target": "node_48",
-      "source": "node_47"
+      "source": "node_47",
+      "target": "node_48"
     },
     {
-      "target": "node_49",
-      "source": "node_48"
+      "source": "node_48",
+      "target": "node_49"
     },
     {
-      "target": "node_50",
-      "source": "node_49"
+      "source": "node_49",
+      "target": "node_50"
     },
     {
-      "target": "node_51",
-      "source": "node_50"
+      "source": "node_50",
+      "target": "node_51"
     },
     {
-      "target": "node_52",
-      "source": "node_51"
+      "source": "node_51",
+      "target": "node_52"
     },
     {
-      "target": "node_56",
-      "source": "node_52"
+      "source": "node_52",
+      "target": "node_56"
     },
     {
       "id": "garage_1",
@@ -2487,500 +2638,568 @@
       "source": "node_56_2"
     },
     {
-      "target": "node_54",
-      "source": "node_56_2"
+      "source": "node_56_2",
+      "target": "node_54"
     },
     {
-      "target": "node_53",
-      "source": "node_54"
+      "source": "node_54",
+      "target": "node_53"
     },
     {
-      "target": "node_54",
-      "source": "node_35"
+      "source": "node_35",
+      "target": "node_54"
     },
     {
-      "target": "n_mid_0",
-      "source": "node_15_climb"
+      "source": "node_15_climb",
+      "target": "n_mid_0"
     },
     {
-      "target": "n_mid_1",
-      "source": "node_15_climb"
+      "source": "node_15_climb",
+      "target": "n_mid_1"
     },
     {
-      "target": "n_mid_2",
-      "source": "node_15_climb"
+      "source": "node_15_climb",
+      "target": "n_mid_2"
     },
     {
-      "target": "n_mid_0",
-      "source": "node_32_climb"
+      "source": "node_32_climb",
+      "target": "n_mid_0"
     },
     {
-      "target": "n_mid_1",
-      "source": "node_32_climb"
+      "source": "node_32_climb",
+      "target": "n_mid_1"
     },
     {
-      "target": "n_mid_2",
-      "source": "node_32_climb"
+      "source": "node_32_climb",
+      "target": "n_mid_2"
     },
     {
-      "target": "node_37",
-      "source": "node_53"
+      "source": "node_53",
+      "target": "node_37"
     },
     {
-      "target": "node_38",
-      "source": "node_37"
+      "source": "node_37",
+      "target": "node_38"
     },
     {
-      "target": "node_39_climb",
-      "source": "node_38"
+      "source": "node_38",
+      "target": "node_39_climb"
     },
     {
-      "target": "node_40",
-      "source": "node_39"
+      "source": "node_39",
+      "target": "node_40"
     },
     {
-      "target": "node_41",
-      "source": "node_40"
+      "source": "node_40",
+      "target": "node_41"
     },
     {
-      "target": "node_42",
-      "source": "node_41"
+      "source": "node_41",
+      "target": "node_42"
     },
     {
-      "target": "node_43",
-      "source": "node_42"
+      "source": "node_42",
+      "target": "node_43"
     },
     {
-      "target": "node_44",
-      "source": "node_43"
+      "source": "node_43",
+      "target": "node_44"
     },
     {
-      "target": "node_45",
-      "source": "node_44"
+      "source": "node_44",
+      "target": "node_45"
     },
     {
-      "target": "node_71",
-      "source": "node_45"
+      "source": "node_45",
+      "target": "node_71"
     },
     {
-      "target": "node_62",
-      "source": "node_71"
+      "source": "node_71",
+      "target": "node_62"
     },
     {
-      "target": "node_61",
-      "source": "node_62"
+      "source": "node_62",
+      "target": "node_61"
     },
     {
-      "target": "node_64",
-      "source": "node_61"
+      "source": "node_61",
+      "target": "node_64"
     },
     {
-      "target": "node_65",
-      "source": "node_64"
+      "source": "node_64",
+      "target": "node_65"
     },
     {
-      "target": "node_12",
-      "source": "node_9"
+      "source": "node_9",
+      "target": "node_12"
     },
     {
-      "target": "node_9_2",
-      "source": "node_9"
+      "source": "node_9",
+      "target": "node_9_2"
     },
     {
-      "target": "node_57",
-      "source": "node_56"
+      "source": "node_56",
+      "target": "node_57"
     },
     {
-      "target": "node_58",
-      "source": "node_57"
+      "source": "node_57",
+      "target": "node_58"
     },
     {
-      "target": "node_60",
-      "source": "node_58"
+      "source": "node_58",
+      "target": "node_60"
     },
     {
-      "target": "node_61",
-      "source": "node_60"
+      "source": "node_60",
+      "target": "node_61"
     },
     {
-      "target": "node_15_climb",
-      "source": "node_15"
+      "source": "node_15",
+      "target": "node_15_climb"
     },
     {
-      "target": "node_2_0",
-      "source": "node_15_climb"
+      "source": "node_15_climb",
+      "target": "node_2_0"
     },
     {
-      "target": "node_2_1",
-      "source": "node_2_0"
+      "source": "node_2_0",
+      "target": "node_2_1"
     },
     {
-      "target": "node_32_climb",
-      "source": "node_2_1"
+      "source": "node_2_1",
+      "target": "node_32_climb"
     },
     {
-      "target": "node_32",
-      "source": "node_32_climb"
+      "source": "node_32_climb",
+      "target": "node_32"
     },
     {
-      "target": "node_3_1",
-      "source": "node_16"
+      "source": "node_16",
+      "target": "node_3_1"
     },
     {
-      "target": "node_4_1",
-      "source": "node_64"
+      "source": "node_64",
+      "target": "node_4_1"
     },
     {
-      "target": "node_29_climb",
-      "source": "node_29"
+      "source": "node_29",
+      "target": "node_29_climb"
     },
     {
-      "target": "node_29_climb",
-      "source": "node_5"
+      "source": "node_5",
+      "target": "node_29_climb"
     },
     {
-      "target": "node_29_climb",
-      "source": "node_6"
+      "source": "node_6",
+      "target": "node_29_climb"
     },
     {
-      "target": "node_40_climb",
-      "source": "node_40"
+      "source": "node_40",
+      "target": "node_40_climb"
     },
     {
-      "target": "node_40_climb",
-      "source": "node_57"
+      "source": "node_57",
+      "target": "node_40_climb"
     },
     {
-      "target": "node_40_climb",
-      "source": "node_58"
+      "source": "node_58",
+      "target": "node_40_climb"
     },
     {
-      "target": "node_building_1",
-      "source": "node_49"
+      "source": "node_49",
+      "target": "node_building_1"
     },
     {
-      "target": "node_building_1",
-      "source": "node_52"
+      "source": "node_52",
+      "target": "node_building_1"
     },
     {
-      "target": "node_building_0",
-      "source": "node_19"
+      "source": "node_19",
+      "target": "node_building_0"
     },
     {
-      "target": "node_building_0",
-      "source": "node_69"
+      "source": "node_69",
+      "target": "node_building_0"
     },
     {
-      "target": "node_30_climb",
-      "source": "node_30"
+      "source": "node_30",
+      "target": "node_30_climb"
     },
     {
-      "target": "node_31",
-      "source": "node_30_climb"
+      "source": "node_30_climb",
+      "target": "node_31"
     },
     {
-      "target": "n_u_0",
-      "source": "node_30"
+      "source": "node_30",
+      "target": "n_u_0"
     },
     {
-      "target": "n_u_1",
-      "source": "n_u_0"
+      "source": "n_u_0",
+      "target": "n_u_1"
     },
     {
-      "target": "n_u_2",
-      "source": "n_u_1"
+      "source": "n_u_1",
+      "target": "n_u_2"
     },
     {
-      "target": "n_u_3",
-      "source": "n_u_2"
+      "source": "n_u_2",
+      "target": "n_u_3"
     },
     {
-      "target": "n_u_4",
-      "source": "n_u_3"
+      "source": "n_u_3",
+      "target": "n_u_4"
     },
     {
-      "target": "n_u_5",
-      "source": "n_u_4"
+      "source": "n_u_4",
+      "target": "n_u_5"
     },
     {
-      "target": "node_39",
-      "source": "n_u_5"
+      "source": "n_u_5",
+      "target": "node_39"
     },
     {
-      "target": "node_39",
-      "source": "node_39_climb"
+      "source": "node_39_climb",
+      "target": "node_39"
     },
     {
-      "target": "n_u_2_climb",
-      "source": "n_u_2"
+      "source": "n_u_2",
+      "target": "n_u_2_climb"
     },
     {
-      "target": "node_15",
-      "source": "n_u_2_climb"
+      "source": "n_u_2_climb",
+      "target": "node_15"
     },
     {
-      "target": "node_32",
-      "source": "n_u_2_climb"
+      "source": "n_u_2_climb",
+      "target": "node_32"
     },
     {
-      "target": "n_u_3_climb",
-      "source": "n_u_3"
+      "source": "n_u_3",
+      "target": "n_u_3_climb"
     },
     {
-      "target": "node_15",
-      "source": "n_u_3_climb"
+      "source": "n_u_3_climb",
+      "target": "node_15"
     },
     {
-      "target": "node_32",
-      "source": "n_u_3_climb"
+      "source": "n_u_3_climb",
+      "target": "node_32"
     },
     {
-      "target": "node_67",
-      "source": "n_n_0"
+      "source": "n_n_0",
+      "target": "node_67"
     },
     {
-      "target": "node_71",
-      "source": "n_n_50"
+      "source": "n_n_50",
+      "target": "node_71"
     },
     {
-      "target": "n_n_1_c",
-      "source": "n_n_1"
+      "source": "n_n_1",
+      "target": "n_n_1_c"
     },
     {
-      "target": "n_n_2_c",
-      "source": "n_n_2"
+      "source": "n_n_2",
+      "target": "n_n_2_c"
     },
     {
-      "target": "n_n_7_c",
-      "source": "n_n_7"
+      "source": "n_n_7",
+      "target": "n_n_7_c"
     },
     {
-      "target": "n_n_8_c",
-      "source": "n_n_8"
+      "source": "n_n_8",
+      "target": "n_n_8_c"
     },
     {
-      "target": "n_n_12_c",
-      "source": "n_n_12"
+      "source": "n_n_12",
+      "target": "n_n_12_c"
     },
     {
-      "target": "n_n_3",
-      "source": "n_n_1_c"
+      "source": "n_n_1_c",
+      "target": "n_n_3"
     },
     {
-      "target": "n_n_4",
-      "source": "n_n_1_c"
+      "source": "n_n_1_c",
+      "target": "n_n_4"
     },
     {
-      "target": "n_n_5",
-      "source": "n_n_1_c"
+      "source": "n_n_1_c",
+      "target": "n_n_5"
     },
     {
-      "target": "n_n_2",
-      "source": "n_n_1"
+      "source": "n_n_1",
+      "target": "n_n_2"
     },
     {
-      "target": "n_n_2",
-      "source": "n_bridge_0"
+      "source": "n_bridge_0",
+      "target": "n_n_2"
     },
     {
-      "target": "n_n_7",
-      "source": "n_bridge_0"
+      "source": "n_bridge_0",
+      "target": "n_n_7"
     },
     {
-      "target": "n_n_8",
-      "source": "n_n_7"
+      "source": "n_n_7",
+      "target": "n_n_8"
     },
     {
-      "target": "n_n_14",
-      "source": "n_n_8"
+      "source": "n_n_8",
+      "target": "n_n_14"
     },
     {
-      "target": "n_n_14",
-      "source": "node_67"
+      "source": "node_67",
+      "target": "n_n_14"
     },
     {
-      "target": "n_n_13",
-      "source": "node_24"
+      "source": "node_24",
+      "target": "n_n_13"
     },
     {
-      "target": "n_n_13",
-      "source": "n_n_12"
+      "source": "n_n_12",
+      "target": "n_n_13"
     },
     {
-      "target": "n_n_7_c",
-      "source": "n_n_10"
+      "source": "n_n_10",
+      "target": "n_n_7_c"
     },
     {
-      "target": "n_n_7_c",
-      "source": "n_n_9"
+      "source": "n_n_9",
+      "target": "n_n_7_c"
     },
     {
-      "target": "n_n_8_c",
-      "source": "n_n_11"
+      "source": "n_n_11",
+      "target": "n_n_8_c"
     },
     {
-      "target": "n_n_6",
-      "source": "n_n_2_c"
+      "source": "n_n_2_c",
+      "target": "n_n_6"
     },
     {
-      "target": "n_n_8",
-      "source": "n_n_12_c"
+      "source": "n_n_12_c",
+      "target": "n_n_8"
     },
     {
-      "target": "n_n_7",
-      "source": "n_n_12_c"
+      "source": "n_n_12_c",
+      "target": "n_n_7"
     },
     {
-      "target": "n_r_0",
-      "source": "node_71"
+      "source": "node_71",
+      "target": "n_r_0"
     },
     {
-      "target": "n_r_1",
-      "source": "n_r_0"
+      "source": "n_r_0",
+      "target": "n_r_1"
     },
     {
-      "target": "n_r_5",
-      "source": "n_r_1"
+      "source": "n_r_1",
+      "target": "n_r_5"
     },
     {
-      "target": "n_r_7",
-      "source": "node_45"
+      "source": "node_45",
+      "target": "n_r_7"
     },
     {
-      "target": "n_r_5",
-      "source": "n_r_8"
+      "source": "n_r_8",
+      "target": "n_r_5"
     },
     {
-      "target": "n_r_9",
-      "source": "n_r_8"
+      "source": "n_r_8",
+      "target": "n_r_9"
     },
     {
-      "target": "n_r_10",
-      "source": "n_r_9"
+      "source": "n_r_9",
+      "target": "n_r_10"
     },
     {
-      "target": "n_r_10",
-      "source": "n_r_10_c"
+      "source": "n_r_10_c",
+      "target": "n_r_10"
     },
     {
-      "target": "n_r_12",
-      "source": "n_r_10_c"
+      "source": "n_r_10_c",
+      "target": "n_r_12"
     },
     {
-      "target": "n_r_13",
-      "source": "n_r_10_c"
+      "source": "n_r_10_c",
+      "target": "n_r_13"
     },
     {
-      "target": "n_r_14",
-      "source": "n_r_10_c"
+      "source": "n_r_10_c",
+      "target": "n_r_14"
     },
     {
-      "target": "n_r_11",
-      "source": "n_r_9_c"
+      "source": "n_r_9_c",
+      "target": "n_r_11"
     },
     {
-      "target": "n_r_5",
-      "source": "n_r_5_c"
+      "source": "n_r_5_c",
+      "target": "n_r_5"
     },
     {
-      "target": "n_r_1",
-      "source": "n_r_1_c"
+      "source": "n_r_1_c",
+      "target": "n_r_1"
     },
     {
-      "target": "n_r_1_c",
-      "source": "n_r_2"
+      "source": "n_r_2",
+      "target": "n_r_1_c"
     },
     {
-      "target": "n_r_5_c",
-      "source": "n_r_3"
+      "source": "n_r_3",
+      "target": "n_r_5_c"
     },
     {
-      "target": "n_r_5_c",
-      "source": "n_r_4"
+      "source": "n_r_4",
+      "target": "n_r_5_c"
     },
     {
-      "target": "n_r_6_c",
-      "source": "n_r_6"
+      "source": "n_r_6",
+      "target": "n_r_6_c"
     },
     {
-      "target": "n_r_7",
-      "source": "n_r_6"
+      "source": "n_r_6",
+      "target": "n_r_7"
     },
     {
-      "target": "n_r_9",
-      "source": "n_r_9_c"
+      "source": "n_r_9_c",
+      "target": "n_r_9"
     },
     {
-      "target": "n_r_1",
-      "source": "n_r_6_c"
+      "source": "n_r_6_c",
+      "target": "n_r_1"
     },
     {
-      "target": "n_r_5",
-      "source": "n_r_6_c"
+      "source": "n_r_6_c",
+      "target": "n_r_5"
     },
     {
-      "target": "n_r_0",
-      "source": "node_62"
+      "source": "node_62",
+      "target": "n_r_0"
     },
     {
-      "target": "node_1",
-      "source": "n_n_14"
+      "source": "n_n_14",
+      "target": "node_1"
     },
     {
-      "target": "n_n_0_2",
-      "source": "n_n_0"
+      "source": "n_n_0",
+      "target": "n_n_0_2"
     },
     {
-      "target": "n_n_0_2",
-      "source": "node_29_climb"
+      "source": "node_29_climb",
+      "target": "n_n_0_2"
     },
     {
-      "target": "n_n_50_2",
-      "source": "n_n_50"
+      "source": "n_n_50",
+      "target": "n_n_50_2"
     },
     {
-      "target": "n_n_50_2",
-      "source": "node_40_climb"
+      "source": "node_40_climb",
+      "target": "n_n_50_2"
     },
     {
-      "target": "node_56_2",
-      "source": "node_53"
+      "source": "node_53",
+      "target": "node_56_2"
     },
     {
-      "target": "node_9",
-      "source": "node_68"
+      "source": "node_68",
+      "target": "node_9"
     },
     {
-      "target": "node_65_climb",
-      "source": "node_65"
+      "source": "node_65",
+      "target": "node_65_climb"
     },
     {
-      "target": "node_65_climb",
-      "source": "n_br_4"
+      "source": "n_br_4",
+      "target": "node_65_climb"
     },
     {
-      "target": "n_br_3_climb",
-      "source": "n_br_4"
+      "source": "n_br_4",
+      "target": "n_br_3_climb"
     },
     {
-      "target": "n_br_3_climb",
-      "source": "n_br_3"
+      "source": "n_br_3",
+      "target": "n_br_3_climb"
     },
     {
-      "target": "node_17",
-      "source": "node_17_climb"
+      "source": "node_17_climb",
+      "target": "node_17"
     },
     {
-      "target": "n_br_0",
-      "source": "node_17_climb"
+      "source": "node_17_climb",
+      "target": "n_br_0"
     },
     {
-      "target": "n_br_0",
-      "source": "n_br_1_climb"
+      "source": "n_br_1_climb",
+      "target": "n_br_0"
     },
     {
-      "target": "n_br_1",
-      "source": "n_br_1_climb"
+      "source": "n_br_1_climb",
+      "target": "n_br_1"
+    },
+    {
+      "source": "n_z_0",
+      "target": "n_z_0_c"
+    },
+    {
+      "source": "n_n_1",
+      "target": "n_z_0_c"
+    },
+    {
+      "source": "n_n_2",
+      "target": "n_z_0_c"
+    },
+    {
+      "source": "n_z_1",
+      "target": "n_z_0"
+    },
+    {
+      "source": "n_z_1",
+      "target": "n_z_2"
+    },
+    {
+      "source": "n_z_2_c",
+      "target": "n_z_2"
+    },
+    {
+      "source": "n_n_12",
+      "target": "n_z_2"
+    },
+    {
+      "source": "n_bridge_0",
+      "target": "n_z_2_c"
+    },
+    {
+      "source": "n_z_2_c",
+      "target": "n_n_7"
+    },
+    {
+      "source": "n_z_3",
+      "target": "n_z_3_c"
+    },
+    {
+      "source": "n_z_3",
+      "target": "n_r_6"
+    },
+    {
+      "source": "n_r_5",
+      "target": "n_z_3_c"
+    },
+    {
+      "source": "n_r_8",
+      "target": "n_z_3_c"
+    },
+    {
+      "source": "n_z_4",
+      "target": "n_z_3"
+    },
+    {
+      "source": "n_z_4",
+      "target": "n_z_4_c"
+    },
+    {
+      "source": "n_r_9",
+      "target": "n_z_4_c"
+    },
+    {
+      "source": "n_r_10",
+      "target": "n_z_4_c"
     }
   ]
 

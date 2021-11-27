@@ -498,7 +498,7 @@ class GameInstance
 {
     init(_data, _onEventFunc)
     {
-        console.log("Initializing game instance...");
+        this.log("Initializing game instance");
         this.data = _data.data;
         this.lobbyId = _data.lobbyId;
         this.onEventFunc = _onEventFunc;
@@ -535,7 +535,8 @@ class GameInstance
                 respawnTime: _data.settings.respawnTime,                
                 bSpawnProtection: _data.settings.bSpawnProtection == true,
                 bVehicles: _data.settings.bVehicles == true,
-                bWeaponDrops: _data.settings.bWeaponDrops == true,
+                bMountedWeapons: _data.settings.bMountedWeapons == true,
+                bSpecialWeapons: _data.settings.bSpecialWeapons == true,
                 vehicleRespawnTime: _data.settings.vehicleRespawnTime != null ? _data.settings.vehicleRespawnTime : 60,
                 weaponRespawnTime: _data.settings.weaponRespawnTime != null ? _data.settings.weaponRespawnTime : 60,
                 bAllowRespawns: true,
@@ -607,7 +608,8 @@ class GameInstance
                 this.game.gameModeData.bAllowRevives = true;
                 this.game.gameModeData.timeLimit = null;
                 this.game.gameModeData.bVehicles = false;
-                this.game.gameModeData.bWeaponDrops = false;
+                this.game.gameModeData.bMountedWeapons = this.game.gameModeId != GameMode.SURVIVAL_CLASSIC;
+                this.game.gameModeData.bSpecialWeapons = false;
                 this.game.gameModeData.bAllowRespawns = false;
                 this.game.gameModeData.wave = 0;
                 this.game.gameModeData.enemies = 0;    
@@ -621,6 +623,7 @@ class GameInstance
                 team: 0,
                 type: Crate.STORE
             });
+            storeCrate.mass = 10;
         }
 
         this.initMap();
@@ -687,7 +690,7 @@ class GameInstance
 
     destroy()
     {
-        console.log("Destroy game");
+        this.log("Destroy game");
         var game = this.game;
         if (game)
         {
@@ -751,13 +754,18 @@ class GameInstance
         this.onEndCallback = _func;
     }
 
+    log(_val)
+    {
+        console.log("game | " + _val);
+    }
+
     endGame()
     {
         if (this.bGameEnded)
         {
             return;
         }
-        console.log("End game");
+        this.log("End game");
         this.bGameEnded = true;
         this.game.state = MatchState.STATE_POST_GAME;
         this.game.gameModeData.bAllowRespawns = false;
@@ -1404,7 +1412,7 @@ class GameInstance
 
     generateMapNodes() 
     {
-        console.log("Generating map nodes...");
+        this.log("Generating map nodes");
         var map = this.getCurrentMapData();
         var nodes = map.nodes;
         var links = map.links;
@@ -1730,7 +1738,7 @@ class GameInstance
                     if (object.bPlatform)
                     {
                         cg = CollisionGroups.PLATFORM;
-                        cm = CollisionGroups.PAWN;
+                        //cm = CollisionGroups.PAWN;
                         pType = "platform";
                     }
                     this.loadPolygon(object.spriteId, mapBody, object.width, object.height, 1, {
@@ -1741,6 +1749,7 @@ class GameInstance
                     mapBody.data = {
                         id: "map",
                         type: pType,
+                        material: object.material,
                         bSkipServerUpdate: true
                     };
                     this.addWorldBody(mapBody);
@@ -1799,7 +1808,7 @@ class GameInstance
                     body.data = {
                         id: object.id,
                         type: object.type,
-                        width: 20,
+                        width: this.getSharedData("ladderWidth"),
                         height: object.height,
                         direction: object.direction,
                         bSkipServerUpdate: true
@@ -1859,7 +1868,7 @@ class GameInstance
                     break;
 
                 case "mountedWeapon":
-                    if (this.game.gameModeData.bVehicles)
+                    if (this.game.gameModeData.bMountedWeapons)
                     {
                         this.createSpawner(object.position, {
                             type: object.type,
@@ -1874,7 +1883,7 @@ class GameInstance
                     break;
 
                 case "droppedWeapon":
-                    if (this.game.gameModeData.bWeaponDrops)
+                    if (this.game.gameModeData.bSpecialWeapons)
                     {
                         this.createSpawner(object.position, {
                             type: object.type,
@@ -2954,10 +2963,15 @@ class GameInstance
                                         aim[0] += (ai.offsetX * ai.enemyDistMult) * 0.25;
                                         aim[1] += (ai.offsetY * ai.enemyDistMult) * 0.25;
                                     }
+                                    if (controllable.data.type == "mountedWeapon")
+                                    {
+                                        aim[0] += (ai.offsetX * ai.enemyDistMult) * 0.5;
+                                        aim[1] += (ai.offsetY * ai.enemyDistMult) * 0.5;
+                                    }
                                     else
                                     {
-                                        aim[0] += ai.offsetX * ai.enemyDistMult;
-                                        aim[1] += ai.offsetY * ai.enemyDistMult;
+                                        aim[0] += (ai.offsetX * ai.enemyDistMult);
+                                        aim[1] += (ai.offsetY * ai.enemyDistMult);
                                     }
                                     var rad = this.Angle(muzzle[0], muzzle[1], aim[0], aim[1]);
                                     this.setVehicleWeaponAimRotation(controllable.data.scale, weapon, rad);
@@ -3978,7 +3992,6 @@ class GameInstance
         }
         if (data.attachToId)
         {
-            console.log("attached to", data.attachToId);
             //_body.angularVelocity += -(_body.angle) * 0.5;
             if (!this.getObjectById(data.attachToId))
             {
@@ -6303,7 +6316,7 @@ class GameInstance
                                             var bMelee = _data.bMelee;
                                             var bHeadshot = cur.bHeadshot;
                                             var bLegshot = cur.bLegshot;
-                                            var bLongshot = cur.distance > dist * 0.5;                                            
+                                            var bLongshot = !bMelee && cur.distance > dist * 0.5;                                            
                                             var bNearshot = !bMelee && cur.distance < 250;
                                             var damageType = DamageType.DAMAGE_BULLET;
                                             if (weaponData && this.isMeleeWeapon(weaponData))
@@ -6317,7 +6330,7 @@ class GameInstance
                                             }
                                             else if (bLegshot)
                                             {
-                                                damageAmount *= 0.75;
+                                                damageAmount *= 0.8;
                                             }
                                             if (weaponData)
                                             {
@@ -7199,7 +7212,6 @@ class GameInstance
                     index: data.currentInventoryIndex,
                     value: !item.bBarrel
                 });
-                //console.log(item.id, item.mods ? item.mods[Mods.TYPE_ACCESSORY] : null, item.bBarrel);
             }
         }
     }
@@ -10185,7 +10197,11 @@ class GameInstance
         }
         if (wave >= 10)
         {
-            types.push(Helicopter.COBRA, Helicopter.OH58);
+            types.push(Helicopter.OH58);
+        }
+        if (wave >= 12)
+        {
+            types.push(Helicopter.COBRA);
         }
         if (wave >= 15)
         {
@@ -11085,7 +11101,7 @@ class GameInstance
         _body.gravityScale = 0;
         _body.damping = shared.climbDamping;
         _body.velocity = [0, 0];
-        _body.position[0] = _ladder.position[0];
+        _body.position[0] = _ladder.position[0] + (-30 * _ladder.data.direction);
         _body.fixedX = true;
 
         var data = _body.data;
@@ -11116,7 +11132,6 @@ class GameInstance
     createVehicle(_position, _id)
     {
         var veh = this.getVehicleData(_id);
-        console.log(veh);
         if (veh)
         {
             var data = {
@@ -11167,18 +11182,26 @@ class GameInstance
         }
     }
 
-    spawn(_playerId, _id)
+    spawn(_playerId, _args)
     {
         var curPawn = this.getObjectById(_playerId);
         if (curPawn)
         {
-            switch (_id)
+            var id = _args[1];
+            switch (id)
             {
                 case "m2":
                 case "bgm71":
                     this.createMountedWeapon(curPawn.position, {
-                        weaponType: _id,
+                        weaponType: id,
                         scale: curPawn.data.scale
+                    });
+                    break;
+                case "obstacle":
+                    this.createObstacle({
+                        type: "obstacle",
+                        position: curPawn.position,
+                        obstacleId: _args[2]
                     });
                     break;
                 case "barrel":
@@ -11197,18 +11220,25 @@ class GameInstance
                     break;
                 case "weapon":
                     var wpns = this.getAllWeapons();
+                    var wpn = this.getWeaponData(wpns[this.Random(0, wpns.length - 1)].id);
+                    this.setRandomWeaponMods(wpn);
                     this.createDroppedWeapon(curPawn.position, {
-                        weaponData: this.getWeaponData(wpns[this.Random(0, wpns.length - 1)].id)
+                        weaponData: wpn
                     });
                     break;
-                case "ammo":
-
+                case "ammo_box":
+                    var ammoBox = this.createEquipment(curPawn.position, curPawn.data.team, curPawn.data.scale, "ammo_box", this.getWeaponData("ammo_box"));
+                    ammoBox.data.itemData = {
+                        uses: 10,
+                        interactTime: this.game.settings.fps * 0.5
+                    };
+                    ammoBox.data.destroyTimer = this.game.settings.fps * 60;
                     break;
                 default:
-                    var veh = this.getVehicleData(_id);
+                    var veh = this.getVehicleData(id);
                     if (veh)
                     {
-                        this.createVehicle(curPawn.position, _id);
+                        this.createVehicle(curPawn.position, id);
                     }
                     break;
             }
@@ -12220,7 +12250,7 @@ class GameInstance
             pointTimerMax: this.game.settings.fps * 3
         };
         var shape = new p2.Box({
-            width: 250,
+            width: this.getSharedData("flagCaptureSize"),
             height: 121,
             collisionGroup: CollisionGroups.PAWN,
             collisionMask: CollisionGroups.GROUND
@@ -12551,7 +12581,7 @@ class GameInstance
             team: _data.team,
             health: _data.health ? _data.health : this.getCharacterMaxHealth(),
             aimRotation: 0,
-            aimSpeed: 0.25 / this.game.fpsMult,
+            aimSpeed: 0.5,
             desiredAimRotation: this.ToRad(this.RandomBoolean() ? 0 : 180),
             lookPos: [_data.x + this.RandomBoolean() ? 100 : -1000, _data.y],
             maxSpeed: shared.maxSpeed,
@@ -13349,7 +13379,7 @@ class GameInstance
                                                 this.requestEvent({
                                                     eventId: GameServer.EVENT_PAWN_DAMAGE,
                                                     damageType: DamageType.DAMAGE_MELEE,
-                                                    damageAmount: 200, //Direct impact
+                                                    damageAmount: 100, //Direct impact
                                                     pawnId: dataB.id,
                                                     attackerId: dataA.grenadeData.playerId,
                                                     causerId: dataA.id,

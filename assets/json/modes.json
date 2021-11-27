@@ -12,6 +12,12 @@
     "bTeam": true
   },
   {
+    "id": "capture_the_flag",
+    "name": "STR_MODE_CTF",
+    "desc": "STR_MODE_CTF_DESC",
+    "bTeam": true
+  },
+  {
     "id": "conquest",
     "name": "STR_MODE_CONQUEST",
     "desc": "STR_MODE_CONQUEST_DESC",
