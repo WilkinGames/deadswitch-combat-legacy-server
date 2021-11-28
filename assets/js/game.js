@@ -2052,6 +2052,7 @@ class GameInstance
             _char.data.bSprinting = false;
             _char.data.controllableId = _vehicle.data.id;
             _char.data.vehicleCooldown = this.game.settings.fps;
+            _char.data.bWantsToFire = false;
             this.cancelCharacterBoltPull(_char);
             this.cancelCharacterReload(_char);  
             this.requestEvent({
