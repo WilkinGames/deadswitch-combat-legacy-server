@@ -10317,13 +10317,13 @@ class GameInstance
         for (var i = 0; i < weaponTypes.length; i++)
         {
             wpns = wpns.concat(this.getAllWeaponsByType(weaponTypes[i]));
-        }
-        if (this.game.gameModeId == GameMode.DESTRUCTION)
-        {
-            wpns = this.getWeaponData("melee_knife");
-        }
+        }        
         var primary = this.getWeaponData(wpns[this.Random(0, wpns.length - 1)].id);
         this.setRandomWeaponMods(primary);
+        if (this.game.gameModeId == GameMode.DESTRUCTION)
+        {
+            primary = this.getWeaponData("melee_knife");
+        }
         var inventory = [
             {
                 id: primary.id,
