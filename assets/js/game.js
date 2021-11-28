@@ -10380,7 +10380,7 @@ class GameInstance
         {
             botSkill = Math.min(BotSkill.SKILL_GOD, Math.floor(wave * 0.25));
         }
-        var health = this.getCharacterMaxHealth() + (wave * 10);
+        var health = this.getCharacterMaxHealth() + (wave * 5);
         var char = this.createCharacter({
             id: this.getRandomUniqueId(),
             x: spawnPos[0],
