@@ -598,6 +598,14 @@ class GameInstance
                     this.createFlag(map.flags[this.game.gameModeId][i], { num: i });
                 }
                 break;
+            case GameMode.CAPTURE_THE_FLAG:
+                this.game.gameModeData.flags = [];
+                for (var i = 0; i < 2; i++)
+                {
+                    this.game.gameModeData.flags.push(null);
+                    this.createFlag(map.flags[this.game.gameModeId][i], { num: i });
+                }
+                break;
             case GameMode.SURVIVAL:
             case GameMode.SURVIVAL_CLASSIC:
                 this.game.bRanked = false;
@@ -3064,6 +3072,10 @@ class GameInstance
     {
         if (_weapon)
         {
+            if (_weapon.aimRotation == null)
+            {
+                _weapon.aimRotation = 0;
+            }
             var val = _val;
             if (isNaN(val))
             {
@@ -4178,7 +4190,7 @@ class GameInstance
                                         eventId: GameServer.EVENT_PAWN_ACTION,
                                         pawnId: data.id,
                                         type: GameServer.PAWN_WEAPON_COOLDOWN,
-                                        index: i,
+                                        index: j,
                                         value: weapon.bCooldown
                                     });
                                 }
@@ -6902,12 +6914,28 @@ class GameInstance
         }
     }
 
-    toggleVehicleWeapon(_body, _index)
+    cycleVehicleWeapon(_body, _index)
     {
-        var weapon = this.getVehicleWeapon(_body, _index);
-        if (weapon)
+        var data = _body.data;
+        var weapons = data.weapons;
+        if (weapons)
         {
-            
+            var weaponList = weapons[_index];
+            if (weaponList && weaponList.length > 0)
+            {
+                var seat = data.seats[_index];
+                if (seat.weaponIndex == null)
+                {
+                    seat.weaponIndex = 0;
+                }
+                seat.weaponIndex++;
+                if (seat.weaponIndex > weaponList.length - 1)
+                {
+                    seat.weaponIndex = 0;
+                }
+                console.log(weaponList[seat.weaponIndex]);
+                this.pushObjectDataUpdate(data.id, ["seats"]);
+            }
         }
     }
 
@@ -6926,7 +6954,8 @@ class GameInstance
         var weapons = _vehicle.data.weapons;
         if (weapons)
         {
-            var weaponIndex = _vehicle.data.weaponIndex != null ? _vehicle.data.weaponIndex : 0;
+            var seat = _vehicle.data.seats[_index];
+            var weaponIndex = seat.weaponIndex != null ? seat.weaponIndex : 0;
             if (weapons[_index])
             {
                 return weapons[_index][weaponIndex];
@@ -7067,7 +7096,7 @@ class GameInstance
                 switch (keyId)
                 {
                     case Control.WEAPON:
-                        this.toggleVehicleWeapon(_controllable);
+                        this.cycleVehicleWeapon(_controllable, _char.data.seatIndex);
                         break;
 
                     case Control.JUMP:
@@ -11539,7 +11568,7 @@ class GameInstance
                             maxAngle: this.ToRad(30)
                         },
                         {
-                            muzzlePos: [-30, -70],
+                            muzzlePos: [100, -30],
                             weaponData: this.getWeaponData("m249")
                         }
                     ],
@@ -11574,6 +11603,10 @@ class GameInstance
                             weaponData: this.getWeaponData("m256a1"),
                             minAngle: this.ToRad(-80),
                             maxAngle: this.ToRad(30)
+                        },
+                        {
+                            muzzlePos: [100, -30],
+                            weaponData: this.getWeaponData("m249")
                         }
                     ],
                     [
@@ -12001,7 +12034,7 @@ class GameInstance
         {
             console.warn("Missing height");
         }
-        var width = _data.width ? _data.width : 40;
+        var width = 30; //_data.width ? _data.width : 25;
         var height = _data.height;
 
         var useWidth = Math.max(50, width);
@@ -12021,7 +12054,7 @@ class GameInstance
             doorData: {
                 doorType: _data.doorType,
                 bClosed: _data.bClosed,
-                width: useWidth,
+                width: width,
                 height: useHeight
             }
         };
@@ -12239,6 +12272,7 @@ class GameInstance
             y: body.position[1],
             type: "flag",
             num: _data.num,
+            flagType: _data.flagType,
             bIsBeingCaptured: false,
             bIsContested: false,
             captureTimer: [

@@ -359,6 +359,14 @@
     "es": "Banderas devueltas",
     "it": "Bandiere Tornate"
   },
+  "STR_STAT_RETURNS": {
+    "en": "Returns",
+    "ru": "Возвратов",
+    "zh-CN": "寻回旗帜",
+    "tr": "Geri Getirmeler",
+    "es": "Devueltas",
+    "it": "Ritorni"
+  },
   "STR_STAT_BOMB_PLANTS": {
     "en": "Bomb Plants",
     "ru": "Закладки бомб",

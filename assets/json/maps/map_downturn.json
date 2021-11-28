@@ -667,10 +667,10 @@
       "type": "ladder",
       "position": [
         1993,
-        2466
+        2476
       ],
       "direction": 1,
-      "height": 240
+      "height": 260
     },
     {
       "id": "l_z_2",
@@ -687,10 +687,10 @@
       "type": "ladder",
       "position": [
         12007,
-        2466
+        2476
       ],
       "direction": -1,
-      "height": 240
+      "height": 260
     },
     {
       "type": "obstacle",
