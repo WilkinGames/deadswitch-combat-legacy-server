@@ -616,7 +616,7 @@ class GameInstance
                 this.game.gameModeData.bAllowRevives = true;
                 this.game.gameModeData.timeLimit = null;
                 this.game.gameModeData.bVehicles = false;
-                this.game.gameModeData.bMountedWeapons = this.game.gameModeId != GameMode.SURVIVAL_CLASSIC;
+                this.game.gameModeData.bMountedWeapons = false;
                 this.game.gameModeData.bSpecialWeapons = false;
                 this.game.gameModeData.bAllowRespawns = false;
                 this.game.gameModeData.wave = 0;
