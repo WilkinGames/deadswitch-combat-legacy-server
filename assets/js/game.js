@@ -608,6 +608,7 @@ class GameInstance
                 break;
             case GameMode.SURVIVAL:
             case GameMode.SURVIVAL_CLASSIC:
+            case GameMode.DESTRUCTION:
                 this.game.bRanked = false;
                 this.game.bSurvival = true;
                 this.game.bFriendlyFire = false;
@@ -1007,7 +1008,7 @@ class GameInstance
                             if (numOnTeam < Settings.MAX_ENEMIES)
                             {
                                 var wave = this.game.gameModeData.wave;
-                                if (wave > 1 && this.Random(1, 6) == 1)
+                                if (wave > 1 && this.Random(1, 6) == 1 && this.game.gameModeId != GameMode.DESTRUCTION)
                                 {
                                     this.spawnSurvivalEnemyVehicle();                                    
                                 }
@@ -10317,6 +10318,10 @@ class GameInstance
         {
             wpns = wpns.concat(this.getAllWeaponsByType(weaponTypes[i]));
         }
+        if (this.game.gameModeId == GameMode.DESTRUCTION)
+        {
+            wpns = this.getWeaponData("melee_knife");
+        }
         var primary = this.getWeaponData(wpns[this.Random(0, wpns.length - 1)].id);
         this.setRandomWeaponMods(primary);
         var inventory = [
@@ -10326,13 +10331,16 @@ class GameInstance
             }
         ];
         var secondaryTypes = [];
-        if (wave >= 10)
+        if (this.game.gameModeId != GameMode.DESTRUCTION)
         {
-            secondaryTypes.push(Weapon.TYPE_LAUNCHER);
-        }
-        else if (wave >= 3)
-        {
-            secondaryTypes.push(Weapon.TYPE_SHOTGUN);
+            if (wave >= 10)
+            {
+                secondaryTypes.push(Weapon.TYPE_LAUNCHER);
+            }
+            else if (wave >= 3)
+            {
+                secondaryTypes.push(Weapon.TYPE_SHOTGUN);
+            }
         }
         if (secondaryTypes.length > 1)
         {
@@ -10363,8 +10371,15 @@ class GameInstance
         {
             equipment.push("knife");
         }
-        var melee = "melee_knife";        
-        var botSkill = Math.min(BotSkill.SKILL_GOD, Math.floor(wave * 0.25));
+        var melee = "melee_knife";       
+        if (this.game.gameModeId == GameMode.DESTRUCTION)
+        {
+            var botSkill = Math.min(BotSkill.SKILL_GOD, Math.ceil(wave * 0.5));
+        }
+        else
+        {
+            botSkill = Math.min(BotSkill.SKILL_GOD, Math.floor(wave * 0.25));
+        }
         var health = this.getCharacterMaxHealth() + (wave * 10);
         var char = this.createCharacter({
             id: this.getRandomUniqueId(),
@@ -10500,6 +10515,7 @@ class GameInstance
                     switch (this.game.gameModeId)
                     {
                         case GameMode.SURVIVAL:
+                        case GameMode.DESTRUCTION:
                             grenade = "frag";
                             equipment = this.RandomBoolean() ? "ammo_box" : "stim";
                             var secondary = ["smaw", "javelin", "rpg", "mgl", "m320"];
