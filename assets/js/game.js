@@ -6635,7 +6635,7 @@ class GameInstance
 
                             case GameServer.INV_UNDERBARREL_EQUIP:
                                 var weapon = this.getCurrentCharacterInventoryItem(pawn, false);
-                                if (weapon)
+                                if (weapon && weapon.barrel)
                                 {
                                     weapon.bBarrel = _data.value;
                                     this.setCharacterCurrentInventoryItem(pawn, _data.index);
@@ -10374,7 +10374,7 @@ class GameInstance
         var melee = "melee_knife";       
         if (this.game.gameModeId == GameMode.DESTRUCTION)
         {
-            var botSkill = Math.min(BotSkill.SKILL_GOD, Math.ceil(wave * 0.5));
+            var botSkill = Math.min(BotSkill.SKILL_GOD, Math.ceil(wave));
         }
         else
         {
