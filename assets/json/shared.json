@@ -1,7 +1,7 @@
 {
   "smokeSize": 325,
   "flagCaptureSize": 300,
-  "ladderWidth": 150,
+  "ladderWidth": 50,
   "character": {
     "width": 40,
     "height": 80,

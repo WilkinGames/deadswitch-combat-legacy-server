@@ -125,6 +125,7 @@ const Settings = {
     MAX_CRATES: 10,
     MAX_ENEMIES: 20,
     MAX_DROPPED_WEAPONS: 8,
+    MAX_VEHICLES: 10,
     VEHICLE_EXPLOSION_DAMAGE: 200
 };
 const CollisionGroups = {
@@ -315,7 +316,8 @@ const GameMode = {
     DESTRUCTION: "destruction",
     CAPTURE_THE_FLAG: "capture_the_flag",
     SURVIVAL: "survival",
-    SURVIVAL_CLASSIC: "survival_classic"
+    SURVIVAL_CLASSIC: "survival_classic",
+    SURVIVAL_ZOMBIES: "survival_zombies"
 };
 const Classes = {
     ASSAULT: "ASSAULT",
@@ -587,7 +589,11 @@ class GameInstance
                 for (var i = 0; i < 3; i++)
                 {
                     this.game.gameModeData.flags.push(null);
-                    this.createFlag(map.flags[this.game.gameModeId][i], { num: i });
+                    var flag = this.createFlag(map.flags[this.game.gameModeId][i], {
+                        flagType: GameMode.DOMINATION,
+                        num: i
+                    });
+                    flag.mass = 0;
                 }
                 break;
             case GameMode.CONQUEST:
@@ -595,20 +601,27 @@ class GameInstance
                 for (var i = 0; i < 5; i++)
                 {
                     this.game.gameModeData.flags.push(null);
-                    this.createFlag(map.flags[this.game.gameModeId][i], { num: i });
+                    var flag = this.createFlag(map.flags[this.game.gameModeId][i], {
+                        flagType: GameMode.DOMINATION,
+                        num: i
+                    });
+                    flag.mass = 0;
                 }
                 break;
             case GameMode.CAPTURE_THE_FLAG:
                 this.game.gameModeData.flags = [];
                 for (var i = 0; i < 2; i++)
                 {
-                    this.game.gameModeData.flags.push(null);
-                    this.createFlag(map.flags[this.game.gameModeId][i], { num: i });
+                    this.game.gameModeData.flags.push(i);
+                    this.createFlag(map.flags[this.game.gameModeId][i], {
+                        num: i,
+                        team: i
+                    });
                 }
                 break;
             case GameMode.SURVIVAL:
             case GameMode.SURVIVAL_CLASSIC:
-            case GameMode.DESTRUCTION:
+            case GameMode.SURVIVAL_ZOMBIES:
                 this.game.bRanked = false;
                 this.game.bSurvival = true;
                 this.game.bFriendlyFire = false;
@@ -626,13 +639,16 @@ class GameInstance
                 break;
         }
 
-        if (this.game.gameModeId == GameMode.SURVIVAL_CLASSIC)
+        switch (this.game.gameModeId)
         {
-            var storeCrate = this.createCrate(map.spawn_survival, {
-                team: 0,
-                type: Crate.STORE
-            });
-            storeCrate.mass = 10;
+            case GameMode.SURVIVAL_CLASSIC:
+            case GameMode.SURVIVAL_ZOMBIES:
+                var storeCrate = this.createCrate(map.spawn_survival, {
+                    team: 0,
+                    type: Crate.STORE
+                });
+                storeCrate.mass = 0;
+                break;
         }
 
         this.initMap();
@@ -1008,15 +1024,25 @@ class GameInstance
                             if (numOnTeam < Settings.MAX_ENEMIES)
                             {
                                 var wave = this.game.gameModeData.wave;
-                                if (wave > 1 && this.Random(1, 6) == 1 && this.game.gameModeId != GameMode.DESTRUCTION)
+                                switch (this.game.gameModeId)
                                 {
-                                    this.spawnSurvivalEnemyVehicle();                                    
-                                }
-                                else
-                                {
-                                    this.spawnSurvivalEnemyCharacter();
-                                    gameData.enemiesSpawned++;
-                                }
+                                    case GameMode.SURVIVAL_ZOMBIES:
+                                        this.spawnSurvivalEnemyZombie();
+                                        gameData.enemiesSpawned++;
+                                        break;
+                                    default:
+                                        if (wave > 1 && this.Random(1, 6) == 1)
+                                        {
+                                            this.spawnSurvivalEnemyVehicle();
+                                        }
+                                        else
+                                        {
+                                            this.spawnSurvivalEnemyCharacter();
+                                            gameData.enemiesSpawned++;
+                                        }
+                                        break;
+                                }                               
+                                
                             }
                             gameData.spawnTimer = gameData.spawnTimerMax;
                         }
@@ -1187,16 +1213,38 @@ class GameInstance
                     case "flag":
                         if (this.matchInProgress())
                         {
-                            this.handleFlag(body);
+                            switch (data.flagType)
+                            {
+                                case GameMode.DOMINATION:
+                                    this.handleDominationFlag(body);
+                                    break;
+                                default:
+                                    this.handleFlag(body);
+                                    break;
+                            }                            
                         }
                         break;
                     default:
-                        if (body.position[1] > this.getCurrentMapData().height)
+                        if (this.isOutOfMap(body))
                         {
                             console.warn("Out of bounds", data.type);
                             this.removeNextStep(body);
                         }
                         break;
+                }
+
+                var vehicles = this.getVehicles();
+                if (vehicles.length > Settings.MAX_VEHICLES)
+                {
+                    for (var k = 0; k < vehicles.length; k++)
+                    {
+                        var veh = vehicles[k];
+                        if (!this.vehicleHasOccupant(veh))
+                        {
+                            this.removeNextStep(veh);
+                            break;
+                        }
+                    }
                 }
 
                 if (!data.bSkipServerUpdate)
@@ -1372,6 +1420,22 @@ class GameInstance
             }
         }     
         //this.sendBatchData();
+    }
+
+    isOutOfMap(_body)
+    {
+        if (_body)
+        {
+            var map = this.getCurrentMapData();
+            if (map)
+            {
+                if (_body.position[0] < 0 || _body.position[0] > map.width || _body.position[1] > map.height)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     removeDuplicateKeys(_source, _target)
@@ -2083,6 +2147,11 @@ class GameInstance
                                 var newData = this.getWeaponData(playerVehicleData.weapons[_seatIndex]);
                                 if (newData)
                                 {
+                                    var seat = _vehicle.data.seats[_seatIndex];
+                                    if (seat)
+                                    {
+                                        seat.weaponIndex = 0;
+                                    }
                                     var weapon = this.getVehicleWeapon(_vehicle, _seatIndex); //weapons[_seatIndex];
                                     if (weapon)
                                     {
@@ -2367,7 +2436,7 @@ class GameInstance
                         ai.bWantsItem = true;
                     }
                 }
-                ai.bWantsVehicle = !_body.data.controllableId && this.Random(1, 4) == 1 && (this.getAvailableVehicles(_body).length > 0);
+                ai.bWantsVehicle = !_body.data.controllableId && this.Random(1, 5) == 1 && (this.getAvailableVehicles(_body).length > 0);
                 ai.desiredVehicleId = null;
                 if (ai.bWantsVehicle)
                 {
@@ -2390,9 +2459,6 @@ class GameInstance
                 var pathTickerMax = 0;
                 switch (ai.botSkill)
                 {
-                    case BotSkill.SKILL_EASY:
-                        pathTickerMax = 3;
-                        break;
                     case BotSkill.SKILL_NORMAL:
                     case BotSkill.SKILL_HARD:
                         pathTickerMax = 2;
@@ -2402,7 +2468,7 @@ class GameInstance
                         pathTickerMax = 1;
                         break;
                     default:
-                        pathTickerMax = 5;
+                        pathTickerMax = 3;
                         break;
                 }
                 ai.pathTicker = pathTickerMax;
@@ -2778,6 +2844,45 @@ class GameInstance
                         ai.moveToPos = this.clone(flag.position);
                     }
                     break;
+                case GameMode.CAPTURE_THE_FLAG:
+                    var enemyFlag = this.getFlagCTF(data.team == 0 ? 1 : 0);
+                    var homeFlag = this.getFlagCTF(data.team);
+                    if (enemyFlag.data.carrierId == data.id)
+                    {
+                        data.bHasFlag = true;
+                        //ai.activityTimer = 0;
+                        ai.moveToPos = this.clone(homeFlag.position);
+                    }
+                    else
+                    {
+                        delete data.bHasFlag;
+                        if (homeFlag.data.bAwayFromHome)
+                        {
+                            var distToHomeFlag = this.Dist(homeFlag.position[0], homeFlag.position[1], _body.position[0], _body.position[1]);
+                            var distToEnemyFlag = this.Dist(enemyFlag.position[0], enemyFlag.position[1], _body.position[0], _body.position[1]);
+                            if (distToHomeFlag < distToEnemyFlag)
+                            {
+                                ai.moveToPos = this.clone(homeFlag.position);
+                            }
+                            else
+                            {
+                                ai.moveToPos = this.clone(enemyFlag.position);
+                                if (enemyFlag.data.carrierId)
+                                {
+                                    ai.destThreshold = 200;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            ai.moveToPos = this.clone(enemyFlag.position);
+                            if (enemyFlag.data.carrierId)
+                            {
+                                //ai.destThreshold = 200;
+                            }
+                        }
+                    }
+                    break;
                 default:
                     if (ai.enemy)
                     {
@@ -2787,7 +2892,8 @@ class GameInstance
             }
         }
 
-        var bTriggerFire = ai.enemyDist < ai.lookRange && ai.bEnemyLOS && (!data.bStunned && !data.bFlashed);
+        var item = this.getCurrentCharacterInventoryItem(_body);
+        var bTriggerFire = ai.enemyDist < item.range && ai.enemyDist < ai.lookRange && ai.bEnemyLOS && (!data.bStunned && !data.bFlashed);
 
         this.triggerCharacterWeapon({
             eventId: GameServer.EVENT_PLAYER_TRIGGER_WEAPON,
@@ -2968,10 +3074,10 @@ class GameInstance
                                 {
                                     var muzzle = this.getVehicleMuzzlePosition(controllable, data.seatIndex);
                                     var aim = [ai.enemy.position[0], ai.enemy.position[1]];
-                                    if (controllable.data.type == "tank" && _body.data.seatIndex == 0)
+                                    if (controllable.data.type == "tank")
                                     {
-                                        aim[0] += (ai.offsetX * ai.enemyDistMult) * 0.25;
-                                        aim[1] += (ai.offsetY * ai.enemyDistMult) * 0.25;
+                                        aim[0] += (ai.offsetX * ai.enemyDistMult) * 0.1;
+                                        aim[1] += (ai.offsetY * ai.enemyDistMult) * 0.1;
                                     }
                                     if (controllable.data.type == "mountedWeapon")
                                     {
@@ -3501,7 +3607,184 @@ class GameInstance
         return true;
     }
 
+    returnFlagCTF(_body, _playerId)
+    {
+        if (_body)
+        {
+            var data = _body.data;
+            var map = this.getCurrentMapData();
+            var pos = map.flags[this.game.gameModeId][data.team];
+            if (pos)
+            {
+                _body.position[0] = pos[0];
+                _body.position[1] = pos[1];
+            }
+            else
+            {
+                console.warn("Invalid flag position");
+            }
+            data.bAwayFromHome = false;
+            data.cooldownTimer = 5;
+            if (_playerId)
+            {
+                this.onFlagReturned(_body, _playerId);
+            }
+        }
+    }
+
     handleFlag(_body)
+    {
+        if (this.isOutOfMap(_body))
+        {
+            this.returnFlagCTF(_body);
+        }
+        var data = _body.data;
+        if (data["cooldownTimer"] > 0)
+        {
+            data["cooldownTimer"]--;
+        }
+        else
+        {
+            delete data["cooldownTimer"];
+        }
+        if (data["carrierId"])
+        {
+            var carrier = this.getObjectById(data["carrierId"]);
+            if (carrier)
+            {
+                if (carrier.data["health"])
+                {
+                    _body.position[0] = carrier.position[0];
+                    _body.position[1] = carrier.position[1] - 40;
+                }
+                _body.gravityScale = 0;
+            }
+            else
+            {
+                this.onFlagDropped(_body, data["carrierId"]);
+                this.setFlagCarrierId(_body, null);
+            }
+        }
+        if (data["bAwayFromHome"])
+        {
+            if (!data["carrierId"])
+            {
+                _body.gravityScale = 1;
+            }
+        }
+        else
+        {
+            var map = this.getCurrentMapData();
+            var pos = map.flags[this.game.gameModeId][data.team];
+            _body.position[0] = pos[0];
+            _body.position[1] = pos[1];
+            _body.gravityScale = 0;
+        }
+        if (!data["cooldownTimer"])
+        {
+            var chars = this.getCharacters();
+            for (var i = 0; i < chars.length; i++)
+            {
+                var char = chars[i];
+                var bOverlap = _body.getAABB().overlaps(char.getAABB());
+                if (bOverlap)
+                {
+                    if (char.data["team"] == data["team"])
+                    {
+                        if (!data["carrierId"] && data["bAwayFromHome"])
+                        {
+                            data["cooldownTimer"] = 5;
+                            this.returnFlagCTF(_body, char.data["id"]);
+                        }
+                        else if (!data["bAwayFromHome"])
+                        {
+                            var otherFlag = this.getFlagCTF(data["team"] == 1 ? 0 : 1);
+                            if (otherFlag.data["carrierId"] == char.data["id"])
+                            {
+                                this.setFlagCarrierId(otherFlag, null);
+                                otherFlag.data["cooldownTimer"] = 5;
+                                var map = this.getCurrentMapData();
+                                var pos = map.flags[this.game.gameModeId][otherFlag.data["team"]];
+                                otherFlag.position[0] = pos[0];
+                                otherFlag.position[1] = pos[1];
+                                otherFlag.data["bAwayFromHome"] = false;
+                                otherFlag.wakeUp();
+
+                                data["cooldownTimer"] = 5;
+                                this.onFlagCaptured(_body, [char.data["id"]]);
+                                return;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (!data["carrierId"])
+                        {
+                            this.setFlagCarrierId(_body, char.data.id);
+                            data["bAwayFromHome"] = true;
+                            data["cooldownTimer"] = 5;
+
+                            this.onFlagPickedUp(_body, char.data["id"]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    setFlagCarrierId(_body, _carrierId)
+    {
+        if (_body)
+        {
+            this.setDataValue(_body, "carrierId", _carrierId);
+            console.log(_body.data);
+        }
+    }
+
+    onFlagReturned(_flag, _playerId)
+    {
+        var ps = this.getPlayerById(_playerId);
+        if (ps)
+        {
+            ps["returns"]++;
+            this.onEvent({
+                eventId: GameServer.EVENT_PLAYER_UPDATE,
+                playerId: _playerId,
+                data: {
+                    returns: ps["returns"]
+                }
+            });
+            this.onEvent({
+                eventId: GameServer.EVENT_PLAYER_FLAG,
+                playerId: _playerId,
+                team: _flag.data["team"],
+                type: "returned"
+            });
+        }
+    }
+
+    onFlagDropped(_flag, _playerId)
+    {
+        _flag.wakeUp();
+        this.onEvent({
+            eventId: GameServer.EVENT_PLAYER_FLAG,
+            playerId: _playerId,
+            team: _flag.data["team"],
+            type: "dropped"
+        });
+    }
+
+    onFlagPickedUp(_flag, _playerId)
+    {
+        this.onEvent({
+            eventId: GameServer.EVENT_PLAYER_FLAG,
+            playerId: _playerId,
+            team: _flag.data["team"],
+            type: "picked_up"
+        });
+    }
+
+    handleDominationFlag(_body)
     {
         var data = _body.data;
         var charsTouching;
@@ -3524,7 +3807,6 @@ class GameInstance
             }
         }
         var prevCaptureTimer = this.clone(data.captureTimer);
-        //var prevTouching = data.charsTouching ? data.charsTouching.length : 0;
         var prevTouching = [0, 0];
         if (data.charsTouching)
         {
@@ -3684,6 +3966,7 @@ class GameInstance
 
     onFlagCaptured(_flag, _playerIds)
     {
+        var team = _flag.data.team;
         if (_playerIds)
         {
             for (var i = 0; i < _playerIds.length; i++)
@@ -3714,8 +3997,23 @@ class GameInstance
         }
         switch (this.game.gameModeId)
         {
-            case GameMode.DOMINATION:
-                //...
+            case GameMode.CAPTURE_THE_FLAG:
+                var scores = this.game.gameModeData.scores;
+                scores[team]++;
+                this.onEvent({
+                    eventId: GameServer.EVENT_GAME_UPDATE,
+                    data: {
+                        scores: scores
+                    }
+                });
+                if (scores[team] >= this.game.gameModeData.scoreLimit)
+                {
+                    this.requestEvent({
+                        eventId: GameServer.EVENT_GAME_END,
+                        condition: MatchState.END_CONDITION_SCORE,
+                        winningTeam: team
+                    });
+                }
                 break;
         }
     }
@@ -4150,7 +4448,18 @@ class GameInstance
                             }
                             else if (weaponData.bGrenade)
                             {
-                                //TODO
+                                this.createGrenade(muzzlePos, {
+                                    team: data.team,
+                                    playerId: pawnId,
+                                    causerId: data.id,
+                                    rotation: bulletRad,
+                                    velocity: weaponData.velocity ? weaponData.velocity : 1500,
+                                    damage: weaponData.damage,
+                                    weaponId: weaponData.id,
+                                    type: weaponData.mods ? weaponData.mods[Mods.TYPE_AMMO] : null,
+                                    bImpact: true,
+                                    bMinimumDistance: true
+                                });
                             }
                             else if (weaponData.bProjectile)
                             {
@@ -4215,7 +4524,7 @@ class GameInstance
         if (data.health)
         {
             var deg = Math.abs(this.ToDeg(_body.angle));
-            if (deg > 100)
+            if (deg > 90)
             {
                 this.requestEvent({
                     eventId: GameServer.EVENT_PAWN_DAMAGE,
@@ -5759,11 +6068,16 @@ class GameInstance
             case GameMode.CONQUEST:
                 ps.captures = 0;
                 break;
+            case GameMode.CAPTURE_THE_FLAG:
+                ps.captures = 0;
+                ps.returns = 0;
+                break;
             case GameMode.CONQUEST:
                 ps.plants = 0;
                 ps.defuses = 0;
                 break;
             case GameMode.SURVIVAL_CLASSIC:
+            case GameMode.SURVIVAL_ZOMBIES:
                 ps.money = 0;
                 break;
         }        
@@ -6935,8 +7249,14 @@ class GameInstance
                 {
                     seat.weaponIndex = 0;
                 }
-                console.log(weaponList[seat.weaponIndex]);
                 this.pushObjectDataUpdate(data.id, ["seats"]);
+                this.requestEvent({
+                    eventId: GameServer.EVENT_PAWN_ACTION,
+                    pawnId: _body.data.id,
+                    type: GameServer.PAWN_VEHICLE_UPDATE,
+                    index: _index,
+                    weaponIndex: seat.weaponIndex
+                });
             }
         }
     }
@@ -8636,6 +8956,28 @@ class GameInstance
         return arr;
     }
 
+    getFlagCTF(_team)
+    {
+        var world = this.game.world;
+        for (var i = 0; i < world.bodies.length; i++)
+        {
+            var cur = world.bodies[i];
+            if (cur.data)
+            {
+                switch (cur.data.type)
+                {
+                    case "flag":
+                        if (cur.data.team == _team)
+                        {
+                            return cur;
+                        }
+                        break;
+                }
+            }
+        }
+        return null;
+    }
+
     getFlags()
     {
         var world = this.game.world;
@@ -9783,6 +10125,7 @@ class GameInstance
             switch (this.game.gameModeId)
             {
                 case GameMode.SURVIVAL_CLASSIC:
+                case GameMode.SURVIVAL_ZOMBIES:
                     ps.inventory = [pawn.data.inventory[0], pawn.data.inventory[1]];
                     ps.melee = pawn.data.melee ? pawn.data.melee.id : null;
                     ps.equipment = pawn.data.equipment ? pawn.data.equipment : null;
@@ -9896,11 +10239,11 @@ class GameInstance
         if (_bBleedTimer)
         {
             var bleedTimerMax = 30;
-            if (this.localData["bOperation"])
+            if (this.game.bOperation)
             {
-                bleedTimerMax = 30 - (this.localData["difficulty"] * 5);
+                bleedTimerMax = 30 - (this.game.gameModeData.difficulty * 5);
             }
-            body.data["bleedTimerMax"] = this.localData.settings.fps * bleedTimerMax;
+            body.data["bleedTimerMax"] = this.game.settings.fps * bleedTimerMax;
             body.data["bleedTimer"] = body.data["bleedTimerMax"];
         }
         var shape = new p2.Box({
@@ -10202,7 +10545,7 @@ class GameInstance
         gameData.numEnemies = Math.min(100, 5 * gameData.wave);
         gameData.enemiesSpawned = 0;
         gameData.enemiesRemaining = gameData.numEnemies;
-        gameData.spawnTimer = Math.round(this.game.settings.fps * 0.1);
+        gameData.spawnTimer = Math.round(this.game.settings.fps * 0.5);
         gameData.spawnTimerMax = gameData.spawnTimer;
         this.onEvent({
             eventId: GameServer.EVENT_GAME_UPDATE,
@@ -10283,6 +10626,47 @@ class GameInstance
         return vehicle;
     }
 
+    spawnSurvivalEnemyZombie()
+    {
+        var map = this.getCurrentMapData();
+        var spawns = map.spawns_survival;
+        if (!spawns)
+        {
+            spawns = map.spawns;
+        }
+        var spawnPos = spawns[this.Random(0, spawns.length - 1)].position;
+
+        var avatar = {
+            body: Character.BODY_ZOMBIE,
+            face: Character.FACE_ZOMBIE_1
+        };
+
+        var wave = this.game.gameModeData.wave;
+        var inventory = [
+            {
+                id: "zombie"
+            }
+        ];
+        var botSkill = botSkill = Math.min(BotSkill.SKILL_GOD, Math.floor(wave * 0.25));
+        var health = this.getCharacterMaxHealth() + (wave * 25);
+        var char = this.createCharacter({
+            id: this.getRandomUniqueId(),
+            x: spawnPos[0],
+            y: spawnPos[1],
+            team: 1,
+            inventory: inventory,
+            melee: "none",
+            avatar: avatar,
+            bBot: true,
+            botSkill: botSkill,
+            health: health,
+            bZombie: true,
+            maxSpeed: 200 + (wave * 25),
+            bRegenHealth: false
+        });
+        return char;
+    }
+
     spawnSurvivalEnemyCharacter()
     {
         var map = this.getCurrentMapData();
@@ -10320,10 +10704,6 @@ class GameInstance
         }        
         var primary = this.getWeaponData(wpns[this.Random(0, wpns.length - 1)].id);
         this.setRandomWeaponMods(primary);
-        if (this.game.gameModeId == GameMode.DESTRUCTION)
-        {
-            primary = this.getWeaponData("melee_knife");
-        }
         var inventory = [
             {
                 id: primary.id,
@@ -10331,16 +10711,13 @@ class GameInstance
             }
         ];
         var secondaryTypes = [];
-        if (this.game.gameModeId != GameMode.DESTRUCTION)
+        if (wave >= 10)
         {
-            if (wave >= 10)
-            {
-                secondaryTypes.push(Weapon.TYPE_LAUNCHER);
-            }
-            else if (wave >= 3)
-            {
-                secondaryTypes.push(Weapon.TYPE_SHOTGUN);
-            }
+            secondaryTypes.push(Weapon.TYPE_LAUNCHER);
+        }
+        else if (wave >= 3)
+        {
+            secondaryTypes.push(Weapon.TYPE_SHOTGUN);
         }
         if (secondaryTypes.length > 1)
         {
@@ -10372,14 +10749,7 @@ class GameInstance
             equipment.push("knife");
         }
         var melee = "melee_knife";       
-        if (this.game.gameModeId == GameMode.DESTRUCTION)
-        {
-            var botSkill = Math.min(BotSkill.SKILL_GOD, Math.ceil(wave));
-        }
-        else
-        {
-            botSkill = Math.min(BotSkill.SKILL_GOD, Math.floor(wave * 0.25));
-        }
+        var botSkill = botSkill = Math.min(BotSkill.SKILL_GOD, Math.floor(wave * 0.25));
         var health = this.getCharacterMaxHealth() + (wave * 5);
         var char = this.createCharacter({
             id: this.getRandomUniqueId(),
@@ -10515,7 +10885,6 @@ class GameInstance
                     switch (this.game.gameModeId)
                     {
                         case GameMode.SURVIVAL:
-                        case GameMode.DESTRUCTION:
                             grenade = "frag";
                             equipment = this.RandomBoolean() ? "ammo_box" : "stim";
                             var secondary = ["smaw", "javelin", "rpg", "mgl", "m320"];
@@ -10536,6 +10905,7 @@ class GameInstance
                             break;
 
                         case GameMode.SURVIVAL_CLASSIC:
+                        case GameMode.SURVIVAL_ZOMBIES:
                             grenade = "frag";
                             inventory = [
                                 {
@@ -10571,7 +10941,7 @@ class GameInstance
             {
                 var spawnPos = _position;
             }
-            else if (this.game.gameModeId == GameMode.SURVIVAL_CLASSIC)
+            else if (this.game.bSurvival)
             {
                 var map = this.getCurrentMapData();
                 spawnPos = this.clone(map.spawn_survival);
@@ -10860,6 +11230,11 @@ class GameInstance
 
     createDroppedWeapon(_position, _data)
     {
+        var weaponData = _data.weaponData;
+        if (weaponData.id == "none" || weaponData.bZombie)
+        {
+            return;
+        }
         var body = new p2.Body({
             mass: 1,
             position: _position,
@@ -10874,8 +11249,7 @@ class GameInstance
             scale: _data.scale != null ? _data.scale : 1,
             itemData: _data,
             value: 1
-        };
-        var weaponData = _data["weaponData"];
+        };        
         var atlasData = this.getWorldWeaponData(weaponData["id"]);
         var shape = new p2.Box({
             width: atlasData.w,
@@ -10890,7 +11264,7 @@ class GameInstance
         }
         if (_data.velocity)
         {
-            //body.applyImpulse([_data.velocity[0], _data.velocity[1]], 0, 0);
+            body.applyImpulse([_data.velocity[0], _data.velocity[1]], 0, 0);
         }
         this.onEvent({
             eventId: GameServer.EVENT_SPAWN_OBJECT,
@@ -11236,20 +11610,11 @@ class GameInstance
             var id = _args[1];
             switch (id)
             {
-                case "revive":
-                    for (var i = 0; this.game.players.length; i++)
-                    {
-                        var ps = this.game.players[i];
-                        var reviver = this.getReviverByPlayerId(ps.id);
-                        this.respawnPlayer(ps.id, reviver ? [reviver.position[0], reviver.position[1] - 30] : null);
-                        this.onEvent({
-                            eventId: GameServer.EVENT_PAWN_ACTION,
-                            pawnId: ps.id,
-                            type: GameServer.PAWN_END_REVIVE,
-                            reviveId: ps.id
-                        });
-                        this.removeNextStep(reviver);
-                    }
+                case "store":
+                    var storeCrate = this.createCrate(curPawn.position, {
+                        team: 0,
+                        type: Crate.STORE
+                    });
                     break;
 
                 case "m2":
@@ -12294,7 +12659,7 @@ class GameInstance
     createFlag(_position, _data)
     {
         var body = new p2.Body({
-            mass: 0,
+            mass: 10,
             position: _position,
             fixedRotation: true
         });
@@ -12306,6 +12671,7 @@ class GameInstance
             type: "flag",
             num: _data.num,
             flagType: _data.flagType,
+            team: _data.team,
             bIsBeingCaptured: false,
             bIsContested: false,
             captureTimer: [
@@ -12316,8 +12682,17 @@ class GameInstance
             pointTimer: 0,
             pointTimerMax: this.game.settings.fps * 3
         };
+        switch (_data.flagType)
+        {
+            case GameMode.DOMINATION:
+                var flagWidth = this.getSharedData("flagCaptureSize");
+                break;
+            default:
+                flagWidth = 100;
+                break;
+        }
         var shape = new p2.Box({
-            width: this.getSharedData("flagCaptureSize"),
+            width: flagWidth,
             height: 121,
             collisionGroup: CollisionGroups.PAWN,
             collisionMask: CollisionGroups.GROUND
@@ -12651,7 +13026,7 @@ class GameInstance
             aimSpeed: 0.5,
             desiredAimRotation: this.ToRad(this.RandomBoolean() ? 0 : 180),
             lookPos: [_data.x + this.RandomBoolean() ? 100 : -1000, _data.y],
-            maxSpeed: shared.maxSpeed,
+            maxSpeed: _data.maxSpeed ? _data.maxSpeed : shared.maxSpeed,
             jumpHeight: shared.jumpHeight,
             reloadMultiplier: 1,
             speedMultiplier: 1,
@@ -12672,6 +13047,10 @@ class GameInstance
         data.maxHealth = data.health;
         //data.bGodMode = !data.bBot;
         data.weapon.bUnlimitedAmmo = this.game.gameModeData.bUnlimitedAmmo;
+        if (_data.bZombie)
+        {
+            data.bZombie = _data.bZombie;
+        }
         if (_data.inventory)
         {
             var inventory = [];

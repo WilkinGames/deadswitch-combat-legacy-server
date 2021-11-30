@@ -4,7 +4,7 @@
   "type": "STR_INTERNET",
   "port": 8000,
   "maxPlayers": 32,
-  "bUseLobby": false,
+  "bUseLobby": true,
   "bAllowVotekick": true,
   "welcome": "STR_SERVER_WELCOME",
   "rules": "STR_SERVER_RULES_NONE",

@@ -519,6 +519,9 @@
   "STR_UNLOCK_ALL": {
     "en": "Unlock All"
   },
+  "STR_UNLOCK": {
+    "en": "Unlock"
+  },
   "STR_TARGET_LOCK": {
     "en": "Target Lock"
   },
@@ -758,6 +761,9 @@
   "STR_MODE_SURVIVAL_CLASSIC": {
     "en": "Classic Survival"
   },
+  "STR_MODE_SURVIVAL_ZOMBIES": {
+    "en": "Zombie Survival"
+  },
   "STR_MODE_SURVIVAL_DESC": {
     "en": "Survive as long as possible."
   },
@@ -806,6 +812,14 @@
   },
   "STR_X_ENEMIES": {
     "en": "%1 Enemies"
+  },
+  "STR_GET_SHARDS": {
+    "en": "Get Shards",
+    "ru": "Получить осколки",
+    "zh-CN": "获取碎片",
+    "tr": "Shard'lardan Al",
+    "es": "Obtener Fragmentos",
+    "it": "Ottieni Frammenti"
   },
   "STR_X_MS": {
     "en": "%1 ms",
@@ -1309,7 +1323,7 @@
     "en": "Zuni Rockets"
   },
   "STR_WPN_HYDRA": {
-    "en": "Hydra Rockets"
+    "en": "Hydra Rocket"
   },
   "STR_WPN_ROCKET_GUIDED": {
     "en": "Guided Rockets"
@@ -1567,6 +1581,46 @@
     "es": "Necesitas al menos %1 fragmento para %2.",
     "it": "Hai bisogno di almeno %1 frammento per sbloccare %2."
   },
+  "STR_X_SHARD": {
+    "en": "%1 Shard",
+    "ru": "%1 Осколок",
+    "zh-CN": "仅 %1 块碎片",
+    "tr": "%1 Shard",
+    "es": "%1 Fragmento",
+    "it": "%1 Frammento"
+  },
+  "STR_X_SHARDS": {
+    "en": "%1 Shards",
+    "ru": "%1 Осколков",
+    "zh-CN": "%1 块碎片",
+    "tr": "%1 Shardlar",
+    "es": "%1 Fragmentos",
+    "it": "%1 Frammenti"
+  },
+  "STR_CONFIRM_UNLOCK_X": {
+    "en": "Are you sure you want to unlock %1?",
+    "ru": "Вы уверены, что хотите открыть %1?",
+    "zh-CN": "您确定要解锁 %1 吗?",
+    "tr": "%1'i açmak istediğinize emin misiniz?",
+    "es": "¿Estás seguro de que quieres desbloquear %1?",
+    "it": "Sei sicuro di voler sbloccare %1?"
+  },
+  "STR_CONFIRM_UNLOCK_X_FOR_X": {
+    "en": "Are you sure you want to unlock %1 for %2?",
+    "ru": "Вы уверены, что хотите открыть %1 за %2?",
+    "zh-CN": "您确定要用 %2 来解锁 %1 吗?",
+    "tr": "%2 için %1'i açmak istediğinize emin misiniz?",
+    "es": "¿Estás seguro de que quieres desbloquear %1 para %2?",
+    "it": "Sei sicuro di voler sbloccare %1 per %2?"
+  },
+  "STR_UNLOCK_X": {
+    "en": "Unlock %1",
+    "ru": "Окрыть %1",
+    "zh-CN": "解锁 %1",
+    "tr": "Aç %1",
+    "es": "Desbloquear %1",
+    "it": "Sbloccato %1"
+  },
   "STR_PARACHUTE": {
     "en": "Parachute"
   },
@@ -1823,7 +1877,20 @@
     "it": "%1XP"
   },
   "STR_FLAG_CAPTURED": {
-    "en": "Flag Captured"
+    "en": "Flag Captured",
+    "ru": "Флаг захвачен",
+    "zh-CN": "已夺取敌方旗帜",
+    "tr": "Bayrak Ele Geçirildi",
+    "es": "Bandera Capturada",
+    "it": "Bandiera Catturata"
+  },
+  "STR_FLAG_RETURNED": {
+    "en": "Flag Returned",
+    "ru": "Флаг возвращен",
+    "zh-CN": "敌方旗帜已被夺回",
+    "tr": "Bayrak Elden Çıktı",
+    "es": "Bandera Devuelta",
+    "it": "Bandiera Ritornata"
   },
   "STR_POSITION_SECURED": {
     "en": "Position Secured",
@@ -1836,8 +1903,19 @@
   "STR_X_CAPTURED_X": {
     "en": "%1 captured %2"
   },
+  "STR_X_CAPTURED": {
+    "en": "%1 captured the flag"
+  },
   "STR_CAMO": {
     "en": "Camo"
+  },
+  "STR_YOU_HAVE": {
+    "en": "You Have:",
+    "ru": "У вас:",
+    "zh-CN": "您拥有:",
+    "tr": "Sahipsin: ",
+    "es": "Tienes: ",
+    "it": "Tu hai:"
   },
   "STR_COUNTERMEASURE": {
     "en": "Countermeasure"

@@ -16,6 +16,10 @@
         {
           "id": "minigun",
           "score": 2500
+        },
+        {
+          "id": "mgl",
+          "score": 10000
         }
       ]
     ],
@@ -93,11 +97,11 @@
         },
         {
           "id": "hydra",
-          "score": 2500
+          "score": 5000
         },
         {
           "id": "rocket_guided",
-          "score": 5000
+          "score": 10000
         }
       ],
       [
@@ -292,15 +296,15 @@
         },
         {
           "id": "shell_he",
-          "score": 2500
-        },
-        {
-          "id": "shell_sabot",
           "score": 5000
         },
         {
-          "id": "shell_ap",
+          "id": "shell_sabot",
           "score": 10000
+        },
+        {
+          "id": "shell_ap",
+          "score": 25000
         }
       ],
       [
@@ -356,15 +360,15 @@
         },
         {
           "id": "shell_he",
-          "score": 2500
-        },
-        {
-          "id": "shell_sabot",
           "score": 5000
         },
         {
-          "id": "shell_ap",
+          "id": "shell_sabot",
           "score": 10000
+        },
+        {
+          "id": "shell_ap",
+          "score": 25000
         }
       ],
       [

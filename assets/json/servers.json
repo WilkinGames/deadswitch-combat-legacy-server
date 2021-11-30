@@ -1,6 +1,12 @@
 [
   {
+    "url": "http://localhost:8000/"
+  },
+  {
     "url": "https://dscmp.wilkingames.net/"
+  },
+  {
+    "url": "https://dscmp-eu.herokuapp.com/"
   },
   {
     "url": "http://104.131.188.248:8000/"
@@ -10,8 +16,5 @@
   },
   {
     "url": "http://165.22.49.4:8000/"
-  },
-  {
-    "url": "http://localhost:8000/"
   }
 ]
