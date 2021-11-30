@@ -10670,7 +10670,7 @@ class GameInstance
     spawnSurvivalEnemyCharacter()
     {
         var map = this.getCurrentMapData();
-        var spawns = map.spawns; //map.spawns_survival;
+        var spawns = map.spawns_survival;
         if (!spawns)
         {
             spawns = map.spawns;
@@ -11521,7 +11521,7 @@ class GameInstance
         _body.gravityScale = 0;
         _body.damping = shared.climbDamping;
         _body.velocity = [0, 0];
-        _body.position[0] = _ladder.position[0] + (-30 * _ladder.data.direction);
+        _body.position[0] = _ladder.position[0];
         _body.fixedX = true;
 
         var data = _body.data;

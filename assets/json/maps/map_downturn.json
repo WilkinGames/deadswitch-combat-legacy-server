@@ -413,7 +413,7 @@
       "id": "l_n_0",
       "type": "ladder",
       "position": [
-        2382,
+        2412,
         2513
       ],
       "direction": -1,
@@ -423,7 +423,7 @@
       "id": "l_n_1",
       "type": "ladder",
       "position": [
-        11617,
+        11587,
         2513
       ],
       "direction": 1,
@@ -433,7 +433,7 @@
       "id": "l_b_0",
       "type": "ladder",
       "position": [
-        2585,
+        2555,
         2280
       ],
       "direction": 1,
@@ -444,7 +444,7 @@
       "id": "l_b_1",
       "type": "ladder",
       "position": [
-        11415,
+        11445,
         2280
       ],
       "direction": -1,
@@ -455,7 +455,7 @@
       "id": "l_ramp_0",
       "type": "ladder",
       "position": [
-        5808,
+        5778,
         2563
       ],
       "direction": 1,
@@ -466,7 +466,7 @@
       "id": "l_ramp_1",
       "type": "ladder",
       "position": [
-        8200,
+        8230,
         2563
       ],
       "direction": -1,
@@ -477,7 +477,7 @@
       "id": "l_0",
       "type": "ladder",
       "position": [
-        2281,
+        2251,
         2127
       ],
       "direction": 1,
@@ -488,7 +488,7 @@
       "id": "l_1",
       "type": "ladder",
       "position": [
-        11719,
+        11749,
         2127
       ],
       "direction": -1,
@@ -499,7 +499,7 @@
       "id": "l_2",
       "type": "ladder",
       "position": [
-        127,
+        97,
         2002
       ],
       "direction": 1,
@@ -510,7 +510,7 @@
       "id": "l_1_1",
       "type": "ladder",
       "position": [
-        13478,
+        13508,
         2277
       ],
       "direction": -1,
@@ -521,7 +521,7 @@
       "id": "l_2_1",
       "type": "ladder",
       "position": [
-        13883,
+        13913,
         2002
       ],
       "direction": -1,
@@ -532,7 +532,7 @@
       "id": "l_3",
       "type": "ladder",
       "position": [
-        537,
+        507,
         2277
       ],
       "direction": 1,
@@ -543,7 +543,7 @@
       "id": "ladder_0",
       "type": "ladder",
       "position": [
-        3380,
+        3410,
         2630
       ],
       "direction": -1,
@@ -554,7 +554,7 @@
       "id": "ladder_1",
       "type": "ladder",
       "position": [
-        3645,
+        3615,
         2260
       ],
       "direction": 1,
@@ -565,7 +565,7 @@
       "id": "ladder_2",
       "type": "ladder",
       "position": [
-        5275,
+        5245,
         2230
       ],
       "direction": 1,
@@ -576,7 +576,7 @@
       "id": "ladder_4",
       "type": "ladder",
       "position": [
-        5915,
+        5945,
         2184
       ],
       "direction": -1,
@@ -587,7 +587,7 @@
       "id": "ladder_5",
       "type": "ladder",
       "position": [
-        6116,
+        6146,
         2415
       ],
       "direction": -1,
@@ -598,7 +598,7 @@
       "id": "ladder_6",
       "type": "ladder",
       "position": [
-        7889,
+        7859,
         2415
       ],
       "direction": 1,
@@ -609,7 +609,7 @@
       "id": "ladder_7",
       "type": "ladder",
       "position": [
-        8080,
+        8050,
         2184
       ],
       "direction": 1,
@@ -620,7 +620,7 @@
       "id": "ladder_9",
       "type": "ladder",
       "position": [
-        8725,
+        8755,
         2230
       ],
       "direction": -1,
@@ -631,7 +631,7 @@
       "id": "ladder_10",
       "type": "ladder",
       "position": [
-        10355,
+        10385,
         2260
       ],
       "direction": -1,
@@ -642,7 +642,7 @@
       "id": "ladder_11",
       "type": "ladder",
       "position": [
-        10615,
+        10585,
         2630
       ],
       "direction": 1,
@@ -653,7 +653,7 @@
       "id": "ladder_12",
       "type": "ladder",
       "position": [
-        6673,
+        6643,
         2260
       ],
       "direction": 1,
@@ -663,7 +663,7 @@
       "id": "ladder_13",
       "type": "ladder",
       "position": [
-        7325,
+        6643,
         2260
       ],
       "direction": -1,
@@ -673,7 +673,7 @@
       "id": "l_z_0",
       "type": "ladder",
       "position": [
-        235,
+        265,
         2560
       ],
       "direction": -1,
@@ -683,7 +683,7 @@
       "id": "l_z_1",
       "type": "ladder",
       "position": [
-        1993,
+        1963,
         2476
       ],
       "direction": 1,
@@ -693,7 +693,7 @@
       "id": "l_z_2",
       "type": "ladder",
       "position": [
-        13765,
+        13735,
         2560
       ],
       "direction": 1,
@@ -703,7 +703,7 @@
       "id": "l_z_3",
       "type": "ladder",
       "position": [
-        12007,
+        12037,
         2476
       ],
       "direction": -1,
@@ -1026,7 +1026,7 @@
       "id": "l_bridge_0",
       "type": "ladder",
       "position": [
-        3985,
+        3955,
         2000
       ],
       "direction": 1,
@@ -1036,7 +1036,7 @@
       "id": "l_bridge_1",
       "type": "ladder",
       "position": [
-        5475,
+        5505,
         2000
       ],
       "direction": -1,
@@ -1046,7 +1046,7 @@
       "id": "l_bridge_2",
       "type": "ladder",
       "position": [
-        8513,
+        8483,
         2000
       ],
       "direction": 1,
@@ -1056,7 +1056,7 @@
       "id": "l_bridge_3",
       "type": "ladder",
       "position": [
-        9987,
+        10017,
         2000
       ],
       "direction": -1,
@@ -1066,7 +1066,7 @@
       "id": "ladder_left",
       "type": "ladder",
       "position": [
-        4190,
+        4220,
         2144
       ],
       "direction": -1,
@@ -1076,7 +1076,7 @@
       "id": "ladder_right",
       "type": "ladder",
       "position": [
-        9810,
+        2144,
         2144
       ],
       "direction": 1,
@@ -1086,7 +1086,7 @@
       "id": "l_u_0",
       "type": "ladder",
       "position": [
-        5473,
+        5443,
         2757
       ],
       "direction": 1,
@@ -1096,7 +1096,7 @@
       "id": "l_u_1",
       "type": "ladder",
       "position": [
-        6916,
+        6946,
         2720
       ],
       "direction": -1,
@@ -1106,7 +1106,7 @@
       "id": "l_u_2",
       "type": "ladder",
       "position": [
-        7088,
+        7058,
         2720
       ],
       "direction": 1,
@@ -1116,7 +1116,7 @@
       "id": "l_u_3",
       "type": "ladder",
       "position": [
-        8527,
+        8557,
         2757
       ],
       "direction": -1,
@@ -1134,7 +1134,7 @@
       "id": "ladder_sewer_0",
       "type": "ladder",
       "position": [
-        4858,
+        4828,
         2604
       ],
       "direction": 1,
@@ -1206,7 +1206,7 @@
       "id": "ladder_sewer_1",
       "type": "ladder",
       "position": [
-        9155,
+        9185,
         2604
       ],
       "direction": -1,

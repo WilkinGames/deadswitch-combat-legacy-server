@@ -440,7 +440,7 @@
     "range": 1600,
     "mag": 30,
     "ammo": 90,
-    "recoil": 0.8,
+    "recoil": 0.7,
     "penetration": 2,
     "lookModifier": 1.5,
     "score": 5000
@@ -495,7 +495,7 @@
     "type": "TYPE_RIFLE",
     "fireMode": "MODE_AUTO",
     "round": "556mm",
-    "damage": 22,
+    "damage": 24,
     "accuracy": 1,
     "fireRate": 3,
     "magSize": 30,
