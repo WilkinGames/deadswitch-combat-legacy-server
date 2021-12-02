@@ -2457,19 +2457,26 @@ class GameInstance
                     ai.path = this.getAIPath([_body.position[0], _body.position[1]], ai.moveToPos, _body, ai.destThreshold);
                 }
                 var pathTickerMax = 0;
-                switch (ai.botSkill)
+                if (data.bZombie)
                 {
-                    case BotSkill.SKILL_NORMAL:
-                    case BotSkill.SKILL_HARD:
-                        pathTickerMax = 2;
-                        break;
-                    case BotSkill.SKILL_INSANE:
-                    case BotSkill.SKILL_GOD:
-                        pathTickerMax = 1;
-                        break;
-                    default:
-                        pathTickerMax = 3;
-                        break;
+                    pathTickerMax = 1;
+                }
+                else
+                {
+                    switch (ai.botSkill)
+                    {
+                        case BotSkill.SKILL_NORMAL:
+                        case BotSkill.SKILL_HARD:
+                            pathTickerMax = 2;
+                            break;
+                        case BotSkill.SKILL_INSANE:
+                        case BotSkill.SKILL_GOD:
+                            pathTickerMax = 1;
+                            break;
+                        default:
+                            pathTickerMax = 3;
+                            break;
+                    }
                 }
                 ai.pathTicker = pathTickerMax;
                 switch (ai.botSkill)
@@ -2752,7 +2759,7 @@ class GameInstance
         if (ai.botSkill >= BotSkill.SKILL_HARD)
         {
             this.setDataValue(_body, "bSprinting", !data.bWantsToFire && data.bWantsToMove && this.characterCanSprint(_body));
-            this.setDataValue(_body, "bCrouching", !data.bWantsToMove && !data.bClimbing && !data.bSprinting && !data.bParachute && this.characterCanCrouch(_body));
+            this.setDataValue(_body, "bCrouching", !data.bWantsToMove && !data.bClimbing && !data.bSprinting && !data.bParachute && this.characterCanCrouch(_body) && !data.bZombie);
         }
 
         ai.destThreshold = 30;
@@ -3107,9 +3114,12 @@ class GameInstance
         }
         else
         {
-            if (!data.bOnGround && _body.velocity[1] > 600)
+            if (!data.bZombie)
             {
-                this.deployParachute(_body);
+                if (!data.bOnGround && _body.velocity[1] > 600)
+                {
+                    this.deployParachute(_body);
+                }
             }
             if (ai.bInteract && ai.ticker == 0)
             {
