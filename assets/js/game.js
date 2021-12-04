@@ -645,9 +645,9 @@ class GameInstance
             case GameMode.SURVIVAL_ZOMBIE:
                 var storeCrate = this.createCrate(map.spawn_store, {
                     team: 0,
+                    frame: "crate_store",
                     type: Crate.STORE
                 });
-                storeCrate.mass = 0;
                 break;
         }
 
@@ -2728,9 +2728,7 @@ class GameInstance
                     value: true
                 });
                 break;
-        }
-        data.moveX = moveDirX;
-        data.bWantsToMove = moveDirX != 0;
+        }        
         if (ai.enemy && ai.enemy.data)
         {            
             switch (ai.enemy.data.type)
@@ -2848,7 +2846,7 @@ class GameInstance
                     if (flag)
                     {
                         ai.destThreshold = 100;
-                        ai.moveToPos = this.clone(flag.position);
+                        ai.moveToPos = flag.position;
                     }
                     break;
                 case GameMode.CAPTURE_THE_FLAG:
@@ -2858,7 +2856,7 @@ class GameInstance
                     {
                         data.bHasFlag = true;
                         //ai.activityTimer = 0;
-                        ai.moveToPos = this.clone(homeFlag.position);
+                        ai.moveToPos = homeFlag.position;
                     }
                     else
                     {
@@ -2869,11 +2867,11 @@ class GameInstance
                             var distToEnemyFlag = this.Dist(enemyFlag.position[0], enemyFlag.position[1], _body.position[0], _body.position[1]);
                             if (distToHomeFlag < distToEnemyFlag)
                             {
-                                ai.moveToPos = this.clone(homeFlag.position);
+                                ai.moveToPos = homeFlag.position;
                             }
                             else
                             {
-                                ai.moveToPos = this.clone(enemyFlag.position);
+                                ai.moveToPos = enemyFlag.position;
                                 if (enemyFlag.data.carrierId)
                                 {
                                     ai.destThreshold = 200;
@@ -2882,7 +2880,7 @@ class GameInstance
                         }
                         else
                         {
-                            ai.moveToPos = this.clone(enemyFlag.position);
+                            ai.moveToPos = enemyFlag.position;
                             if (enemyFlag.data.carrierId)
                             {
                                 //ai.destThreshold = 200;
@@ -2893,7 +2891,7 @@ class GameInstance
                 default:
                     if (ai.enemy)
                     {
-                        ai.moveToPos = this.clone(ai.enemy.position);
+                        ai.moveToPos = ai.enemy.position;
                     }
                     break;
             }
@@ -2901,14 +2899,44 @@ class GameInstance
 
         var item = this.getCurrentCharacterInventoryItem(_body);
         var bTriggerFire = ai.enemyDist < item.range && ai.enemyDist < ai.lookRange && ai.bEnemyLOS && (!data.bStunned && !data.bFlashed);
-
         this.triggerCharacterWeapon({
             eventId: GameServer.EVENT_PLAYER_TRIGGER_WEAPON,
             playerId: data.id,
             value: this.hasInventoryAmmo(_body) && bTriggerFire,
             worldPosition: data.lookPos
         });
-
+        if (ai.enemy && ai.enemyDist < item.range)
+        {
+            var bMoveBackFromEnemy = !data.bLadderCooldown && ai.bEnemyLOS && !ai.desiredVehicleId && !ai.desiredItemId;
+            if (bMoveBackFromEnemy)
+            {
+                var enemyDistThreshold = (item.dropRange ? item.dropRange : item.range) * 0.2;
+                if (ai.enemyDist < enemyDistThreshold)
+                {
+                    var enemy = ai.enemy;
+                    var desiredMoveX = enemy.position[0] > _body.position[0] ? -1 : 1;
+                    if (ai.ticker % 10 == 0)
+                    {
+                        ai.bMoveCheck = this.checkLineOfSight([_body.position[0], _body.position[1]], [_body.position[0] + (50 * desiredMoveX), _body.position[1] + 50], false);
+                    }
+                    if (ai.bMoveCheck == true || ai.bMoveCheck == null)
+                    {
+                        moveDirX = 0;
+                    }
+                    else
+                    {
+                        moveDirX = desiredMoveX;
+                        bMovingBack = true;
+                    }
+                }
+                else
+                {
+                    moveDirX = 0;
+                }
+            }
+        }
+        data.moveX = moveDirX;
+        data.bWantsToMove = moveDirX != 0;
         if (ai.bFireCooldown)
         {
             if (ai.fireCooldownTimer > 0)
@@ -6765,7 +6793,47 @@ class GameInstance
                         var pawn = this.getObjectById(_data.pawnId);
                         if (pawn)
                         {
-                            if (_data.modId)
+                            if (_data.bAmmo)
+                            {
+                                var curWeapon = pawn.data.inventory[_data.index];
+                                if (curWeapon)
+                                {
+                                    var moneyCost = this.getSharedData("ammoCost")[curWeapon.round];
+                                    if (ps.money >= moneyCost)
+                                    {
+                                        ps.money -= moneyCost;
+                                        this.onEvent({
+                                            eventId: GameServer.EVENT_PLAYER_UPDATE,
+                                            playerId: pawn.data.id,
+                                            data: {
+                                                money: ps.money
+                                            }
+                                        });
+                                        if (_data.index <= 1)
+                                        {
+                                            this.requestEvent({
+                                                eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                                pawnId: pawn.data.id,
+                                                index: _data.index,
+                                                type: GameServer.INV_AMMO_ADD,
+                                                value: curWeapon.magSize,
+                                                barrelAmmo: 1
+                                            });
+                                        }
+                                        else if (_data.index >= 3)
+                                        {
+                                            this.requestEvent({
+                                                eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                                pawnId: pawn.data.id,
+                                                type: GameServer.INV_EQUIPMENT_ADD,
+                                                slot: _data.index == 3 ? "equipment" : "grenade",
+                                                value: 1
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                            else if (_data.modId)
                             {
                                 var mod = this.getModData(_data.modId);
                                 if (mod)
@@ -6782,7 +6850,6 @@ class GameInstance
                                             }
                                         });
                                         var curWeapon = pawn.data.inventory[_data.index];
-                                        console.log(_data.index, curWeapon);
                                         if (curWeapon)
                                         {
                                             if (!curWeapon.mods)
@@ -10702,8 +10769,8 @@ class GameInstance
         }
         var spawnPos = spawns[this.Random(0, spawns.length - 1)].position;
 
-        var faces = [Character.FACE_ZOMBIE_1, Character.FACE_ZOMBIE_2, Character.FACE_ZOMBIE_3, Character.FACE_ZOMBIE_4];
-        var bodies = [Character.BODY_ZOMBIE, Character.BODY_ZOMBIE_2, Character.BODY_ZOMBIE_3, Character.BODY_ZOMBIE_FAT, Character.BODY_ZOMBIE_SPRINTER];
+        var faces = [Character.FACE_ZOMBIE_1, Character.FACE_ZOMBIE_2, Character.FACE_ZOMBIE_3, Character.FACE_ZOMBIE_4, Character.FACE_ZOMBIE_FAT, Character.FACE_ZOMBIE_SPRINTER];
+        var bodies = [Character.BODY_ZOMBIE, Character.BODY_ZOMBIE_2, Character.BODY_ZOMBIE_3, Character.BODY_ZOMBIE_FAT, Character.BODY_ZOMBIE_SPRINTER, Character.BODY_ZOMBIE_SPRINTER_BOSS];
         var avatar = {            
             face: faces[this.Random(0, faces.length - 1)],
             body: bodies[this.Random(0, bodies.length - 1)]

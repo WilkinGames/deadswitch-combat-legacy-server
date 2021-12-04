@@ -26,6 +26,11 @@
     "height": 24,
     "mass": 2
   },
+  "crate_store": {
+    "width": 60,
+    "height": 24,
+    "mass": 0
+  },
   "lever": {
     "width": 40,
     "height": 34,
@@ -254,5 +259,36 @@
         }
       }
     }
+  },
+  "ammoCost": {
+    "railgun": 250,
+    "arrow": 100,
+    "flame": 10,
+    "38": 15,
+    "44": 15,
+    "57": 2,
+    "338": 25,
+    "357": 15,
+    "408": 100,
+    "tazer": 50,
+    "12g": 12,
+    "9mm": 1,
+    "4mm": 1,
+    "556mm": 2,
+    "68mm": 2,
+    "545mm_39": 3,
+    "762mm": 5,
+    "762mm_39": 4,
+    "762mm_54": 4,
+    "50bmg": 100,
+    "45acp": 2,
+    "50cal": 15,
+    "300aac": 2,
+    "rocket": 200,
+    "rocket_smaw": 300,
+    "rocket_heat": 500,
+    "grenade": 150,
+    "grenade_stun": 250,
+    "grenade_flash": 250
   }
 }
