@@ -36,8 +36,9 @@ const GameMode = {
     CONQUEST: "conquest",
     DESTRUCTION: "destruction",
     CAPTURE_THE_FLAG: "capture_the_flag",
-    SURVIVAL: "survival",
-    SURVIVAL_CLASSIC: "survival_classic"
+    SURVIVAL_OUTBREAK: "survival_outbreak",
+    SURVIVAL_TERRORIST: "survival_terrorist",
+    SURVIVAL_ZOMBIE: "survival_zombie"
 };
 const Map = {
     SIEGE: "map_siege"
@@ -832,8 +833,9 @@ function getLobbyPlayerTeam(_lobby)
 {
     switch (_lobby.gameData.gameModeId)
     {
-        case GameMode.SURVIVAL:
-        case GameMode.SURVIVAL_CLASSIC:
+        case GameMode.SURVIVAL_OUTBREAK:
+        case GameMode.SURVIVAL_TERRORIST:
+        case GameMode.SURVIVAL_ZOMBIE:
             return 0;
     }
     return _lobby.players.length % 2 == 0 ? 0 : 1
@@ -1114,8 +1116,9 @@ function startGame(_lobbyId, _gameData)
             bot.name = "Bot " + i;
             switch (lobby.gameData.gameModeId)
             {
-                case GameMode.SURVIVAL:
-                case GameMode.SURVIVAL_CLASSIC:
+                case GameMode.SURVIVAL_OUTBREAK:
+                case GameMode.SURVIVAL_TERRORIST:
+                case GameMode.SURVIVAL_ZOMBIE:
                     bot.team = 0;
                     break;
                 default:
@@ -1148,27 +1151,30 @@ function onEndGame(_lobbyId)
     var lobby = getLobbyData(_lobbyId);
     if (lobby)
     {
-        var votes = [];
-        var gameModes = clone(modes);
-        shuffleArray(gameModes);
-        for (var i = 0; i < 3; i++)
+        if (settings.bAllowVotes)
         {
-            var vote = {
-                id: gameModes[i].id,
-                players: []
-            };
-            votes.push(vote);
+            var votes = [];
+            var gameModes = clone(modes);
+            shuffleArray(gameModes);
+            for (var i = 0; i < 3; i++)
+            {
+                var vote = {
+                    id: gameModes[i].id,
+                    players: []
+                };
+                votes.push(vote);
+            }
+            lobby.votes = votes;
+            log(votes);
+            io.to(lobby.id).emit("updateLobby", { votes: votes });
         }
-        lobby.votes = votes;
-        log(votes);
-        io.to(lobby.id).emit("updateLobby", { votes: votes });
         lobby.timer = 15;
         lobby.interval = setInterval(() =>
         {
             var lobby = getLobbyData(_lobbyId);            
             lobby.timer--;            
             if (lobby.timer < 0)
-            {
+            {                
                 if (settings.bUseLobby)
                 {
                     setLobbyState(_lobbyId, LobbyState.WAITING);
