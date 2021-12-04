@@ -6665,6 +6665,10 @@ class GameInstance
                                             if (bHeadshot)
                                             {
                                                 damageAmount *= weaponData.headshotMult ? weaponData.headshotMult : 1.4;
+                                                if (data.bZombie)
+                                                {
+                                                    damageAmount *= 1.5;
+                                                }
                                             }
                                             else if (bLegshot)
                                             {
@@ -10713,7 +10717,7 @@ class GameInstance
             }
         ];
         var botSkill = botSkill = Math.min(BotSkill.SKILL_GOD, Math.floor(wave * 0.25));
-        var health = this.getCharacterMaxHealth() + (wave * 25);
+        var health = (this.getCharacterMaxHealth() * (this.Random(10, 20) * 0.1)) + ((wave * wave) * 10);
         var char = this.createCharacter({
             id: this.getRandomUniqueId(),
             x: spawnPos[0],
@@ -10726,7 +10730,7 @@ class GameInstance
             botSkill: botSkill,
             health: health,
             bZombie: true,
-            maxSpeed: 200 + (wave * 25),
+            maxSpeed: Math.min(500, (200 + (wave * 25)) * (this.Random(50, 100) * 0.01)),
             bRegenHealth: false
         });
         return char;
