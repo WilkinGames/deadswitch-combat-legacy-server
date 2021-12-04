@@ -643,7 +643,7 @@ class GameInstance
         {
             case GameMode.SURVIVAL_TERRORIST:
             case GameMode.SURVIVAL_ZOMBIE:
-                var storeCrate = this.createCrate(map.spawn_survival, {
+                var storeCrate = this.createCrate(map.spawn_store, {
                     team: 0,
                     type: Crate.STORE
                 });
