@@ -6116,7 +6116,7 @@ class GameInstance
                 break;
             case GameMode.SURVIVAL_TERRORIST:
             case GameMode.SURVIVAL_ZOMBIE:
-                ps.money = 50000;
+                ps.money = 1000;
                 break;
         }        
         if (ps.currentClass == null)
@@ -6798,7 +6798,14 @@ class GameInstance
                                 var curWeapon = pawn.data.inventory[_data.index];
                                 if (curWeapon)
                                 {
-                                    var moneyCost = this.getSharedData("ammoCost")[curWeapon.round];
+                                    if (curWeapon.bEquipment)
+                                    {
+                                        var moneyCost = curWeapon.score ? curWeapon.score : 1000;
+                                    }
+                                    else
+                                    {
+                                        moneyCost = this.getSharedData("ammoCost")[curWeapon.round] * curWeapon.magSize;
+                                    }
                                     if (ps.money >= moneyCost)
                                     {
                                         ps.money -= moneyCost;
@@ -6873,6 +6880,9 @@ class GameInstance
                                 var newItem = this.getWeaponData(_data.itemId);
                                 if (newItem)
                                 {
+                                    newItem.mods = {
+                                        optic: null
+                                    };
                                     var moneyCost = newItem.score ? newItem.score : 1000;
                                     if (ps.money >= moneyCost)
                                     {
@@ -13291,6 +13301,7 @@ class GameInstance
 
     initAI(_body, _botSkill)
     {
+        var data = _body.data;
         var ai = {
             pathTicker: 1,
             actionTicker: 0,
@@ -13312,25 +13323,33 @@ class GameInstance
         {
             //ai.bInteract = _body.data.team == 0;
         }
-        if (_botSkill == BotSkill.SKILL_EASY)
-        {
-            ai.fireBurstTimerMax = Math.ceil(ai.fireBurstTimerMax * 0.4);
-            ai.fireCooldownTimerMax = Math.ceil(ai.fireCooldownTimerMax * 1.5);
-        }
-        else if (_botSkill == BotSkill.SKILL_NORMAL)
-        {
-            ai.fireBurstTimerMax = Math.ceil(ai.fireBurstTimerMax * 0.5);
-            ai.fireCooldownTimerMax = Math.ceil(ai.fireCooldownTimerMax * 1.2);
-        }
-        else if (_botSkill == BotSkill.SKILL_INSANE)
-        {
-            ai.semiCooldownTimerMax -= Math.round(3 * this.game.fpsMult);
-            ai.fireBurstTimerMax = Math.ceil(ai.fireBurstTimerMax * 1.5);
-        }
-        else if (_botSkill >= BotSkill.SKILL_GOD)
+        if (data.bZombie)
         {
             ai.semiCooldownTimerMax = 1;
             ai.fireBurstTimerMax = Math.ceil(ai.fireBurstTimerMax * 5);
+        }
+        else
+        {
+            if (_botSkill == BotSkill.SKILL_EASY)
+            {
+                ai.fireBurstTimerMax = Math.ceil(ai.fireBurstTimerMax * 0.4);
+                ai.fireCooldownTimerMax = Math.ceil(ai.fireCooldownTimerMax * 1.5);
+            }
+            else if (_botSkill == BotSkill.SKILL_NORMAL)
+            {
+                ai.fireBurstTimerMax = Math.ceil(ai.fireBurstTimerMax * 0.5);
+                ai.fireCooldownTimerMax = Math.ceil(ai.fireCooldownTimerMax * 1.2);
+            }
+            else if (_botSkill == BotSkill.SKILL_INSANE)
+            {
+                ai.semiCooldownTimerMax -= Math.round(3 * this.game.fpsMult);
+                ai.fireBurstTimerMax = Math.ceil(ai.fireBurstTimerMax * 1.5);
+            }
+            else if (_botSkill >= BotSkill.SKILL_GOD)
+            {
+                ai.semiCooldownTimerMax = 1;
+                ai.fireBurstTimerMax = Math.ceil(ai.fireBurstTimerMax * 5);
+            }
         }
         _body.ai = ai;
     }
