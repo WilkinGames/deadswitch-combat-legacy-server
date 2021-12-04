@@ -28,12 +28,30 @@
     7000,
     2380
   ],
+  "spawn_survival_outbreak": [
+    600,
+    2380
+  ],
   "spawns_survival": [
     {
       "position": [ 200, 2380 ]
     },
     {
       "position": [ 13800, 2380 ]
+    }
+  ],
+  "spawns_survival_outbreak": [
+    {
+      "position": [ 13800, 2700 ]
+    },
+    {
+      "position": [ 13800, 1820 ]
+    },
+    {
+      "position": [ 13800, 2000 ]
+    },
+    {
+      "position": [ 13000, 2380 ]
     }
   ],
   "spawns": [
@@ -663,7 +681,7 @@
       "id": "ladder_13",
       "type": "ladder",
       "position": [
-        6643,
+        7359,
         2260
       ],
       "direction": -1,

@@ -167,7 +167,7 @@
     "range": 1250,
     "mag": 20,
     "ammo": 60,
-    "recoil": 0.8,
+    "recoil": 0.7,
     "penetration": 1,
     "lookModifier": 1
   },

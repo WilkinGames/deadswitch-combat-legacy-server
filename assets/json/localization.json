@@ -755,11 +755,11 @@
   "STR_MODE_DESTRUCTION": {
     "en": "Destruction"
   },
-  "STR_MODE_SURVIVAL": {
-    "en": "Survival"
+  "STR_MODE_SURVIVAL_OUTBREAK": {
+    "en": "Outbreak Survival"
   },
-  "STR_MODE_SURVIVAL_CLASSIC": {
-    "en": "Classic Survival"
+  "STR_MODE_SURVIVAL_TERRORIST": {
+    "en": "Terrorist Survival"
   },
   "STR_MODE_SURVIVAL_ZOMBIES": {
     "en": "Zombie Survival"

@@ -30,22 +30,22 @@
     "bTeam": true
   },
   {
-    "id": "survival",
-    "name": "STR_MODE_SURVIVAL",
+    "id": "survival_terrorist",
+    "name": "STR_MODE_SURVIVAL_TERRORIST",
     "desc": "STR_MODE_SURVIVAL_DESC",
     "bSurvival": true,
     "bTeam": false
   },
   {
-    "id": "survival_zombies",
+    "id": "survival_zombie",
     "name": "STR_MODE_SURVIVAL_ZOMBIES",
     "desc": "STR_MODE_SURVIVAL_DESC",
     "bSurvival": true,
     "bTeam": false
   },
   {
-    "id": "survival_classic",
-    "name": "STR_MODE_SURVIVAL_CLASSIC",
+    "id": "survival_outbreak",
+    "name": "STR_MODE_SURVIVAL_OUTBREAK",
     "desc": "STR_MODE_SURVIVAL_DESC",
     "bSurvival": true,
     "bTeam": false

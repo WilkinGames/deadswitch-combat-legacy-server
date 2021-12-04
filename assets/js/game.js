@@ -315,9 +315,9 @@ const GameMode = {
     CONQUEST: "conquest",
     DESTRUCTION: "destruction",
     CAPTURE_THE_FLAG: "capture_the_flag",
-    SURVIVAL: "survival",
-    SURVIVAL_CLASSIC: "survival_classic",
-    SURVIVAL_ZOMBIES: "survival_zombies"
+    SURVIVAL_OUTBREAK: "survival_outbreak",
+    SURVIVAL_TERRORIST: "survival_terrorist",
+    SURVIVAL_ZOMBIE: "survival_zombie"
 };
 const Classes = {
     ASSAULT: "ASSAULT",
@@ -619,9 +619,9 @@ class GameInstance
                     });
                 }
                 break;
-            case GameMode.SURVIVAL:
-            case GameMode.SURVIVAL_CLASSIC:
-            case GameMode.SURVIVAL_ZOMBIES:
+            case GameMode.SURVIVAL_OUTBREAK:
+            case GameMode.SURVIVAL_TERRORIST:
+            case GameMode.SURVIVAL_ZOMBIE:
                 this.game.bRanked = false;
                 this.game.bSurvival = true;
                 this.game.bFriendlyFire = false;
@@ -641,8 +641,8 @@ class GameInstance
 
         switch (this.game.gameModeId)
         {
-            case GameMode.SURVIVAL_CLASSIC:
-            case GameMode.SURVIVAL_ZOMBIES:
+            case GameMode.SURVIVAL_TERRORIST:
+            case GameMode.SURVIVAL_ZOMBIE:
                 var storeCrate = this.createCrate(map.spawn_survival, {
                     team: 0,
                     type: Crate.STORE
@@ -1026,7 +1026,7 @@ class GameInstance
                                 var wave = this.game.gameModeData.wave;
                                 switch (this.game.gameModeId)
                                 {
-                                    case GameMode.SURVIVAL_ZOMBIES:
+                                    case GameMode.SURVIVAL_ZOMBIE:
                                         this.spawnSurvivalEnemyZombie();
                                         gameData.enemiesSpawned++;
                                         break;
@@ -6086,9 +6086,9 @@ class GameInstance
                 ps.plants = 0;
                 ps.defuses = 0;
                 break;
-            case GameMode.SURVIVAL_CLASSIC:
-            case GameMode.SURVIVAL_ZOMBIES:
-                ps.money = 0;
+            case GameMode.SURVIVAL_TERRORIST:
+            case GameMode.SURVIVAL_ZOMBIE:
+                ps.money = 50000;
                 break;
         }        
         if (ps.currentClass == null)
@@ -6761,41 +6761,80 @@ class GameInstance
                         var pawn = this.getObjectById(_data.pawnId);
                         if (pawn)
                         {
-                            var newItem = this.getWeaponData(_data.itemId);
-                            if (newItem)
+                            if (_data.modId)
                             {
-                                var moneyCost = newItem.score ? newItem.score : 1000;
-                                if (ps.money >= moneyCost)
+                                var mod = this.getModData(_data.modId);
+                                if (mod)
                                 {
-                                    ps.money -= moneyCost;
-                                    this.onEvent({
-                                        eventId: GameServer.EVENT_PLAYER_UPDATE,
-                                        playerId: pawn.data.id,
-                                        data: {
-                                            money: ps.money
+                                    var moneyCost = mod.score ? mod.score : 1000;
+                                    if (ps.money >= moneyCost)
+                                    {
+                                        ps.money -= moneyCost;
+                                        this.onEvent({
+                                            eventId: GameServer.EVENT_PLAYER_UPDATE,
+                                            playerId: pawn.data.id,
+                                            data: {
+                                                money: ps.money
+                                            }
+                                        });
+                                        var curWeapon = pawn.data.inventory[_data.index];
+                                        console.log(_data.index, curWeapon);
+                                        if (curWeapon)
+                                        {
+                                            if (!curWeapon.mods)
+                                            {
+                                                curWeapon.mods = {};
+                                            }
+                                            curWeapon.mods[_data.modType] = _data.modId;
+                                            this.applyWeaponMods(curWeapon, curWeapon.mods);
+                                            this.requestEvent({
+                                                eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                                pawnId: pawn.data.id,
+                                                inventory: pawn.data.inventory,
+                                                type: GameServer.INV_INVENTORY
+                                            });
                                         }
-                                    });
-                                    if (_data.index <= 2)
-                                    {
-                                        this.requestEvent({
-                                            eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
-                                            pawnId: pawn.data.id,
-                                            index: _data.index,
-                                            item: newItem,
-                                            type: GameServer.INV_ITEM_REPLACE
-                                        });
                                     }
-                                    else
+                                }
+                            }
+                            else if (_data.itemId)
+                            {
+                                var newItem = this.getWeaponData(_data.itemId);
+                                if (newItem)
+                                {
+                                    var moneyCost = newItem.score ? newItem.score : 1000;
+                                    if (ps.money >= moneyCost)
                                     {
-                                        var slot = _data.index == 3 ? "equipment" : "grenade";
-                                        this.requestEvent({
-                                            eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
-                                            pawnId: pawn.data.id,
-                                            slot: slot,
-                                            value: newItem.id,
-                                            type: GameServer.INV_EQUIPMENT_SET,
-                                            sfxId: "wpn_ammo"
+                                        ps.money -= moneyCost;
+                                        this.onEvent({
+                                            eventId: GameServer.EVENT_PLAYER_UPDATE,
+                                            playerId: pawn.data.id,
+                                            data: {
+                                                money: ps.money
+                                            }
                                         });
+                                        if (_data.index <= 2)
+                                        {
+                                            this.requestEvent({
+                                                eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                                pawnId: pawn.data.id,
+                                                index: _data.index,
+                                                item: newItem,
+                                                type: GameServer.INV_ITEM_REPLACE
+                                            });
+                                        }
+                                        else
+                                        {
+                                            var slot = _data.index == 3 ? "equipment" : "grenade";
+                                            this.requestEvent({
+                                                eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                                pawnId: pawn.data.id,
+                                                slot: slot,
+                                                value: newItem.id,
+                                                type: GameServer.INV_EQUIPMENT_SET,
+                                                sfxId: "wpn_ammo"
+                                            });
+                                        }
                                     }
                                 }
                             }
@@ -7981,24 +8020,28 @@ class GameInstance
                         {
                             if (!pawn.data.bNoPickups)
                             {
-                                this.dropCharacterEquipment(pawn, "melee");
-                                this.requestEvent({
-                                    eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
-                                    pawnId: pawn.data["id"],
-                                    index: 2,
-                                    slot: "melee",
-                                    value: weaponData["id"],
-                                    type: GameServer.INV_EQUIPMENT_SET,
-                                    sfxId: "wpn_ammo"
-                                });
-                                this.requestEvent({
-                                    eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
-                                    pawnId: pawn.data["id"],
-                                    index: 2,
-                                    item: weaponData,
-                                    type: GameServer.INV_ITEM_REPLACE
-                                });
-                                this.removeNextStep(_interactable);
+                                var curMelee = pawn.data.inventory[2];
+                                if (!curMelee || curMelee.id != weaponData.id)
+                                {
+                                    this.dropCharacterEquipment(pawn, "melee");
+                                    this.requestEvent({
+                                        eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                        pawnId: pawn.data["id"],
+                                        index: 2,
+                                        slot: "melee",
+                                        value: weaponData["id"],
+                                        type: GameServer.INV_EQUIPMENT_SET,
+                                        sfxId: "wpn_ammo"
+                                    });
+                                    this.requestEvent({
+                                        eventId: GameServer.EVENT_PLAYER_UPDATE_INVENTORY,
+                                        pawnId: pawn.data["id"],
+                                        index: 2,
+                                        item: weaponData,
+                                        type: GameServer.INV_ITEM_REPLACE
+                                    });
+                                    this.removeNextStep(_interactable);
+                                }
                             }
                         }
                         else if (weaponData.type == Weapon.TYPE_GRENADE)
@@ -10134,8 +10177,8 @@ class GameInstance
             }
             switch (this.game.gameModeId)
             {
-                case GameMode.SURVIVAL_CLASSIC:
-                case GameMode.SURVIVAL_ZOMBIES:
+                case GameMode.SURVIVAL_TERRORIST:
+                case GameMode.SURVIVAL_ZOMBIE:
                     ps.inventory = [pawn.data.inventory[0], pawn.data.inventory[1]];
                     ps.melee = pawn.data.melee ? pawn.data.melee.id : null;
                     ps.equipment = pawn.data.equipment ? pawn.data.equipment : null;
@@ -10591,25 +10634,34 @@ class GameInstance
         {
             types.push(Helicopter.OSPREY, Tank.T90);
         }
-        var veh = this.getVehicleData(types[this.Random(0, types.length - 1)]);
+        var veh = this.getVehicleData(types[this.Random(0, types.length - 1)]);        
+        switch (this.game.gameModeId)
+        {
+            case GameMode.SURVIVAL_OUTBREAK:
+                var spawnX = map.width * 0.9;
+                break;
+            default:
+                spawnX = map.width * Math.random();
+                break;
+        }
         switch (veh.type)
         {
             case "helicopter":
-                var vehicle = this.createHelicopter([map.width * 0.5, 0], {
+                var vehicle = this.createHelicopter([spawnX, 0], {
                     type: veh.id,
                     team: 1,
                     scale: 1
                 });
                 break;
             case "tank":
-                vehicle = this.createTank([map.width * Math.random(), 0], {
+                vehicle = this.createTank([spawnX, 0], {
                     type: veh.id,
                     team: 1,
                     scale: 1
                 });
                 break;
             case "car":
-                vehicle = this.createCar([map.width * Math.random(), 0], {
+                vehicle = this.createCar([spawnX, 0], {
                     type: veh.id,
                     team: 1,
                     scale: 1
@@ -10646,15 +10698,18 @@ class GameInstance
         }
         var spawnPos = spawns[this.Random(0, spawns.length - 1)].position;
 
-        var avatar = {
-            body: Character.BODY_ZOMBIE,
-            face: Character.FACE_ZOMBIE_1
+        var faces = [Character.FACE_ZOMBIE_1, Character.FACE_ZOMBIE_2, Character.FACE_ZOMBIE_3, Character.FACE_ZOMBIE_4];
+        var bodies = [Character.BODY_ZOMBIE, Character.BODY_ZOMBIE_2, Character.BODY_ZOMBIE_3, Character.BODY_ZOMBIE_FAT, Character.BODY_ZOMBIE_SPRINTER];
+        var avatar = {            
+            face: faces[this.Random(0, faces.length - 1)],
+            body: bodies[this.Random(0, bodies.length - 1)]
         };
 
         var wave = this.game.gameModeData.wave;
+        var weapons = ["zombie", "melee_knife"];
         var inventory = [
             {
-                id: "zombie"
+                id: weapons[this.Random(0, weapons.length - 1)]
             }
         ];
         var botSkill = botSkill = Math.min(BotSkill.SKILL_GOD, Math.floor(wave * 0.25));
@@ -10680,7 +10735,15 @@ class GameInstance
     spawnSurvivalEnemyCharacter()
     {
         var map = this.getCurrentMapData();
-        var spawns = map.spawns_survival;
+        switch (this.game.gameModeId)
+        {
+            case GameMode.SURVIVAL_OUTBREAK:
+                var spawns = map.spawns_survival_outbreak;
+                break;
+            default:
+                spawns = map.spawns_survival;
+                break;
+        }
         if (!spawns)
         {
             spawns = map.spawns;
@@ -10894,7 +10957,7 @@ class GameInstance
                 {
                     switch (this.game.gameModeId)
                     {
-                        case GameMode.SURVIVAL:
+                        case GameMode.SURVIVAL_OUTBREAK:
                             grenade = "frag";
                             equipment = this.RandomBoolean() ? "ammo_box" : "stim";
                             var secondary = ["smaw", "javelin", "rpg", "mgl", "m320"];
@@ -10914,8 +10977,8 @@ class GameInstance
                             ];
                             break;
 
-                        case GameMode.SURVIVAL_CLASSIC:
-                        case GameMode.SURVIVAL_ZOMBIES:
+                        case GameMode.SURVIVAL_TERRORIST:
+                        case GameMode.SURVIVAL_ZOMBIE:
                             grenade = "frag";
                             inventory = [
                                 {
@@ -10954,8 +11017,16 @@ class GameInstance
             else if (this.game.bSurvival)
             {
                 var map = this.getCurrentMapData();
-                spawnPos = this.clone(map.spawn_survival);
-                spawnPos[0] += this.Random(-100, 100);
+                switch (this.game.gameModeId)
+                {
+                    case GameMode.SURVIVAL_OUTBREAK:
+                        spawnPos = this.clone(map.spawn_survival_outbreak);
+                        break;
+                    default:
+                        spawnPos = this.clone(map.spawn_survival);
+                        break;
+                }                
+                spawnPos[0] += this.Random(-150, 150);
             }
             else if (ps.desiredSpawn && ps.desiredSpawn[0] != null && ps.desiredSpawn[1] != null)
             {                
@@ -14832,6 +14903,20 @@ class GameInstance
             if (veh.id == _id)
             {
                 return veh;
+            }
+        }
+        return null;
+    }
+
+    getModData(_id)
+    {
+        var mods = this.data.mods;
+        for (var i = 0; i < mods.length; i++)
+        {
+            var mod = mods[i];
+            if (mod.id == _id)
+            {
+                return this.clone(mod);
             }
         }
         return null;
