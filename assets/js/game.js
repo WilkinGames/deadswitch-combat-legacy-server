@@ -2454,7 +2454,7 @@ class GameInstance
             {
                 if (!_body.data.bClimbing)
                 {
-                    ai.path = this.getAIPath([_body.position[0], _body.position[1]], ai.moveToPos, _body, ai.destThreshold);
+                    ai.path = this.getAIPath([_body.position[0], _body.position[1]], ai.moveToPos, _body, ai.destThreshold);                    
                 }
                 var pathTickerMax = 0;
                 if (data.bZombie)
@@ -12604,7 +12604,7 @@ class GameInstance
         var width = 30; //_data.width ? _data.width : 25;
         var height = _data.height;
 
-        var useWidth = Math.max(50, width);
+        var useWidth = Math.max(30, width);
         var useHeight = Math.max(100, height);
         var material = _data.material ? _data.material : Material.WOOD;
         body.data = {
