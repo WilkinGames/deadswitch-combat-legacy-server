@@ -1549,9 +1549,9 @@
     },
     {
       "data": {
+        "ladderId": "ladder_0",
         "type": "node_climb",
-        "position": [ 3405, 2825 ],
-        "ladderId": "ladder_0"
+        "position": [ 3405, 2825 ]
       },
       "id": "node_67"
     },
@@ -1564,9 +1564,9 @@
     },
     {
       "data": {
+        "ladderId": "ladder_2",
         "type": "node_climb",
-        "position": [ 5250, 2412 ],
-        "ladderId": "ladder_2"
+        "position": [ 5250, 2412 ]
       },
       "id": "node_19"
     },
@@ -1579,9 +1579,9 @@
     },
     {
       "data": {
+        "ladderId": "ladder_5",
         "type": "node_climb",
-        "position": [ 6145, 2628.35 ],
-        "ladderId": "ladder_5"
+        "position": [ 6145, 2628.35 ]
       },
       "id": "node_70"
     },
@@ -1594,9 +1594,9 @@
     },
     {
       "data": {
+        "ladderId": "ladder_1",
         "type": "node_climb",
-        "position": [ 3623, 2416 ],
-        "ladderId": "ladder_1"
+        "position": [ 3623, 2416 ]
       },
       "id": "node_16"
     },
@@ -1609,17 +1609,17 @@
     },
     {
       "data": {
+        "ladderId": "l_ramp_0",
         "type": "node_climb",
-        "position": [ 5779, 2626.35 ],
-        "ladderId": "l_ramp_0"
+        "position": [ 5779, 2626.35 ]
       },
       "id": "node_68"
     },
     {
       "data": {
+        "ladderId": "ladder_4",
         "type": "node_climb",
-        "position": [ 5944, 2254.2 ],
-        "ladderId": "ladder_4"
+        "position": [ 5944, 2254.2 ]
       },
       "id": "node_69"
     },
@@ -1710,7 +1710,7 @@
     {
       "data": {
         "type": "node_walk",
-        "position": [ 8269.2, 2646.35 ]
+        "position": [ 8289.65, 2648.35 ]
       },
       "id": "node_38"
     },
@@ -1772,9 +1772,9 @@
     },
     {
       "data": {
+        "ladderId": "ladder_11",
         "type": "node_climb",
-        "position": [ 10585.1, 2825 ],
-        "ladderId": "ladder_11"
+        "position": [ 10585.1, 2825 ]
       },
       "id": "node_71"
     },
@@ -1787,9 +1787,9 @@
     },
     {
       "data": {
+        "ladderId": "ladder_9",
         "type": "node_climb",
-        "position": [ 8750.1, 2412 ],
-        "ladderId": "ladder_9"
+        "position": [ 8750.1, 2412 ]
       },
       "id": "node_52"
     },
@@ -1802,9 +1802,9 @@
     },
     {
       "data": {
+        "ladderId": "ladder_6",
         "type": "node_climb",
-        "position": [ 7854.1, 2630.35 ],
-        "ladderId": "ladder_6"
+        "position": [ 7854.1, 2630.35 ]
       },
       "id": "node_46"
     },
@@ -1817,9 +1817,9 @@
     },
     {
       "data": {
+        "ladderId": "ladder_10",
         "type": "node_climb",
-        "position": [ 10377.1, 2412 ],
-        "ladderId": "ladder_10"
+        "position": [ 10377.1, 2412 ]
       },
       "id": "node_64"
     },
@@ -1832,17 +1832,17 @@
     },
     {
       "data": {
+        "ladderId": "l_ramp_1",
         "type": "node_climb",
-        "position": [ 8228.1, 2626.35 ],
-        "ladderId": "l_ramp_1"
+        "position": [ 8228.1, 2626.35 ]
       },
       "id": "node_53"
     },
     {
       "data": {
+        "ladderId": "ladder_7",
         "type": "node_climb",
-        "position": [ 8057, 2251 ],
-        "ladderId": "ladder_7"
+        "position": [ 8057, 2251 ]
       },
       "id": "node_49"
     },
@@ -1862,17 +1862,17 @@
     },
     {
       "data": {
+        "ladderId": "ladder_12",
         "type": "node_climb",
-        "position": [ 6640.05, 2626.35 ],
-        "ladderId": "ladder_12"
+        "position": [ 6640.05, 2626.35 ]
       },
       "id": "node_15_climb"
     },
     {
       "data": {
+        "ladderId": "ladder_13",
         "type": "node_climb",
-        "position": [ 7365, 2626.35 ],
-        "ladderId": "ladder_13"
+        "position": [ 7365, 2626.35 ]
       },
       "id": "node_32_climb"
     },
@@ -1892,17 +1892,17 @@
     },
     {
       "data": {
+        "ladderId": "ladder_sewer_0",
         "type": "node_climb",
-        "position": [ 4827.35, 2825 ],
-        "ladderId": "ladder_sewer_0"
+        "position": [ 4827.35, 2825 ]
       },
       "id": "node_29_climb"
     },
     {
       "data": {
+        "ladderId": "ladder_sewer_1",
         "type": "node_climb",
-        "position": [ 9184.7, 2825 ],
-        "ladderId": "ladder_sewer_1"
+        "position": [ 9184.7, 2825 ]
       },
       "id": "node_40_climb"
     },
@@ -1964,33 +1964,33 @@
     },
     {
       "data": {
+        "ladderId": "l_u_2",
         "type": "node_climb",
-        "position": [ 7059.7, 2835.85 ],
-        "ladderId": "l_u_2"
+        "position": [ 7059.7, 2835.85 ]
       },
       "id": "n_u_3_climb"
     },
     {
       "data": {
+        "ladderId": "l_u_1",
         "type": "node_climb",
-        "position": [ 6947, 2836.85 ],
-        "ladderId": "l_u_1"
+        "position": [ 6947, 2836.85 ]
       },
       "id": "n_u_2_climb"
     },
     {
       "data": {
+        "ladderId": "l_u_0",
         "type": "node_climb",
-        "position": [ 5443.55, 2813 ],
-        "ladderId": "l_u_0"
+        "position": [ 5443.55, 2813 ]
       },
       "id": "node_30_climb"
     },
     {
       "data": {
+        "ladderId": "l_u_3",
         "type": "node_climb",
-        "position": [ 8556.2, 2813 ],
-        "ladderId": "l_u_3"
+        "position": [ 8556.2, 2813 ]
       },
       "id": "node_39_climb"
     },
@@ -2025,7 +2025,7 @@
     {
       "data": {
         "type": "node_walk",
-        "position": [ 10440.3, 2624.7 ]
+        "position": [ 10151.3, 2624.7 ]
       },
       "id": "n_n_50"
     },
@@ -2080,9 +2080,9 @@
     },
     {
       "data": {
+        "ladderId": "l_0",
         "type": "node_climb",
-        "position": [ 2252, 2366.8 ],
-        "ladderId": "l_0"
+        "position": [ 2252, 2366.8 ]
       },
       "id": "n_n_7_c"
     },
@@ -2095,9 +2095,9 @@
     },
     {
       "data": {
+        "ladderId": "l_n_0",
         "type": "node_climb",
-        "position": [ 2414.85, 2663.8 ],
-        "ladderId": "l_n_0"
+        "position": [ 2414.85, 2663.8 ]
       },
       "id": "n_n_12_c"
     },
@@ -2110,9 +2110,9 @@
     },
     {
       "data": {
+        "ladderId": "l_3",
         "type": "node_climb",
-        "position": [ 508.55, 2363.8 ],
-        "ladderId": "l_3"
+        "position": [ 508.55, 2363.8 ]
       },
       "id": "n_n_2_c"
     },
@@ -2125,9 +2125,9 @@
     },
     {
       "data": {
+        "ladderId": "l_2",
         "type": "node_climb",
-        "position": [ 96.6, 2365 ],
-        "ladderId": "l_2"
+        "position": [ 96.6, 2365 ]
       },
       "id": "n_n_1_c"
     },
@@ -2161,9 +2161,9 @@
     },
     {
       "data": {
+        "ladderId": "l_b_0",
         "type": "node_climb",
-        "position": [ 2554.95, 2374 ],
-        "ladderId": "l_b_0"
+        "position": [ 2554.95, 2374 ]
       },
       "id": "n_n_8_c"
     },
@@ -2260,17 +2260,17 @@
     },
     {
       "data": {
+        "ladderId": "l_b_1",
         "type": "node_climb",
-        "position": [ 11447.05, 2370 ],
-        "ladderId": "l_b_1"
+        "position": [ 11447.05, 2370 ]
       },
       "id": "n_r_1_c"
     },
     {
       "data": {
+        "ladderId": "l_1",
         "type": "node_climb",
-        "position": [ 11744, 2364.8 ],
-        "ladderId": "l_1"
+        "position": [ 11744, 2364.8 ]
       },
       "id": "n_r_5_c"
     },
@@ -2290,25 +2290,25 @@
     },
     {
       "data": {
+        "ladderId": "l_n_1",
         "type": "node_climb",
-        "position": [ 11585.75, 2657.35 ],
-        "ladderId": "l_n_1"
+        "position": [ 11585.75, 2657.35 ]
       },
       "id": "n_r_6_c"
     },
     {
       "data": {
+        "ladderId": "l_1_1",
         "type": "node_climb",
-        "position": [ 13507.35, 2363.8 ],
-        "ladderId": "l_1_1"
+        "position": [ 13507.35, 2363.8 ]
       },
       "id": "n_r_9_c"
     },
     {
       "data": {
+        "ladderId": "l_2_1",
         "type": "node_climb",
-        "position": [ 13914.35, 2365.8 ],
-        "ladderId": "l_2_1"
+        "position": [ 13914.35, 2365.8 ]
       },
       "id": "n_r_10_c"
     },
@@ -2322,7 +2322,7 @@
     {
       "data": {
         "type": "node_walk",
-        "position": [ 9293.8, 2624.7 ]
+        "position": [ 9580.9, 2624.7 ]
       },
       "id": "n_n_50_2"
     },
@@ -2349,25 +2349,25 @@
     },
     {
       "data": {
+        "ladderId": "l_bridge_2",
         "type": "node_climb",
-        "position": [ 8483.8, 2101.25 ],
-        "ladderId": "l_bridge_2"
+        "position": [ 8483.8, 2101.25 ]
       },
       "id": "n_br_3_climb"
     },
     {
       "data": {
+        "ladderId": "l_bridge_3",
         "type": "node_climb",
-        "position": [ 10017.5, 2096.25 ],
-        "ladderId": "l_bridge_3"
+        "position": [ 10017.5, 2096.25 ]
       },
       "id": "node_65_climb"
     },
     {
       "data": {
+        "ladderId": "l_bridge_0",
         "type": "node_climb",
-        "position": [ 3963.75, 2098.25 ],
-        "ladderId": "l_bridge_0"
+        "position": [ 3963.75, 2098.25 ]
       },
       "id": "node_17_climb"
     },
@@ -2380,9 +2380,9 @@
     },
     {
       "data": {
+        "ladderId": "l_bridge_1",
         "type": "node_climb",
-        "position": [ 5496.1, 2098 ],
-        "ladderId": "l_bridge_1"
+        "position": [ 5496.1, 2098 ]
       },
       "id": "n_br_1_climb"
     },
@@ -2430,17 +2430,17 @@
     },
     {
       "data": {
+        "ladderId": "l_z_0",
         "type": "node_climb",
-        "position": [ 257.5, 2712.6 ],
-        "ladderId": "l_z_0"
+        "position": [ 257.5, 2712.6 ]
       },
       "id": "n_z_0_c"
     },
     {
       "data": {
+        "ladderId": "l_z_1",
         "type": "node_climb",
-        "position": [ 1964.4, 2659.9 ],
-        "ladderId": "l_z_1"
+        "position": [ 1964.4, 2659.9 ]
       },
       "id": "n_z_2_c"
     },
@@ -2453,9 +2453,9 @@
     },
     {
       "data": {
+        "ladderId": "l_z_3",
         "type": "node_climb",
-        "position": [ 12022.7, 2661 ],
-        "ladderId": "l_z_3"
+        "position": [ 12022.7, 2661 ]
       },
       "id": "n_z_3_c"
     },
@@ -2475,9 +2475,9 @@
     },
     {
       "data": {
+        "ladderId": "l_z_2",
         "type": "node_climb",
-        "position": [ 13750.15, 2713.35 ],
-        "ladderId": "l_z_2"
+        "position": [ 13750.15, 2713.35 ]
       },
       "id": "n_z_4_c"
     },
@@ -2536,6 +2536,20 @@
         "position": [ 2123.4, 2378 ]
       },
       "id": "n_bridge_0_1"
+    },
+    {
+      "data": {
+        "type": "node_walk",
+        "position": [ 8127.5, 2543.95 ]
+      },
+      "id": "node_54_1"
+    },
+    {
+      "data": {
+        "type": "node_walk",
+        "position": [ 5860, 2535.65 ]
+      },
+      "id": "node_9_1"
     }
   ],
 
@@ -2618,8 +2632,8 @@
     },
     {
       "id": "garage_0",
-      "source": "node_7",
-      "target": "node_9_2"
+      "target": "node_9_2",
+      "source": "node_7"
     },
     {
       "source": "node_9_2",
@@ -2719,16 +2733,20 @@
     },
     {
       "id": "garage_1",
-      "source": "node_56_2",
-      "target": "node_56"
+      "target": "node_56",
+      "source": "node_56_2"
     },
     {
       "source": "node_56_2",
-      "target": "node_54"
+      "target": "node_54_1"
+    },
+    {
+      "source": "node_54_1",
+      "target": "node_53"
     },
     {
       "source": "node_54",
-      "target": "node_53"
+      "target": "node_54_1"
     },
     {
       "source": "node_35",
@@ -2819,8 +2837,12 @@
       "target": "node_12"
     },
     {
-      "source": "node_9",
+      "source": "node_9_1",
       "target": "node_9_2"
+    },
+    {
+      "source": "node_9",
+      "target": "node_9_1"
     },
     {
       "source": "node_56",
@@ -3188,15 +3210,15 @@
     },
     {
       "source": "node_68",
-      "target": "node_9"
+      "target": "node_9_1"
+    },
+    {
+      "source": "n_br_4_1",
+      "target": "node_65_climb"
     },
     {
       "source": "node_65",
       "target": "node_65_climb"
-    },
-    {
-      "source": "n_br_4",
-      "target": "node_4_1"
     },
     {
       "source": "n_br_4",
