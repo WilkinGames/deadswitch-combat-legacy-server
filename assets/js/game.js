@@ -2459,7 +2459,7 @@ class GameInstance
                 var pathTickerMax = 0;
                 if (data.bZombie)
                 {
-                    pathTickerMax = 1;
+                    pathTickerMax = 2;
                 }
                 else
                 {
@@ -15248,6 +15248,7 @@ class GameInstance
         _weaponData.mods.barrel = mods[this.Random(0, mods.length - 1)];
         mods = this.getModsForWeapon(_weaponData.id, Mods.TYPE_AMMO);
         _weaponData.mods.ammo = mods[this.Random(0, mods.length - 1)];
+        this.applyWeaponMods(_weaponData, _weaponData.mods);
     }
 
     getModsForWeapon(_weaponId, _modType)
