@@ -315,7 +315,7 @@ const GameMode = {
     CONQUEST: "conquest",
     DESTRUCTION: "destruction",
     CAPTURE_THE_FLAG: "capture_the_flag",
-    SURVIVAL_OUTBREAK: "survival_outbreak",
+    SURVIVAL_SIEGE: "survival_siege",
     SURVIVAL_TERRORIST: "survival_terrorist",
     SURVIVAL_ZOMBIE: "survival_zombie"
 };
@@ -619,7 +619,7 @@ class GameInstance
                     });
                 }
                 break;
-            case GameMode.SURVIVAL_OUTBREAK:
+            case GameMode.SURVIVAL_SIEGE:
             case GameMode.SURVIVAL_TERRORIST:
             case GameMode.SURVIVAL_ZOMBIE:
                 this.game.bRanked = false;
@@ -7605,6 +7605,10 @@ class GameInstance
                 var heliSpeed = (_controllable.data.speed ? _controllable.data.speed : 4500);
                 switch (keyId)
                 {
+                    case Control.WEAPON:
+                        this.cycleVehicleWeapon(_controllable, _char.data.seatIndex);
+                        break;
+
                     case Control.JUMP:
                         if (_char.data.seatIndex == 0)
                         {
@@ -10718,7 +10722,7 @@ class GameInstance
         var veh = this.getVehicleData(types[this.Random(0, types.length - 1)]);        
         switch (this.game.gameModeId)
         {
-            case GameMode.SURVIVAL_OUTBREAK:
+            case GameMode.SURVIVAL_SIEGE:
                 var spawnX = map.width * 0.9;
                 break;
             default:
@@ -10818,7 +10822,7 @@ class GameInstance
         var map = this.getCurrentMapData();
         switch (this.game.gameModeId)
         {
-            case GameMode.SURVIVAL_OUTBREAK:
+            case GameMode.SURVIVAL_SIEGE:
                 var spawns = map.spawns_survival_outbreak;
                 break;
             default:
@@ -11038,7 +11042,7 @@ class GameInstance
                 {
                     switch (this.game.gameModeId)
                     {
-                        case GameMode.SURVIVAL_OUTBREAK:
+                        case GameMode.SURVIVAL_SIEGE:
                             grenade = "frag";
                             equipment = this.RandomBoolean() ? "ammo_box" : "stim";
                             var secondary = ["smaw", "javelin", "rpg", "mgl", "m320"];
@@ -11100,7 +11104,7 @@ class GameInstance
                 var map = this.getCurrentMapData();
                 switch (this.game.gameModeId)
                 {
-                    case GameMode.SURVIVAL_OUTBREAK:
+                    case GameMode.SURVIVAL_SIEGE:
                         spawnPos = this.clone(map.spawn_survival_outbreak);
                         break;
                     default:

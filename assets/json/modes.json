@@ -44,8 +44,8 @@
     "bTeam": false
   },
   {
-    "id": "survival_outbreak",
-    "name": "STR_MODE_SURVIVAL_OUTBREAK",
+    "id": "survival_siege",
+    "name": "STR_MODE_SURVIVAL_SIEGE",
     "desc": "STR_MODE_SURVIVAL_DESC",
     "bSurvival": true,
     "bTeam": false

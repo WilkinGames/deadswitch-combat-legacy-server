@@ -758,8 +758,8 @@
   "STR_MODE_DESTRUCTION": {
     "en": "Destruction"
   },
-  "STR_MODE_SURVIVAL_OUTBREAK": {
-    "en": "Outbreak Survival"
+  "STR_MODE_SURVIVAL_SIEGE": {
+    "en": "Siege Survival"
   },
   "STR_MODE_SURVIVAL_TERRORIST": {
     "en": "Terrorist Survival"
