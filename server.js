@@ -36,7 +36,7 @@ const GameMode = {
     CONQUEST: "conquest",
     DESTRUCTION: "destruction",
     CAPTURE_THE_FLAG: "capture_the_flag",
-    SURVIVAL_OUTBREAK: "survival_outbreak",
+    SURVIVAL_SIEGE: "survival_siege",
     SURVIVAL_TERRORIST: "survival_terrorist",
     SURVIVAL_ZOMBIE: "survival_zombie"
 };
@@ -308,7 +308,9 @@ io.on("connection", (socket) =>
         name: "Player",
         level: 1,
         team: 0
-    };    
+    };   
+
+    socket.emit("updateServer", settings);
 
     socket.on("ping", (_func) =>
     {
@@ -833,7 +835,7 @@ function getLobbyPlayerTeam(_lobby)
 {
     switch (_lobby.gameData.gameModeId)
     {
-        case GameMode.SURVIVAL_OUTBREAK:
+        case GameMode.SURVIVAL_SIEGE:
         case GameMode.SURVIVAL_TERRORIST:
         case GameMode.SURVIVAL_ZOMBIE:
             return 0;
@@ -1116,7 +1118,7 @@ function startGame(_lobbyId, _gameData)
             bot.name = "Bot " + i;
             switch (lobby.gameData.gameModeId)
             {
-                case GameMode.SURVIVAL_OUTBREAK:
+                case GameMode.SURVIVAL_SIEGE:
                 case GameMode.SURVIVAL_TERRORIST:
                 case GameMode.SURVIVAL_ZOMBIE:
                     bot.team = 0;
