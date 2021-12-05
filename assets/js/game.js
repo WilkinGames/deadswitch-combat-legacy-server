@@ -2907,7 +2907,7 @@ class GameInstance
         });
         if (ai.enemy && ai.enemyDist < item.range)
         {
-            var bMoveBackFromEnemy = !data.bLadderCooldown && ai.bEnemyLOS && !ai.desiredVehicleId && !ai.desiredItemId;
+            var bMoveBackFromEnemy = !ai.bPreferObjective && !data.bLadderCooldown && ai.bEnemyLOS && !ai.desiredVehicleId && !ai.desiredItemId;
             if (bMoveBackFromEnemy)
             {
                 var enemyDistThreshold = (item.dropRange ? item.dropRange : item.range) * 0.2;
@@ -11776,19 +11776,22 @@ class GameInstance
             var id = _args[1];
             switch (id)
             {
+                case "reviver":
+
+                    break;
                 case "store":
                     var storeCrate = this.createCrate(curPawn.position, {
                         team: 0,
                         type: Crate.STORE
                     });
                     break;
-
                 case "m2":
                 case "bgm71":
-                    this.createMountedWeapon(curPawn.position, {
+                    var mounted = this.createMountedWeapon(curPawn.position, {
                         weaponType: id,
                         scale: curPawn.data.scale
                     });
+                    mounted.mass = 1;
                     break;
                 case "obstacle":
                     this.createObstacle({
@@ -13321,7 +13324,8 @@ class GameInstance
             semiCooldownTimerMax: Math.round((this.Random(15, 20) - (_botSkill * 2)) * this.game.fpsMult),
             lookRange: 2500 + (_botSkill * 500),
             bFireCooldown: true,
-            bInteract: true
+            bInteract: !data.bZombie,
+            bPreferObjective: this.Random(1, 5) > 1
         };
         if (this.game.bSurvival)
         {
