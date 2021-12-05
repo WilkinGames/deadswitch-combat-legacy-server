@@ -6222,7 +6222,7 @@ class GameInstance
                             {
                                 if (this.isTeamGameMode())
                                 {
-                                    this.changeTeam(ps.id, _data.data.team);
+                                    this.changeTeam(ps.id, ps.team == 0 ? 1 : 0);
                                 }
                             }
                             if (_data.data.currentClass)
@@ -9054,6 +9054,13 @@ class GameInstance
                     bInfofeed: true,
                     message: "STR_X_SWITCHED_TEAM",
                     messageParams: [ps.name]
+                }
+            });
+            this.onEvent({
+                eventId: GameServer.EVENT_PLAYER_UPDATE,
+                playerId: ps.id,
+                data: {
+                    team: ps.team
                 }
             });
         }
