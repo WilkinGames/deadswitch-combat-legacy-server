@@ -801,6 +801,9 @@
   "STR_SPAWN": {
     "en": "Spawn"
   },
+  "STR_SURVIVAL_REVIVE_DESC": {
+    "en": "You will be revived at the end of wave."
+  },
   "STR_RESPAWN_IN_X": {
     "en": "Respawn available in %1"
   },

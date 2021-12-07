@@ -665,11 +665,13 @@ class GameInstance
                             team: i,
                             num: bombNum,
                             type: Crate.BOMB,
+                            bLimitInteractions: true,
                             itemData: {
                                 interactTime: this.game.settings.fps * 2,
                                 interactTeam: i == 0 ? 1 : 0
                             }
                         });
+                        bombCrate.mass = 0;
                         bombNum++;
                     }
                 }
@@ -13211,6 +13213,7 @@ class GameInstance
             crateType: _data.type,
             ownerId: _data.ownerId,
             bEnabled: true,
+            bLimitInteractions: _data.bLimitInteractions,
             bDisposable: _data.bDisposable != null ? _data.bDisposable : true
         };     
         var data = body.data;
