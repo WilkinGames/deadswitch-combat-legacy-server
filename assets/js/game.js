@@ -619,6 +619,9 @@ class GameInstance
                     });
                 }
                 break;
+            case GameMode.DESTRUCTION:
+                this.game.gameModeData.bombs = [0, 0, 0, 1, 1, 1];
+                break;
             case GameMode.SURVIVAL_SIEGE:
             case GameMode.SURVIVAL_TERRORIST:
             case GameMode.SURVIVAL_ZOMBIE:
@@ -648,6 +651,28 @@ class GameInstance
                     frame: "crate_store",
                     type: Crate.STORE
                 });
+                break;
+
+            case GameMode.DESTRUCTION:
+                var bombs = map.bombs[this.game.gameModeId];
+                var bombNum = 0;
+                for (var i = 0; i < bombs.length; i++)
+                {
+                    var points = bombs[i];
+                    for (var j = 0; j < points.length; j++)
+                    {
+                        var bombCrate = this.createCrate(points[j], {
+                            team: i,
+                            num: bombNum,
+                            type: Crate.BOMB,
+                            itemData: {
+                                interactTime: this.game.settings.fps * 2,
+                                interactTeam: i == 0 ? 1 : 0
+                            }
+                        });
+                        bombNum++;
+                    }
+                }
                 break;
         }
 
@@ -1171,6 +1196,9 @@ class GameInstance
                         break;
                     case "door":
                         this.handleDoor(body);
+                        break;
+                    case "crate":
+                        this.handleCrate(body);
                         break;
                     case "character":
                         this.handleCharacter(body);
@@ -2753,11 +2781,16 @@ class GameInstance
             {
                 this.triggerCharacterMeleeAttack(_body);
             }
-        }    
+        }   
+        var bSprint = !data.bWantsToFire && data.bWantsToMove && this.characterCanSprint(_body);
         if (ai.botSkill >= BotSkill.SKILL_HARD)
-        {
-            this.setDataValue(_body, "bSprinting", !data.bWantsToFire && data.bWantsToMove && this.characterCanSprint(_body));
+        {           
+            this.setDataValue(_body, "bSprinting", bSprint);
             this.setDataValue(_body, "bCrouching", !data.bWantsToMove && !data.bClimbing && !data.bSprinting && !data.bParachute && this.characterCanCrouch(_body) && !data.bZombie);
+        }
+        else
+        {
+            this.setDataValue(_body, "bSprinting", bSprint && ai.enemyDist > 2000);
         }
 
         ai.destThreshold = 30;
@@ -2849,6 +2882,13 @@ class GameInstance
                         ai.moveToPos = flag.position;
                     }
                     break;
+                case GameMode.DESTRUCTION:
+                    var bombs = this.getBombCrates(data.team == 0 ? 1 : 0);
+                    if (bombs[0])
+                    {
+                        ai.moveToPos = bombs[0].position;
+                    }
+                    break;
                 case GameMode.CAPTURE_THE_FLAG:
                     var enemyFlag = this.getFlagCTF(data.team == 0 ? 1 : 0);
                     var homeFlag = this.getFlagCTF(data.team);
@@ -2907,7 +2947,7 @@ class GameInstance
         });
         if (ai.enemy && ai.enemyDist < item.range)
         {
-            var bMoveBackFromEnemy = !ai.bPreferObjective && !data.bLadderCooldown && ai.bEnemyLOS && !ai.desiredVehicleId && !ai.desiredItemId;
+            var bMoveBackFromEnemy = !data.bLadderCooldown && ai.bEnemyLOS && !ai.desiredVehicleId && !ai.desiredItemId;
             if (bMoveBackFromEnemy)
             {
                 var enemyDistThreshold = (item.dropRange ? item.dropRange : item.range) * 0.2;
@@ -4674,6 +4714,29 @@ class GameInstance
         }
     }
 
+    handleCrate(_body)
+    {
+        var data = _body.data;
+        switch (data.crateType)
+        {
+            case Crate.BOMB:
+            case Crate.BOMB_GENERIC:
+                if (data.bBombPlanted)
+                {
+                    if (data.bombTimer > 0)
+                    {
+                        data.bombTimer--;
+                        this.pushObjectDataUpdate(data.id, ["bombTimer"]);
+                    }
+                    else if (!data.bDetonated)
+                    {
+                        this.detonate(_body);
+                    }
+                }
+                break;
+        }
+    }
+
     handleDoor(_body)
     {
         var data = _body.data;
@@ -6116,7 +6179,7 @@ class GameInstance
                 break;
             case GameMode.SURVIVAL_TERRORIST:
             case GameMode.SURVIVAL_ZOMBIE:
-                ps.money = 1000;
+                ps.money = 10000;
                 break;
         }        
         if (ps.currentClass == null)
@@ -6275,6 +6338,19 @@ class GameInstance
                     this.removeEquipmentByPlayerId(_data.playerId);
                     this.removeNextStep(this.getReviverByPlayerId(_data.playerId));
                     this.removePlayer(_data.playerId);
+                    if (this.game.bSurvival)
+                    {
+                        var numChars = this.getNumCharactersOnTeam(0);
+                        if (this.getNumCharactersOnTeam(0) <= 0)
+                        {
+                            this.requestEvent({
+                                eventId: GameServer.EVENT_GAME_END,
+                                condition: MatchState.END_CONDITION_KIA,
+                                result: MatchState.END_RESULT_LOSS,
+                                winningTeam: 1
+                            });
+                        }
+                    }
                     break;
 
                 case GameServer.EVENT_SPAWN_EXPLOSION:
@@ -8047,6 +8123,47 @@ class GameInstance
                 case "crate":
                     switch (data.crateType)
                     {
+                        case Crate.BOMB:
+                        case Crate.BOMB_GENERIC:
+                            if (data.bBombPlanted)
+                            {
+                                this.setDataValue(_interactable, "bBombPlanted", false);
+                                data.bombTimer = data.bombTimerMax;
+                                data.itemData.interactTeam = data.team == 0 ? 1 : 0;  
+                                this.pushObjectDataUpdate(data.id, ["bBombPlanted", "bombTimer", "itemData"]);
+                                this.onEvent({
+                                    eventId: GameServer.EVENT_GAME_UPDATE,
+                                    data: {
+                                        defuseTeam: data.team
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                this.setDataValue(_interactable, "bBombPlanted", true);
+                                data.itemData.interactTeam = data.team;                                
+                                this.pushObjectDataUpdate(data.id, ["bBombPlanted", "itemData"]);
+                                var ps = this.getPlayerById(_playerId);
+                                if (ps)
+                                {
+                                    ps.plants++;
+                                    this.onEvent({
+                                        eventId: GameServer.EVENT_PLAYER_UPDATE,
+                                        playerId: _playerId,
+                                        data: {
+                                            plants: ps.plants
+                                        }
+                                    });
+                                }
+                                this.onEvent({
+                                    eventId: GameServer.EVENT_GAME_UPDATE,
+                                    data: {
+                                        plantTeam: data.team == 0 ? 1 : 0
+                                    }
+                                });
+                            }                            
+                            break;
+
                         case Crate.AMMO:
                             var inventory = pawn.data["inventory"];
                             var numMags = 1;
@@ -8487,6 +8604,7 @@ class GameInstance
                 else
                 {
                     this.startInteraction(pawn, interactable);
+                    console.log(interactable);
                 }
             }
         }
@@ -8535,6 +8653,7 @@ class GameInstance
     getBestInteractable(_body)
     {
         var objects = this.getVehicles();
+        objects = objects.concat(this.getBombCrates());
         if (_body.data.team == 0)
         {
             objects = objects.concat(this.getRevivers());
@@ -8606,8 +8725,16 @@ class GameInstance
         for (var i = 0; i < objects.length; i++)
         {
             var obj = objects[i];
-            if (!obj.data.bPendingRemoval)
+            var data = obj.data;
+            if (!data.bPendingRemoval)
             {
+                if (data.itemData && data.itemData.interactTeam != null)
+                {
+                    if (data.itemData.interactTeam != _body.data.team)
+                    {
+                        continue;
+                    }
+                }
                 if (obj.getAABB().overlaps(_body.getAABB()))
                 {
                     if (this.isVehicle(obj) && !this.hasAvailableSeat(obj))
@@ -9034,6 +9161,39 @@ class GameInstance
                 {
                     case "crate":
                         arr.push(cur);
+                        break;
+                }
+            }
+        }
+        return arr;
+    }
+
+    getBombCrates(_team)
+    {
+        var world = this.game.world;
+        var arr = [];
+        for (var i = 0; i < world.bodies.length; i++)
+        {
+            var cur = world.bodies[i];
+            if (cur.data)
+            {
+                switch (cur.data.type)
+                {
+                    case "crate":
+                        if (cur.data.crateType == Crate.BOMB || cur.data.crateType == Crate.BOMB_GENERIC)
+                        {
+                            if (_team != null)
+                            {
+                                if (cur.data.team == _team)
+                                {
+                                    arr.push(cur);
+                                }
+                            }
+                            else
+                            {
+                                arr.push(cur);
+                            }
+                        }
                         break;
                 }
             }
@@ -9959,7 +10119,7 @@ class GameInstance
                             {
                                 var scores = game.gameModeData["scores"];
                                 scores[ps.team]++;
-                                gameModeData["scores"] = scores;
+                                gameModeData.scores = scores;
                                 if (scores[ps.team] >= game.gameModeData["scoreLimit"])
                                 {
                                     this.requestEvent({
@@ -13052,7 +13212,16 @@ class GameInstance
             ownerId: _data.ownerId,
             bEnabled: true,
             bDisposable: _data.bDisposable != null ? _data.bDisposable : true
-        };        
+        };     
+        var data = body.data;
+        switch (_data.type)
+        {
+            case Crate.BOMB:
+            case Crate.BOMB_GENERIC:
+                data.bombNum = _data.num;
+                data.bombTimerMax = data.bombTimer = this.game.settings.fps * 5;
+                break;
+        }
         var shape = new p2.Box({
             width: shared.width,
             height: shared.height,
@@ -14600,6 +14769,58 @@ class GameInstance
             data.bDetonated = true;
             switch (data.type)
             {
+                case "crate":
+                    switch (this.game.gameModeId)
+                    {
+                        case GameMode.DESTRUCTION:
+                            var bombs = this.game.gameModeData.bombs;
+                            bombs[data.bombNum] = null;
+                            var scoreTeam = data.team == 0 ? 1 : 0;
+                            var scores = this.game.gameModeData.scores;
+                            scores[scoreTeam]++;
+                            this.onEvent({
+                                eventId: GameServer.EVENT_GAME_UPDATE,
+                                data: {
+                                    scores: scores,
+                                    bombs: bombs,
+                                    bombTeam: scoreTeam
+                                }
+                            });
+                            if (scores[scoreTeam] >= this.game.gameModeData.scoreLimit)
+                            {
+                                this.requestEvent({
+                                    eventId: GameServer.EVENT_GAME_END,
+                                    condition: MatchState.END_CONDITION_SCORE,
+                                    winningTeam: scoreTeam
+                                });
+                            }
+                            else
+                            {
+                                var numBombs = this.getBombCrates(data.team);
+                                if (numBombs.length <= 1)
+                                {
+                                    this.requestEvent({
+                                        eventId: GameServer.EVENT_GAME_END,
+                                        condition: MatchState.END_CONDITION_SCORE,
+                                        winningTeam: scoreTeam
+                                    });
+                                }
+                            }
+                            break;
+                    }
+                    this.createExplosion({
+                        eventId: GameServer.EVENT_SPAWN_EXPLOSION,
+                        x: _body.position[0],
+                        y: _body.position[1],
+                        radius: 500,
+                        damage: 1000,
+                        causerId: data.id,
+                        playerId: data.planterId,
+                        weaponId: "bomb"
+                    });
+                    this.removeNextStep(_body);                    
+                    break;
+
                 case "obstacle":
                     switch (data.obstacleId)
                     {

@@ -793,7 +793,7 @@
     "en": "Capture and defend the 5 flag positions."
   },
   "STR_MODE_DESTRUCTION_DESC": {
-    "en": "Teams fight for control of the bomb to destroy the targets."
+    "en": "Destroy the enemy targets and protect yours."
   },
   "STR_MAP_DOWNTURN": {
     "en": "Downturn"
@@ -1906,6 +1906,15 @@
   "STR_X_CAPTURED_X": {
     "en": "%1 captured %2"
   },
+  "STR_X_DESTROYED_TARGET": {
+    "en": "%1 destroyed a target"
+  },
+  "STR_X_PLANTED_BOMB": {
+    "en": "%1 planted bomb"
+  },
+  "STR_X_DEFUSED_BOMB": {
+    "en": "%1 defused bomb"
+  },
   "STR_X_CAPTURED": {
     "en": "%1 captured the flag"
   },
@@ -1922,6 +1931,22 @@
   },
   "STR_COUNTERMEASURE": {
     "en": "Countermeasure"
+  },
+  "STR_BOMB": {
+    "en": "Bomb",
+    "ru": "Бомба",
+    "zh-CN": "炸弹",
+    "tr": "Bomba",
+    "es": "Bomba",
+    "it": "Bomba"
+  },
+  "STR_DEFUSE": {
+    "en": "Defuse",
+    "ru": "Обезвредить",
+    "zh-CN": "拆除",
+    "tr": "Çöz",
+    "es": "Desactivar",
+    "it": "Disattiva"
   },
   "STR_CAPTURE": {
     "en": "Capture",
