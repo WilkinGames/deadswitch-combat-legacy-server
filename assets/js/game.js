@@ -8166,6 +8166,7 @@ class GameInstance
                                 this.onEvent({
                                     eventId: GameServer.EVENT_GAME_UPDATE,
                                     data: {
+                                        playerId: _playerId,
                                         plantTeam: data.team == 0 ? 1 : 0
                                     }
                                 });
