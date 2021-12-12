@@ -40,9 +40,9 @@
         [ 4122, 2825 ]
       ],
       [
-        [ 13372, 2240 ],
+        [ 9878, 2825 ],
         [ 11285, 2250 ],
-        [ 9878, 2825 ]
+        [ 13372, 2240 ]
       ]
     ]
   },
@@ -313,6 +313,52 @@
       "position": [
         8290,
         2667
+      ]
+    },
+    {
+      "type": "lever",
+      "targetId": "door_sewer_0",
+      "links": [
+        "sewer_0"
+      ],
+      "position": [
+        2679,
+        2708
+      ]
+    },
+    {
+      "type": "lever",
+      "targetId": "door_sewer_1",
+      "links": [
+        "sewer_1"
+      ],
+      "position": [
+        11321,
+        2708
+      ]
+    },
+    {
+      "type": "door",
+      "id": "door_sewer_0",
+      "height": 80,
+      "bClosed": false,
+      "doorType": "garage",
+      "material": "metal",
+      "position": [
+        3369,
+        2826
+      ]
+    },
+    {
+      "type": "door",
+      "id": "door_sewer_1",
+      "height": 80,
+      "bClosed": false,
+      "doorType": "garage",
+      "material": "metal",
+      "position": [
+        10630,
+        2826
       ]
     },
     {
@@ -779,6 +825,24 @@
       "position": [
         7380,
         2662
+      ]
+    },
+    {
+      "type": "obstacle",
+      "obstacleId": "sandbags_edge",
+      "scale": -1,
+      "position": [
+        2290,
+        2090
+      ]
+    },
+    {
+      "type": "obstacle",
+      "obstacleId": "sandbags_edge",
+      "scale": 1,
+      "position": [
+        11710,
+        2090
       ]
     },
     {
@@ -2591,6 +2655,7 @@
       "target": "node_67"
     },
     {
+      "id": "sewer_0",
       "source": "node_24_1",
       "target": "node_24"
     },
@@ -3133,6 +3198,7 @@
       "target": "n_r_5"
     },
     {
+      "id": "sewer_1",
       "source": "node_45_1",
       "target": "n_r_7"
     },

@@ -798,6 +798,9 @@
   "STR_MAP_DOWNTURN": {
     "en": "Downturn"
   },
+  "STR_MAP_OVERGROWN": {
+    "en": "Overgrown"
+  },
   "STR_SPAWN": {
     "en": "Spawn"
   },

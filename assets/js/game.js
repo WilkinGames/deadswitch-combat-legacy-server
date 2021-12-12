@@ -662,12 +662,13 @@ class GameInstance
                     for (var j = 0; j < points.length; j++)
                     {
                         var bombCrate = this.createCrate(points[j], {
+                            mass: 10,
                             team: i,
                             num: bombNum,
                             type: Crate.BOMB,
                             bLimitInteractions: true,
                             itemData: {
-                                interactTime: this.game.settings.fps * 2,
+                                interactTime: this.game.settings.fps * 5,
                                 interactTeam: i == 0 ? 1 : 0
                             }
                         });
@@ -7445,7 +7446,7 @@ class GameInstance
         if (weapons)
         {
             var weaponList = weapons[_index];
-            if (weaponList && weaponList.length > 0)
+            if (weaponList && weaponList.length > 1)
             {
                 var seat = data.seats[_index];
                 if (seat.weaponIndex == null)
@@ -8665,6 +8666,14 @@ class GameInstance
             var obj = objects[i];
             if (!obj.data.bPendingRemoval)
             {
+                var itemData = obj.data.itemData;
+                if (itemData)
+                {
+                    if (itemData.interactTeam != _body.data.team)
+                    {
+                        continue;
+                    }
+                }
                 if (obj.getAABB().overlaps(_body.getAABB()))
                 {
                     return obj;
@@ -12997,7 +13006,7 @@ class GameInstance
     createFlag(_position, _data)
     {
         var body = new p2.Body({
-            mass: 10,
+            mass: _data.flagType == GameMode.DOMINATION ? 0 : 10,
             position: _position,
             fixedRotation: true
         });
@@ -13222,7 +13231,7 @@ class GameInstance
             case Crate.BOMB:
             case Crate.BOMB_GENERIC:
                 data.bombNum = _data.num;
-                data.bombTimerMax = data.bombTimer = this.game.settings.fps * 5;
+                data.bombTimerMax = data.bombTimer = this.game.settings.fps * 30;
                 break;
         }
         var shape = new p2.Box({
