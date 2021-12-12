@@ -1059,7 +1059,7 @@ class GameInstance
                                         gameData.enemiesSpawned++;
                                         break;
                                     default:
-                                        if (wave > 1 && this.Random(1, 6) == 1)
+                                        if (wave > 1 && this.Random(1, 6) == 1 && this.getVehicles().length < 5)
                                         {
                                             this.spawnSurvivalEnemyVehicle();
                                         }
@@ -3818,7 +3818,6 @@ class GameInstance
         if (_body)
         {
             this.setDataValue(_body, "carrierId", _carrierId);
-            console.log(_body.data);
         }
     }
 
@@ -3836,10 +3835,12 @@ class GameInstance
                 }
             });
             this.onEvent({
-                eventId: GameServer.EVENT_PLAYER_FLAG,
-                playerId: _playerId,
-                team: _flag.data["team"],
-                type: "returned"
+                eventId: GameServer.EVENT_GAME_UPDATE,
+                data: {
+                    playerId: _playerId,
+                    team: _flag.data.team,
+                    bFlagReturned: true
+                }
             });
         }
     }
@@ -3848,20 +3849,24 @@ class GameInstance
     {
         _flag.wakeUp();
         this.onEvent({
-            eventId: GameServer.EVENT_PLAYER_FLAG,
-            playerId: _playerId,
-            team: _flag.data["team"],
-            type: "dropped"
+            eventId: GameServer.EVENT_GAME_UPDATE,
+            data: {
+                playerId: _playerId,
+                team: _flag.data.team,
+                bFlagDropped: true
+            }
         });
     }
 
     onFlagPickedUp(_flag, _playerId)
     {
         this.onEvent({
-            eventId: GameServer.EVENT_PLAYER_FLAG,
-            playerId: _playerId,
-            team: _flag.data["team"],
-            type: "picked_up"
+            eventId: GameServer.EVENT_GAME_UPDATE,
+            data: {
+                playerId: _playerId,
+                team: _flag.data.team,
+                bFlagPickedUp: true 
+            }
         });
     }
 
@@ -8607,7 +8612,6 @@ class GameInstance
                 else
                 {
                     this.startInteraction(pawn, interactable);
-                    console.log(interactable);
                 }
             }
         }
@@ -11955,7 +11959,7 @@ class GameInstance
             switch (id)
             {
                 case "reviver":
-
+                    //nigga
                     break;
                 case "store":
                     var storeCrate = this.createCrate(curPawn.position, {
