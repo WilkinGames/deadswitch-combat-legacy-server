@@ -985,11 +985,21 @@ function setLobbyState(_lobbyId, _state)
                     var set = gameData.set;
                     var defaults = shared.defaultGameSettings[gameData.gameModeId];
                     var keys = Object.keys(defaults);
-                    for (var i = 0; i < keys.length; i++)
+                    if (keys)
                     {
-                        var key = keys[i];
-                        set[key] = defaults[key];
-                        console.log(key, defaults[key]);
+                        for (var i = 0; i < keys.length; i++)
+                        {
+                            var key = keys[i];
+                            if (set[key])
+                            {
+                                set[key] = defaults[key];
+                                console.log(key, defaults[key]);
+                            }
+                            else
+                            {
+                                console.warn(set, key);
+                            }
+                        }
                     }
                 }
                 gameData.data = {
