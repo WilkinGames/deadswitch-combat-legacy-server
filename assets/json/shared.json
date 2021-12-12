@@ -293,19 +293,33 @@
   },
   "defaultGameSettings": {
     "team_deathmatch": {
+      "preGameTimer": 10,
       "scoreLimit": 100
     },
     "capture_the_flag": {
+      "preGameTimer": 10,
       "scoreLimit": 3
     },
     "domination": {
+      "preGameTimer": 10,
       "scoreLimit": 300
     },
     "conquest": {
+      "preGameTimer": 10,
       "scoreLimit": 500
     },
     "destruction": {
+      "preGameTimer": 10,
       "scoreLimit": 3
+    },
+    "survival_terrorist": {
+      "preGameTimer": 0
+    },
+    "survival_zombie": {
+      "preGameTimer": 0
+    },
+    "survival_siege": {
+      "preGameTimer": 0
     }
   }
 }
