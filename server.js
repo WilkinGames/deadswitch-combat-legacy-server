@@ -982,7 +982,7 @@ function setLobbyState(_lobbyId, _state)
                 gameData.lobbyId = lobby.id;
                 if (!settings.bUseLobby)
                 {
-                    var set = gameData.set;
+                    var set = gameData.settings;
                     var defaults = shared.defaultGameSettings[gameData.gameModeId];
                     var keys = Object.keys(defaults);
                     if (keys)
