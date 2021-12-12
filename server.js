@@ -1258,7 +1258,12 @@ function onEndGame(_lobbyId)
                             if (a.players.length < b.players.length) return 1;
                             return 0;
                         });
-                        lobby.gameData.gameModeId = votes[0].id;
+                        var winningVote = votes[0];
+                        lobby.gameData.gameModeId = winningVote.id;
+                        if (winningVote.mapId)
+                        {
+                            lobby.gameData.mapId = winningVote.mapId;
+                        }
                     }
                     setLobbyState(_lobbyId, LobbyState.IN_PROGRESS);
                 }
