@@ -6289,7 +6289,7 @@ class GameInstance
                         var ps = this.getPlayerById(_data.playerId);
                         if (ps)
                         {
-                            if (_data.data.team != null)
+                            if (_data.data.bChangeTeam)
                             {
                                 if (this.isTeamGameMode())
                                 {
