@@ -5543,7 +5543,7 @@ class GameInstance
                 recoil: useRecoil
             });
         }
-        if (!weapon.bSilenced && !this.hasMod(weapon, Mods.BARREL_SILENCER))
+        if (!weapon.bSilenced && !this.hasMod(weapon, Mods.BARREL_SILENCER) && !this.isMeleeWeapon(weapon))
         {
             this.exposePawn(_body);
         }
@@ -10395,7 +10395,7 @@ class GameInstance
                         delete interactable.data["currentPawnId"];
                     }
                 }
-                if (this.Random(1, 3) == 1)
+                if (this.Random(1, 3) == 1 && !pawn.data.bZombie)
                 {
                     this.dropCharacterWeapon(pawn, pawn.data.currentInventoryIndex);
                 }
@@ -10994,7 +10994,7 @@ class GameInstance
             botSkill: botSkill,
             health: health,
             bZombie: true,
-            maxSpeed: Math.min(500, (200 + (wave * 25)) * (this.Random(50, 100) * 0.01)),
+            maxSpeed: Math.min(350, (200 + (wave * 10)) * (this.Random(50, 100) * 0.01)),
             bRegenHealth: false
         });
         return char;
