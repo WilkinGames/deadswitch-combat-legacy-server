@@ -6293,7 +6293,7 @@ class GameInstance
                             {
                                 if (this.isTeamGameMode())
                                 {
-                                    this.changeTeam(ps.id, ps.team == 0 ? 1 : 0);
+                                    this.changeTeam(ps.id);
                                 }
                             }
                             if (_data.data.currentClass)
@@ -9216,12 +9216,12 @@ class GameInstance
         return arr;
     }
 
-    changeTeam(_id, _team)
+    changeTeam(_id)
     {
         var ps = this.getPlayerById(_id);
         if (ps)
         {
-            ps.team = _team;
+            ps.team = ps.team == 0 ? 1 : 0;
             this.setCurrentClass(ps, ps.currentClass);
             this.requestEvent({
                 eventId: GameServer.EVENT_MESSAGE_ADD,
@@ -9238,19 +9238,19 @@ class GameInstance
                     team: ps.team
                 }
             });
-        }
-        var pawn = this.getObjectById(_id);
-        if (pawn)
-        {
-            this.setDataValue(pawn, "team", _team);
-            this.setDataValue(pawn, "avatar", ps.avatar);
-            var controllable = this.getObjectById(pawn.data.controllableId);
-            if (controllable)
+            var pawn = this.getObjectById(_id);
+            if (pawn)
             {
-                this.setDataValue(controllable, "team", _team);
+                this.setDataValue(pawn, "team", ps.team);
+                this.setDataValue(pawn, "avatar", ps.avatar);
+                var controllable = this.getObjectById(pawn.data.controllableId);
+                if (controllable)
+                {
+                    this.setDataValue(controllable, "team", ps.team);
+                }
+                this.killPawn(pawn.data.id);
             }
-            this.killPawn(pawn.data.id);
-        }        
+        }
     }
 
     getDisposableCrates()
