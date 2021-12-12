@@ -41,11 +41,8 @@ const GameMode = {
     SURVIVAL_ZOMBIE: "survival_zombie"
 };
 const Map = {
-    SIEGE: "map_siege"
-};
-const Faction = {
-    US: "us",
-    RU: "ru"
+    DOWNTURN: "map_downturn",
+    OVERGROWN: "map_overgrown"
 };
 const BotSkill = {
     AUTO: -1,
@@ -718,6 +715,20 @@ io.on("connection", (socket) =>
                         num++;
                     }
                     lobby.gameData[key] = value;
+                    switch (key)
+                    {
+                        case "gameModeId":
+                            var mode = getGameMode(value);
+                            log(mode);
+                            if (mode)
+                            {
+                                if (mode.bSurvival)
+                                {
+                                    setAllLobbyPlayersTeam(lobby, -1);
+                                }
+                            }
+                            break;
+                    }
                 }
             }
             io.to(lobby.id).emit("updateLobby", { gameData: lobby.gameData });
@@ -919,6 +930,24 @@ function enterGame(_socket)
     }
 }
 
+function setAllLobbyPlayersTeam(_lobby, _team)
+{
+    if (_lobby)
+    {
+        for (var i = 0; i < _lobby.players.length; i++)
+        {
+            var ps = _lobby.players[i];
+            ps.team = _team;
+        }
+        log(_lobby.players);
+        io.to(_lobby.id).emit("updateLobby", { players: _lobby.players });
+    }
+    else
+    {
+        console.warn("Invalid lobby", _lobby, _team);
+    }
+}
+
 function setLobbyState(_lobbyId, _state)
 {
     var lobby = getLobbyData(_lobbyId);
@@ -938,11 +967,31 @@ function setLobbyState(_lobbyId, _state)
         log(chalk.magenta(lobby.id), lobby.state);
         switch (_state)
         {
-            case LobbyState.IN_PROGRESS:  
+            case LobbyState.IN_PROGRESS:
+                switch (lobby.gameData.gameModeId)
+                {
+                    case GameMode.SURVIVAL_SIEGE:
+                    case GameMode.SURVIVAL_TERRORIST:
+                    case GameMode.SURVIVAL_ZOMBIE:
+                        setAllLobbyPlayersTeam(lobby, 0);
+                        break;
+                }
                 incrementStat("games");
                 var gameData = lobby.gameData;
                 gameData.bMultiplayer = true;
                 gameData.lobbyId = lobby.id;
+                if (!settings.bUseLobby)
+                {
+                    var set = gameData.set;
+                    var defaults = shared.defaultGameSettings[gameData.gameModeId];
+                    var keys = Object.keys(defaults);
+                    for (var i = 0; i < keys.length; i++)
+                    {
+                        var key = keys[i];
+                        set[key] = defaults[key];
+                        console.log(key, defaults[key]);
+                    }
+                }
                 gameData.data = {
                     p2: p2,
                     graph: graph,
@@ -1156,12 +1205,17 @@ function onEndGame(_lobbyId)
         if (settings.bAllowVotes)
         {
             var votes = [];
+            var maps = [
+                Map.DOWNTURN,
+                Map.OVERGROWN
+            ];
             var gameModes = clone(modes);
             shuffleArray(gameModes);
             for (var i = 0; i < 3; i++)
             {
                 var vote = {
                     id: gameModes[i].id,
+                    mapId: maps[MathUtil.Random(0, maps.length - 1)],
                     players: []
                 };
                 votes.push(vote);
@@ -1356,6 +1410,19 @@ function getNumClients()
         num += namespace.sockets.size;
     });
     return num;
+}
+
+function getGameMode(_id)
+{
+    for (var i = 0; i < modes.length; i++)
+    {
+        var mode = modes[i];
+        if (mode.id == _id)
+        {
+            return mode;
+        }
+    }
+    return null;
 }
 
 function getSocketByPlayerId(_id)

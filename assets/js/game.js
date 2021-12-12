@@ -2571,7 +2571,7 @@ class GameInstance
                     break;
                 case "claymore":
                 case "betty":
-                    if (ai.enemy && ai.enemyDist < 1000 && Math.random() > 0.8)
+                    if (ai.enemy && ai.enemyDist < 1000 && Math.random() > 0.9)
                     {
                         this.useCharacterEquipment(_body, "equipment", ai.enemy.position[0], ai.enemy.position[1]);
                     }
@@ -2584,7 +2584,7 @@ class GameInstance
                     break;
                 case "jammer":
                 case "sensor":
-                    if (ai.enemy && ai.enemyDist < equipment.radius)
+                    if (ai.enemy && ai.enemyDist < equipment.radius && Math.random() > 0.9)
                     {
                         this.useCharacterEquipment(_body, "equipment", ai.enemy.position[0], ai.enemy.position[1]);
                     }
@@ -2605,7 +2605,7 @@ class GameInstance
             switch (grenade.id)
             {
                 default:
-                    if (ai.enemy && ai.enemyDist > 250 && ai.enemyDist < 1000 && Math.random() > 0.9)
+                    if (ai.enemy && ai.enemy.data.type == "character" && ai.enemyDist > 250 && ai.enemyDist < 1000 && Math.random() > 0.99)
                     {
                         this.useCharacterEquipment(_body, "grenade", ai.enemy.position[0], ai.enemy.position[1] - (ai.enemyDist * 0.25));
                     }

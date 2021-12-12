@@ -715,7 +715,7 @@
     "round": "25mm",
     "damage": 75,
     "accuracy": 12,
-    "fireRate": 12,
+    "fireRate": 10,
     "range": 4000,
     "recoil": 1,
     "penetration": 8,

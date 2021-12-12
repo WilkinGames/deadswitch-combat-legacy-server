@@ -1924,6 +1924,30 @@
   "STR_X_CAPTURED": {
     "en": "%1 captured the flag"
   },
+  "STR_X_PICKED_UP_FLAG": {
+    "en": "%1 picked up the flag",
+    "ru": "%1 взял флаг",
+    "zh-CN": "%1 接力了旗帜",
+    "tr": "%1 bayrağı aldı",
+    "es": "%1 ha recogido la bandera",
+    "it": "%1 ha raccolto la bandiera"
+  },
+  "STR_X_RETURNED_FLAG": {
+    "en": "%1 returned the flag",
+    "ru": "%1 вернул флаг",
+    "zh-CN": "%1 夺回了旗帜",
+    "tr": "%1 bayrağı geri getirdi",
+    "es": "%1 ha devuelto la bandera",
+    "it": "%1 ha ritornato la bandiera"
+  },
+  "STR_X_DROPPED_FLAG": {
+    "en": "%1 dropped the flag",
+    "ru": "%1 потерял флаг",
+    "zh-CN": "%1 丢下了旗帜",
+    "tr": "%1 bayrağı düşürdü",
+    "es": "%1 dejó caer la bandera",
+    "it": "%1 ha droppato la bandiera"
+  },
   "STR_CAMO": {
     "en": "Camo"
   },
@@ -1977,6 +2001,14 @@
     "tr": "Savun",
     "es": "Defender",
     "it": "Difendi"
+  },
+  "STR_PLANT": {
+    "en": "Plant",
+    "ru": "Заложить",
+    "zh-CN": "炸弹放置",
+    "tr": "Kur",
+    "es": "Plantar",
+    "it": "Pianta"
   },
   "STR_ENEMY_KILLED": {
     "en": "Enemy Killed",

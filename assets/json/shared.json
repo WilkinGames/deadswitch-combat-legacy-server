@@ -6,7 +6,7 @@
     "width": 40,
     "height": 80,
     "crouchHeight": 62,
-    "maxSpeed": 225,
+    "maxSpeed": 200,
     "jumpHeight": 350,
     "sprintMult": 2.2,
     "crouchMult": 0.6,
@@ -290,5 +290,22 @@
     "grenade": 150,
     "grenade_stun": 250,
     "grenade_flash": 250
+  },
+  "defaultGameSettings": {
+    "team_deathmatch": {
+      "scoreLimit": 100
+    },
+    "capture_the_flag": {
+      "scoreLimit": 3
+    },
+    "domination": {
+      "scoreLimit": 300
+    },
+    "conquest": {
+      "scoreLimit": 500
+    },
+    "destruction": {
+      "scoreLimit": 3
+    }
   }
 }
