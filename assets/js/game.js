@@ -2519,23 +2519,23 @@ class GameInstance
                         break;
                     case BotSkill.SKILL_INSANE:
                         ai.enemyDistMax = 2000;
-                        ai.offsetX = this.Random(-30, 30);
-                        ai.offsetY = this.Random(-30, 30);
+                        ai.offsetX = this.Random(-25, 25);
+                        ai.offsetY = this.Random(-25, 25);
                         break;
                     case BotSkill.SKILL_HARD:
                         ai.enemyDistMax = 1000;
+                        ai.offsetX = this.Random(-50, 50);
+                        ai.offsetY = this.Random(-50, 50);
+                        break;
+                    case BotSkill.SKILL_NORMAL:
+                        ai.enemyDistMax = 800;
                         ai.offsetX = this.Random(-75, 75);
                         ai.offsetY = this.Random(-75, 75);
                         break;
-                    case BotSkill.SKILL_NORMAL:
-                        ai.enemyDistMax = 750;
+                    default:
+                        ai.enemyDistMax = 600;
                         ai.offsetX = this.Random(-100, 100);
                         ai.offsetY = this.Random(-100, 100);
-                        break;
-                    default:
-                        ai.enemyDistMax = 500;
-                        ai.offsetX = this.Random(-150, 150);
-                        ai.offsetY = this.Random(-150, 150);
                         break;
                 }
             }
@@ -2952,12 +2952,13 @@ class GameInstance
             value: this.hasInventoryAmmo(_body) && bTriggerFire,
             worldPosition: data.lookPos
         });
-        if (ai.enemy && ai.enemyDist < item.range)
+        var itemRange = (item.dropRange ? item.dropRange : item.range);
+        if (ai.enemy && ai.enemyDist < itemRange)
         {
             var bMoveBackFromEnemy = !ai.bPreferObjective && !data.bLadderCooldown && ai.bEnemyLOS && !ai.desiredVehicleId && !ai.desiredItemId;
             if (bMoveBackFromEnemy)
             {
-                var enemyDistThreshold = (item.dropRange ? item.dropRange : item.range) * 0.2;
+                var enemyDistThreshold = itemRange * 0.2;
                 if (ai.enemyDist < enemyDistThreshold)
                 {
                     var enemy = ai.enemy;
@@ -2966,7 +2967,7 @@ class GameInstance
                     {
                         ai.bMoveCheck = this.checkLineOfSight([_body.position[0], _body.position[1]], [_body.position[0] + (50 * desiredMoveX), _body.position[1] + 50], false);
                     }
-                    if (ai.bMoveCheck == true) //ai.bMoveCheck == null
+                    if (ai.bMoveCheck == true || ai.bMoveCheck == null)
                     {
                         moveDirX = 0;
                     }
