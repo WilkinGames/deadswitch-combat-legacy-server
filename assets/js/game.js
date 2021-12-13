@@ -2437,7 +2437,7 @@ class GameInstance
             if (enemy)
             {
                 ai.enemy = enemy;                
-                ai.bEnemyLOS = this.checkLineOfSight(_body.position, enemy.position, false, enemy);
+                ai.bEnemyLOS = this.checkLineOfSight(_body.position, enemy.position, true, enemy);
                 ai.enemyDist = this.Dist(enemy.position[0], enemy.position[1], _body.position[0], _body.position[1]);
                 ai.enemyDistMult = ai.enemyDist / ai.enemyDistMax;
                 if (enemy.data.bECM)
