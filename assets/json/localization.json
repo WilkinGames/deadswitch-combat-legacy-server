@@ -728,6 +728,25 @@
     "es": "Ronda finalizada",
     "it": "Round Terminato"
   },
+  "STR_DOOR_CLOSE": {
+    "en": "Close",
+    "ru": "Закрыть",
+    "zh-CN": "关闭",
+    "tr": "Kapalı",
+    "es": "Cerrar",
+    "it": "Chiudi"
+  },
+  "STR_DOOR_OPEN": {
+    "en": "Open",
+    "ru": "Открыть",
+    "zh-CN": "打开",
+    "tr": "Açık",
+    "es": "Abrir",
+    "it": "Apri"
+  },
+  "STR_ENTER": {
+    "en": "Enter"
+  },
   "STR_CONDITION_SCORE": {
     "en": "Score Limit Reached",
     "ru": "Достигнут лимит по очкам",

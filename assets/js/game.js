@@ -12855,7 +12855,7 @@ class GameInstance
         var width = 30; //_data.width ? _data.width : 25;
         var height = _data.height;
 
-        var useWidth = Math.max(30, width);
+        var useWidth = Math.max(50, width);
         var useHeight = Math.max(100, height);
         var material = _data.material ? _data.material : Material.WOOD;
         body.data = {
@@ -14046,6 +14046,7 @@ class GameInstance
                                 var damage = vel * 0.0005;
                                 if (damage > 50)
                                 {
+                                    _bodyA.applyImpulse([vel, 0], [0, 0]);
                                     this.requestEvent({
                                         eventId: GameServer.EVENT_PAWN_DAMAGE,
                                         damageType: DamageType.DAMAGE_WORLD,
