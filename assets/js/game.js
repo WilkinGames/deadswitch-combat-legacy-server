@@ -668,7 +668,7 @@ class GameInstance
                             type: Crate.BOMB,
                             bLimitInteractions: true,
                             itemData: {
-                                interactTime: this.game.settings.fps * 5,
+                                interactTime: this.game.settings.fps * 3,
                                 interactTeam: i == 0 ? 1 : 0
                             }
                         });
@@ -2467,7 +2467,7 @@ class GameInstance
                         ai.bWantsItem = true;
                     }
                 }
-                ai.bWantsVehicle = !_body.data.controllableId && this.Random(1, 5) == 1 && (this.getAvailableVehicles(_body).length > 0);
+                ai.bWantsVehicle = !_body.data.controllableId && this.Random(1, 5) == 1 && (this.getAvailableVehicles(_body).length > 0) && !data.bHasFlag;
                 ai.desiredVehicleId = null;
                 if (ai.bWantsVehicle)
                 {
@@ -2878,6 +2878,7 @@ class GameInstance
                 case GameMode.HEADQUARTERS:
                 case GameMode.DOMINATION:
                 case GameMode.CONQUEST:
+                    ai.bPreferObjective = this.Random(1, 2) > 1;
                     var flag = this.getAIBestDominationFlag(_body);
                     if (flag)
                     {
@@ -2886,13 +2887,15 @@ class GameInstance
                     }
                     break;
                 case GameMode.DESTRUCTION:
-                    var bombs = this.getBombCrates(data.team == 0 ? 1 : 0);
+                    ai.bPreferObjective = this.Random(1, 5) > 1;
+                    var bombs = this.getAIBestBombCrate(_body);
                     if (bombs[0])
                     {
                         ai.moveToPos = bombs[0].position;
                     }
                     break;
                 case GameMode.CAPTURE_THE_FLAG:
+                    ai.bPreferObjective = this.Random(1, 5) > 1;
                     var enemyFlag = this.getFlagCTF(data.team == 0 ? 1 : 0);
                     var homeFlag = this.getFlagCTF(data.team);
                     if (enemyFlag.data.carrierId == data.id)
@@ -2932,6 +2935,7 @@ class GameInstance
                     }
                     break;
                 default:
+                    ai.bPreferObjective = false;
                     if (ai.enemy)
                     {
                         ai.moveToPos = ai.enemy.position;
@@ -2950,7 +2954,7 @@ class GameInstance
         });
         if (ai.enemy && ai.enemyDist < item.range)
         {
-            var bMoveBackFromEnemy = !data.bLadderCooldown && ai.bEnemyLOS && !ai.desiredVehicleId && !ai.desiredItemId;
+            var bMoveBackFromEnemy = !ai.bPreferObjective && !data.bLadderCooldown && ai.bEnemyLOS && !ai.desiredVehicleId && !ai.desiredItemId;
             if (bMoveBackFromEnemy)
             {
                 var enemyDistThreshold = (item.dropRange ? item.dropRange : item.range) * 0.2;
@@ -2962,7 +2966,7 @@ class GameInstance
                     {
                         ai.bMoveCheck = this.checkLineOfSight([_body.position[0], _body.position[1]], [_body.position[0] + (50 * desiredMoveX), _body.position[1] + 50], false);
                     }
-                    if (ai.bMoveCheck == true || ai.bMoveCheck == null)
+                    if (ai.bMoveCheck == true) //ai.bMoveCheck == null
                     {
                         moveDirX = 0;
                     }
@@ -3739,6 +3743,11 @@ class GameInstance
                     _body.position[1] = carrier.position[1] - 40;
                 }
                 _body.gravityScale = 0;
+                if (carrier.data.controllableId)
+                {
+                    this.onFlagDropped(_body, data["carrierId"]);
+                    this.setFlagCarrierId(_body, null);
+                }
             }
             else
             {
@@ -3767,7 +3776,10 @@ class GameInstance
             for (var i = 0; i < chars.length; i++)
             {
                 var char = chars[i];
-                var bOverlap = _body.getAABB().overlaps(char.getAABB());
+                if (!char.data.controllableId)
+                {
+                    var bOverlap = _body.getAABB().overlaps(char.getAABB());
+                }
                 if (bOverlap)
                 {
                     if (char.data["team"] == data["team"])
@@ -6170,6 +6182,7 @@ class GameInstance
         ps.assists = 0;
         ps.deaths = 0;
         ps.melees = 0;  
+        ps.money = 100000;
         ps.killedBy = [];
         switch (this.game.gameModeId)
         {
@@ -6181,13 +6194,13 @@ class GameInstance
                 ps.captures = 0;
                 ps.returns = 0;
                 break;
-            case GameMode.CONQUEST:
+            case GameMode.DESTRUCTION:
                 ps.plants = 0;
                 ps.defuses = 0;
                 break;
             case GameMode.SURVIVAL_TERRORIST:
             case GameMode.SURVIVAL_ZOMBIE:
-                ps.money = 10000;
+                ps.money = 0;
                 break;
         }        
         if (ps.currentClass == null)
@@ -8139,9 +8152,22 @@ class GameInstance
                                 data.bombTimer = data.bombTimerMax;
                                 data.itemData.interactTeam = data.team == 0 ? 1 : 0;  
                                 this.pushObjectDataUpdate(data.id, ["bBombPlanted", "bombTimer", "itemData"]);
+                                var ps = this.getPlayerById(_playerId);
+                                if (ps)
+                                {
+                                    ps.defuses++;
+                                    this.onEvent({
+                                        eventId: GameServer.EVENT_PLAYER_UPDATE,
+                                        playerId: _playerId,
+                                        data: {
+                                            defuses: ps.defuses
+                                        }
+                                    });
+                                }
                                 this.onEvent({
                                     eventId: GameServer.EVENT_GAME_UPDATE,
                                     data: {
+                                        playerId: _playerId,
                                         defuseTeam: data.team
                                     }
                                 });
@@ -8152,6 +8178,7 @@ class GameInstance
                                 data.itemData.interactTeam = data.team;                                
                                 this.pushObjectDataUpdate(data.id, ["bBombPlanted", "itemData"]);
                                 var ps = this.getPlayerById(_playerId);
+                                console.log(ps, _playerId);
                                 if (ps)
                                 {
                                     ps.plants++;
@@ -8595,10 +8622,13 @@ class GameInstance
                     switch (equipment.id)
                     {
                         case "c4":
-                            var grenades = this.getGrenades(data.id, "c4");
-                            for (var i = 0; i < grenades.length; i++)
+                            if (!pawn.data.weapon.bThrowDelay)
                             {
-                                this.detonate(grenades[i]);
+                                var grenades = this.getGrenades(data.id, "c4");
+                                for (var i = 0; i < grenades.length; i++)
+                                {
+                                    this.detonate(grenades[i]);
+                                }
                             }
                             break;
                     }
@@ -8656,6 +8686,44 @@ class GameInstance
             return arr[this.Random(0, arr.length - 1)];
         }
         return null;
+    }
+
+    getAIBestBombCrate(_body)
+    {
+        var world = this.game.world;
+        var arr = [];
+        for (var i = 0; i < world.bodies.length; i++)
+        {
+            var cur = world.bodies[i];
+            if (cur.data)
+            {
+                switch (cur.data.type)
+                {
+                    case "crate":
+                        if (cur.data.crateType == Crate.BOMB || cur.data.crateType == Crate.BOMB_GENERIC)
+                        {
+                            if (cur.data.team == _body.data.team)
+                            {
+                                if (cur.data.bBombPlanted) arr.push(cur);
+                            }
+                            else
+                            {
+                                if (!cur.data.bBombPlanted) arr.push(cur);
+                            }                            
+                        }
+                        break;
+                }
+            }
+        }
+        arr.sort((a, b) =>
+        {
+            var distA = this.DistBodies(_body, a);
+            var distB = this.DistBodies(_body, b);
+            if (distA < distB) return -1;
+            if (distA > distB) return 1;
+            return 0;
+        });
+        return arr;
     }
 
     getBestInteractable(_body)
@@ -13517,8 +13585,7 @@ class GameInstance
             semiCooldownTimerMax: Math.round((this.Random(15, 20) - (_botSkill * 2)) * this.game.fpsMult),
             lookRange: 2500 + (_botSkill * 500),
             bFireCooldown: true,
-            bInteract: !data.bZombie,
-            bPreferObjective: this.Random(1, 5) > 1
+            bInteract: !data.bZombie            
         };
         if (this.game.bSurvival)
         {

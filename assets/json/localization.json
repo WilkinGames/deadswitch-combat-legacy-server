@@ -386,6 +386,22 @@
     "es": "Bombas desactivadas",
     "it": "Bombe Disinnescate"
   },
+  "STR_STAT_PLANTS": {
+    "en": "Plants",
+    "ru": "Закладок",
+    "zh-CN": "炸弹放置",
+    "tr": "Kurmalar",
+    "es": "Plantadas",
+    "it": "Posizionate"
+  },
+  "STR_STAT_DEFUSES": {
+    "en": "Defuses",
+    "ru": "Обезвреживаний",
+    "zh-CN": "炸弹拆除",
+    "tr": "Çözmeler",
+    "es": "Desactivadas",
+    "it": "Disinnescate"
+  },
   "STR_STAT_FLAG_CARRIER_KILLS": {
     "en": "Flag Carrier Kills",
     "ru": "Убийств носителей флагов",
@@ -449,6 +465,38 @@
     "tr": "Skor",
     "es": "Puntuación",
     "it": "Punteggio"
+  },
+  "STR_BOMB_DEFUSED": {
+    "en": "Bomb Defused",
+    "ru": "Бомба обезврежена",
+    "zh-CN": "炸弹解除",
+    "tr": "Bomba çözüldü",
+    "es": "Bomba Desactivada",
+    "it": "Bomba disinnescata"
+  },
+  "STR_PLANTED_BOMB": {
+    "en": "Planted Bomb",
+    "ru": "Установлена бомба",
+    "zh-CN": "成功安放炸弹",
+    "tr": "Bombayı Kurdu",
+    "es": "Bomba plantada",
+    "it": "Bomba Posizionata"
+  },
+  "STR_DEFUSED_BOMB": {
+    "en": "Defused Bomb",
+    "ru": "Обезврежена бомба",
+    "zh-CN": "成功拆除炸弹",
+    "tr": "Bombayı Çözdü",
+    "es": "Bomba desactivada",
+    "it": "Bomba Disinnescata"
+  },
+  "STR_BOMB_PLANTED": {
+    "en": "Bomb Planted",
+    "ru": "Установка бомбы",
+    "zh-CN": "炸弹安放",
+    "tr": "Bomba Kuruldu",
+    "es": "Bomba Plantada",
+    "it": "Bomba Posizionata"
   },
   "STR_EQUIPPED": {
     "en": "Equipped"
