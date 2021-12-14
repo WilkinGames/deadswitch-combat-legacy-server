@@ -980,6 +980,15 @@ function setLobbyState(_lobbyId, _state)
                 var gameData = lobby.gameData;
                 gameData.bMultiplayer = true;
                 gameData.lobbyId = lobby.id;
+                var modeData = getGameMode(gameData.gameModeId);
+                if (modeData.bSurvival)
+                {
+                    gameData.settings.bots = Math.min(4, gameData.settings.bots);
+                }
+                else
+                {
+                    gameData.settings.bots = settings.gameData.bots;
+                }
                 if (!settings.bUseLobby)
                 {
                     var set = gameData.settings;
@@ -995,7 +1004,6 @@ function setLobbyState(_lobbyId, _state)
                                 if (set[key])
                                 {
                                     set[key] = defaults[key];
-                                    console.log(key, defaults[key]);
                                 }
                                 else
                                 {
