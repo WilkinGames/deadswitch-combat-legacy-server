@@ -6177,7 +6177,14 @@ class GameInstance
         ps.bCanRespawn = true;
         ps.desiredSpawn = this.getSpawnPointForTeam(ps.team);
         ps.bAutoRespawn = ps.bBot || !this.game.gameModeData.bAllowRespawns;
-        ps.respawnTimer = this.matchInProgress() ? this.game.gameModeData.respawnTime : -1;
+        if (this.game.gameModeData.bAllowRespawns)
+        {
+            ps.respawnTimer = this.matchInProgress() ? this.game.gameModeData.respawnTime : -1;
+        }
+        else
+        {
+            ps.respawnTimer = -1;
+        }
         ps.kills = 0;
         ps.headshots = 0;
         ps.assists = 0;
