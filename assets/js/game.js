@@ -6210,8 +6210,9 @@ class GameInstance
             case GameMode.SURVIVAL_ZOMBIE:
                 ps.money = 0;
                 break;
-        }        
-        if (ps.currentClass == null)
+        }
+        var mode = this.getGameModeData(this.game.gameModeId);
+        if (ps.currentClass == null || mode.bSurvival)
         {
             if (ps.bBot)
             {
