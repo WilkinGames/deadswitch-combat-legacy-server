@@ -979,18 +979,18 @@ function setLobbyState(_lobbyId, _state)
                 incrementStat("games");
                 var gameData = lobby.gameData;
                 gameData.bMultiplayer = true;
-                gameData.lobbyId = lobby.id;
-                var modeData = getGameMode(gameData.gameModeId);
-                if (modeData.bSurvival)
-                {
-                    gameData.settings.bots = Math.min(4, settings.gameData.bots);
-                }
-                else
-                {
-                    gameData.settings.bots = settings.gameData.bots;
-                }
+                gameData.lobbyId = lobby.id;                
                 if (!settings.bUseLobby)
                 {
+                    var modeData = getGameMode(gameData.gameModeId);
+                    if (modeData.bSurvival)
+                    {
+                        gameData.settings.bots = Math.min(4, settings.gameData.bots);
+                    }
+                    else
+                    {
+                        gameData.settings.bots = settings.gameData.bots;
+                    }
                     var set = gameData.settings;
                     var defaults = shared.defaultGameSettings[gameData.gameModeId];
                     if (defaults)
