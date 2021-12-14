@@ -983,7 +983,7 @@ function setLobbyState(_lobbyId, _state)
                 var modeData = getGameMode(gameData.gameModeId);
                 if (modeData.bSurvival)
                 {
-                    gameData.settings.bots = Math.min(4, gameData.settings.bots);
+                    gameData.settings.bots = Math.min(4, settings.gameData.bots);
                 }
                 else
                 {
