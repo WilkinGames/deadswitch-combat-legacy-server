@@ -985,11 +985,11 @@ function setLobbyState(_lobbyId, _state)
                     var modeData = getGameMode(gameData.gameModeId);
                     if (modeData.bSurvival)
                     {
-                        gameData.settings.bots = Math.min(4, gameData.settings.bot);
+                        gameData.settings.bots = Math.min(4, settings.gameData.settings.bots);
                     }
                     else
                     {
-                        gameData.settings.bots = settings.gameData.bots;
+                        gameData.settings.bots = settings.gameData.settings.bots;
                     }
                     var set = gameData.settings;
                     var defaults = shared.defaultGameSettings[gameData.gameModeId];
