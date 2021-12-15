@@ -12048,10 +12048,10 @@ class GameInstance
                 case "m2":
                 case "bgm71":
                     var mounted = this.createMountedWeapon(curPawn.position, {
+                        mass: 1,
                         weaponType: id,
                         scale: curPawn.data.scale
                     });
-                    mounted.mass = 1;
                     break;
                 case "obstacle":
                     this.createObstacle({
@@ -12950,7 +12950,7 @@ class GameInstance
     createMountedWeapon(_position, _data)
     {
         var body = new p2.Body({
-            mass: 0,
+            mass: _data.mass != null ? _data.mass : 0,
             position: _position,
             angle: _data.rotation != null ? _data.rotation : 0,
             fixedRotation: true,
