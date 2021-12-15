@@ -13029,7 +13029,8 @@ class GameInstance
         body.addShape(new p2.Box({
             width: 70,
             height: 24,
-            collisionGroup: CollisionGroups.PAWN
+            collisionGroup: CollisionGroups.PAWN,
+            collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE
         }));
         this.addWorldBody(body);
         this.requestEvent({
