@@ -1270,10 +1270,13 @@ class GameInstance
                     for (var k = 0; k < vehicles.length; k++)
                     {
                         var veh = vehicles[k];
-                        if (!this.vehicleHasOccupant(veh))
+                        if (veh.data.type != "mountedWeapon")
                         {
-                            this.removeNextStep(veh);
-                            break;
+                            if (!this.vehicleHasOccupant(veh))
+                            {
+                                this.removeNextStep(veh);
+                                break;
+                            }
                         }
                     }
                 }
@@ -2467,7 +2470,7 @@ class GameInstance
                         ai.bWantsItem = true;
                     }
                 }
-                ai.bWantsVehicle = !_body.data.controllableId && this.Random(1, 5) == 1 && (this.getAvailableVehicles(_body).length > 0) && !data.bHasFlag;
+                ai.bWantsVehicle = !_body.data.controllableId && this.Random(1, 5) == 1 && (this.getAvailableVehicles(_body).length > 0) && !data.bHasFlag && !data.bZombie;
                 ai.desiredVehicleId = null;
                 if (ai.bWantsVehicle)
                 {
