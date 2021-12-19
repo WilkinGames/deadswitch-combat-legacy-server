@@ -531,6 +531,9 @@
   "STR_SETTING_CAMERA_SPEED": {
     "en": "Camera Speed"
   },
+  "STR_SETTING_SIMPLE_RAGDOLLS": {
+    "en": "Simple Ragdolls"
+  },
   "STR_SETTING_CLIENT_PREDICTION": {
     "en": "Client Prediction"
   },
@@ -1170,6 +1173,28 @@
   },
   "STR_GROWLER": {
     "en": "M1161 Growler"
+  },
+  "STR_X_NEW_ATTACHMENT": {
+    "en": "%1 New Attachment"
+  },
+  "STR_X_NEW_ATTACHMENTS": {
+    "en": "%1 New Attachments"
+  },
+  "STR_SET_PREFERRED": {
+    "en": "Set As Preferred",
+    "ru": "Установить по умолчанию",
+    "zh-CN": "设为优先",
+    "tr": "Tercih Edilmiş Olarak Ayarla",
+    "es": "Establecer como preferido",
+    "it": "Imposta come Preferito"
+  },
+  "STR_PREFERRED": {
+    "en": "Preferred",
+    "ru": "По умолчанию",
+    "zh-CN": "优先选择",
+    "tr": "Tercih Edilmiş",
+    "es": "Preferido",
+    "it": "Preferito"
   },
   "STR_PRIMARY": {
     "en": "Primary"

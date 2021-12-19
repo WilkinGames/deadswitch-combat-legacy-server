@@ -135,7 +135,7 @@
     {
       "type": "car",
       "carType": "growler",
-      "scale": 1,
+      "scale": -1,
       "position": [
         7150,
         2400

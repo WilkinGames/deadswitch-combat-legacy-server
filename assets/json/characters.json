@@ -295,8 +295,7 @@
     "bHideBeard": true,
     "cost": 15,
     "bPremium": true,
-    "unlockLevel": 50,
-    "factions": []
+    "unlockLevel": 50
   },
   {
     "id": "facewear0028",
@@ -306,8 +305,7 @@
     "bHideBeard": true,
     "cost": 15,
     "bPremium": true,
-    "unlockLevel": 50,
-    "factions": []
+    "unlockLevel": 50
   },
   {
     "id": "facewear0020",
@@ -626,8 +624,7 @@
     "name": "STR_HEAD_SANTA_HAT",
     "type": "head",
     "cost": 20,
-    "unlockLevel": 5,
-    "factions": []
+    "unlockLevel": 5
   },
   {
     "id": "head0041",
@@ -635,8 +632,7 @@
     "type": "head",
     "cost": 25,
     "unlockLevel": 5,
-    "bPremium": true,
-    "factions": []
+    "bPremium": true
   },
   {
     "id": "head0085",
@@ -644,8 +640,7 @@
     "type": "head",
     "cost": 50,
     "unlockLevel": 5,
-    "bPremium": true,
-    "factions": []
+    "bPremium": true
   },
   {
     "id": "head0039",
@@ -1139,8 +1134,7 @@
     "type": "head",
     "cost": 15,
     "unlockLevel": 10,
-    "bPremium": true,
-    "factions": []
+    "bPremium": true
   },
   {
     "id": "head0086",
@@ -1148,8 +1142,7 @@
     "type": "head",
     "cost": 15,
     "unlockLevel": 10,
-    "bPremium": true,
-    "factions": []
+    "bPremium": true
   },
   {
     "id": "head0023",

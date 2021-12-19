@@ -130,11 +130,13 @@ const Settings = {
 };
 const CollisionGroups = {
     PAWN: Math.pow(2, 0),
-    VEHICLE: Math.pow(2, 1),
-    OBJECT: Math.pow(2, 2),
-    GROUND: Math.pow(2, 3),
-    PROJECTILE: Math.pow(2, 4),
-    PLATFORM: Math.pow(2, 5)
+    PAWN_1: Math.pow(2, 1),
+    VEHICLE_0: Math.pow(2, 2),
+    VEHICLE_1: Math.pow(2, 2),
+    OBJECT: Math.pow(2, 3),
+    GROUND: Math.pow(2, 4),
+    PROJECTILE: Math.pow(2, 5),
+    PLATFORM: Math.pow(2, 6)
 };
 const Material = {
     DEFAULT: "default",
@@ -1799,7 +1801,7 @@ class GameInstance
     {
         var map = this.getCurrentMapData();     
 
-        var groundMask = CollisionGroups.PAWN | CollisionGroups.VEHICLE | CollisionGroups.OBJECT | CollisionGroups.PROJECTILE; 
+        var groundMask = CollisionGroups.PAWN | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1 | CollisionGroups.OBJECT | CollisionGroups.PROJECTILE; 
         var leftBody = new p2.Body({
             angle: (3 * Math.PI) / 2
         });
@@ -1841,7 +1843,7 @@ class GameInstance
                     });
                     mapBody.allowSleep = true;
                     var cg = CollisionGroups.GROUND;
-                    var cm = CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.VEHICLE | CollisionGroups.OBJECT;
+                    var cm = CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1 | CollisionGroups.OBJECT;
                     var pType = "ground";
                     if (object.bPlatform)
                     {
@@ -2230,7 +2232,7 @@ class GameInstance
         {
             if (!weapon.weaponData.overheatMax)
             {
-                weapon.weaponData.overheatMax = 180;
+                //weapon.weaponData.overheatMax = 180;
             }
             if (weapon.weaponData.type == Weapon.TYPE_LMG)
             {
@@ -2248,6 +2250,24 @@ class GameInstance
             weapon.aimRotation = 0;
             weapon.overheat = 0;
         }
+    }
+
+    getVehicleCollisionGroup(_body)
+    {
+        if (_body)
+        {
+            return _body.data.team == 0 ? CollisionGroups.VEHICLE_0 : CollisionGroups.VEHICLE_1;
+        }
+        return null;
+    }
+
+    getVehicleCollisionMask(_body)
+    {
+        if (_body)
+        {
+            return _body.data.team == 0 ? CollisionGroups.VEHICLE_1 : CollisionGroups.VEHICLE_0;
+        }
+        return null;
     }
 
     exitVehicle(_char, _bEject)
@@ -2294,7 +2314,7 @@ class GameInstance
                 case "car":
                     if (!this.vehicleHasOccupant(vehicle))
                     {
-                        vehicle.shapes[0].collisionGroup = CollisionGroups.VEHICLE;
+                        vehicle.shapes[0].collisionGroup = this.getVehicleCollisionGroup(vehicle); //CollisionGroups.VEHICLE_0;
                         vehicle.shapes[0].collisionMask = CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT;
                     }
                     break;
@@ -3183,11 +3203,14 @@ class GameInstance
                         }
                         break;
                 }
-                if (controllable.data.type == "car" && this.canExitVehicle(_body))
+                if (this.canExitVehicle(_body))
                 {
-                    if (ai.enemyDist < 200 && Math.abs(controllable.velocity[0] < 50))
+                    if (controllable.data.type == "car" || controllable.data.type == "mountedWeapon")
                     {
-                        this.clearPlayerControllable(data.id);
+                        if (ai.enemyDist < 200 && Math.abs(controllable.velocity[0] < 75))
+                        {
+                            this.clearPlayerControllable(data.id);
+                        }
                     }
                 }
             }
@@ -4660,7 +4683,11 @@ class GameInstance
         this.handleVehicle(_body);
         this.constrainVelocity(_body, 750);
         var data = _body.data;
-        data.scale = _body.velocity[0] > 0 ? 1 : -1;
+        var vx = Math.abs(_body.velocity[0]);
+        if (vx > 10)
+        {
+            data.scale = _body.velocity[0] > 0 ? 1 : -1;
+        }
         data.bOnGround = this.isOnGround(_body);
         if (!data.bOnGround && this.vehicleHasOccupant(_body))
         {
@@ -11613,7 +11640,7 @@ class GameInstance
             width: 50,
             height: 10,
             collisionGroup: CollisionGroups.PROJECTILE,
-            collisionMask: CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.VEHICLE | CollisionGroups.OBJECT
+            collisionMask: CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.OBJECT | this.getVehicleCollisionMask(body)
         });
         shape.sensor = true;
         body.addShape(shape);
@@ -11785,7 +11812,7 @@ class GameInstance
         }
         shape.sensor = true;
         shape.collisionGroup = CollisionGroups.PROJECTILE;
-        shape.collisionMask = bCollidePawns ? (CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.VEHICLE | CollisionGroups.OBJECT) : (CollisionGroups.GROUND | CollisionGroups.OBJECT);
+        shape.collisionMask = bCollidePawns ? (CollisionGroups.GROUND | CollisionGroups.PAWN| CollisionGroups.OBJECT | this.getVehicleCollisionMask(body)) : (CollisionGroups.GROUND | CollisionGroups.OBJECT);
         body.addShape(shape);
         this.addWorldBody(body);
 
@@ -12392,7 +12419,7 @@ class GameInstance
                     }
                 ];
                 var mg = this.getWeaponData("m240");
-                mg.overheatMax = 180;
+                //mg.overheatMax = 180;
                 data.weapons = [
                     [
                         {
@@ -12429,7 +12456,7 @@ class GameInstance
                     }
                 ];
                 var mg = this.getWeaponData("m240");
-                mg.overheatMax = 180;
+                //mg.overheatMax = 180;
                 data.weapons = [
                     [
                         {
@@ -12458,8 +12485,8 @@ class GameInstance
         var shape = new p2.Box({
             width: shared.width,
             height: shared.height,
-            collisionGroup: CollisionGroups.VEHICLE,
-            collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE | CollisionGroups.VEHICLE | CollisionGroups.OBJECT
+            collisionGroup: this.getVehicleCollisionGroup(body), //CollisionGroups.VEHICLE_0,
+            collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | this.getVehicleCollisionMask(body)
         });
         body.addShape(shape);
         this.addWorldBody(body);
@@ -12517,7 +12544,7 @@ class GameInstance
         {
             case Car.QUAD:
                 data.speed = 150;
-                data.health = 750;
+                data.health = 500;
                 data.seats = [
                     {
                         position: [0, -20],
@@ -12530,7 +12557,7 @@ class GameInstance
                 break;
             case Car.GROWLER:
                 data.speed = 125;
-                data.health = 1500;
+                data.health = 1250;
                 data.seats = [
                     {
                         position: [0, -10],
@@ -12568,7 +12595,7 @@ class GameInstance
         var shape = new p2.Box({
             width: shared.width,
             height: shared.height,
-            collisionGroup: CollisionGroups.VEHICLE,
+            collisionGroup: this.getVehicleCollisionGroup(body),
             collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE
         });
         body.addShape(shape);
@@ -12844,8 +12871,8 @@ class GameInstance
         var shape = new p2.Box({
             width: shared.width,
             height: shared.height,
-            collisionGroup: CollisionGroups.VEHICLE,
-            collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE
+            collisionGroup: this.getVehicleCollisionGroup(body),
+            collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | this.getVehicleCollisionMask(body)
         });
         body.addShape(shape);
         this.addWorldBody(body);
@@ -12957,7 +12984,7 @@ class GameInstance
             if (_bClosed)
             {
                 shape.collisionGroup = CollisionGroups.GROUND;
-                shape.collisionMask = CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.VEHICLE | CollisionGroups.OBJECT;
+                shape.collisionMask = CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1
             }
             else
             {
@@ -13116,7 +13143,7 @@ class GameInstance
             width: _data.width,
             height: _data.height,
             collisionGroup: CollisionGroups.OBJECT,
-            collisionMask: CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE
+            collisionMask: CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1
         }));
         this.addWorldBody(body);
         this.requestEvent({
@@ -13253,7 +13280,7 @@ class GameInstance
                 width: shared.width,
                 height: shared.height,
                 collisionGroup: CollisionGroups.OBJECT,
-                collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE
+                collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1
             }));
         }
         else
@@ -13433,11 +13460,11 @@ class GameInstance
         shape.collisionGroup = CollisionGroups.PROJECTILE;
         if (bCollidePawns)
         {
-            shape.collisionMask = CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.OBJECT | CollisionGroups.VEHICLE;
+            shape.collisionMask = CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.OBJECT | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1;
         }
         else if (bRemoteDetonation)
         {
-            shape.collisionMask = CollisionGroups.GROUND | CollisionGroups.OBJECT | CollisionGroups.VEHICLE;
+            shape.collisionMask = CollisionGroups.GROUND | CollisionGroups.OBJECT | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1;
         }
         else
         {
