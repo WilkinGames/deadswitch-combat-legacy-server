@@ -4691,8 +4691,9 @@ class GameInstance
         data.bOnGround = this.isOnGround(_body);
         if (!data.bOnGround && this.vehicleHasOccupant(_body))
         {
-            _body.angularVelocity += -(_body.angle) * 0.025;
+            _body.angularVelocity += -(_body.angle) * (0.025 * _body.angle);
         }
+        this.setDataValue(_body, "bBraking", false);
     }
 
     handleMountedWeapon(_body)
@@ -7667,6 +7668,7 @@ class GameInstance
                             if (value && _controllable.position[0] > 0)
                             {
                                 _controllable.applyImpulse([-carSpeed, 0]);
+                                this.setDataValue(_controllable, "bBraking", _controllable.velocity[0] > 0);
                             }
                         }
                         break;
@@ -7677,6 +7679,7 @@ class GameInstance
                             if (value && _controllable.position[0] < map.width)
                             {
                                 _controllable.applyImpulse([carSpeed, 0]);
+                                this.setDataValue(_controllable, "bBraking", _controllable.velocity[0] < 0);
                             }
                         }
                         break;
@@ -12579,7 +12582,7 @@ class GameInstance
                     ],
                     [
                         {
-                            muzzlePos: [-20, -70],
+                            muzzlePos: [-20, -65],
                             weaponData: this.getWeaponData("m60e4"),
                             aimRotation: 0
                         }
@@ -13664,7 +13667,7 @@ class GameInstance
             semiCooldownTimerMax: Math.round((this.Random(15, 20) - (_botSkill * 2)) * this.game.fpsMult),
             lookRange: 2500 + (_botSkill * 500),
             bFireCooldown: true,
-            bInteract: !data.bZombie            
+            bInteract: true            
         };
         if (this.game.bSurvival)
         {
@@ -13672,6 +13675,7 @@ class GameInstance
         }
         if (data.bZombie)
         {
+            ai.bInteract = false;
             ai.semiCooldownTimerMax = 1;
             ai.fireBurstTimerMax = Math.ceil(ai.fireBurstTimerMax * 5);
         }
