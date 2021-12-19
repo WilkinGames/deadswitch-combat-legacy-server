@@ -125,6 +125,23 @@
       "position": [ 4000, 2000 ]
     },
     {
+      "type": "car",
+      "carType": "growler",
+      "position": [
+        850,
+        2400
+      ]
+    },
+    {
+      "type": "car",
+      "carType": "growler",
+      "scale": 1,
+      "position": [
+        7150,
+        2400
+      ]
+    },
+    {
       "type": "helicopter",
       "heliType": "mh6",
       "position": [

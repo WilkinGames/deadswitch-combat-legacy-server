@@ -202,7 +202,8 @@ const Tank = {
     T90: "t90"
 };
 const Car = {
-    QUAD: "quad"
+    QUAD: "quad",
+    GROWLER: "growler"
 };
 const MountedWeapon = {
     M2_BROWNING: "m2",
@@ -3096,7 +3097,7 @@ class GameInstance
                                 switch (controllable.data.type)
                                 {
                                     case "car":
-                                        var threshold = 50;
+                                        var threshold = 0;
                                         break;
                                     case "tank":
                                         threshold = 1000;
@@ -3701,6 +3702,7 @@ class GameInstance
         if (_body)
         {
             var data = _body.data;
+            this.setFlagCarrierId(_body, null);
             var map = this.getCurrentMapData();
             var pos = map.flags[this.game.gameModeId][data.team];
             if (pos)
@@ -7477,17 +7479,19 @@ class GameInstance
         {
             var weaponList = weapons[_index];
             if (weaponList && weaponList.length > 1)
-            {
+            {                
                 var seat = data.seats[_index];
                 if (seat.weaponIndex == null)
                 {
                     seat.weaponIndex = 0;
                 }
+                var prevWeapon = weaponList[seat.weaponIndex];
                 seat.weaponIndex++;
                 if (seat.weaponIndex > weaponList.length - 1)
                 {
                     seat.weaponIndex = 0;
                 }
+                var wpn = 
                 this.pushObjectDataUpdate(data.id, ["seats"]);
                 this.requestEvent({
                     eventId: GameServer.EVENT_PAWN_ACTION,
@@ -7610,7 +7614,7 @@ class GameInstance
                 break;
 
             case "car":
-                var carSpeed = 100;
+                var carSpeed = _controllable.data.speed ? _controllable.data.speed : 100;
                 switch (keyId)
                 {
                     case Control.SWITCH:
@@ -10968,7 +10972,7 @@ class GameInstance
         var types = [Helicopter.MH6, Car.QUAD];
         if (wave >= 5)
         {
-            types.push(Helicopter.BLACKHAWK);
+            types.push(Helicopter.BLACKHAWK, Car.GROWLER);
         }
         if (wave >= 10)
         {
@@ -12512,6 +12516,7 @@ class GameInstance
         switch (_data.type)
         {
             case Car.QUAD:
+                data.speed = 150;
                 data.health = 750;
                 data.seats = [
                     {
@@ -12521,6 +12526,40 @@ class GameInstance
                         position: [-40, -20],
                         bInput: true
                     }
+                ];
+                break;
+            case Car.GROWLER:
+                data.speed = 125;
+                data.health = 1500;
+                data.seats = [
+                    {
+                        position: [0, -10],
+                        bBack: true
+                    },
+                    {
+                        position: [-35, -40],
+                        bBack: true,
+                        anim: "idle"
+                    },
+                    {
+                        position: [-80, -15],
+                        bInput: true
+                    }
+                ];
+                data.weapons = [
+                    [
+                        null
+                    ],
+                    [
+                        {
+                            muzzlePos: [-20, -70],
+                            weaponData: this.getWeaponData("m60e4"),
+                            aimRotation: 0
+                        }
+                    ],
+                    [
+                        null
+                    ]
                 ];
                 break;
         }

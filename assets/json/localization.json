@@ -728,6 +728,14 @@
     "es": "Ronda finalizada",
     "it": "Round Terminato"
   },
+  "STR_REVIVE_X": {
+    "en": "Revive %1",
+    "ru": "Возродить %1",
+    "zh-CN": "复苏 %1",
+    "tr": "Canlandır %1",
+    "es": "Revivir a %1",
+    "it": "Rianimazione %1"
+  },
   "STR_DOOR_CLOSE": {
     "en": "Close",
     "ru": "Закрыть",
@@ -888,6 +896,14 @@
   },
   "STR_X_ENEMIES": {
     "en": "%1 Enemies"
+  },
+  "STR_ADD_X_SHARDS": {
+    "en": "+%1 Shards",
+    "ru": "+%1 Осколков",
+    "zh-CN": "碎片数 +%1",
+    "tr": "+%1 Shard",
+    "es": "+%1 fragmentos",
+    "it": "+%1 Frammenti"
   },
   "STR_GET_SHARDS": {
     "en": "Get Shards",
@@ -1151,6 +1167,9 @@
   },
   "STR_QUAD": {
     "en": "Quad Bike"
+  },
+  "STR_GROWLER": {
+    "en": "M1161 Growler"
   },
   "STR_PRIMARY": {
     "en": "Primary"
