@@ -130,13 +130,14 @@ const Settings = {
 };
 const CollisionGroups = {
     PAWN: Math.pow(2, 0),
-    PAWN_1: Math.pow(2, 1),
-    VEHICLE_0: Math.pow(2, 2),
-    VEHICLE_1: Math.pow(2, 2),
-    OBJECT: Math.pow(2, 3),
-    GROUND: Math.pow(2, 4),
-    PROJECTILE: Math.pow(2, 5),
-    PLATFORM: Math.pow(2, 6)
+    PAWN_0: Math.pow(2, 2),
+    PAWN_1: Math.pow(2, 3),
+    VEHICLE_0: Math.pow(2, 4),
+    VEHICLE_1: Math.pow(2, 4),
+    OBJECT: Math.pow(2, 5),
+    GROUND: Math.pow(2, 6),
+    PROJECTILE: Math.pow(2, 7),
+    PLATFORM: Math.pow(2, 8)
 };
 const Material = {
     DEFAULT: "default",
@@ -1801,7 +1802,7 @@ class GameInstance
     {
         var map = this.getCurrentMapData();     
 
-        var groundMask = CollisionGroups.PAWN | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1 | CollisionGroups.OBJECT | CollisionGroups.PROJECTILE; 
+        var groundMask = this.getPawnCollisionMask() | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1 | CollisionGroups.OBJECT | CollisionGroups.PROJECTILE; 
         var leftBody = new p2.Body({
             angle: (3 * Math.PI) / 2
         });
@@ -1843,7 +1844,7 @@ class GameInstance
                     });
                     mapBody.allowSleep = true;
                     var cg = CollisionGroups.GROUND;
-                    var cm = CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1 | CollisionGroups.OBJECT;
+                    var cm = this.getPawnCollisionMask() | CollisionGroups.PROJECTILE | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1 | CollisionGroups.OBJECT;
                     var pType = "ground";
                     if (object.bPlatform)
                     {
@@ -2120,6 +2121,11 @@ class GameInstance
         return !_body.data.vehicleCooldown;
     }
 
+    getVehiclePawnMask(_body)
+    {
+        return _body.data.team == 0 ? CollisionGroups.PAWN_1 : CollisionGroups.PAWN_0;
+    }
+
     enterVehicle(_char, _vehicle, _seatIndex)
     {             
         if (!_vehicle.data.health)
@@ -2134,7 +2140,7 @@ class GameInstance
             {
                 case "car":
                     _vehicle.shapes[0].collisionGroup = CollisionGroups.OBJECT;
-                    _vehicle.shapes[0].collisionMask = CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE | CollisionGroups.PAWN | CollisionGroups.OBJECT;
+                    _vehicle.shapes[0].collisionMask = CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE | this.getVehiclePawnMask(_vehicle) | CollisionGroups.OBJECT;
                     break;
                 case "helicopter":
                     _vehicle.gravityScale = 0;
@@ -4521,6 +4527,7 @@ class GameInstance
                                 {
                                     weapon.ammo = weapon.weaponData.ammoMax;
                                 }
+                                console.log(weapon);
                                 weapon.bCooldown = false;
                                 this.onEvent({
                                     eventId: GameServer.EVENT_PAWN_ACTION,
@@ -4680,9 +4687,9 @@ class GameInstance
 
     handleCar(_body)
     {
-        this.handleVehicle(_body);
-        this.constrainVelocity(_body, 750);
+        this.handleVehicle(_body);        
         var data = _body.data;
+        this.constrainVelocity(_body, data.maxSpeed ? data.maxSpeed : 750);
         var vx = Math.abs(_body.velocity[0]);
         if (vx > 10)
         {
@@ -4969,7 +4976,7 @@ class GameInstance
                 var shape = new p2.Box({
                     width: 40,
                     height: desiredHeight,
-                    collisionGroup: CollisionGroups.PAWN,
+                    collisionGroup: data.team == 0 ? CollisionGroups.PAWN_0 : CollisionGroups.PAWN_1,
                     collisionMask: data.bClimbing ? CollisionGroups.PROJECTILE : (CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT)
                 });
                 _body.addShape(shape);
@@ -6204,8 +6211,8 @@ class GameInstance
         }
         if (ps.team == null || ps.team < 0)
         {
-            ps.team = 0;
-            console.warn("Invalid team", _data);
+            console.warn("Invalid team", ps.team);
+            ps.team = 0;            
         }
         ps.bCanRespawn = true;
         ps.desiredSpawn = this.getSpawnPointForTeam(ps.team);
@@ -7519,7 +7526,6 @@ class GameInstance
                 {
                     seat.weaponIndex = 0;
                 }
-                var wpn = 
                 this.pushObjectDataUpdate(data.id, ["seats"]);
                 this.requestEvent({
                     eventId: GameServer.EVENT_PAWN_ACTION,
@@ -11643,7 +11649,7 @@ class GameInstance
             width: 50,
             height: 10,
             collisionGroup: CollisionGroups.PROJECTILE,
-            collisionMask: CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.OBJECT | this.getVehicleCollisionMask(body)
+            collisionMask: CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.PAWN_0 | CollisionGroups.PAWN_1 | CollisionGroups.OBJECT | this.getVehicleCollisionMask(body)
         });
         shape.sensor = true;
         body.addShape(shape);
@@ -11765,6 +11771,11 @@ class GameInstance
         return body;
     }
 
+    getPawnCollisionMask()
+    {
+        return CollisionGroups.PAWN | CollisionGroups.PAWN_0 | CollisionGroups.PAWN_1;
+    }
+
     createProjectile(_position, _rotation, _team, _data)
     {
         var body = new p2.Body({
@@ -11815,7 +11826,7 @@ class GameInstance
         }
         shape.sensor = true;
         shape.collisionGroup = CollisionGroups.PROJECTILE;
-        shape.collisionMask = bCollidePawns ? (CollisionGroups.GROUND | CollisionGroups.PAWN| CollisionGroups.OBJECT | this.getVehicleCollisionMask(body)) : (CollisionGroups.GROUND | CollisionGroups.OBJECT);
+        shape.collisionMask = bCollidePawns ? (CollisionGroups.GROUND | this.getPawnCollisionMask() | CollisionGroups.OBJECT | this.getVehicleCollisionMask(body)) : (CollisionGroups.GROUND | CollisionGroups.OBJECT);
         body.addShape(shape);
         this.addWorldBody(body);
 
@@ -12423,6 +12434,8 @@ class GameInstance
                 ];
                 var mg = this.getWeaponData("m240");
                 //mg.overheatMax = 180;
+                var coaxial = this.getWeaponData("m249");
+                coaxial.accuracy = 15;
                 data.weapons = [
                     [
                         {
@@ -12433,7 +12446,7 @@ class GameInstance
                         },
                         {
                             muzzlePos: [100, -30],
-                            weaponData: this.getWeaponData("m249")
+                            weaponData: coaxial
                         }
                     ],
                     [
@@ -12460,6 +12473,8 @@ class GameInstance
                 ];
                 var mg = this.getWeaponData("m240");
                 //mg.overheatMax = 180;
+                var coaxial = this.getWeaponData("m249");
+                coaxial.accuracy = 15;
                 data.weapons = [
                     [
                         {
@@ -12470,7 +12485,7 @@ class GameInstance
                         },
                         {
                             muzzlePos: [100, -30],
-                            weaponData: this.getWeaponData("m249")
+                            weaponData: coaxial
                         }
                     ],
                     [
@@ -12559,7 +12574,8 @@ class GameInstance
                 ];
                 break;
             case Car.GROWLER:
-                data.speed = 125;
+                data.speed = 200;
+                data.maxSpeed = 600;
                 data.health = 1250;
                 data.seats = [
                     {
@@ -12987,7 +13003,7 @@ class GameInstance
             if (_bClosed)
             {
                 shape.collisionGroup = CollisionGroups.GROUND;
-                shape.collisionMask = CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1
+                shape.collisionMask = this.getPawnCollisionMask() | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1
             }
             else
             {
@@ -13146,7 +13162,7 @@ class GameInstance
             width: _data.width,
             height: _data.height,
             collisionGroup: CollisionGroups.OBJECT,
-            collisionMask: CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1
+            collisionMask: CollisionGroups.GROUND | this.getPawnCollisionMask() | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1
         }));
         this.addWorldBody(body);
         this.requestEvent({
@@ -13283,7 +13299,7 @@ class GameInstance
                 width: shared.width,
                 height: shared.height,
                 collisionGroup: CollisionGroups.OBJECT,
-                collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PAWN | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1
+                collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM | this.getPawnCollisionMask() | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1
             }));
         }
         else
@@ -13463,7 +13479,7 @@ class GameInstance
         shape.collisionGroup = CollisionGroups.PROJECTILE;
         if (bCollidePawns)
         {
-            shape.collisionMask = CollisionGroups.GROUND | CollisionGroups.PAWN | CollisionGroups.OBJECT | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1;
+            shape.collisionMask = CollisionGroups.GROUND | this.getPawnCollisionMask() | CollisionGroups.OBJECT | CollisionGroups.VEHICLE_0 | CollisionGroups.VEHICLE_1;
         }
         else if (bRemoteDetonation)
         {
@@ -13524,7 +13540,7 @@ class GameInstance
         var shape = new p2.Box({
             width: shared.width,
             height: shared.height,
-            collisionGroup: CollisionGroups.PAWN,
+            collisionGroup: _data.team == 0 ? CollisionGroups.PAWN_0 : CollisionGroups.PAWN_1,
             collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE | CollisionGroups.OBJECT
         });
         body.addShape(shape);
