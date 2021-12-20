@@ -12073,6 +12073,7 @@ class GameInstance
                     });
                     break;
             }
+            return pawn;
         }
     }
 
@@ -12146,8 +12147,11 @@ class GameInstance
                     if (veh)
                     {
                         var vehicle = this.createVehicle(curPawn.position, id);
-                        vehicle.data.speed = 300;
-                        vehicle.data.maxSpeed = 2000;
+                        if (vehicle)
+                        {
+                            vehicle.data.speed = 300;
+                            vehicle.data.maxSpeed = 2000;
+                        }
                     }
                     break;
             }
