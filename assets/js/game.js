@@ -12087,6 +12087,9 @@ class GameInstance
                 case "reviver":
                     //nigga
                     break;
+                case "wave":
+                    this.game.gameModeData.wave = 5;
+                    break;
                 case "store":
                     var storeCrate = this.createCrate(curPawn.position, {
                         team: 0,
