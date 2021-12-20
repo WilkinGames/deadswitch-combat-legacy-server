@@ -12145,7 +12145,9 @@ class GameInstance
                     var veh = this.getVehicleData(id);
                     if (veh)
                     {
-                        this.createVehicle(curPawn.position, id);
+                        var vehicle = this.createVehicle(curPawn.position, id);
+                        vehicle.data.speed = 300;
+                        vehicle.data.maxSpeed = 2000;
                     }
                     break;
             }
