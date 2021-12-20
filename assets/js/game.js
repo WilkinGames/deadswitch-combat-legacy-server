@@ -12089,7 +12089,7 @@ class GameInstance
                     //nigga
                     break;
                 case "wave":
-                    this.game.gameModeData.wave = 5;
+                    this.game.gameModeData.wave = 10;
                     break;
                 case "store":
                     var storeCrate = this.createCrate(curPawn.position, {
