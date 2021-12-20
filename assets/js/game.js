@@ -11163,10 +11163,6 @@ class GameInstance
         {
             wpns = wpns.concat(this.getAllWeaponsByType(weaponTypes[i]));
         }       
-        if (wave >= 18)
-        {
-            wpns.push("m242", "m256a1", "gatling", "minigun");
-        }
         var primary = this.getWeaponData(wpns[this.Random(0, wpns.length - 1)].id);
         this.setRandomWeaponMods(primary);
         var inventory = [
@@ -12093,7 +12089,7 @@ class GameInstance
                     //nigga
                     break;
                 case "wave":
-                    this.game.gameModeData.wave = 14;
+                    this.game.gameModeData.wave = 20;
                     break;
                 case "store":
                     var storeCrate = this.createCrate(curPawn.position, {
