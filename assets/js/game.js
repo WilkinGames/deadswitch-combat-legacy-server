@@ -121,7 +121,7 @@ const GameServer = {
     INV_UNDERBARREL_EQUIP: 23
 };
 const Settings = {
-    INTERMISSION_TIMER: 10,
+    INTERMISSION_TIMER: 15,
     MAX_CRATES: 10,
     MAX_ENEMIES: 20,
     MAX_DROPPED_WEAPONS: 8,
