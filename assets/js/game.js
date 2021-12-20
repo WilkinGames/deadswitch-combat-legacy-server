@@ -11144,7 +11144,7 @@ class GameInstance
 
         var wave = this.game.gameModeData.wave;
 
-        var weaponTypes = [Weapon.TYPE_PISTOL, Weapon.TYPE_MACHINE_PISTOL];
+        var weaponTypes = [Weapon.TYPE_PISTOL, Weapon.TYPE_MACHINE_PISTOL];       
         if (wave >= 10)
         {
             weaponTypes.push(Weapon.TYPE_DMR, Weapon.TYPE_SNIPER);
@@ -11162,7 +11162,11 @@ class GameInstance
         for (var i = 0; i < weaponTypes.length; i++)
         {
             wpns = wpns.concat(this.getAllWeaponsByType(weaponTypes[i]));
-        }        
+        }       
+        if (wave >= 18)
+        {
+            wpns.push("m242", "m256a1", "gatling", "minigun");
+        }
         var primary = this.getWeaponData(wpns[this.Random(0, wpns.length - 1)].id);
         this.setRandomWeaponMods(primary);
         var inventory = [
