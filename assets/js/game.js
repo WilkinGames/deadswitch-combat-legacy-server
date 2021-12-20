@@ -14139,13 +14139,13 @@ class GameInstance
                     {
                         case "car":
                         case "tank":
-                            if (dataA.team != dataB.team)
+                            if (dataA.team != dataB.team && !dataA.controllableId)
                             {
                                 var vel = _bodyB.velocity[0] * _bodyB.velocity[0] + _bodyB.velocity[1] * _bodyB.velocity[1];
                                 var damage = vel * 0.0005;
                                 if (damage > 50)
                                 {
-                                    _bodyA.applyImpulse([vel, 0], [0, 0]);
+                                    //_bodyA.applyImpulse([vel, 0], [0, 0]);
                                     this.requestEvent({
                                         eventId: GameServer.EVENT_PAWN_DAMAGE,
                                         damageType: DamageType.DAMAGE_WORLD,
