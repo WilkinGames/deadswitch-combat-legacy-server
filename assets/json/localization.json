@@ -1177,6 +1177,9 @@
   "STR_MRAP": {
     "en": "MRAP"
   },
+  "STR_USE": {
+    "en": "Use"
+  },
   "STR_X_NEW_ATTACHMENT": {
     "en": "%1 New Attachment"
   },

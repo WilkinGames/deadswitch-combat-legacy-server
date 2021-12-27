@@ -127,6 +127,15 @@
     {
       "type": "mountedWeapon",
       "weaponType": "m2",
+      "scale": 1,
+      "position": [
+        4720,
+        2240
+      ]
+    },
+    {
+      "type": "mountedWeapon",
+      "weaponType": "m2",
       "scale": -1,
       "position": [
         3280,
@@ -135,10 +144,10 @@
     },
     {
       "type": "car",
-      "carType": "mrap",
+      "carType": "growler",
       "position": [
-        850,
-        2400
+        1740,
+        2170
       ]
     },
     {
@@ -146,8 +155,8 @@
       "carType": "growler",
       "scale": -1,
       "position": [
-        7150,
-        2400
+        6260,
+        2170
       ]
     },
     {
@@ -474,24 +483,10 @@
       "material": "wood"
     },
     {
-      "id": "barrel_0",
-      "type": "obstacle",
-      "obstacleId": "barrel_explosive",
-      "position": [ 1820, 2192 ],
-      "bDark": true
-    },
-    {
       "id": "barrel_1",
       "type": "obstacle",
       "obstacleId": "barrel_explosive",
       "position": [ 2380, 2686 ]
-    },
-    {
-      "id": "barrel_2",
-      "type": "obstacle",
-      "obstacleId": "barrel_explosive",
-      "position": [ 6180, 2192 ],
-      "bDark": true
     },
     {
       "id": "barrel_3",
