@@ -206,7 +206,8 @@ const Tank = {
 };
 const Car = {
     QUAD: "quad",
-    GROWLER: "growler"
+    GROWLER: "growler",
+    MRAP: "mrap"
 };
 const MountedWeapon = {
     M2_BROWNING: "m2",
@@ -2139,6 +2140,7 @@ class GameInstance
             switch (_vehicle.data.type)
             {
                 case "car":
+                case "tank":
                     _vehicle.shapes[0].collisionGroup = CollisionGroups.OBJECT;
                     _vehicle.shapes[0].collisionMask = CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE | this.getVehiclePawnMask(_vehicle) | CollisionGroups.OBJECT;
                     break;
@@ -2318,6 +2320,7 @@ class GameInstance
             switch (vehicle.data.type)
             {
                 case "car":
+                case "tank":
                     if (!this.vehicleHasOccupant(vehicle))
                     {
                         vehicle.shapes[0].collisionGroup = this.getVehicleCollisionGroup(vehicle); //CollisionGroups.VEHICLE_0;
@@ -3341,6 +3344,11 @@ class GameInstance
             {
                 var rad = this.WrapAngle(_weapon.aimRotation - _val, true);
                 _weapon.aimRotation -= rad * 0.25;
+            }
+            if (isNaN(_weapon.aimRotation))
+            {
+                console.warn(_weapon.aimRotation);
+                _weapon.aimRotation = 0;
             }
         }
     }
@@ -4527,7 +4535,6 @@ class GameInstance
                                 {
                                     weapon.ammo = weapon.weaponData.ammoMax;
                                 }
-                                console.log(weapon);
                                 weapon.bCooldown = false;
                                 this.onEvent({
                                     eventId: GameServer.EVENT_PAWN_ACTION,
@@ -4693,7 +4700,7 @@ class GameInstance
         var vx = Math.abs(_body.velocity[0]);
         if (vx > 10)
         {
-            data.scale = _body.velocity[0] > 0 ? 1 : -1;
+            //data.scale = _body.velocity[0] > 0 ? 1 : -1;
         }
         data.bOnGround = this.isOnGround(_body);
         if (!data.bOnGround && this.vehicleHasOccupant(_body))
@@ -4701,6 +4708,19 @@ class GameInstance
             _body.angularVelocity += -(_body.angle) * (0.025 * _body.angle);
         }
         this.setDataValue(_body, "bBraking", false);
+        var bReversing = false;
+        if (vx > 10)
+        {
+            if (_body.velocity[0] > 0)
+            {
+                bReversing = data.scale == -1;
+            }
+            else if (_body.velocity[0] < 0)
+            {
+                bReversing = data.scale == 1;
+            }
+        }
+        this.setDataValue(_body, "bReversing", bReversing);
     }
 
     handleMountedWeapon(_body)
@@ -7655,6 +7675,13 @@ class GameInstance
                         this.switchSeats(_char);
                         break;
 
+                    case Control.JUMP:
+                        if (_char.data.seatIndex == 0)
+                        {
+                            this.toggleVehicleScale(_controllable);
+                        }
+                        break;
+
                     case Control.LOOK:
                         var weapons = _controllable.data.weapons;
                         if (weapons)
@@ -8497,6 +8524,7 @@ class GameInstance
                 {
                     this.removeNextStep(_interactable);
                 }
+                this.pushObjectDataUpdate(data.id, ["itemData"]);
             }
         }
     }
@@ -12089,7 +12117,7 @@ class GameInstance
                     //nigga
                     break;
                 case "wave":
-                    this.game.gameModeData.wave = 20;
+                    this.game.gameModeData.wave = 10;
                     break;
                 case "store":
                     var storeCrate = this.createCrate(curPawn.position, {
@@ -12147,11 +12175,6 @@ class GameInstance
                     if (veh)
                     {
                         var vehicle = this.createVehicle(curPawn.position, id);
-                        if (vehicle)
-                        {
-                            vehicle.data.speed = 300;
-                            vehicle.data.maxSpeed = 2000;
-                        }
                     }
                     break;
             }
@@ -12611,6 +12634,49 @@ class GameInstance
                             weaponData: this.getWeaponData("m60e4"),
                             aimRotation: 0
                         }
+                    ],
+                    [
+                        null
+                    ]
+                ];
+                break;
+            case Car.MRAP:
+                data.speed = 250;
+                data.maxSpeed = 500;
+                data.health = 2000;
+                data.seats = [
+                    {
+                        position: [30, -20],
+                        bBack: true
+                    },
+                    {
+                        position: [-50, -70],
+                        bBack: true,
+                        anim: "idle"
+                    },
+                    {
+                        position: [-80, -50],
+                        bInput: true
+                    },
+                    {
+                        position: [-100, -70],
+                        bInput: true,
+                        bBack: true
+                    }
+                ];
+                data.weapons = [
+                    [
+                        null
+                    ],
+                    [
+                        {
+                            muzzlePos: [-40, -90],
+                            weaponData: this.getWeaponData("m2"),
+                            aimRotation: 0
+                        }
+                    ],
+                    [
+                        null
                     ],
                     [
                         null
@@ -13125,7 +13191,7 @@ class GameInstance
         data.maxHealth = data.health;
         body.addShape(new p2.Box({
             width: 70,
-            height: 24,
+            height: 25,
             collisionGroup: CollisionGroups.PAWN,
             collisionMask: CollisionGroups.GROUND | CollisionGroups.PLATFORM | CollisionGroups.PROJECTILE
         }));
@@ -13696,7 +13762,7 @@ class GameInstance
         };
         if (this.game.bSurvival)
         {
-            //ai.bInteract = _body.data.team == 0;
+            ai.bInteract = _body.data.team == 0;
         }
         if (data.bZombie)
         {
@@ -14148,10 +14214,10 @@ class GameInstance
                     {
                         case "car":
                         case "tank":
-                            if (dataA.team != dataB.team && !dataA.controllableId)
+                            if (dataA.team != dataB.team)
                             {
                                 var vel = _bodyB.velocity[0] * _bodyB.velocity[0] + _bodyB.velocity[1] * _bodyB.velocity[1];
-                                var damage = vel * 0.0005;
+                                var damage = vel * 0.0005 * _bodyB.mass;
                                 if (damage > 50)
                                 {
                                     //_bodyA.applyImpulse([vel, 0], [0, 0]);
@@ -15462,7 +15528,7 @@ class GameInstance
                 delete data.desc;
                 delete data.unlockLevel;
                 delete data.unlockPrestige;
-                if (data.range && !data.bVehicle)
+                if (data.range)
                 {                           
                     switch (data.type)
                     {
@@ -15657,6 +15723,10 @@ class GameInstance
 
     setRandomWeaponMods(_weaponData)
     {
+        if (_weaponData.bEquipment)
+        {
+            return;
+        }
         if (!_weaponData.mods)
         {
             _weaponData.mods = {};

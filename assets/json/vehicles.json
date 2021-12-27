@@ -234,13 +234,16 @@
           "id": null
         },
         {
-          "id": "minigun"
+          "id": "minigun",
+          "score": 1000
         },
         {
-          "id": "gatling"
+          "id": "gatling",
+          "score": 5000
         },
         {
-          "id": "m2"
+          "id": "m2",
+          "score": 10000
         }
       ],
       [
@@ -248,13 +251,16 @@
           "id": null
         },
         {
-          "id": "minigun"
+          "id": "minigun",
+          "score": 1000
         },
         {
-          "id": "gatling"
+          "id": "gatling",
+          "score": 5000
         },
         {
-          "id": "m2"
+          "id": "m2",
+          "score": 10000
         }
       ]
     ],
@@ -452,11 +458,47 @@
         },
         {
           "id": "m60e4",
-          "score": 2500
+          "score": 5000
         },
         {
           "id": "m2",
+          "score": 10000
+        }
+      ]
+    ]
+  },
+  {
+    "id": "mrap",
+    "name": "STR_MRAP",
+    "type": "car",
+    "factions": [ "us" ],
+    "uiScale": 1.5,
+    "seats": [
+      [ 2, -20 ],
+      [ -26, -30 ],
+      [ -36, -30 ],
+      [ -46, -30 ]
+    ],
+    "camos": [
+      {
+        "id": null
+      }
+    ],
+    "weapons": [
+      [
+        {
+          "id": "m240"
+        },
+        {
+          "id": "m249"
+        },
+        {
+          "id": "m60e4",
           "score": 5000
+        },
+        {
+          "id": "m2",
+          "score": 10000
         }
       ]
     ]

@@ -1174,6 +1174,9 @@
   "STR_GROWLER": {
     "en": "M1161 Growler"
   },
+  "STR_MRAP": {
+    "en": "MRAP"
+  },
   "STR_X_NEW_ATTACHMENT": {
     "en": "%1 New Attachment"
   },

@@ -389,7 +389,7 @@
     "type": "TYPE_RIFLE",
     "fireMode": "MODE_BURST",
     "round": "556mm",
-    "damage": 34,
+    "damage": 35,
     "accuracy": 0.5,
     "fireRate": 3,
     "burstFireRate": 22,

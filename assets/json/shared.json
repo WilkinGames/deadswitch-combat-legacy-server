@@ -89,6 +89,12 @@
     "mass": 8,
     "angularDamping": 0.9
   },
+  "mrap": {
+    "width": 256,
+    "height": 90,
+    "mass": 10,
+    "angularDamping": 0.9
+  },
   "abrams": {
     "width": 420,
     "height": 126

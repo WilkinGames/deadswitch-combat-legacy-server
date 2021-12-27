@@ -125,8 +125,17 @@
       "position": [ 4000, 2000 ]
     },
     {
+      "type": "mountedWeapon",
+      "weaponType": "m2",
+      "scale": -1,
+      "position": [
+        3280,
+        2240
+      ]
+    },
+    {
       "type": "car",
-      "carType": "growler",
+      "carType": "mrap",
       "position": [
         850,
         2400
