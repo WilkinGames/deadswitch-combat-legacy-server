@@ -11040,7 +11040,7 @@ class GameInstance
         }
         if (wave >= 10)
         {
-            types.push(Helicopter.OH58);
+            types.push(Helicopter.OH58, Car.MRAP);
         }
         if (wave >= 12)
         {
@@ -12460,7 +12460,7 @@ class GameInstance
                         bInvisible: true
                     },
                     {
-                        position: [-40, -55],
+                        position: [-40, -50],
                         bBack: true
                     }
                 ];
@@ -12499,7 +12499,7 @@ class GameInstance
                         bInvisible: true
                     },
                     {
-                        position: [-20, -55],
+                        position: [-20, -50],
                         bBack: true
                     }
                 ];
@@ -12650,7 +12650,7 @@ class GameInstance
                         bBack: true
                     },
                     {
-                        position: [-50, -70],
+                        position: [-40, -70],
                         bBack: true,
                         anim: "idle"
                     },
