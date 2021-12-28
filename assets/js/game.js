@@ -12710,7 +12710,7 @@ class GameInstance
                         bInvisible: true
                     },
                     {
-                        position: [-50, -50],
+                        position: [-30, -85],
                         bBack: true,
                         anim: "idle"
                     },
@@ -12734,7 +12734,7 @@ class GameInstance
                     ],
                     [
                         {
-                            muzzlePos: [-40, -90],
+                            muzzlePos: [-20, -105],
                             weaponData: this.getWeaponData("m240"),
                             aimRotation: 0
                         }
