@@ -11205,7 +11205,14 @@ class GameInstance
         }
         if (wave >= 10)
         {
-            wpns.push(this.getWeaponData("m82"), this.getWeaponData("tac50"));
+            if (this.Random(1, 2) == 1)
+            {
+                wpns = [this.getWeaponData("m82"), this.getWeaponData("tac50")];
+            }
+            else
+            {
+                wpns.push(this.getWeaponData("m82"), this.getWeaponData("tac50"));
+            }
         }
         var primary = this.getWeaponData(wpns[this.Random(0, wpns.length - 1)].id);
         this.setRandomWeaponMods(primary);
