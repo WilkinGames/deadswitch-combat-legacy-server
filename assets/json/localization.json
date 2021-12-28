@@ -1172,10 +1172,13 @@
     "en": "Quad Bike"
   },
   "STR_GROWLER": {
-    "en": "M1161 Growler"
+    "en": "M1161 ITV"
   },
   "STR_MRAP": {
     "en": "MRAP"
+  },
+  "STR_LAV25": {
+    "en": "LAV-25"
   },
   "STR_USE": {
     "en": "Use"
@@ -1437,7 +1440,7 @@
     "en": "M2HB"
   },
   "STR_WPN_M242": {
-    "en": "M242 Bushmaster"
+    "en": "M242 25mm"
   },
   "STR_WPN_ROPE": {
     "en": "Grapple Rope"

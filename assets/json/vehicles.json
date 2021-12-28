@@ -102,19 +102,6 @@
           "id": "rocket_guided",
           "score": 10000
         }
-      ],
-      [
-        {
-          "id": "minigun"
-        },
-        {
-          "id": "gatling",
-          "score": 2500
-        },
-        {
-          "id": "m2",
-          "score": 5000
-        }
       ]
     ],
     "camos": [
@@ -153,6 +140,9 @@
     ],
     "weapons": [
       [
+        {
+          "id": "m240"
+        },
         {
           "id": "minigun"
         },
@@ -485,6 +475,47 @@
       }
     ],
     "weapons": [
+      [
+        {
+          "id": "m240"
+        },
+        {
+          "id": "m249"
+        },
+        {
+          "id": "m60e4",
+          "score": 5000
+        },
+        {
+          "id": "m2",
+          "score": 10000
+        }
+      ]
+    ]
+  },
+  {
+    "id": "lav25",
+    "name": "STR_LAV25",
+    "type": "car",
+    "factions": [ "us" ],
+    "uiScale": 1.5,
+    "seats": [
+      [ 2, -20 ],
+      [ -26, -30 ],
+      [ -36, -30 ],
+      [ -46, -30 ]
+    ],
+    "camos": [
+      {
+        "id": null
+      }
+    ],
+    "weapons": [
+      [
+        {
+          "id": "m242"
+        }
+      ],
       [
         {
           "id": "m240"

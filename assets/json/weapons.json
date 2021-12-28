@@ -685,13 +685,14 @@
     "name": "STR_WPN_MINIGUN",
     "type": "TYPE_LMG",
     "round": "762mm",
-    "damage": 10,
+    "damage": 12,
     "accuracy": 50,
     "fireRate": 2,
     "range": 2000,
     "recoil": 0.1,
     "penetration": 2,
-    "overheatMax": 180,
+    "ammo": 100,
+    "ammoMax": 100,
     "bVehicle": true
   },
   {
@@ -705,7 +706,8 @@
     "range": 2000,
     "recoil": 0.5,
     "penetration": 3,
-    "overheatMax": 60,
+    "ammo": 50,
+    "ammoMax": 50,
     "bVehicle": true
   },
   {
@@ -715,11 +717,15 @@
     "round": "25mm",
     "damage": 75,
     "accuracy": 12,
-    "fireRate": 10,
+    "fireRate": 15,
     "range": 2000,
     "recoil": 1,
+    "ammo": 20,
+    "ammoMax": 20,
     "penetration": 8,
-    "overheatMax": 180,
+    "overheatMax": 120,
+    "overheatNum": 6,
+    "overheatCooldownNum": 0,
     "bVehicle": true
   },
   {
@@ -735,8 +741,8 @@
     "range": 2000,
     "recoil": 0.8,
     "penetration": 5,
-    "overheatMax": 300,
-    "cooldownNum": 2,
+    "ammo": 50,
+    "ammoMax": 50,
     "bVehicle": true
   },
   {
@@ -1263,8 +1269,7 @@
     "bVehicle": true
   },
   {
-    "id": "m256a1",
-    "soundId": "rpg",
+    "id": "m256a1",    
     "name": "STR_WPN_M256A1",
     "type": "TYPE_LAUNCHER",
     "round": "rocket",
@@ -1288,7 +1293,7 @@
   },
   {
     "id": "shell_he",
-    "soundId": "rpg",
+    "soundId": "m256a1",
     "name": "STR_WPN_SHELL_HE",
     "type": "TYPE_LAUNCHER",
     "round": "rocket",
@@ -1311,7 +1316,7 @@
   },
   {
     "id": "shell_sabot",
-    "soundId": "rpg",
+    "soundId": "m256a1",
     "name": "STR_WPN_SHELL_SABOT",
     "type": "TYPE_LAUNCHER",
     "round": "rocket",
@@ -1335,7 +1340,7 @@
   },
   {
     "id": "shell_ap",
-    "soundId": "javelin",
+    "soundId": "m256a1",
     "name": "STR_WPN_SHELL_AP",
     "type": "TYPE_LAUNCHER",
     "round": "rocket",

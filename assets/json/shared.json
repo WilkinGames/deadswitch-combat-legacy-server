@@ -29,7 +29,7 @@
   "crate_store": {
     "width": 60,
     "height": 24,
-    "mass": 0
+    "mass": 1
   },
   "lever": {
     "width": 40,
@@ -90,6 +90,12 @@
     "angularDamping": 0.9
   },
   "mrap": {
+    "width": 256,
+    "height": 90,
+    "mass": 10,
+    "angularDamping": 0.9
+  },
+  "lav25": {
     "width": 256,
     "height": 90,
     "mass": 10,

@@ -207,7 +207,8 @@ const Tank = {
 const Car = {
     QUAD: "quad",
     GROWLER: "growler",
-    MRAP: "mrap"
+    MRAP: "mrap",
+    LAV25: "lav25"
 };
 const MountedWeapon = {
     M2_BROWNING: "m2",
@@ -2231,34 +2232,7 @@ class GameInstance
         }
         this.pushObjectDataUpdate(_vehicle.data.id, ["seats"]);
         this.setPlayerControllable(_char.data.id, _vehicle);
-    }
-
-    initVehicleWeapon(_weapon)
-    {
-        var weapon = _weapon;
-        if (weapon)
-        {
-            if (!weapon.weaponData.overheatMax)
-            {
-                //weapon.weaponData.overheatMax = 180;
-            }
-            if (weapon.weaponData.type == Weapon.TYPE_LMG)
-            {
-                weapon.weaponData.cooldownNum = 2;
-            }
-            if (weapon.weaponData.ammoMax)
-            {
-                weapon.ammo = weapon.weaponData.ammoMax;
-            }
-            else
-            {
-                weapon.ammo = null;
-            }
-            weapon.bCooldown = false;
-            weapon.aimRotation = 0;
-            weapon.overheat = 0;
-        }
-    }
+    }    
 
     getVehicleCollisionGroup(_body)
     {
@@ -4550,6 +4524,7 @@ class GameInstance
                                     pawnId: data.id,
                                     type: GameServer.PAWN_WEAPON_COOLDOWN,
                                     index: i,
+                                    weaponIndex: j,
                                     value: weapon.bCooldown,
                                     ammo: weapon.ammo
                                 });
@@ -6464,6 +6439,7 @@ class GameInstance
                     if (char)
                     {
                         var item = this.getObjectById(_data.itemId);
+                        console.log(item);
                         if (item)
                         {
                             if (char.data.bInteracting)
@@ -11066,13 +11042,17 @@ class GameInstance
         {
             types.push(Helicopter.BLACKHAWK, Car.GROWLER);
         }
+        if (wave >= 8)
+        {
+            types.push(Helicopter.OH58);
+        }
         if (wave >= 10)
         {
-            types.push(Helicopter.OH58, Car.MRAP);
+            types.push(Car.MRAP);
         }
         if (wave >= 12)
         {
-            types.push(Helicopter.COBRA);
+            types.push(Helicopter.COBRA, Car.LAV25);
         }
         if (wave >= 15)
         {
@@ -12670,7 +12650,7 @@ class GameInstance
                 break;
             case Car.MRAP:
                 data.speed = 250;
-                data.maxSpeed = 500;
+                data.maxSpeed = 450;
                 data.health = 2000;
                 data.seats = [
                     {
@@ -12700,6 +12680,54 @@ class GameInstance
                         {
                             muzzlePos: [-40, -90],
                             weaponData: this.getWeaponData("m2"),
+                            aimRotation: 0
+                        }
+                    ],
+                    [
+                        null
+                    ],
+                    [
+                        null
+                    ]
+                ];
+                break;
+            case Car.LAV25:
+                data.speed = 200;
+                data.maxSpeed = 500;
+                data.health = 2000;
+                data.seats = [
+                    {
+                        position: [-40, -20],
+                        bBack: true,
+                        bInvisible: true
+                    },
+                    {
+                        position: [-40, -70],
+                        bBack: true,
+                        anim: "idle"
+                    },
+                    {
+                        position: [-80, -50],
+                        bInput: true,
+                        bBack: true
+                    },
+                    {
+                        position: [-110, -30],
+                        bInput: true
+                    }
+                ];
+                data.weapons = [
+                    [
+                        {
+                            muzzlePos: [10, -75],
+                            weaponData: this.getWeaponData("m242"),
+                            aimRotation: 0
+                        }
+                    ],
+                    [
+                        {
+                            muzzlePos: [-40, -90],
+                            weaponData: this.getWeaponData("m240"),
                             aimRotation: 0
                         }
                     ],
@@ -12858,7 +12886,7 @@ class GameInstance
                 break;
 
             case Helicopter.COBRA:
-                data.health = 2000;
+                data.health = 1750;
                 data.speed = 2800;
                 data.seats = [
                     {
@@ -12873,15 +12901,16 @@ class GameInstance
                 data.weapons = [
                     [
                         {
-                            muzzlePos: [30, 60],
+                            muzzlePos: [170, 60],
                             weaponData: this.getWeaponData("zuni")
-                        }
-                    ],
-                    [
+                        },
                         {
                             muzzlePos: [170, 60],
                             weaponData: this.getWeaponData("gatling")
                         }
+                    ],
+                    [
+                        null
                     ]
                 ];
                 break;
@@ -13007,6 +13036,28 @@ class GameInstance
         return body;
     }
 
+    initVehicleWeapon(_weapon)
+    {
+        var weapon = _weapon;
+        if (weapon)
+        {
+            if (weapon.weaponData.ammoMax)
+            {
+                weapon.ammo = weapon.weaponData.ammoMax;
+                weapon.weaponData.overheatMax = 100;
+                weapon.weaponData.overheatNum = weapon.weaponData.overheatMax / weapon.weaponData.ammoMax;
+                weapon.weaponData.overheatCooldownNum = 0;
+            }
+            else
+            {
+                weapon.ammo = null;
+            }
+            weapon.bCooldown = false;
+            weapon.aimRotation = 0;
+            weapon.overheat = 0;
+        }
+    }
+
     initVehicleWeapons(_body, _weapons)
     {
         var data = _body.data;
@@ -13025,6 +13076,9 @@ class GameInstance
                         if (wpn.weaponData.ammoMax)
                         {
                             wpn.ammo = wpn.weaponData.ammoMax;
+                            wpn.weaponData.overheatMax = 100;
+                            wpn.weaponData.overheatNum = wpn.weaponData.overheatMax / wpn.weaponData.ammoMax;
+                            wpn.weaponData.overheatCooldownNum = 0;
                         }
                     }
                 }
