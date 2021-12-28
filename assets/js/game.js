@@ -627,6 +627,7 @@ class GameInstance
                 break;
             case GameMode.DESTRUCTION:
                 this.game.gameModeData.bombs = [0, 0, 0, 1, 1, 1];
+                this.game.gameModeData.scoreLimit = 3;
                 break;
             case GameMode.SURVIVAL_SIEGE:
             case GameMode.SURVIVAL_TERRORIST:
@@ -7637,7 +7638,7 @@ class GameInstance
                 var weapon = this.getVehicleWeapon(_controllable, _char.data.seatIndex);
                 if (weapon && weapon.weaponData)
                 {
-                    if (weapon.weaponData.overheatCooldownNum == 0 && !weapon.bCooldown)
+                    if (weapon.overheat > 0 && weapon.weaponData.overheatCooldownNum == 0 && !weapon.bCooldown)
                     {
                         weapon.bCooldown = true;
                         this.onEvent({
@@ -12741,7 +12742,7 @@ class GameInstance
                         anim: "idle"
                     },
                     {
-                        position: [-80, -50],
+                        position: [-80, -70],
                         bInput: true,
                         bBack: true
                     },
@@ -13079,7 +13080,7 @@ class GameInstance
             {
                 weapon.ammo = weapon.weaponData.ammoMax;
                 weapon.weaponData.overheatMax = 100;
-                weapon.weaponData.overheatNum = weapon.weaponData.overheatMax / weapon.weaponData.ammoMax;
+                weapon.weaponData.overheatNum = Math.round(weapon.weaponData.overheatMax / weapon.weaponData.ammoMax);
                 weapon.weaponData.overheatCooldownNum = 0;
             }
             else
@@ -13111,7 +13112,7 @@ class GameInstance
                         {
                             wpn.ammo = wpn.weaponData.ammoMax;
                             wpn.weaponData.overheatMax = 100;
-                            wpn.weaponData.overheatNum = wpn.weaponData.overheatMax / wpn.weaponData.ammoMax;
+                            wpn.weaponData.overheatNum = Math.round(wpn.weaponData.overheatMax / wpn.weaponData.ammoMax);
                             wpn.weaponData.overheatCooldownNum = 0;
                         }
                     }
@@ -15268,7 +15269,7 @@ class GameInstance
                     }
                     if (grenadeData["weaponId"] == "smoke" || grenadeData.type == Mods.GRENADE_SMOKE)
                     {
-                        _body.data["destroyTimer"] = this.game.settings.fps * 8;
+                        _body.data["destroyTimer"] = this.game.settings.fps * 5;
                         this.setDataValue(_body, "bActivated", true);
                         this.createExplosion({
                             eventId: GameServer.EVENT_SPAWN_EXPLOSION,
