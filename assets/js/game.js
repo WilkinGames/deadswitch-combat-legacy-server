@@ -3200,7 +3200,7 @@ class GameInstance
                 {
                     if (controllable.data.type == "car" || controllable.data.type == "mountedWeapon")
                     {
-                        if (ai.enemyDist < 200 && Math.abs(controllable.velocity[0] < 75))
+                        if (ai.enemyDist < 300 && Math.abs(controllable.velocity[0] < 75))
                         {
                             this.clearPlayerControllable(data.id);
                         }
@@ -11263,6 +11263,10 @@ class GameInstance
         var melee = "melee_knife";       
         var botSkill = botSkill = Math.min(BotSkill.SKILL_GOD, Math.floor(wave * 0.25));
         var health = this.getCharacterMaxHealth() + (wave * 5);
+        if (primary.type == Weapon.TYPE_SHOTGUN)
+        {
+            health *= 3;
+        }
         var char = this.createCharacter({
             id: this.getRandomUniqueId(),
             x: spawnPos[0],
@@ -12155,7 +12159,7 @@ class GameInstance
                     }
                     break;
                 case "wave":
-                    this.game.gameModeData.wave = 10;
+                    this.game.gameModeData.wave = 20;
                     break;
                 case "store":
                     var storeCrate = this.createCrate(curPawn.position, {
