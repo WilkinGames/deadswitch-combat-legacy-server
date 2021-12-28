@@ -1343,7 +1343,8 @@ class GameInstance
                                     if (curWeapon)
                                     {
                                         objData.weapons[j][k] = {
-                                            aimRotation: curWeapon.aimRotation
+                                            aimRotation: curWeapon.aimRotation,
+                                            bCooldown: curWeapon.bCooldown
                                         }
                                         if (curWeapon.weaponData && curWeapon.weaponData.overheatMax)
                                         {
@@ -6439,7 +6440,6 @@ class GameInstance
                     if (char)
                     {
                         var item = this.getObjectById(_data.itemId);
-                        console.log(item);
                         if (item)
                         {
                             if (char.data.bInteracting)
@@ -11180,7 +11180,11 @@ class GameInstance
 
         var wave = this.game.gameModeData.wave;
 
-        var weaponTypes = [Weapon.TYPE_PISTOL, Weapon.TYPE_MACHINE_PISTOL];       
+        var weaponTypes = [Weapon.TYPE_PISTOL, Weapon.TYPE_MACHINE_PISTOL]; 
+        if (wave >= 12)
+        {
+            weaponTypes.push(Weapon.TYPE_LAUNCHER);
+        }
         if (wave >= 10)
         {
             weaponTypes.push(Weapon.TYPE_DMR, Weapon.TYPE_SNIPER);
@@ -11198,7 +11202,11 @@ class GameInstance
         for (var i = 0; i < weaponTypes.length; i++)
         {
             wpns = wpns.concat(this.getAllWeaponsByType(weaponTypes[i]));
-        }       
+        }
+        if (wave >= 10)
+        {
+            wpns = [this.getWeaponData("m82"), this.getWeaponData("tac50")];
+        }
         var primary = this.getWeaponData(wpns[this.Random(0, wpns.length - 1)].id);
         this.setRandomWeaponMods(primary);
         var inventory = [
@@ -11207,12 +11215,12 @@ class GameInstance
                 mods: primary.mods
             }
         ];
-        var secondaryTypes = [];
+        var secondaryTypes = [];        
         if (wave >= 10)
         {
             secondaryTypes.push(Weapon.TYPE_LAUNCHER);
         }
-        else if (wave >= 3)
+        if (wave >= 3)
         {
             secondaryTypes.push(Weapon.TYPE_SHOTGUN);
         }
@@ -12658,7 +12666,7 @@ class GameInstance
                         bBack: true
                     },
                     {
-                        position: [-40, -70],
+                        position: [-40, -80],
                         bBack: true,
                         anim: "idle"
                     },
@@ -12702,7 +12710,7 @@ class GameInstance
                         bInvisible: true
                     },
                     {
-                        position: [-40, -70],
+                        position: [-50, -50],
                         bBack: true,
                         anim: "idle"
                     },
@@ -15874,27 +15882,34 @@ class GameInstance
                     }
                     break;
                 case Mods.TYPE_BARREL:
-                    switch (wpn.type)
+                    if (wpn.id == "m82" || wpn.id == "tac50")
                     {
-                        case Weapon.TYPE_LAUNCHER:
-                            break;
-                        case Weapon.TYPE_DMR:
-                        case Weapon.TYPE_SNIPER:
-                        case Weapon.TYPE_RIFLE:
-                        case Weapon.TYPE_CARBINE:
-                        case Weapon.TYPE_SMG:
-                            if (!wpn.bSilenced)
-                            {
-                                mods.push(Mods.BARREL_COMPENSATOR, Mods.BARREL_BRAKE, Mods.BARREL_HEAVY, Mods.BARREL_SILENCER);
-                            }
-                            else
-                            {
+                        mods.push(Mods.BARREL_COMPENSATOR, Mods.BARREL_BRAKE, Mods.BARREL_HEAVY);
+                    }
+                    else
+                    {
+                        switch (wpn.type)
+                        {
+                            case Weapon.TYPE_LAUNCHER:
+                                break;
+                            case Weapon.TYPE_DMR:
+                            case Weapon.TYPE_SNIPER:
+                            case Weapon.TYPE_RIFLE:
+                            case Weapon.TYPE_CARBINE:
+                            case Weapon.TYPE_SMG:
+                                if (!wpn.bSilenced)
+                                {
+                                    mods.push(Mods.BARREL_COMPENSATOR, Mods.BARREL_BRAKE, Mods.BARREL_HEAVY, Mods.BARREL_SILENCER);
+                                }
+                                else
+                                {
+                                    mods.push(Mods.BARREL_COMPENSATOR, Mods.BARREL_BRAKE, Mods.BARREL_HEAVY);
+                                }
+                                break;
+                            default:
                                 mods.push(Mods.BARREL_COMPENSATOR, Mods.BARREL_BRAKE, Mods.BARREL_HEAVY);
-                            }
-                            break;
-                        default:
-                            mods.push(Mods.BARREL_COMPENSATOR, Mods.BARREL_BRAKE, Mods.BARREL_HEAVY);
-                            break;
+                                break;
+                        }
                     }
                     break;
                 case Mods.TYPE_AMMO:
