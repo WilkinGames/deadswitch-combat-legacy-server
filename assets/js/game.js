@@ -12130,7 +12130,22 @@ class GameInstance
             switch (id)
             {
                 case "reviver":
-                    //nigga
+                    for (var i = 0; i < this.game.players.length; i++)
+                    {
+                        var ps = this.game.players[i];
+                        if (!ps.bHasPawn)
+                        {
+                            var reviver = this.getReviverByPlayerId(ps.id);
+                            this.respawnPlayer(ps.id, reviver ? [reviver.position[0], reviver.position[1] - 30] : null);
+                            this.onEvent({
+                                eventId: GameServer.EVENT_PAWN_ACTION,
+                                pawnId: ps.id,
+                                type: GameServer.PAWN_END_REVIVE,
+                                reviveId: ps.id
+                            });
+                            this.removeNextStep(reviver);
+                        }
+                    }
                     break;
                 case "wave":
                     this.game.gameModeData.wave = 10;
