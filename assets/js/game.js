@@ -160,7 +160,8 @@ const BotSkill = {
     SKILL_NORMAL: 1,
     SKILL_HARD: 2,
     SKILL_INSANE: 3,
-    SKILL_GOD: 4
+    SKILL_GOD: 4,
+    SKILL_IMPOSSIBLE: 5
 };
 const FeedItem = {
     TYPE_MESSAGE: "message",
@@ -12145,22 +12146,19 @@ class GameInstance
                     for (var i = 0; i < this.game.players.length; i++)
                     {
                         var ps = this.game.players[i];
-                        if (!ps.bHasPawn)
-                        {
-                            var reviver = this.getReviverByPlayerId(ps.id);
-                            this.respawnPlayer(ps.id, reviver ? [reviver.position[0], reviver.position[1] - 30] : null);
-                            this.onEvent({
-                                eventId: GameServer.EVENT_PAWN_ACTION,
-                                pawnId: ps.id,
-                                type: GameServer.PAWN_END_REVIVE,
-                                reviveId: ps.id
-                            });
-                            this.removeNextStep(reviver);
-                        }
+                        var reviver = this.getReviverByPlayerId(ps.id);
+                        this.respawnPlayer(ps.id, reviver ? [reviver.position[0], reviver.position[1] - 30] : null);
+                        this.onEvent({
+                            eventId: GameServer.EVENT_PAWN_ACTION,
+                            pawnId: ps.id,
+                            type: GameServer.PAWN_END_REVIVE,
+                            reviveId: ps.id
+                        });
+                        this.removeNextStep(reviver);
                     }
                     break;
                 case "wave":
-                    this.game.gameModeData.wave = 20;
+                    this.game.gameModeData.wave = 10;
                     break;
                 case "store":
                     var storeCrate = this.createCrate(curPawn.position, {
@@ -13906,8 +13904,9 @@ class GameInstance
             }
             else if (_botSkill >= BotSkill.SKILL_GOD)
             {
-                ai.semiCooldownTimerMax = 1;
-                ai.fireBurstTimerMax = Math.ceil(ai.fireBurstTimerMax * 5);
+                ai.semiCooldownTimerMax = 0; //1;
+                ai.fireCooldownTimerMax = 0;
+                ai.fireBurstTimerMax = 0; //Math.ceil(ai.fireBurstTimerMax * 5);
             }
         }
         _body.ai = ai;
