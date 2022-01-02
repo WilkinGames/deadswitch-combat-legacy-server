@@ -4545,73 +4545,77 @@ class GameInstance
                             var pawnId = seats[i].pawnId;
                             var muzzlePos = this.getVehicleMuzzlePosition(_body, i);
                             var weaponData = weapon.weaponData;
-                            var bulletRad = weapon.aimRotation + this.ToRad(this.Random(-weaponData.accuracy, weaponData.accuracy) * 0.1);
-                            if (weaponData.bAutoLock)
+                            var numBullets = weaponData.type == Weapon.TYPE_SHOTGUN ? 10 : 1;
+                            for (var i = 0; i < numBullets; i++)
                             {
-                                var pawn = this.getObjectById(pawnId);
-                                if (pawn && pawn.data.lockOnTargetId)
+                                var bulletRad = weapon.aimRotation + this.ToRad(this.Random(-weaponData.accuracy, weaponData.accuracy) * 0.1);
+                                if (weaponData.bAutoLock)
                                 {
-                                    bulletRad += this.ToRad(this.Random(-15, 15));
+                                    var pawn = this.getObjectById(pawnId);
+                                    if (pawn && pawn.data.lockOnTargetId)
+                                    {
+                                        bulletRad += this.ToRad(this.Random(-15, 15));
+                                    }
                                 }
-                            }
-                            if (weaponData.bRocket)
-                            {
-                                var pawn = this.getObjectById(pawn);
-                                this.createRocket({
-                                    x: muzzlePos[0],
-                                    y: muzzlePos[1],
-                                    type: weaponData["rocketType"] ? weaponData["rocketType"] : Rocket.TYPE_DEFAULT,
-                                    team: data.team,
-                                    playerId: pawnId,
-                                    causerId: data.id,
-                                    angle: bulletRad,
-                                    weaponId: weaponData.id,
-                                    damage: weaponData.damage,
-                                    radius: weaponData.radius,
-                                    bAirOnly: weaponData.bAirOnly,
-                                    gravityScale: weaponData.gravityScale,
-                                    bAutoLock: weaponData.bAutoLock,
-                                    bCanLock: weaponData.bCanLock
-                                });
-                            }
-                            else if (weaponData.bGrenade)
-                            {
-                                this.createGrenade(muzzlePos, {
-                                    team: data.team,
-                                    playerId: pawnId,
-                                    causerId: data.id,
-                                    rotation: bulletRad,
-                                    velocity: weaponData.velocity ? weaponData.velocity : 1500,
-                                    damage: weaponData.damage,
-                                    weaponId: weaponData.id,
-                                    type: weaponData.mods ? weaponData.mods[Mods.TYPE_AMMO] : null,
-                                    bImpact: true,
-                                    bMinimumDistance: true
-                                });
-                            }
-                            else if (weaponData.bProjectile)
-                            {
-                                if (data.attachId)
+                                if (weaponData.bRocket)
                                 {
-                                    this.detachRope(_body);
+                                    var pawn = this.getObjectById(pawn);
+                                    this.createRocket({
+                                        x: muzzlePos[0],
+                                        y: muzzlePos[1],
+                                        type: weaponData["rocketType"] ? weaponData["rocketType"] : Rocket.TYPE_DEFAULT,
+                                        team: data.team,
+                                        playerId: pawnId,
+                                        causerId: data.id,
+                                        angle: bulletRad,
+                                        weaponId: weaponData.id,
+                                        damage: weaponData.damage,
+                                        radius: weaponData.radius,
+                                        bAirOnly: weaponData.bAirOnly,
+                                        gravityScale: weaponData.gravityScale,
+                                        bAutoLock: weaponData.bAutoLock,
+                                        bCanLock: weaponData.bCanLock
+                                    });
                                 }
-                                else
+                                else if (weaponData.bGrenade)
                                 {
-                                    this.createProjectile(muzzlePos, bulletRad, data.team, {
+                                    this.createGrenade(muzzlePos, {
+                                        team: data.team,
                                         playerId: pawnId,
                                         causerId: data.id,
                                         rotation: bulletRad,
-                                        velocity: 200,
+                                        velocity: weaponData.velocity ? weaponData.velocity : 1500,
+                                        damage: weaponData.damage,
                                         weaponId: weaponData.id,
-                                        frameId: weaponData.frameId,
-                                        sourceId: data.id
+                                        type: weaponData.mods ? weaponData.mods[Mods.TYPE_AMMO] : null,
+                                        bImpact: true,
+                                        bMinimumDistance: true
                                     });
                                 }
-                            }
-                            else
-                            {
-                                this.createBullet(muzzlePos[0], muzzlePos[1], bulletRad, weaponData.range, weaponData.damage, pawnId, data.id, weaponData.id, weaponData, true, false, false);
-                            }
+                                else if (weaponData.bProjectile)
+                                {
+                                    if (data.attachId)
+                                    {
+                                        this.detachRope(_body);
+                                    }
+                                    else
+                                    {
+                                        this.createProjectile(muzzlePos, bulletRad, data.team, {
+                                            playerId: pawnId,
+                                            causerId: data.id,
+                                            rotation: bulletRad,
+                                            velocity: 200,
+                                            weaponId: weaponData.id,
+                                            frameId: weaponData.frameId,
+                                            sourceId: data.id
+                                        });
+                                    }
+                                }
+                                else
+                                {
+                                    this.createBullet(muzzlePos[0], muzzlePos[1], bulletRad, weaponData.range, weaponData.damage, pawnId, data.id, weaponData.id, weaponData, true, false, false);
+                                }
+                            }       
                             weapon.bFireDelay = true;
                             weapon.fireDelayTimer = Math.max(1, Math.ceil(weaponData.fireRate * this.game.fpsMult));
                             if (weapon.ammo != null)
