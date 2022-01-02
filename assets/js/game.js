@@ -4546,7 +4546,7 @@ class GameInstance
                             var muzzlePos = this.getVehicleMuzzlePosition(_body, i);
                             var weaponData = weapon.weaponData;
                             var numBullets = weaponData.type == Weapon.TYPE_SHOTGUN ? 10 : 1;
-                            for (var i = 0; i < numBullets; i++)
+                            for (var b = 0; b < numBullets; b++)
                             {
                                 var bulletRad = weapon.aimRotation + this.ToRad(this.Random(-weaponData.accuracy, weaponData.accuracy) * 0.1);
                                 if (weaponData.bAutoLock)
