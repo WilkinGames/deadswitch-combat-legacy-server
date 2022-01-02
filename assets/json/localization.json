@@ -1989,6 +1989,14 @@
   "STR_WELCOME_TO_DSC_X": {
     "en": "Welcome to Deadswitch: Combat, %1."
   },
+  "STR_X_XP": {
+    "en": "%1 XP",
+    "ru": "%1 Опыт",
+    "zh-CN": "%1 XP",
+    "tr": "%1 XP",
+    "es": "%1 XP",
+    "it": "%1 XP"
+  },
   "STR_ADD_X_XP": {
     "en": "+%1 XP",
     "ru": "%1 Опыт",

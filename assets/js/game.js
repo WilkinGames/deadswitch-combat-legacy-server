@@ -3218,7 +3218,7 @@ class GameInstance
                     this.deployParachute(_body);
                 }
             }
-            if (ai.bInteract && ai.ticker == 0)
+            if (ai.bInteract)
             {
                 var interactable = this.getBestInteractable(_body);
                 if (interactable)
