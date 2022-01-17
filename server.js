@@ -535,6 +535,35 @@ io.on("connection", (socket) =>
                     }
                     break;
 
+                case "/voteskip":
+                    if (lobby && lobby.game)
+                    {
+                        if (1 || !settings.bUseLobby)
+                        {
+                            if (!lobby.voteskips)
+                            {
+                                lobby.voteskips = [];
+                            }
+                            if (lobby.voteskips.indexOf(socket.player.id) == -1)
+                            {
+                                lobby.voteskips.push(socket.player.id);
+                            }
+                            var numReal = getNumRealPlayers(lobby.players);
+                            sendChatMessageToLobby(lobby.id, {
+                                bServer: true,
+                                locText: "STR_SERVER_VOTESKIP_X_X",
+                                params: [lobby.voteskips.length, numReal]
+                            });
+                            if (lobby.voteskips.length >= numReal)
+                            {
+                                lobby.game.requestEvent({
+                                    eventId: GameServer.EVENT_GAME_END
+                                });
+                            }
+                        }
+                    }
+                    break;
+
                 case "/votekick":
                     if (lobby)
                     {
@@ -719,12 +748,15 @@ io.on("connection", (socket) =>
                     {
                         case "gameModeId":
                             var mode = getGameMode(value);
-                            log(mode);
                             if (mode)
                             {
                                 if (mode.bSurvival)
                                 {
                                     setAllLobbyPlayersTeam(lobby, -1);
+                                }
+                                else
+                                {
+                                    setAllLobbyPlayersToRecommendedTeam(lobby);
                                 }
                             }
                             break;
@@ -779,7 +811,7 @@ io.on("connection", (socket) =>
                     {
                         items.push({
                             eventId: GameServer.EVENT_PLAYER_JOIN,
-                            player: ps,
+                            player: clone(ps),
                             bSilent: true
                         });
                     }
@@ -854,6 +886,20 @@ function getLobbyPlayerTeam(_lobby)
     return _lobby.players.length % 2 == 0 ? 0 : 1
 }
 
+function getRecommendedPlayerTeam(_player)
+{
+    var lobby = getLobbyData(_player.lobbyId);
+    if (lobby)
+    {
+        var index = lobby.players.indexOf(_player);
+        if (index >= 0)
+        {
+            return index % 2 == 0 ? 0 : 1;
+        }
+    }
+    return 0;
+}
+
 function joinLobby(_player, _lobbyId)
 {
     var lobby = getLobbyData(_lobbyId);
@@ -865,8 +911,8 @@ function joinLobby(_player, _lobbyId)
             socket.join(_lobbyId);            
         }
         _player.lobbyId = _lobbyId;
-        _player.team = getLobbyPlayerTeam(lobby);
         lobby.players.push(_player);
+        _player.team = getRecommendedPlayerTeam(_player);
         log(lobby.players.length, "in lobby");  
         if (socket)
         {
@@ -948,12 +994,23 @@ function setAllLobbyPlayersTeam(_lobby, _team)
     }
 }
 
+function setAllLobbyPlayersToRecommendedTeam(_lobby)
+{
+    for (var i = 0; i < _lobby.players.length; i++)
+    {
+        var ps = _lobby.players[i];
+        ps.team = getRecommendedPlayerTeam(ps);
+    }
+    io.to(_lobby.id).emit("updateLobby", { players: _lobby.players });
+}
+
 function setLobbyState(_lobbyId, _state)
 {
     var lobby = getLobbyData(_lobbyId);
     if (lobby)
     {
         destroyLobbyGame(lobby.id);
+        delete lobby.voteskips;
         lobby.state = _state;
         lobby.chat = [];
         if (lobby.interval)
@@ -1130,6 +1187,14 @@ function leaveLobby(_player, _reason)
     var lobby = getLobbyData(_player.lobbyId);
     if (lobby)
     {       
+        if (lobby.voteskips)
+        {
+            var skipIndex = lobby.voteskips.indexOf(_player.id);
+            if (skipIndex >= 0)
+            {
+                lobby.voteskips.splice(skipIndex, 1);
+            }
+        }
         if (lobby.game)
         {
             lobby.game.requestEvent({
@@ -1426,6 +1491,24 @@ function disconnectSocket(_socket, _reason)
         _socket.disconnectReason = _reason;
         _socket.disconnect();
     }
+}
+
+function getNumRealPlayers(_players)
+{
+    if (_players)
+    {
+        var num = 0;
+        for (var i = 0; i < _players.length; i++)
+        {
+            var ps = _players[i];
+            if (!ps.bBot)
+            {
+                num++;
+            }
+        }
+        return num;
+    }
+    return 0;
 }
 
 function getNumClients()

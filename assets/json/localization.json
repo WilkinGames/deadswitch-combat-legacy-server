@@ -681,6 +681,9 @@
   "STR_SERVER_VOTEKICK_VOTES_AGAINST_X_X_X": {
     "en": "Votes against %1: %2/%3"
   },
+  "STR_SERVER_VOTESKIP_X_X": {
+    "en": "Votes to skip: %1/%2"
+  },
   "STR_SERVER_X_GAMES": {
     "en": "%1 game(s) have been played on this server."
   },
@@ -738,6 +741,14 @@
     "tr": "Canlandır %1",
     "es": "Revivir a %1",
     "it": "Rianimazione %1"
+  },
+  "STR_REVIVE_BR_X": {
+    "en": "Revive\n%1",
+    "ru": "Возродить\n%1",
+    "zh-CN": "复苏\n%1",
+    "tr": "Canlandır\n%1",
+    "es": "Revivir a\n%1",
+    "it": "Rianimazione\n%1"
   },
   "STR_DOOR_CLOSE": {
     "en": "Close",
