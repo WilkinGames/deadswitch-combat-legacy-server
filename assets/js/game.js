@@ -12161,8 +12161,11 @@ class GameInstance
                         this.removeNextStep(reviver);
                     }
                     break;
-                case "wave":
-                    this.game.gameModeData.wave = 7;
+                case "wave8":
+                    this.game.gameModeData.wave = 7;					
+                    break;
+				case "wave":
+                    this.game.gameModeData.wave = 1000;					
                     break;
                 case "store":
                     var storeCrate = this.createCrate(curPawn.position, {
