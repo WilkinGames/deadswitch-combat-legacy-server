@@ -12165,7 +12165,7 @@ class GameInstance
                     this.game.gameModeData.wave = 7;					
                     break;
 				case "wave":
-                    this.game.gameModeData.wave = 1000;					
+                    this.game.gameModeData.wave = 49;					
                     break;
                 case "store":
                     var storeCrate = this.createCrate(curPawn.position, {
