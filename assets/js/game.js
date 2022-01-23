@@ -8818,8 +8818,7 @@ class GameInstance
 
     getBestInteractable(_body)
     {
-        var objects = this.getVehicles();
-        objects = objects.concat(this.getBombCrates());
+        var objects = this.getInteractables();
         if (_body.data.team == 0)
         {
             objects = objects.concat(this.getRevivers());
@@ -12161,11 +12160,8 @@ class GameInstance
                         this.removeNextStep(reviver);
                     }
                     break;
-                case "wave8":
-                    this.game.gameModeData.wave = 7;					
-                    break;
-				case "wave":
-                    this.game.gameModeData.wave = 49;					
+                case "wave":
+                    this.game.gameModeData.wave = 49;
                     break;
                 case "store":
                     var storeCrate = this.createCrate(curPawn.position, {
