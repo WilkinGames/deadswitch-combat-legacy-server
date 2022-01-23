@@ -8832,9 +8832,9 @@ class GameInstance
                 var itemData = obj.data.itemData;
                 if (itemData)
                 {
-                    if (itemData.interactTeam != _body.data.team)
+                    if (itemData.interactTeam != null && itemData.interactTeam != _body.data.team)
                     {
-                        //continue;
+                        continue;
                     }
                 }
                 if (obj.getAABB().overlaps(_body.getAABB()))
