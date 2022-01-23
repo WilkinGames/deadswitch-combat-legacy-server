@@ -8818,7 +8818,8 @@ class GameInstance
 
     getBestInteractable(_body)
     {
-        var objects = this.getInteractables();
+        var objects = this.getVehicles();
+        objects = objects.concat(this.getBombCrates());
         if (_body.data.team == 0)
         {
             objects = objects.concat(this.getRevivers());
@@ -8833,7 +8834,7 @@ class GameInstance
                 {
                     if (itemData.interactTeam != _body.data.team)
                     {
-                        continue;
+                        //continue;
                     }
                 }
                 if (obj.getAABB().overlaps(_body.getAABB()))
