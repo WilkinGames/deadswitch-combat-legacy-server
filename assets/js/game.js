@@ -15874,6 +15874,8 @@ class GameInstance
                     switch (wpn.id)
                     {
                         case "deagle":
+                        case "m82":
+                        case "tac50":
                             return mods;
                     }
                     switch (wpn.type)
