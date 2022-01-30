@@ -5554,7 +5554,7 @@ class GameInstance
                 else
                 {
                     this.createProjectile(muzzlePos, bulletRad, data.team, {
-                        playerId: pawnId,
+                        playerId: data.id,
                         causerId: data.id,
                         rotation: bulletRad,
                         velocity: 200,
