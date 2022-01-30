@@ -12220,6 +12220,7 @@ class GameInstance
                     if (veh)
                     {
                         var vehicle = this.createVehicle(curPawn.position, id);
+                        vehicle.data.speed *= 5;
                     }
                     break;
             }
@@ -12940,14 +12941,13 @@ class GameInstance
                         {
                             muzzlePos: [170, 60],
                             weaponData: this.getWeaponData("zuni")
-                        },
+                        }                        
+                    ],
+                    [
                         {
                             muzzlePos: [170, 60],
                             weaponData: this.getWeaponData("gatling")
                         }
-                    ],
-                    [
-                        null
                     ]
                 ];
                 break;
