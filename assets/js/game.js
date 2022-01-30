@@ -12220,7 +12220,10 @@ class GameInstance
                     if (veh)
                     {
                         var vehicle = this.createVehicle(curPawn.position, id);
-                        vehicle.data.speed *= 5;
+                        if (vehicle.data.maxSpeed)
+                        {
+                            vehicle.data.maxSpeed *= 5;
+                        }
                     }
                     break;
             }
