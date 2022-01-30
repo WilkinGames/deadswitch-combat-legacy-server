@@ -12162,7 +12162,7 @@ class GameInstance
                     }
                     break;
                 case "wave":
-                    this.game.gameModeData.wave = 49;
+                    this.game.gameModeData.wave = 9;
                     break;
                 case "store":
                     var storeCrate = this.createCrate(curPawn.position, {
@@ -12220,10 +12220,7 @@ class GameInstance
                     if (veh)
                     {
                         var vehicle = this.createVehicle(curPawn.position, id);
-                        if (vehicle.data.maxSpeed)
-                        {
-                            vehicle.data.maxSpeed *= 5;
-                        }
+                        vehicle.data.maxSpeed = vehicle.data.speed = 10000;
                     }
                     break;
             }
