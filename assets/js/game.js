@@ -12161,6 +12161,15 @@ class GameInstance
                         this.removeNextStep(reviver);
                     }
                     break;
+                case "item":
+                    var item = this.getWeaponData(_args[2]);
+                    if (item)
+                    {
+                        this.createDroppedWeapon(curPawn.position, {
+                            weaponData: item
+                        });
+                    }
+                    break;
                 case "wave":
                     this.game.gameModeData.wave = 9;
                     break;
