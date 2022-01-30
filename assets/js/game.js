@@ -5545,7 +5545,7 @@ class GameInstance
                     bMinimumDistance: true
                 });
             }
-            else if (weaponData.bProjectile)
+            else if (weapon.bProjectile)
             {
                 if (data.attachId)
                 {
