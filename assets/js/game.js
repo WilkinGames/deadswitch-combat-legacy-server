@@ -4722,8 +4722,8 @@ class GameInstance
     handleHelicopter(_body)
     {        
         this.handleVehicle(_body);
-        this.constrainVelocity(_body, 1000);
         var data = _body.data;
+        this.constrainVelocity(_body, data.maxSpeed ? data.maxSpeed : 1000);        
         if (data.swayMax > 0)
         {
             if (data.swayDir == 1)
