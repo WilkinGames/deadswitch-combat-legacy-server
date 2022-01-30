@@ -5545,9 +5545,24 @@ class GameInstance
                     bMinimumDistance: true
                 });
             }
-            else if (weapon.bProjectile)
+            else if (weaponData.bProjectile)
             {
-                //
+                if (data.attachId)
+                {
+                    this.detachRope(_body);
+                }
+                else
+                {
+                    this.createProjectile(muzzlePos, bulletRad, data.team, {
+                        playerId: pawnId,
+                        causerId: data.id,
+                        rotation: bulletRad,
+                        velocity: 200,
+                        weaponId: weapon.id,
+                        frameId: weapon.frameId,
+                        sourceId: data.id
+                    });
+                }
             }
             else if (weapon.id == "blowtorch")
             {
@@ -14227,6 +14242,8 @@ class GameInstance
                                     case "droppedWeapon":
                                     case "crate":
                                     case "reviver":
+                                    case "character":
+                                    case "crate":
                                         if (!dataB.controllableId)
                                         {
                                             var source = this.getObjectById(dataA.sourceId);
