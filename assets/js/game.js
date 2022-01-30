@@ -4675,7 +4675,8 @@ class GameInstance
     handleTank(_body)
     {
         this.handleVehicle(_body);
-        this.constrainVelocity(_body, 275);
+        var data = _body.data;
+        this.constrainVelocity(_body, data.maxSpeed ? data.maxSpeed : 275);
         var data = _body.data;
         if (!data.bOnGround)
         {
@@ -5547,6 +5548,7 @@ class GameInstance
             }
             else if (weapon.bProjectile)
             {
+                console.log(data.attachId, weapon);
                 if (data.attachId)
                 {
                     this.detachRope(_body);
