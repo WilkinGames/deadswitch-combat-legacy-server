@@ -1,75 +1,186 @@
 ﻿{
+  "STR_BETA": {
+    "en": "Beta",
+    "ru": "Бета",
+    "zh-CN": "贝塔",
+    "tr": "Beta",
+    "es": "Beta",
+    "it": "Beta"
+  },
   "STR_LOADING": {
-    "en": "Loading"
+    "en": "Loading",
+    "ru": "Загрузка игры",
+    "zh-CN": "正在读取游戏",
+    "tr": "Oyun Yükleniyor",
+    "es": "Cargando la partida",
+    "it": "Caricamento"
+  },
+  "STR_PRELOADER_LOADING_GAME": {
+    "en": "Loading Game",
+    "ru": "Загрузка игры",
+    "zh-CN": "正在读取游戏",
+    "tr": "Oyun Yükleniyor",
+    "es": "Cargando la partida",
+    "it": "Caricamento"
+  },
+  "STR_PRELOADER_LOADING_ASSETS": {
+    "en": "Loading Assets",
+    "ru": "Загрузка файлов",
+    "zh-CN": "正在读取资源包",
+    "tr": "Dosyalar Yükleniyor",
+    "es": "Cargando activos",
+    "it": "Caricamento Assets"
+  },
+  "STR_PRELOADER_LOADING_FONTS": {
+    "en": "Loading Fonts",
+    "ru": "Загрузка шрифтов",
+    "zh-CN": "正在读取字体",
+    "tr": "Fontlar Yükleniyor",
+    "es": "Cargando fuentes",
+    "it": "Caricamento Font"
   },
   "STR_PRELOADING_TEXTURES": {
-    "en": "Preloading Textures"
+    "en": "Preloading Textures",
+    "ru": "Загрузка текстур",
+    "zh-CN": "加载纹理",
+    "tr": "Dokuları Önyükleme",
+    "es": "Cargando texturas",
+    "it": "Precaricamento delle trame"
   },
   "STR_CONTINUE": {
-    "en": "Continue"
+    "en": "Continue",
+    "ru": "Продолжить",
+    "zh-CN": "继续",
+    "tr": "Devam Et",
+    "es": "Continuar",
+    "it": "Continua"
   },
   "STR_START_GAME": {
-    "en": "Start Game"
+    "en": "Start Game",
+    "ru": "Начать игру",
+    "zh-CN": "开始游戏",
+    "tr": "Oyun Başlat",
+    "es": "Abrir el juego",
+    "it": "Avvia Gioco"
   },
   "STR_CLICK_TO_START": {
-    "en": "Click to Start"
+    "en": "Click to Start",
+    "ru": "Нажмите, чтобы начать",
+    "zh-CN": "点击开始",
+    "tr": "Başlamak için tıklayın",
+    "es": "Haga clic para comenzar",
+    "it": "Fare clic per iniziare"
   },
   "STR_WILKIN_COPYRIGHT": {
-    "en": "\u00A92021 Wilkin Games"
+    "en": "\u00A92021 Wilkin Games",
+    "ru": "\u00A92021 Wilkin Games",
+    "zh-CN": "\u00A92021 Wilkin Games",
+    "tr": "\u00A92021 Wilkin Games",
+    "es": "\u00A92021 Wilkin Games",
+    "it": "\u00A92021 Wilkin Games"
   },
   "STR_DSC_COPYRIGHT": {
-    "en": "\u00A92021 Wilkin Games.\nDeadswitch: Combat is developed by Wilkin Games.\nAll rights reserved.\n\nNote: This beta build does not represent the game in its final state."
+    "en": "\u00A92021 Wilkin Games.\nDeadswitch: Combat is developed by Wilkin Games.\nAll rights reserved.\n\nNote: This beta build does not represent the game in its final state.",
+    "ru": "\u00A92021 Wilkin Games",
+    "zh-CN": "\u00A92021 年威尔金运动会。\nDeadswitch: Combat 由 Wilkin Games 开发。\n版权所有。\n\n注意：此 beta 版本并不代表游戏的最终状态。",
+    "tr": "\u00A92021 Wilkin Games",
+    "es": "\u00A92021 Wilkin Games",
+    "it": "\u00A92021 Wilkin Games"
   },
   "STR_DSC": {
-    "en": "Deadswitch: Combat"
-  },
-  "STR_DSC_BETA": {
-    "en": "Deadswitch: Combat Beta"
-  },
-  "STR_DSC_BETA_DESC": {
-    "en": "Thank you for participating in the Deadswitch: Combat Beta.\n\nPlease note that the beta build does not represent the game in its final state.\n\nPlease provide any feedback or issues to the official Deadswitch: Combat Discord.\n\nHave fun!"
+    "en": "Deadswitch: Combat",
+    "ru": "Deadswitch: Combat",
+    "zh-CN": "Deadswitch: Combat",
+    "tr": "Deadswitch: Combat",
+    "es": "Deadswitch: Combat",
+    "it": "Deadswitch: Combat"
   },
   "STR_DISCORD": {
-    "en": "Join Discord"
+    "en": "Join Discord",
+    "ru": "Заходите в Discord",
+    "zh-CN": "加入 Discord 服务器",
+    "tr": "Discord'a Katıl",
+    "es": "Únete al discord",
+    "it": "Unisciti a Discord"
   },
   "STR_HOMEPAGE": {
     "en": "Homepage"
   },
   "STR_SWITCH_TEAM": {
-    "en": "Switch Team"
+    "en": "Switch Team",
+    "ru": "Сменить команды",
+    "zh-CN": "更换团队",
+    "tr": "Takım Değiştir",
+    "es": "Cambiar de Equipo",
+    "it": "Cambia Squadra"
   },
   "STR_X_SWITCHED_TEAM": {
     "en": "%1 switched teams"
   },
   "STR_MULTIPLAYER": {
-    "en": "Multiplayer"
+    "en": "Multiplayer",
+    "ru": "Совместная игра",
+    "zh-CN": "多人游戏",
+    "tr": "Çokoyunculu",
+    "es": "Multijugador",
+    "it": "Multigiocatore"
   },
   "STR_HOME": {
-    "en": "Home"
+    "en": "Home",
+    "ru": "Домой",
+    "zh-CN": "主页",
+    "tr": "Ana Sayfa",
+    "es": "Página principal",
+    "it": "Home"
   },
   "STR_PLAY": {
-    "en": "Play"
+    "en": "Play",
+    "ru": "Начать",
+    "zh-CN": "开始",
+    "tr": "Başla",
+    "es": "Empezar",
+    "it": "Avvia"
   },
   "STR_SERVER_BROWSER": {
-    "en": "Server Browser"
+    "en": "Server Browser",
+    "ru": "Браузер серверов",
+    "zh-CN": "服务器浏览器",
+    "tr": "Sunucu Tarayıcısı",
+    "es": "Navegador de Servidor",
+    "it": "Browser del Server"
   },
   "STR_CONNECT_BY_IP": {
     "en": "Connect by IP"
   },
   "STR_CONNECT": {
-    "en": "Connect"
+    "en": "Connect",
+    "ru": "Присоединится",
+    "zh-CN": "连接",
+    "tr": "Bağlan",
+    "es": "Conectarse",
+    "it": "Connetti"
   },
   "STR_CONNECT_BY_IP_DESC": {
     "en": "Enter the IP address of the Deadswitch: Combat server you want to join."
   },
   "STR_CONNECTING_TO_X": {
-    "en": "Connecting to %1..."
+    "en": "Connecting to %1...",
+    "ru": "Подключение к %1...",
+    "zh-CN": "正在连接到 %1 服务器……",
+    "tr": "%1'a Bağlanıyor...",
+    "es": "Conectando a %1...",
+    "it": "Connessione a %1..."
   },
   "STR_HOST_GAME": {
     "en": "Host Game"
   },
   "STR_QUICK_JOIN": {
-    "en": "Quick Join"
+    "en": "Quick Join",
+    "ru": "Быстрое присоединение",
+    "zh-CN": "快速加入",
+    "tr": "Hızlı Katıl",
+    "es": "Unión rápida",
+    "it": "Partecipazione rapida"
   },
   "STR_JOIN_SERVER": {
     "en": "Join Server ‣"
@@ -81,55 +192,135 @@
     "en": "Disconnect"
   },
   "STR_LOBBY": {
-    "en": "Lobby"
+    "en": "Lobby",
+    "ru": "Комната",
+    "zh-CN": "游戏房间",
+    "tr": "Lobi",
+    "es": "Lobby",
+    "it": "Lobby"
   },
   "STR_LOCAL_PLAY": {
-    "en": "Local Play"
+    "en": "Local Play",
+    "ru": "Локальная игра",
+    "zh-CN": "本地游戏",
+    "tr": "Yerel Oyun",
+    "es": "Partida en red local",
+    "it": "Partita Locale"
   },
   "STR_CUSTOMIZE": {
-    "en": "Customize"
+    "en": "Customize",
+    "ru": "Изменить",
+    "zh-CN": "个性化",
+    "tr": "Kişiselleştir",
+    "es": "Personalizar",
+    "it": "Personalizza"
   },
   "STR_SHOP": {
-    "en": "Shop"
+    "en": "Shop",
+    "ru": "Магазин",
+    "zh-CN": "游戏商城",
+    "tr": "Dükkan",
+    "es": "Tienda",
+    "it": "Negozio"
   },
   "STR_AMMO": {
-    "en": "Ammo"
+    "en": "Ammo",
+    "ru": "Боезапас",
+    "zh-CN": "弹药",
+    "tr": "Mühimmat",
+    "es": "Munición",
+    "it": "Munizioni"
   },
   "STR_PROFILE": {
-    "en": "Profile"
+    "en": "Profile",
+    "ru": "Профиль",
+    "zh-CN": "个人资料",
+    "tr": "Profil",
+    "es": "Perfil",
+    "it": "Profilo"
   },
   "STR_SETTINGS": {
-    "en": "Settings"
+    "en": "Settings",
+    "ru": "Настройки",
+    "zh-CN": "设置选项",
+    "tr": "Ayarlar",
+    "es": "Ajustes",
+    "it": "Impostazioni"
   },
   "STR_AUDIO": {
-    "en": "Audio"
+    "en": "Audio",
+    "ru": "Звук",
+    "zh-CN": "音频",
+    "tr": "Ses",
+    "es": "Audio",
+    "it": "Audio"
   },
   "STR_GRAPHICS": {
-    "en": "Graphics"
+    "en": "Graphics",
+    "ru": "Графика",
+    "zh-CN": "图形",
+    "tr": "Grafikler",
+    "es": "Gráficos",
+    "it": "Grafica"
   },
   "STR_PREFERENCES": {
-    "en": "Preferences"
+    "en": "Preferences",
+    "ru": "Другое",
+    "zh-CN": "偏好",
+    "tr": "Tercihler",
+    "es": "Preferencias",
+    "it": "Preferenze"
   },
   "STR_QUIT_GAME": {
-    "en": "Quit Game"
+    "en": "Quit Game",
+    "ru": "Выйти из игры",
+    "zh-CN": "退出游戏",
+    "tr": "Oyundan Çık",
+    "es": "Abandonar partida",
+    "it": "Esci dal Gioco"
   },
   "STR_END_GAME": {
     "en": "End Game"
   },
   "STR_QUIT": {
-    "en": "Quit"
+    "en": "Quit",
+    "ru": "Выйти",
+    "zh-CN": "退出",
+    "tr": "Çık",
+    "es": "Salir",
+    "it": "Esci"
   },
   "STR_LEAVE": {
-    "en": "Leave"
+    "en": "Leave",
+    "ru": "Выйти",
+    "zh-CN": "离开",
+    "tr": "Ayrıl",
+    "es": "Abandonar",
+    "it": "Abbandona"
   },
   "STR_QUIT_GAME_CONFIRM": {
-    "en": "Are you sure you want to quit this game?"
+    "en": "Are you sure you want to quit this game?",
+    "ru": "Вы уверены, что хотите выйти из этой игры?",
+    "zh-CN": "您确定要退出这场比赛吗?",
+    "tr": "Bu oyundan çıkmak istediğinizden emin misiniz?",
+    "es": "¿Estás seguro de que quieres salir de esta partida?",
+    "it": "Sei sicuro di voler abbandonare questa partita?"
   },
   "STR_QUIT_GAME_PC_CONFIRM": {
-    "en": "Are you sure you want to quit Deadswitch: Combat?"
+    "en": "Are you sure you want to quit Deadswitch: Combat?",
+    "ru": "Вы уверены, что хотите выйти из Deadswitch: Combat?",
+    "zh-CN": "您确定要退出死亡开关吗?",
+    "tr": "Deadswitch: Combat'den çıkmak istediğinizden emin misiniz?",
+    "es": "¿Estás seguro de que quieres salir de Deadswitch: Combat?",
+    "it": "Sei sicuro di voler chiudere Deadswitch: Combat?"
   },
   "STR_BACK": {
-    "en": "Back"
+    "en": "Back",
+    "ru": "Назад",
+    "zh-CN": "返回",
+    "tr": "Geri",
+    "es": "Atrás",
+    "it": "Indietro"
   },
   "STR_PREVIOUS": {
     "en": "Previous"
@@ -138,7 +329,12 @@
     "en": "Next"
   },
   "STR_PLAYERS": {
-    "en": "Players"
+    "en": "Players",
+    "ru": "Игроки",
+    "zh-CN": "玩家",
+    "tr": "Oyuncular",
+    "es": "Jugadores",
+    "it": "Giocatori"
   },
   "STR_X_/_X_PLAYERS": {
     "en": "%1 / %2 Players"
@@ -189,10 +385,20 @@
     "it": "Connessione al Server fallita\n\nRiprova più tardi oppure prova un altro server."
   },
   "STR_BOT_TEAM": {
-    "en": "Bot Team"
+    "en": "Bot Team",
+    "ru": "Команда ИИ",
+    "zh-CN": "AI玩家队伍",
+    "tr": "Bot Takımı",
+    "es": "Equipo de bots",
+    "it": "Bot nel Team"
   },
   "STR_AUTO": {
-    "en": "Auto"
+    "en": "Auto",
+    "ru": "Автоматически",
+    "zh-CN": "自动",
+    "tr": "Otomatik",
+    "es": "Automático",
+    "it": "Automatico"
   },
   "STR_BOT_SKILL": {
     "en": "Bot Skill",
@@ -604,22 +810,60 @@
     "en": "Skill"
   },
   "STR_YES": {
-    "en": "Yes"
+    "en": "Yes",
+    "ru": "Да",
+    "zh-CN": "是的",
+    "tr": "Evet",
+    "es": "Sí",
+    "it": "Si"
+  },
+  "STR_NO": {
+    "en": "No",
+    "ru": "Нет",
+    "zh-CN": "不",
+    "tr": "Hayır",
+    "es": "No",
+    "it": "No"
   },
   "STR_TOGGLE_ON": {
-    "en": "On"
+    "en": "On",
+    "ru": "Вкл",
+    "zh-CN": "启用",
+    "tr": "Açık",
+    "es": "Encendido",
+    "it": "Acceso"
   },
   "STR_TOGGLE_OFF": {
-    "en": "Off"
+    "en": "Off",
+    "ru": "Выкл",
+    "zh-CN": "禁用",
+    "tr": "Kapalı",
+    "es": "Apagado",
+    "it": "Spento"
   },
   "STR_PAUSED": {
-    "en": "Paused"
+    "en": "Paused",
+    "ru": "Пауза",
+    "zh-CN": "已暂停",
+    "tr": "Duraklatıldı",
+    "es": "Pausar",
+    "it": "In Pausa"
   },
   "STR_RESUME": {
-    "en": "Resume"
+    "en": "Resume",
+    "ru": "Продолжить",
+    "zh-CN": "继续游戏",
+    "tr": "Devam et",
+    "es": "Reanudar",
+    "it": "Riprendi"
   },
   "STR_MENU": {
-    "en": "Menu"
+    "en": "Menu",
+    "ru": "Меню",
+    "zh-CN": "菜单",
+    "tr": "Menü",
+    "es": "Menú",
+    "it": "Menù"
   },
   "STR_DATE_X_X": {
     "en": "%1h %2m"
@@ -634,7 +878,12 @@
     "en": "LAN"
   },
   "STR_SERVER": {
-    "en": "Server"
+    "en": "Server",
+    "ru": "Сервер",
+    "zh-CN": "服务器",
+    "tr": "Sunucu",
+    "es": "Servidor",
+    "it": "Server"
   },
   "STR_COUNTRY": {
     "en": "Country"
@@ -701,6 +950,70 @@
   },
   "STR_SERVER_SETTINGS_CHANGED_X": {
     "en": "Game settings changed (%1)"
+  },
+  "STR_LANGUAGE": {
+    "en": "Language",
+    "ru": "Язык",
+    "zh-CN": "语言",
+    "tr": "Dil",
+    "es": "Idioma",
+    "it": "Lingua"
+  },
+  "STR_LANGUAGE_DESC": {
+    "en": "Select a language.",
+    "ru": "Выберите язык.",
+    "zh-CN": "请选择一种语言。",
+    "tr": "Bir dil seç.",
+    "es": "Selecciona un idioma.",
+    "it": "Seleziona una lingua."
+  },
+  "STR_LANG_EN": {
+    "en": "English",
+    "ru": "Английский\nEnglish",
+    "zh-CN": "英语\nEnglish",
+    "tr": "İngilizce\nEnglish",
+    "es": "Inglés\nEnglish",
+    "it": "Inglese\nEnglish"
+  },
+  "STR_LANG_RU": {
+    "en": "Russian\nРусский",
+    "ru": "Русский",
+    "zh-CN": "俄语\nРусский",
+    "tr": "Rusça\nРусский",
+    "es": "Ruso\nРусский",
+    "it": "Russo\nРусский"
+  },
+  "STR_LANG_IT": {
+    "en": "Italian\nItaliano",
+    "ru": "Итальянский\nItaliano",
+    "zh-CN": "意大利语\nItaliano",
+    "tr": "İtalyan\nItaliano",
+    "es": "Italiano\nItaliano",
+    "it": "Italiano"
+  },
+  "STR_LANG_ES": {
+    "en": "Spanish\nEspañol",
+    "ru": "Испанский\nEspañol",
+    "zh-CN": "西班牙语\nEspañol",
+    "tr": "İspanyol\nEspañol",
+    "es": "Español",
+    "it": "Spagnolo\nEspañol"
+  },
+  "STR_LANG_ZH": {
+    "en": "Chinese Simplified\n简体中文",
+    "ru": "Китайский упрощенный\n简体中文",
+    "zh-CN": "简体中文",
+    "tr": "Basitleştirilmiş Çince\n简体中文",
+    "es": "Chino Simplificado\n简体中文",
+    "it": "Cinese Semplificato\n简体中文"
+  },
+  "STR_LANG_TR": {
+    "en": "Turkish\nTürk",
+    "ru": "Турецкий\nTürk",
+    "zh-CN": "土耳其\nTürk",
+    "tr": "Türk",
+    "es": "Turco\nTürk",
+    "it": "Turco\nTürk"
   },
   "STR_VICTORY": {
     "en": "Victory",
@@ -885,10 +1198,20 @@
     "en": "Destroy the enemy targets and protect yours."
   },
   "STR_MAP_DOWNTURN": {
-    "en": "Downturn"
+    "en": "Downturn",
+    "ru": "Упадок",
+    "zh-CN": "没落园区",
+    "tr": "Alçalma",
+    "es": "Recesión",
+    "it": "Downturn"
   },
   "STR_MAP_OVERGROWN": {
-    "en": "Overgrown"
+    "en": "Overgrown",
+    "ru": "Запущенная",
+    "zh-CN": "野岭旧居",
+    "tr": "Azman",
+    "es": "Desproporcionado",
+    "it": "Overgrown"
   },
   "STR_SPAWN": {
     "en": "Spawn"
@@ -897,19 +1220,39 @@
     "en": "You will be revived at the end of wave."
   },
   "STR_RESPAWN_IN_X": {
-    "en": "Respawn available in %1"
+    "en": "Respawn available in %1",
+    "ru": "Возрождение доступно через %1",
+    "zh-CN": "将于 %1 后可以重生",
+    "tr": "Yeniden doğma %1 içinde mümkün",
+    "es": "Reaparición disponible en %1",
+    "it": "Respawn disponibile in %1"
   },
   "STR_RESPAWN_AVAILABLE": {
-    "en": "Respawn available"
+    "en": "Respawn available",
+    "ru": "Доступно возрождение",
+    "zh-CN": "可以重生了",
+    "tr": "Yeniden doğma uygun",
+    "es": "Reaparición disponible",
+    "it": "Respawn disponibile"
   },
   "STR_SELECT_SPAWN": {
     "en": "Select a spawn point"
   },
   "STR_WAVE_X": {
-    "en": "Wave %1"
+    "en": "Wave %1",
+    "ru": "Волна %1",
+    "zh-CN": "第 %1 波",
+    "tr": "Dalga %1",
+    "es": "Oleada %1",
+    "it": "Ondata %1"
   },
   "STR_X_ENEMIES": {
-    "en": "%1 Enemies"
+    "en": "%1 Enemies Remaining",
+    "ru": "%1 врагов осталось",
+    "zh-CN": "剩余 %1 个敌人",
+    "tr": "%1 kalan düşmanlar",
+    "es": "%1 enemigos restantes",
+    "it": "%1 nemici rimasti"
   },
   "STR_ADD_X_SHARDS": {
     "en": "+%1 Shards",
@@ -976,28 +1319,63 @@
     "it": "Dio"
   },
   "STR_X_JOINED": {
-    "en": "%1 joined"
+    "en": "%1 joined",
+    "ru": "%1 присоединился",
+    "zh-CN": "%1 加盟",
+    "tr": "%1 katıldı",
+    "es": "%1 se unió",
+    "it": "%1 si è unito"
   },
   "STR_X_LEFT": {
-    "en": "%1 left"
+    "en": "%1 left",
+    "ru": "%1 покинул",
+    "zh-CN": "%1 已经离开",
+    "tr": "%1 bıraktı",
+    "es": "%1 se fue",
+    "it": "%1 ha abbandonato"
   },
   "STR_X_KICKED": {
-    "en": "%1 was kicked"
+    "en": "%1 was kicked",
+    "ru": "%1 выгнали из лобби",
+    "zh-CN": "%1 从大厅踢",
+    "tr": "%1 lobiden atıldı",
+    "es": "%1 fue pateado",
+    "it": "%1 è stato espulso"
   },
   "STR_X_TIMED_OUT": {
-    "en": "%1 timed out"
+    "en": "%1 timed out",
+    "ru": "%1 превысил время ожидания",
+    "zh-CN": "%1 连接已超时",
+    "tr": "%1 zaman aşımında uğradı",
+    "es": "%1 agotó el tiempo de espera",
+    "it": "%1 tempo scaduto"
   },
   "STR_MAP": {
-    "en": "Map"
+    "en": "Map",
+    "ru": "Карта",
+    "zh-CN": "地图",
+    "tr": "Harita",
+    "es": "Mapa",
+    "it": "Mappa"
   },
   "STR_WORLD": {
-    "en": "World"
+    "en": "World",
+    "ru": "Мир",
+    "zh-CN": "场景",
+    "tr": "Dünya",
+    "es": "Mundo",
+    "it": "Mondo"
   },
   "STR_WORLD_DUSK": {
     "en": "Dusk"
   },
   "STR_WORLD_NIGHT": {
-    "en": "Night"
+    "en": "Night",
+    "ru": "Ночь",
+    "zh-CN": "夜晚",
+    "tr": "Gece",
+    "es": "Noche",
+    "it": "Notte"
   },
   "STR_WORLD_WINTER": {
     "en": "Winter"
@@ -1006,28 +1384,68 @@
     "en": "Mountains"
   },
   "STR_RELOAD": {
-    "en": "Reload"
+    "en": "Reload",
+    "ru": "Перезарядка",
+    "zh-CN": "装填",
+    "tr": "Doldur",
+    "es": "Recargar",
+    "it": "Ricarica"
   },
   "STR_LOW_AMMO": {
-    "en": "Low Ammo"
+    "en": "Low Ammo",
+    "ru": "Мало патронов",
+    "zh-CN": "弹药将尽",
+    "tr": "Az Mühimmat",
+    "es": "Munición baja",
+    "it": "Poche Munizioni"
   },
   "STR_NO_AMMO": {
-    "en": "No Ammo"
+    "en": "No Ammo",
+    "ru": "Нет патронов",
+    "zh-CN": "弹药竭尽",
+    "tr": "Mühimmat Yok",
+    "es": "Sin munición",
+    "it": "Nessuna Munizione"
   },
   "STR_GAME_MODE": {
-    "en": "Game Mode"
+    "en": "Game Mode",
+    "ru": "Режим",
+    "zh-CN": "游戏模式",
+    "tr": "Oyun Modu",
+    "es": "Modo juego",
+    "it": "Modalità di Gioco"
   },
   "STR_ERROR": {
-    "en": "Error"
+    "en": "Error",
+    "ru": "Ошибка",
+    "zh-CN": "错误",
+    "tr": "Hata",
+    "es": "Error",
+    "it": "Errore"
   },
   "STR_ERROR_DESC": {
-    "en": "An error occurred."
+    "en": "An error occurred.",
+    "ru": "Произошла ошибка.",
+    "zh-CN": "发生错误。",
+    "tr": "Bir hata meydana geldi.",
+    "es": "Ocurrió un error.",
+    "it": "E' stato riscontrato un errore."
   },
   "STR_SUBMIT_BUG_REPORT": {
-    "en": "Submit Bug Report"
+    "en": "Submit Bug Report",
+    "ru": "Отправить сообщение об ошибке",
+    "zh-CN": "上传漏洞报告",
+    "tr": "Hata Raporunu Gönder",
+    "es": "Enviar informe de errores",
+    "it": "Invia segnalazione Bug"
   },
   "STR_EDIT_GAME_SETTINGS": {
-    "en": "Edit Game Settings"
+    "en": "Edit Game Settings",
+    "ru": "Изменить настройки игры",
+    "zh-CN": "编辑比赛设定",
+    "tr": "Oyun Ayarlarını Düzenle",
+    "es": "Editar la configuración del juego",
+    "it": "Modifica Impostazioni Gioco"
   },
   "STR_LEAVE_MULTIPLAYER_CONFIRM": {
     "en": "Are you sure you want to leave this server?"
@@ -1036,46 +1454,63 @@
     "en": "Waiting"
   },
   "STR_STATE_LOBBY": {
-    "en": "Lobby"
+    "en": "Lobby",
+    "ru": "Комната",
+    "zh-CN": "游戏房间",
+    "tr": "Lobi",
+    "es": "Lobby",
+    "it": "Lobby"
   },
   "STR_STATE_IN_PROGRESS": {
     "en": "In Progress"
   },
   "STR_CLASS_ASSAULT": {
-    "en": "Assault"
+    "en": "Assault",
+    "zh-CN": "突击"
   },
   "STR_CLASS_ASSAULT_DESC": {
-    "en": "Versatile all-range combat role."
+    "en": "Versatile all-range combat role.",
+    "zh-CN": "多才多艺的全方位战斗角色。"
   },
   "STR_CLASS_ENGINEER": {
-    "en": "Engineer"
+    "en": "Engineer",
+    "zh-CN": "工程师"
   },
   "STR_CLASS_ENGINEER_DESC": {
-    "en": "Ideal for close-mid range combat.\nRole: Vehicles and explosives."
+    "en": "Ideal for close-mid range combat.\nRole: Vehicles and explosives.",
+    "zh-CN": "中近距离战斗的理想选择。\n作用：车辆和炸药。"
   },
   "STR_CLASS_SUPPORT": {
-    "en": "Support"
+    "en": "Support",
+    "zh-CN": "支持"
   },
   "STR_CLASS_SUPPORT_DESC": {
-    "en": "Ideal for mid-long range combat.\nRole: Suppression and team support."
+    "en": "Ideal for mid-long range combat.\nRole: Suppression and team support.",
+    "zh-CN": "中远程战斗的理想选择。\n作用：压制和团队支持。"
   },
   "STR_CLASS_RECON": {
-    "en": "Recon"
+    "en": "Recon",
+    "zh-CN": "侦察"
   },
   "STR_CLASS_RECON_DESC": {
-    "en": "Ideal for long-range combat.\nRole: Reconnaissance and stealth."
+    "en": "Ideal for long-range combat.\nRole: Reconnaissance and stealth.",
+    "zh-CN": "远程战斗的理想选择。\n作用：侦察和隐身。"
   },
   "STR_CLASSES": {
-    "en": "Classes"
+    "en": "Classes",
+    "zh-CN": "配置"
   },
   "STR_LOADOUT": {
-    "en": "Loadout"
+    "en": "Loadout",
+    "zh-CN": "装载"
   },
   "STR_APPEARANCE": {
-    "en": "Appearance"
+    "en": "Appearance",
+    "zh-CN": "外貌"
   },
   "STR_VEHICLES": {
-    "en": "Vehicles"
+    "en": "Vehicles",
+    "zh-CN": "车辆"
   },
   "STR_UNLIMITED_AMMO": {
     "en": "Unlimited Ammo"
@@ -1117,25 +1552,48 @@
     "en": "Gunner Weapon"
   },
   "STR_WEAPON": {
-    "en": "Weapon"
+    "en": "Weapon",
+    "ru": "Оружие",
+    "zh-CN": "武器",
+    "tr": "Silah",
+    "es": "Arma",
+    "it": "Arma"
   },
   "STR_GRENADE": {
-    "en": "Grenade"
+    "en": "Grenade",
+    "ru": "Граната",
+    "zh-CN": "手雷",
+    "tr": "El Bombası",
+    "es": "Granada",
+    "it": "Granata"
   },
   "STR_EQUIPMENT": {
-    "en": "Equipment"
+    "en": "Equipment",
+    "ru": "Оборудование",
+    "zh-CN": "设备",
+    "tr": "Ekipman",
+    "es": "Equipo",
+    "it": "Attrezzatura"
   },
   "STR_MELEE": {
-    "en": "Melee"
+    "en": "Melee",
+    "ru": "Холодное",
+    "zh-CN": "近战器具",
+    "tr": "Yakın Dövüş Silahı",
+    "es": "Arma cuerpo a cuerpo",
+    "it": "Corpo a Corpo"
   },
   "STR_HELICOPTERS": {
-    "en": "Helicopters"
+    "en": "Helicopters",
+    "zh-CN": "直升机"
   },
   "STR_TANKS": {
-    "en": "Tanks"
+    "en": "Tanks",
+    "zh-CN": "坦克"
   },
   "STR_CARS": {
-    "en": "Land"
+    "en": "Land",
+    "zh-CN": "陆地车辆"
   },
   "STR_CAMO_THERMAL": {
     "en": "Thermal Camo"
@@ -1594,16 +2052,36 @@
     "en": "M18 Smoke"
   },
   "STR_WPN_FRAG": {
-    "en": "M67 Frag"
+    "en": "M67 Frag",
+    "ru": "Осколочная граната",
+    "zh-CN": "破片手雷",
+    "tr": "El Bombası",
+    "es": "Granada de fragmentación",
+    "it": "Granata a Frammentazione"
   },
   "STR_WPN_STUN": {
-    "en": "M84 Stun"
+    "en": "M84 Stun",
+    "ru": "Оглушающая граната",
+    "zh-CN": "眩晕手雷",
+    "tr": "Ses Bombası",
+    "es": "Granada de aturdimiento",
+    "it": "Granata Stordente"
   },
   "STR_WPN_FLASHBANG": {
-    "en": "M84 Flashbang"
+    "en": "M84 Flashbang",
+    "ru": "Светошумовая граната",
+    "zh-CN": "闪光手雷",
+    "tr": "Flaş Bombası",
+    "es": "Granada cegadora",
+    "it": "Granata Accecante"
   },
   "STR_WPN_SEMTEX": {
-    "en": "Semtex"
+    "en": "Semtex",
+    "ru": "Пластид",
+    "zh-CN": "塑胶炸药",
+    "tr": "Semtex",
+    "es": "Explosivos plasticos",
+    "it": "Granata Adesiva"
   },
   "STR_WPN_BLOWTORCH": {
     "en": "Repair Tool"
@@ -1655,7 +2133,12 @@
     "it": "Accecamento"
   },
   "STR_WPN_AMMO_BOX": {
-    "en": "Ammo Box"
+    "en": "Ammo Box",
+    "ru": "Ящик с патронами",
+    "zh-CN": "弹药箱",
+    "tr": "Mühimmat",
+    "es": "Munición",
+    "it": "Munizioni"
   },
   "STR_WPN_SENSOR": {
     "en": "Motion Sensor",
@@ -1995,7 +2478,12 @@
     "en": "Requires Level %1"
   },
   "STR_WELCOME_BACK_X": {
-    "en": "Welcome back, %1."
+    "en": "Welcome back, %1.",
+    "ru": "С возвращением, %1.",
+    "zh-CN": "欢迎回来，%1。",
+    "tr": "Tekrar hoş geldin %1.",
+    "es": "Bienvenido de nuevo, %1.",
+    "it": "Bentornato, %1."
   },
   "STR_WELCOME_TO_DSC_X": {
     "en": "Welcome to Deadswitch: Combat, %1."
