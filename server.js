@@ -42,7 +42,8 @@ const GameMode = {
 };
 const Map = {
     DOWNTURN: "map_downturn",
-    OVERGROWN: "map_overgrown"
+    OVERGROWN: "map_overgrown",
+    BATTLESHIP: "map_battleship"
 };
 const BotSkill = {
     AUTO: -1,
@@ -1293,7 +1294,8 @@ function onEndGame(_lobbyId)
             var votes = [];
             var maps = [
                 Map.DOWNTURN,
-                Map.OVERGROWN
+                Map.OVERGROWN,
+                Map.BATTLESHIP
             ];
             var gameModes = clone(modes);
             shuffleArray(gameModes);
