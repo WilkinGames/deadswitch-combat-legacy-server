@@ -1213,6 +1213,9 @@
     "es": "Desproporcionado",
     "it": "Overgrown"
   },
+  "STR_MAP_BATTLESHIP": {
+    "en": "Battleship"
+  },
   "STR_SPAWN": {
     "en": "Spawn"
   },
