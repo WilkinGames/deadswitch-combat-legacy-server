@@ -1698,11 +1698,11 @@ class GameInstance
                 {
                     if (!fromNode)
                     {
-                        console.warn("Invalid fromNode!");
+                        //console.warn("Invalid fromNode!");
                     }
                     if (!toNode)
                     {
-                        console.warn("Invalid toNode!");
+                        //console.warn("Invalid toNode!");
                     }
                 }
             }
