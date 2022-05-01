@@ -3681,6 +3681,23 @@ class GameInstance
         }
     }
 
+    checkKillzone(_position)
+    {
+        var killzones = this.getCurrentMapData().killzones;
+        for (var i = 0; i < killzones.length; i++)
+        {
+            var killzone = killzones[i];
+            var topBound = killzone.position[1] - (killzone.height / 2);
+            var bottomBound = killzone.position[1] + (killzone.height / 2);
+            var leftBound = killzone.position[0] - (killzone.width / 2);
+            var rightBound = killzone.position[0] + (killzone.width / 2);
+            if (_position[0] > leftBound && _position[0] < rightBound && _position[1] > topBound && _position[1] < bottomBound)
+            {
+                return true;
+            }
+        }
+    }
+
     checkLineOfSight(_startPos, _endPos, _bObstaclesBlock, _targetBody)
     {
         var result = this.raycast(_startPos[0], _startPos[1], _endPos[0], _endPos[1]);
@@ -4669,6 +4686,18 @@ class GameInstance
                 });
             }
         }
+        if (_body.position[1] > this.getCurrentMapData().height)
+        {
+            this.requestEvent({
+                eventId: GameServer.EVENT_PAWN_DAMAGE,
+                damageType: DamageType.DAMAGE_WORLD,
+                damageAmount: data.maxHealth,
+                pawnId: data.id,
+                attackerId: data.id,
+                causerId: data.id,
+                weaponId: "generic"
+            });
+        }
         _body.position[1] = Math.max(0, _body.position[1]);
     }
 
@@ -4822,6 +4851,11 @@ class GameInstance
     handleCharacter(_body)
     {
         if (_body.position[1] > this.getCurrentMapData().height || _body.position[0] < 0 || _body.position[0] > this.getCurrentMapData().width)
+        {
+            this.killPawn(_body.data.id);
+            return;
+        }
+        if (this.checkKillzone(_body.position))
         {
             this.killPawn(_body.data.id);
             return;
