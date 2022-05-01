@@ -2,6 +2,20 @@
   "id": "map_battleship",
   "width": 14000,
   "height": 3000,
+  "killzones": [
+	{
+		"position":[13409.25,2922],
+		"height":150.6,
+		"width":1183.8,
+		"type":"killzone"
+	},
+	{
+		"position":[1077.2,2923.8],
+		"height":152.5,
+		"width":2154.4,
+		"type":"killzone"
+	}
+  ],
   "flags": {
     "domination": [
       [ 3459.65, 2385.6 ],
