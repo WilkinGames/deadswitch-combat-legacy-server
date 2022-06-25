@@ -925,14 +925,34 @@ function joinLobby(_player, _lobbyId)
             if (socket)
             {
                 socket.emit("prepareGame", lobby.gameData);
-                setTimeout(() =>
-                {
+                setTimeout(() => {
+                    if (lobby.gameData.bSquadCombat) {
+                        var squad = createSquad(_player.id);
+                        var squadMembers = createSquadMembers(_player, squad);
+                        for (var k = 0; k < squadMembers.length; k++) {
+                            lobby.game.addPlayer(squadMembers[k]);
+                        }
+                        lobby.gameData.squads.push(squad);
+                    }
                     enterGame(socket);
                 }, 2000);
             }
             else
             {
-                lobby.game.addPlayer(clone(_player));
+                if (lobby.gameData.bSquadCombat)
+                {
+                    var squad = createSquad(_player.id);
+                    var squadMembers = createSquadMembers(_player, squad);
+                    for (var k = 0; k < squadMembers.length; k++)
+                    {
+                        lobby.game.addPlayer(squadMembers[k]);
+                    }
+                    lobby.gameData.squads.push(squad);
+                }
+                else
+                {
+                    lobby.game.addPlayer(clone(_player));
+                }
             }
         }
         else
@@ -1203,6 +1223,29 @@ function leaveLobby(_player, _reason)
                 playerId: _player.id,
                 reason: _reason
             });
+            if (lobby.gameData.bSquadCombat)
+            {
+                var squad = getSquadById(_player.id, _player.lobbyId);
+                if (squad) {
+                    lobby.game.requestEvent({
+                        eventId: GameServer.EVENT_PLAYER_LEAVE,
+                        playerId: squad.assault
+                    });
+                    lobby.game.requestEvent({
+                        eventId: GameServer.EVENT_PLAYER_LEAVE,
+                        playerId: squad.engineer
+                    });
+                    lobby.game.requestEvent({
+                        eventId: GameServer.EVENT_PLAYER_LEAVE,
+                        playerId: squad.support
+                    });
+                    lobby.game.requestEvent({
+                        eventId: GameServer.EVENT_PLAYER_LEAVE,
+                        playerId: squad.recon
+                    });
+                    lobby.gameData.squads.splice(squad);
+                }
+            }
         }
         lobby.players.splice(lobby.players.indexOf(_player), 1);
         _player.lobbyId = null;
@@ -1248,22 +1291,56 @@ function startGame(_lobbyId, _gameData)
         delete require.cache[require.resolve("./assets/js/game")];
         var game = new (require("./assets/js/game").GameInstance)();
         var players = clone(lobby.players);
-        for (var i = 0; i < _gameData.settings.bots; i++)
+        switch (lobby.gameData.gameModeId)
         {
-            var bot = getBot(_gameData.settings.botSkill);
-            bot.name = "Bot " + i;
-            switch (lobby.gameData.gameModeId)
-            {
-                case GameMode.SURVIVAL_SIEGE:
-                case GameMode.SURVIVAL_TERRORIST:
-                case GameMode.SURVIVAL_ZOMBIE:
+            case GameMode.SURVIVAL_SIEGE:
+            case GameMode.SURVIVAL_TERRORIST:
+            case GameMode.SURVIVAL_ZOMBIE:
+                for (var i = 0; i < _gameData.settings.bots; i++)
+                {
+                    var bot = getBot(_gameData.settings.botSkill);
+                    bot.name = "Bot " + i;
                     bot.team = 0;
-                    break;
-                default:
-                    bot.team = _gameData.settings.botTeam >= 0 ? _gameData.settings.botTeam : (i % 2 == 0 ? 0 : 1);
-                    break;
-            }            
-            players.push(bot);
+                    players.push(bot);
+                }
+                break;
+            default:
+                if (_gameData.settings.bSquadCombat)
+                {
+                    _gameData.bSquadCombat = true;
+                    var bots = [];
+                    var squads = [];
+                    for (var i = 0; i < players.length; i++)
+                    {
+                        var squad = createSquad(players[i].id);
+                        var squadMembers = createSquadMembers(players[i], squad);
+                        bots.push(...squadMembers);
+                        squads.push(squad);
+                    }
+                    for (var i = 0; i < _gameData.settings.bots; i++)
+                    {
+                        var bot = getBot(_gameData.settings.botSkill);
+                        bot.name = "Bot " + i;
+                        bot.team = _gameData.settings.botTeam >= 0 ? _gameData.settings.botTeam : (i % 2 == 0 ? 0 : 1);
+                        var squad = createSquad(bot.id);
+                        var squadMembers = createSquadMembers(bot.id, squad);
+                        bots.push(...squadMembers);
+                        squads.push(squad); // Technically no need to add bot squads to the list of squads, since nothing will be done with them
+                    }
+                    players = bots;
+                    _gameData.squads = squads;
+                }
+                else
+                {
+                    for (var i = 0; i < _gameData.settings.bots; i++)
+                    {
+                        var bot = getBot(_gameData.settings.botSkill);
+                        bot.name = "Bot " + i;
+                        bot.team = _gameData.settings.botTeam >= 0 ? _gameData.settings.botTeam : (i % 2 == 0 ? 0 : 1);
+                        players.push(bot);
+                    }
+                }
+                break;
         }
         _gameData.players = players;
         game.init(_gameData, function (_data)
@@ -1483,6 +1560,81 @@ function getBot(_botSkill)
         level: level
     };
     return player;
+}
+
+function createSquad(_playerId)
+{
+    var squadIds = [
+        getRandomUniqueId(),
+        getRandomUniqueId(),
+        getRandomUniqueId(),
+        getRandomUniqueId()
+    ];
+    var squad = {
+        playerId: _playerId, //playerId acts as the squad's id, since the player itself never enters the game
+        assault: squadIds[0],
+        engineer: squadIds[1],
+        support: squadIds[2],
+        recon: squadIds[3],
+    };
+    return squad;
+}
+
+function createSquadMembers(_player, _squad)
+{
+    var squadMembers = [];
+    var botSkill = _player.botSkill;
+    if (!_player.botSkill)
+    {
+        if (_player.level <= 9) botSkill = BotSkill.EASY;
+        else if (_player.level <= 49) botSkill = BotSkill.NORMAL;
+        else if (_player.level <= 75) botSkill = BotSkill.HARD;
+        else if (_player.level <= 99) botSkill = BotSkill.INSANE;
+        else if (_player.level >= 100) botSkill = BotSkill.GOD;
+    }
+
+    for (var j = 0; j < 4; j++)
+    {
+        var bot = clone(_player);
+        bot.bBot = true;
+        if (bot.bAdmin) bot.bAdmin = false;
+        bot.botSkill = botSkill;
+        bot.team = _player.team;
+        switch (j)
+        {
+            case 0:
+                bot.id = _squad.assault
+                bot.currentClass = "ASSAULT";
+                break;
+            case 1:
+                bot.id = _squad.engineer
+                bot.currentClass = "ENGINEER";
+                break;
+            case 2:
+                bot.id = _squad.support
+                bot.currentClass = "SUPPORT";
+                break;
+            case 3:
+                bot.id = _squad.recon
+                bot.currentClass = "RECON";
+                break;
+        }
+        bot.squad = _squad;
+        squadMembers.push(bot);
+    }
+    return squadMembers;
+}
+
+function getSquadById(_id, _lobbyId)
+{
+    var lobby = getLobbyData(_lobbyId);
+    var squads = lobby.gameData.squads;
+    for (var i = 0; i < squads.length; i++) {
+        if (squads[i].playerId == _id) {
+            return squads[i];
+        }
+    }
+    return null;
 }
 
 function disconnectSocket(_socket, _reason)
