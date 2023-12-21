@@ -2,7 +2,7 @@
 
 © 2023 Wilkin Games
 
-Note: Development is currently on hold.
+**Note:** Official development is currently on hold. Branches and updates are welcome.
 
 ## Playtest
 
