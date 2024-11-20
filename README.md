@@ -1,9 +1,9 @@
-# Deadswitch: Combat Multiplayer Server
+# [LEGACY] Deadswitch Combat Multiplayer Server
 
-© 2023 Wilkin Games
+© 2024 Wilkin Games
 
-**Note:** Official development is currently on hold. Branches and updates are welcome.
+**Note:** This repository is the legacy version of Deadswitch Combat. Please visit the new project at https://github.com/WilkinGames/deadswitch-combat
 
 ## Playtest
 
-Access the game in your browser: https://xwilkinx.com/play/combat/latest
+Access the game in your browser: https://xwilkinx.com/play/combat/legacy
